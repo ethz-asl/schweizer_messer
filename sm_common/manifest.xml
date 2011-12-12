@@ -1,0 +1,14 @@
+<package>
+  <description brief="sm_common">
+
+     sm_common
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_common</url>
+
+</package>
+
+
