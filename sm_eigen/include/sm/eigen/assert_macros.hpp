@@ -1,11 +1,22 @@
-#ifndef ASRL_EIGEN_ISNAN_HPP
-#define ASRL_EIGEN_ISNAN_HPP
+/**
+ * @file   assert_macros.hpp
+ * @author Paul Furgale <paul.furgale@gmail.com>
+ * @date   Mon Dec 12 11:53:43 2011
+ * 
+ * @brief  Code for checking if Eigen matrices are finite. It is slow. Use sparingly.
+ * 
+ * 
+ */
+
+
+#ifndef SM_EIGEN_ISNAN_HPP
+#define SM_EIGEN_ISNAN_HPP
 
 #include <cmath>
-#include "../assert_macros.hpp"
+#include <sm/assert_macros.hpp>
 
 
-#define ASRL_ASSERT_MAT_IS_FINITE(exceptionType, matrix, message)		\
+#define SM_ASSERT_MAT_IS_FINITE(exceptionType, matrix, message)		\
   {									\
   for(int r = 0; r < matrix.rows(); ++r)				\
     {									\
@@ -13,9 +24,9 @@
 	{								\
 	  if(!std::isfinite(matrix(r,c)))				\
 	    {								\
-	      std::stringstream asrl_assert_stringstream;		\
-	      asrl_assert_stringstream << "debug assert( isfinite(" << #matrix << "(" << r << ", " << c << ") ) failed. [ isfinite(" << matrix(r,c) << " ) ]" << message << std::endl << matrix; \
-	      asrl::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,asrl_assert_stringstream.str()); \
+	      std::stringstream sm_assert_stringstream;		\
+	      sm_assert_stringstream << "debug assert( isfinite(" << #matrix << "(" << r << ", " << c << ") ) failed. [ isfinite(" << matrix(r,c) << " ) ]" << message << std::endl << matrix; \
+	      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
 	    }								\
 	}								\
      }   								\
@@ -24,7 +35,7 @@
 
 #ifndef NDEBUG
 
-#define ASRL_ASSERT_MAT_IS_FINITE_DBG(exceptionType, matrix, message)		\
+#define SM_ASSERT_MAT_IS_FINITE_DBG(exceptionType, matrix, message)		\
   {									\
   for(int r = 0; r < matrix.rows(); ++r)				\
     {									\
@@ -32,9 +43,9 @@
 	{								\
 	  if(!std::isfinite(matrix(r,c)))				\
 	    {								\
-	      std::stringstream asrl_assert_stringstream;		\
-	      asrl_assert_stringstream << "assert( isfinite(" << #matrix << "(" << r << ", " << c << ") ) failed. [ isfinite(" << matrix(r,c) << " ) ]" << message << std::endl << matrix; \
-	      asrl::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,asrl_assert_stringstream.str()); \
+	      std::stringstream sm_assert_stringstream;		\
+	      sm_assert_stringstream << "assert( isfinite(" << #matrix << "(" << r << ", " << c << ") ) failed. [ isfinite(" << matrix(r,c) << " ) ]" << message << std::endl << matrix; \
+	      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
 	    }								\
 	}								\
      }   								\
@@ -43,9 +54,9 @@
 
 #else
 
-#define ASRL_ASSERT_MAT_IS_FINITE_DBG(exceptionType, matrix, message)
+#define SM_ASSERT_MAT_IS_FINITE_DBG(exceptionType, matrix, message)
 
 #endif
 
 
-#endif /* ASRL_EIGEN_ISNAN_HPP */
+#endif /* SM_EIGEN_ISNAN_HPP */

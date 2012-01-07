@@ -1,13 +1,21 @@
 <package>
   <description brief="sm_common">
 
-     sm_common
+     sm_common - Common programming tools.
 
   </description>
   <author>Paul Furgale</author>
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sm_common</url>
+
+  <export>
+    <!-- I'm not sure if -Wl,-rpath,${prefix}/lib is needed below -->
+    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"/>
+    <!--lflags="`rosboost-cfg - -lflags filesystem system` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_common"/ -->
+    <!-- python path="${prefix}/python"/ -->
+  </export>
+  
 
 </package>
 

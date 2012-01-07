@@ -1,0 +1,6 @@
+bblos-driver/
+numpy_eigen/build/
+numpy_eigen/lib/
+sm_eigen/bin/
+sm_eigen/build/
+sm_eigen/test.ba

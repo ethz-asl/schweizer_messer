@@ -9,13 +9,17 @@
 ///
 
 
-#ifndef ASRL_EIGEN_SERIALIZATION_HPP
-#define ASRL_EIGEN_SERIALIZATION_HPP
+#ifndef SM_EIGEN_SERIALIZATION_HPP
+#define SM_EIGEN_SERIALIZATION_HPP
 
 #include <Eigen/Core>
-#include <asrl/assert_macros.hpp>
+#include <sm/assert_macros.hpp>
 #include <boost/serialization/split_free.hpp>
 
+namespace sm { namespace eigen {
+    // An exception for errors during serialization/deserialization
+    SM_DEFINE_EXCEPTION( SerializationException, std::runtime_error );
+  }} // namespace sm::eigen
 
 namespace boost { namespace serialization {
 
@@ -48,7 +52,7 @@ namespace boost { namespace serialization {
 
 
     /// 
-    /// Loads an Eigen3 matrix object from a boost::serialization archive.
+    /// Loads an Eigen matrix object from a boost::serialization archive.
     /// This function has several specializations to handle Matrices with
     /// fixed sizes and those with dynamic sizes. This function is called
     /// by the boost serialization code and should not be called directly.
@@ -67,8 +71,8 @@ namespace boost { namespace serialization {
       int rows, cols;
       ar >> rows;
       ar >> cols;
-      ASRL_ASSERT_EQ(std::runtime_error,rows,A,"Unexpected number of rows found for fixed-sized type");
-      ASRL_ASSERT_EQ(std::runtime_error,cols,B,"Unexpected number of columns found for fixed-sized type");
+      SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
+      SM_ASSERT_EQ(sm::eigen::SerializationException,cols,B,"Unexpected number of columns found for fixed-sized type");
 
       if(rows > 0 && cols > 0)
 	{
@@ -78,7 +82,7 @@ namespace boost { namespace serialization {
 
 
     /// 
-    /// Loads an Eigen3 matrix object from a boost::serialization archive.
+    /// Loads an Eigen matrix object from a boost::serialization archive.
     /// This function has several specializations to handle Matrices with
     /// fixed sizes and those with dynamic sizes. This function is called
     /// by the boost serialization code and should not be called directly.
@@ -98,7 +102,7 @@ namespace boost { namespace serialization {
       int rows, cols;
       ar >> rows;
       ar >> cols;
-      ASRL_ASSERT_EQ(std::runtime_error,cols,B,"Unexpected number of columns found for fixed-sized type");
+      SM_ASSERT_EQ(sm::eigen::SerializationException,cols,B,"Unexpected number of columns found for fixed-sized type");
       
       M.resize(rows,Eigen::NoChange);
       if(rows > 0 && cols > 0)
@@ -108,7 +112,7 @@ namespace boost { namespace serialization {
     }
 
     /// 
-    /// Loads an Eigen3 matrix object from a boost::serialization archive.
+    /// Loads an Eigen matrix object from a boost::serialization archive.
     /// This function has several specializations to handle Matrices with
     /// fixed sizes and those with dynamic sizes. This function is called
     /// by the boost serialization code and should not be called directly.
@@ -128,7 +132,7 @@ namespace boost { namespace serialization {
       int rows, cols;
       ar >> rows;
       ar >> cols;
-      ASRL_ASSERT_EQ(std::runtime_error,rows,A,"Unexpected number of rows found for fixed-sized type");
+      SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
     
       M.resize(Eigen::NoChange,cols);
       ar >> make_array(&M(0,0),M.rows()*M.cols());
@@ -136,7 +140,7 @@ namespace boost { namespace serialization {
     }
 
     /// 
-    /// Loads an Eigen3 matrix object from a boost::serialization archive.
+    /// Loads an Eigen matrix object from a boost::serialization archive.
     /// This function has several specializations to handle Matrices with
     /// fixed sizes and those with dynamic sizes. This function is called
     /// by the boost serialization code and should not be called directly.
@@ -167,7 +171,7 @@ namespace boost { namespace serialization {
     /// 
     /// The function that causes boost::serialization to look for
     /// seperate save() and load() functions when serializing
-    /// and Eigen3 matrix.
+    /// and Eigen matrix.
     ///
     /// @param ar The boost::serialization archive
     /// @param M  The matrix to be serialized
@@ -184,8 +188,8 @@ namespace boost { namespace serialization {
 
 
     /// 
-    /// A function that serialized an Eigen3 Transform by causing the underlying
-    /// Eigen3 matrix to be serialized.
+    /// A function that serialized an Eigen Transform by causing the underlying
+    /// Eigen matrix to be serialized.
     ///
     /// @param ar The boost::serialization archive
     /// @param M  The transform to be serialized
@@ -203,4 +207,4 @@ namespace boost { namespace serialization {
 
 }}
 
-#endif // ASRL_EIGEN_SERIALIZATION_HPP
+#endif // SM_EIGEN_SERIALIZATION_HPP

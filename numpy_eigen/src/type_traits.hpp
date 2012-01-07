@@ -24,7 +24,7 @@ template<> struct TypeToNumPy<int>
   static const char * typeString() { return "int"; }
   static bool canConvert(int type)
   {
-    return type == NPY_INT;
+    return type == NPY_INT || type == NPY_LONG;
   }
 };
 

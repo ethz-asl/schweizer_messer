@@ -9,6 +9,10 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sm_eigen</url>
 
+  <depend package="sm_common"/>
+  <depend package="eigen"/>
+
+
 </package>
 
 

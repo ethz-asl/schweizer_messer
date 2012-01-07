@@ -13,7 +13,7 @@
 #include <boost/filesystem.hpp>
 
 #include <Eigen/Geometry>
-#include <asrl/eigen/EigenSerialization.hpp>
+#include <sm/eigen/serialization.hpp>
 
 
 
