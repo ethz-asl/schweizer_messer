@@ -36,6 +36,9 @@ namespace sm { namespace eigen {
     template<typename M1, typename M2, typename T>
     void assertNear(const M1 & A, const M2 & B, T tolerance, sm::source_file_pos const & sfp, std::string const & message = "")
     {
+      // Note: If these assertions fail, they only abort this subroutine.
+      // see: http://code.google.com/p/googletest/wiki/AdvancedGuide#Using_Assertions_in_Sub-routines
+      // \todo better handling of this
       ASSERT_EQ(A.rows(),B.rows()) << message << "\nMatrix A:\n" << A << "\nand matrix B\n" << B << "\nare not the same\n" << sfp;
       ASSERT_EQ(A.cols(),B.cols()) << message << "\nMatrix A:\n" << A << "\nand matrix B\n" << B << "\nare not the same\n" << sfp;
 
