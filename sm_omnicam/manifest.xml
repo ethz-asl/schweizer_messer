@@ -1,0 +1,14 @@
+<package>
+  <description brief="sm_omnicam">
+
+     sm_omnicam
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_omnicam</url>
+
+</package>
+
+
