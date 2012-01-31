@@ -1,4 +1,5 @@
 #include<sm/cameras/OmniCameraGeometry.hpp>
+#include<sm/boost/serialization.hpp>
 
 namespace sm { namespace cameras {
 
@@ -62,7 +63,7 @@ namespace sm { namespace cameras {
     OmniCameraGeometry::keypoint_t OmniCameraGeometry::euclideanHomogeneousToKeypoint(Eigen::Vector4d const & ph, jacobian_homogeneous_t * outJacobian) const
     {
       
-      return ;
+      return keypoint_t();
     }
 
       
@@ -154,31 +155,78 @@ namespace sm { namespace cameras {
     /// \brief Save the camera structure as a boost binary archive
     void OmniCameraGeometry::saveBinary(const std::string & fileName)
     {
-      
+      sm::boost::serialization::save(*this,fileName);
     }
 
     /// \brief Load the camera structure from a boost binary archive
     void OmniCameraGeometry::loadBinary(const std::string & fileName)
     {
-
+      sm::boost::serialization::load(*this,fileName);
     }
 
     /// \brief Save the camera structure as a boost xml archive
     void OmniCameraGeometry::saveXml(const std::string & fileName)
     {
-
+      sm::boost::serialization::save_xml(*this, "ocamcal", fileName);
     }
 
     /// \brief Load the camera structure as a boost xml archive
     void OmniCameraGeometry::loadXml(const std::string & fileName)
     {
-
+      sm::boost::serialization::load_xml(*this,"ocamcal", fileName);
     }
 
     /// \brief Load the camera structure from the output of the OCamCal toolbox
     void OmniCameraGeometry::loadOCamCal(const std::string & fileName)
     {
+      std::ifstream ifs(fileName.c_str());
+      SM_ASSERT_TRUE(Exception,ifs.good(), "Unable to open file " << fileName << " for reading");
 
+      
+      // //Read polynomial coefficients
+      // fgets(buf,CMV_MAX_BUF,f);
+      // fscanf(f,"\n");
+      const std::streamsize BUF_SIZE = 1024;
+      char buffer[BUF_SIZE];
+      ifs.getline(buffer, BUF_SIZE);
+      
+      int polSize;
+      ifs >> polSize;
+      SM_ASSERT_GE_LT(Exception, polSize, 1, 20, "Unexpected polynomial size.");
+      
+      std::cout << "Polynomial size: " << polSize << std::endl;
+
+      for(int i = 0; i < polS
+
+      // //Read inverse polynomial coefficients
+      // fscanf(f,"\n");
+      // fgets(buf,CMV_MAX_BUF,f);
+      // fscanf(f,"\n");
+      // fscanf(f,"%d", length_invpol);
+      // for (i = 0; i < *length_invpol; i++)
+      // 	{
+      // 	  fscanf(f," %lf",&invpol[i]);
+      // 	}
+      
+      // //Read center coordinates
+      // fscanf(f,"\n");
+      // fgets(buf,CMV_MAX_BUF,f);
+      // fscanf(f,"\n");
+      // fscanf(f,"%lf %lf\n", xc, yc);
+      
+      // //Read affine coefficients
+      // fgets(buf,CMV_MAX_BUF,f);
+      // fscanf(f,"\n");
+      // fscanf(f,"%lf %lf %lf\n", c,d,e);
+      
+      // //Read image size
+      // fgets(buf,CMV_MAX_BUF,f);
+      // fscanf(f,"\n");
+      // fscanf(f,"%d %d", height, width);
+      
+      // fclose(f);
+      // return 0;
+      
     }
 
 

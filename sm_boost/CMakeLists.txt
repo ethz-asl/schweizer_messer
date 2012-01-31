@@ -22,19 +22,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
-rosbuild_add_library(${PROJECT_NAME} src/OmniCameraGeometry.cpp)
+#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} serialization system filesystem)
+#rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
-
-rosbuild_add_gtest(${PROJECT_NAME}_tests
-  test/test_serialization.cpp
-  test/test_main.cpp
-  )
-# Link against the main project library if necessary
-target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
-
-rosbuild_link_boost(${PROJECT_NAME}_tests serialization )
-

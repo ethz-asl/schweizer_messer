@@ -9,6 +9,10 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sm_omnicam</url>
 
+  <depend package="sm_common"/>
+  <depend package="sm_boost"/>
+  <depend package="roscpp"/>
+  <depend package="eigen"/>
 </package>
 
 
