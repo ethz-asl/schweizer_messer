@@ -1,0 +1,17 @@
+<package>
+  <description brief="sm_kinematics">
+
+     sm_kinematics
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_kinematics</url>
+
+  <depend package="eigen"/>
+  <depend package="sm_common"/>
+
+</package>
+
+
