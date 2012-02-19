@@ -1,0 +1,21 @@
+<package>
+  <description brief="sm_python">
+
+     sm_python
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_python</url>
+
+  <depend package="sm_common"/>
+  <depend package="numpy_eigen"/>
+  <depend package="sm_kinematics"/>
+
+  <export>
+    <python path="${prefix}/python"/>
+  </export>
+</package>
+
+
