@@ -18,36 +18,39 @@ set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
-
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
-
-#common commands for building c++ executables and libraries
-#rosbuild_add_library(numpy_eigen src/dummy.cpp)
-#target_link_libraries(numpy_eigen another_library)
 rosbuild_add_boost_directories()
-#rosbuild_link_boost(numpy_eigen thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example numpy_eigen)
 
-#target_link_libraries(test/spline_tests numpy_eigen)
+# Include the custom python export library funciton
+include(cmake/add_python_export_library.cmake)
 
-#rosbuild_link_boost(test/spline_tests thread)
+# # Auto generate the export module
+# TODO: My CMake skills are pretty weak. Figure out how to 
+#       autogenerate the source files and compile.
+#
+# add_custom_target(autogen ALL)
+# add_custom_command(TARGET autogen
+#                     COMMAND python create_export_module.py
+#  		    #COMMAND FILE(GLOB AUTOGEN_CPP RELATIVE ${PROJECT_SOURCE_DIR} "src/autogen_module/*.cpp")
+#                     DEPENDS ${PROJECT_SOURCE_DIR}/src/create_export_module.py
+#                     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/src
+#                     COMMENT "Autogenerating the python export module")
 
+# # Clean up the auto-generated files on make clean.
+# get_directory_property(AMCF ADDITIONAL_MAKE_CLEAN_FILES)
+# list(APPEND AMCF ${PROJECT_SOURCE_DIR}/src/autogen_module)
+# list(APPEND AMCF ${PROJECT_SOURCE_DIR}/src/autogen_test_module)
+# set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${AMCF}") 
 
-rosbuild_find_ros_package(numpy_eigen)
-include(${numpy_eigen_PACKAGE_PATH}/cmake/add_python_export_library.cmake)
-
+INCLUDE(src/autogen_files.cmake)
 add_python_export_library(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
-                           src/numpy_eigen_export_module.cpp
-                          )
+ ${AUTOGEN_FILES}
+)
 
+INCLUDE(src/autogen_test_files.cmake)
 add_python_export_library(${PROJECT_NAME}_test ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
-                           src/numpy_eigen_test_module.cpp
-                          )
+  ${AUTOGEN_TEST_FILES}
+  )
 
-rosbuild_add_pyunit( test/numpy_eigen_tests.py)
+rosbuild_add_pyunit( test/numpy_eigen_tests.py TIMEOUT 600)
 
 

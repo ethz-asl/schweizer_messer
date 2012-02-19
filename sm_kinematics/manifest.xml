@@ -11,6 +11,13 @@
 
   <depend package="eigen"/>
   <depend package="sm_common"/>
+  <depend package="sm_eigen"/>
+
+  <export>
+    <cpp cflags="-I${prefix}/include"
+     lflags="`rosboost-cfg --lflags filesystem system` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_kinematics"/>
+       
+  </export>
 
 </package>
 

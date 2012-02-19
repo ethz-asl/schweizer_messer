@@ -13,8 +13,9 @@
 # with the __init__.py file. The standard for ROS (where python message
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
 
-FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
+MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
 
+  rosbuild_add_boost_directories()
   # Find Python
   FIND_PACKAGE(PythonLibs REQUIRED)
   INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
@@ -39,7 +40,7 @@ FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   ENDIF(APPLE)
 
 
-  message("Target files: ${ARGV2}")
+  # message("Target files: ${ARGN}")
   # Create the target and assign source files
   rosbuild_add_library( ${TARGET_NAME}
       ${ARGN}
@@ -70,5 +71,5 @@ FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   list(APPEND AMCF ${PYTHON_MODULE_DIRECTORY}/${PYLIB_SO_NAME})
   set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${AMCF}") 
 
-ENDFUNCTION()
+ENDMACRO()
 

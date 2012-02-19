@@ -4,3 +4,9 @@ numpy_eigen/lib/
 sm_eigen/bin/
 sm_eigen/build/
 sm_eigen/test.ba
+sm_common/build
+sm_common/bin
+sm_common/lib
+sm_kinematics/build
+sm_kinematics/bin
+sm_kinematics/lib
