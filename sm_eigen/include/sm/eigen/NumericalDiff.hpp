@@ -3,30 +3,36 @@
 
 #include <Eigen/Core>
 #include <sm/assert_macros.hpp>
+#include <boost/function.hpp>
+#include <boost/bind.hpp>
 
 namespace sm { namespace eigen {
 
-    
-    struct AddUpdatePolicy
+    template<typename RESULT_VEC_T, typename INPUT_VEC_T, typename JACOBIAN_T = Eigen::MatrixXd>
+    struct NumericalDiffFunctor
     {
-      template<typename T>
-      T update(T input, int dim, double delta)
-      {
-	input[dim] += delta;
-	return input;
-      }
+      typedef RESULT_VEC_T value_t;
+      typedef typename value_t::Scalar scalar_t;
+      typedef INPUT_VEC_T input_t;
+      typedef JACOBIAN_T jacobian_t;
+      
+
+      NumericalDiffFunctor( boost::function< value_t(input_t) > f) : _f(f){}
+      
+      value_t operator()(const input_t & x) { return _f(x); }
+      input_t update(const input_t & x, int c, scalar_t delta) { input_t xnew = x; xnew[c] += delta; return xnew; }
+      boost::function<value_t(input_t)> _f;
     };
 
     // A simple implementation of central differences to estimate a Jacobian matrix
-    template<typename FUNCTOR_T, typename UPDATE_POLICY_T = AddUpdatePolicy>
+    template<typename FUNCTOR_T>
     struct NumericalDiff
     {
       typedef FUNCTOR_T functor_t;
       typedef typename functor_t::input_t input_t;
-      typedef typename functor_t::jacobian_t jacobian_t;
       typedef typename functor_t::value_t value_t;
       typedef typename functor_t::scalar_t scalar_t;
-      typedef UPDATE_POLICY_T update_policy_t;
+      typedef typename functor_t::jacobian_t jacobian_t;
 
       NumericalDiff(functor_t f, scalar_t eps = sqrt(std::numeric_limits<scalar_t>::epsilon())) : functor(f), eps(eps) {}
       
@@ -39,10 +45,8 @@ namespace sm { namespace eigen {
 	
 	//std::cout << "Size: " << M << ", " << N << std::endl;
 	jacobian_t J;
-	if(jacobian_t::RowsAtCompileTime == Eigen::Dynamic || jacobian_t::ColsAtCompileTime == Eigen::Dynamic)
-	  {
-	    J.resize(M, N);
-	  }
+	J.resize(M, N);
+	
 	SM_ASSERT_EQ(std::runtime_error,x0.size(),J.cols(),"Unexpected number of columns for input size");
 	SM_ASSERT_EQ(std::runtime_error,fx0.size(),J.rows(),"Unexpected number of columns for output size");	
 
@@ -54,9 +58,9 @@ namespace sm { namespace eigen {
 	  //input_t x(x0);
 	  //scalar_t xc = x(c);
 	  //x(c) = xc + rcEps;
-	  value_t fxp = functor(updator.update(x0,c,rcEps));
+	  value_t fxp = functor(functor.update(x0,c,rcEps));
 	  //x(c) = xc - rcEps;
-	  value_t fxm = functor(updator.update(x0,c,-rcEps));
+	  value_t fxm = functor(functor.update(x0,c,-rcEps));
 	  value_t dfx = (fxp - fxm)/(rcEps*(scalar_t)2.0);
 	  
 	  for(unsigned r = 0; r < M; r++) {
@@ -68,7 +72,6 @@ namespace sm { namespace eigen {
 
       functor_t functor;
       scalar_t eps;
-      update_policy_t updator;
     };
 
   }}

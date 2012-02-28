@@ -29,6 +29,8 @@ struct SMatrixFunctor
   typedef Eigen::Matrix3d jacobian_t;
   typedef Eigen::Vector3d value_t;
   typedef double scalar_t;
+  
+  enum { XMinimalDimension = 3 };
 
   SMatrixFunctor(const Eigen::Vector3d & pbar, const Eigen::Vector3d & v) :
     pbar_(pbar), v_(v)
@@ -42,6 +44,13 @@ struct SMatrixFunctor
     
     Eigen::Vector3d Cv = C*v_;
     return Cv;
+  }
+
+  input_t update(const input_t & x, int c, double delta)
+  {
+    input_t xnew = x;
+    xnew[c] += delta;
+    return xnew;
   }
 
   /// The nominal parameter value
@@ -63,6 +72,14 @@ struct SMatrixFunctor2
   typedef Eigen::Matrix3d jacobian_t;
   typedef Eigen::Vector3d value_t;
   typedef double scalar_t;
+
+  enum { XMinimalDimension = 3 };
+  input_t update(const input_t & x, int c, double delta)
+  {
+    input_t xnew = x;
+    xnew[c] += delta;
+    return xnew;
+  }
 
   SMatrixFunctor2(const Eigen::Vector3d & pbar) :
     pbar_(pbar)
@@ -98,6 +115,15 @@ struct AngularVelocityFunctor
   typedef Eigen::Matrix<double,3,6> jacobian_t;
   typedef Eigen::Vector3d value_t;
   typedef double scalar_t;
+
+  enum { XMinimalDimension = 6 };
+  input_t update(const input_t & x, int c, double delta)
+  {
+    input_t xnew = x;
+    xnew[c] += delta;
+    return xnew;
+  }
+
 
   AngularVelocityFunctor(){}
 

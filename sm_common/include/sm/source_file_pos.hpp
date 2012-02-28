@@ -20,6 +20,11 @@ namespace sm {
 
     operator std::string()
     {
+      return toString();
+    }
+
+    std::string toString() const
+    {
       std::stringstream s;
       s << file << ":" << line << ": " << function << "()";
       return s.str();
@@ -29,7 +34,7 @@ namespace sm {
 
 }// namespace sm
 
-inline std::ostream & operator<<(std::ostream & out, sm::source_file_pos const & sfp)
+inline std::ostream & operator<<(std::ostream & out, const sm::source_file_pos & sfp)
 {
   out << sfp.file << ":" << sfp.line << ": " << sfp.function << "()";
   return out;

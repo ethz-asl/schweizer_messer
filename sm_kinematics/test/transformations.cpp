@@ -12,6 +12,15 @@ struct TransformationFunctor
   typedef Eigen::Vector4d value_t;
   typedef double scalar_t;
 
+  enum { XMinimalDimension = 6 };
+  input_t update(const input_t & x, int c, double delta)
+  {
+    input_t xnew = x;
+    xnew[c] += delta;
+    return xnew;
+  }
+
+
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
   TransformationFunctor(Eigen::Matrix4d T, Eigen::Vector4d v) : T_(T), v_(v){}
 
@@ -32,6 +41,15 @@ struct InverseTransformationFunctor
   typedef Eigen::Matrix<double,4,6> jacobian_t;
   typedef Eigen::Vector4d value_t;
   typedef double scalar_t;
+
+  enum { XMinimalDimension = 6 };
+  input_t update(const input_t & x, int c, double delta)
+  {
+    input_t xnew = x;
+    xnew[c] += delta;
+    return xnew;
+  }
+
 
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
   InverseTransformationFunctor(Eigen::Matrix4d T, Eigen::Vector4d v) : T_(T), v_(v){}
