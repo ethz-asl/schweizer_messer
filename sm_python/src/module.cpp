@@ -9,6 +9,7 @@ using namespace boost::python;
 void import_rotational_kinematics_python();
 void export_rotations();
 void export_transformations();
+void export_quaternion_algebra();
 
 BOOST_PYTHON_MODULE(libsm_python)
 {
@@ -16,4 +17,5 @@ BOOST_PYTHON_MODULE(libsm_python)
   import_rotational_kinematics_python();
   export_rotations();
   export_transformations();
+  export_quaternion_algebra();
 }
