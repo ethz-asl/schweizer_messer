@@ -40,6 +40,7 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/export_rotational_kinematics.cpp
   src/export_rotations.cpp
   src/export_transformations.cpp
+  src/export_quaternion_algebra.cpp
   )
 
 rosbuild_link_boost(${PY_PROJECT_NAME} python thread filesystem)
