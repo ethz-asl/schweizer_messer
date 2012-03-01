@@ -1,0 +1,14 @@
+<package>
+  <description brief="sm_timing">
+
+     sm_timing
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_timing</url>
+
+</package>
+
+
