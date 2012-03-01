@@ -8,6 +8,14 @@
   <license>BSD</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sm_timing</url>
+  
+  <depend package="sm_common"/>
+
+  <export>
+    <cpp cflags="-I${prefix}/include"
+	 lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_timing"/>
+  </export>
+
 
 </package>
 
