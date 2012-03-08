@@ -1,4 +1,5 @@
 #include <sm/kinematics/quaternion_algebra.hpp>
+#include <sm/kinematics/rotations.hpp>
 #include <sm/assert_macros.hpp>
 #include <Eigen/Geometry>
 
@@ -255,6 +256,20 @@ namespace sm { namespace kinematics {
       retq[3] = q[3]*ca-dq3[0]*q[0]-dq3[1]*q[1]-dq3[2]*q[2];
 
       return retq;
+    }
+
+    Eigen::Vector3d quatRotate(Eigen::Vector4d const & q_a_b, Eigen::Vector3d const & v_b)
+    {
+      return v_b + 2.0 * q_a_b.head<3>().cross(q_a_b.head<3>().cross(v_b) - q_a_b[3] * v_b);
+    }
+
+    Eigen::Vector4d quatRandom()
+    {
+      Eigen::Vector4d q_a_b;
+      q_a_b.setRandom();
+      q_a_b.array() -= 0.5;
+      q_a_b /= q_a_b.norm();
+      return q_a_b;
     }
 
   }} // namespace sm::kinematics

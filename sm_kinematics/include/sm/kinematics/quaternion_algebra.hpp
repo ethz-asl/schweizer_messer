@@ -22,8 +22,12 @@ namespace sm { namespace kinematics {
     Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a);
     Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q);
     Eigen::Matrix4d quatPlus(Eigen::Vector4d const & q);
+    Eigen::Vector4d qplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
     Eigen::Matrix4d quatOPlus(Eigen::Vector4d const & q);
+    Eigen::Vector4d qoplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
     Eigen::Vector4d quatInv(Eigen::Vector4d const & q);
+    Eigen::Vector3d quatRotate(Eigen::Vector4d const & q_a_b, Eigen::Vector3d const & v_b);
+    Eigen::Vector4d quatRandom();
     void invertQuat(Eigen::Vector4d & q);
     Eigen::Vector3d qeps(Eigen::Vector4d const & q);
     double qeta(Eigen::Vector4d const & q);

@@ -31,6 +31,7 @@ rosbuild_add_library( ${PROJECT_NAME}
   src/EulerAnglesZYX.cpp
   src/EulerAnglesYawPitchRoll.cpp
   src/EulerRodriguez.cpp
+  src/Transformation.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
@@ -41,6 +42,8 @@ rosbuild_add_library( ${PROJECT_NAME}
 
 rosbuild_add_gtest( ${PROJECT_NAME}_tests 
   test/RotationalKinematicsTests.cpp
+  test/QuaternionTests.cpp
+  test/TransformationTests.cpp
   test/transformations.cpp
   test/test_main.cpp
 )
