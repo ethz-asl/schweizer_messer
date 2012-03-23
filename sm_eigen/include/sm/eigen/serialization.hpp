@@ -44,10 +44,10 @@ namespace boost { namespace serialization {
     {
       int rows = M.rows();
       int cols = M.cols();
-      ar << rows;
-      ar << cols;
+      ar << BOOST_SERIALIZATION_NVP(rows);
+      ar << BOOST_SERIALIZATION_NVP(cols);
 
-      ar << make_array(&M(0,0),M.rows()*M.cols());
+      ar << make_nvp("data", make_array(&M(0,0),M.rows()*M.cols()));
     }
 
 
@@ -201,7 +201,7 @@ namespace boost { namespace serialization {
 			    const unsigned int file_version )
      {
        
-       ar & M.matrix();
+       ar & boost::serialization::make_nvp("matrix",M.matrix());
      }
 
 

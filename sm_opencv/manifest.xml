@@ -1,0 +1,20 @@
+<package>
+  <description brief="sm_opencv">
+
+     sm_opencv
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_opencv</url>
+
+  <depend package="sm_common"/>
+  <export>
+    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
+	 lflags="`rosboost-cfg --lflags filesystem,system,serialization`"/>
+  </export>
+
+</package>
+
+

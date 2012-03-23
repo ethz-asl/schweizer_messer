@@ -34,7 +34,7 @@ namespace sm {
       ///
       /// @param T_ab the initializing transformation.
       ///
-      Transformation(transformation_t const & T_a_b);
+      Transformation(const transformation_t & T_a_b);
 
       /// 
       /// Constructor. 
@@ -57,6 +57,8 @@ namespace sm {
       /// @return the translation vector
       Eigen::Vector3d t() const;
 
+      Eigen::Vector4d q() const;
+
       Eigen::Matrix<double, 3,4> T3x4() const;
 
       /** 
@@ -65,6 +67,9 @@ namespace sm {
        * @return The inverted transformation
        */
       Transformation inverse() const;
+
+      // Set this to a random transformation.
+      void setRandom();
 
       
       Transformation operator*(const Transformation & rhs);
@@ -98,8 +103,8 @@ namespace sm {
     template<class Archive>
     void Transformation::serialize(Archive & ar, const unsigned int version)
     {
-      ar & _q_a_b;
-      ar & _t_a_b_a;
+      ar & BOOST_SERIALIZATION_NVP(_q_a_b);
+      ar & BOOST_SERIALIZATION_NVP(_t_a_b_a);
     }
 
 

@@ -36,6 +36,11 @@ namespace sm {
       return _t_a_b_a;
     }
 
+
+    Eigen::Vector4d Transformation::q() const
+    {
+      return _q_a_b;
+    }
     
     Transformation::transformation_t Transformation::T() const
     {
@@ -88,6 +93,14 @@ namespace sm {
       return rval;
       
     }
+
+
+    void Transformation::setRandom()
+    {
+      _q_a_b = quatRandom();
+      _t_a_b_a = (Eigen::Vector3d::Random().array() - 0.5) * 100.0;
+    }
+
 
 
   } // namespace kinematics
