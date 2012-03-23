@@ -2,6 +2,7 @@
 #define SM_TRANSFORMATION_HPP
 
 #include <sm/kinematics/quaternion_algebra.hpp>
+#include <boost/serialization/nvp.hpp>
 
 namespace sm {
   namespace kinematics {
