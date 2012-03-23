@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+#include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 # Append to CPACK_SOURCE_IGNORE_FILES a semicolon-separated list of
 # directories (or patterns, but directories should suffice) that should
@@ -14,4 +14,9 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 # variables.
 #list(APPEND CPACK_SOURCE_IGNORE_FILES /core/experimental)
 
-rosbuild_make_distribution(0.1.0)
+#rosbuild_make_distribution(0.1.0)
+
+project(schweizer_messer)
+
+
+  
