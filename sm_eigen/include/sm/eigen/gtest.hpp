@@ -68,6 +68,21 @@ namespace sm { namespace eigen {
         }
     }
 
+
+    template<typename M1>
+    void assertFinite(const M1 & A, sm::source_file_pos const & sfp, std::string const & message = "")
+    {
+      for(int r = 0; r < A.rows(); r++)
+	{
+	  for(int c = 0; c < A.cols(); c++)
+	    {
+	      ASSERT_TRUE(std::isfinite(A(r,c))) << sfp.toString() << std::endl << "Check for finite values failed at A(" << r << "," << c << "). Matrix A:" << std::endl << A << std::endl;
+	    }
+	}
+    }
+
+    
+
 }} // namespace sm::eigen
 
 #endif /* SM_EIGEN_GTEST_HPP */

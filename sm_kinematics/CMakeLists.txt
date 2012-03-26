@@ -32,6 +32,7 @@ rosbuild_add_library( ${PROJECT_NAME}
   src/EulerAnglesYawPitchRoll.cpp
   src/EulerRodriguez.cpp
   src/Transformation.cpp
+  src/homogeneous_coordinates.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
