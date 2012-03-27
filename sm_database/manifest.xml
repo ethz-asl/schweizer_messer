@@ -1,0 +1,18 @@
+<package>
+  <description brief="sm_database">
+
+     sm_database
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_database</url>
+
+  <depend package="sm_common"/>
+  <depend package="sm_boost"/>
+  <rosdep name="sqlite"/>
+
+</package>
+
+
