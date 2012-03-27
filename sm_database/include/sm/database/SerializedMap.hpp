@@ -36,7 +36,9 @@ namespace sm {
       virtual ~SerializedMap();
       
       ::boost::shared_ptr<T> get(::boost::uint64_t id);      
+      void get(::boost::uint64_t id, T & outValue);      
       void set(::boost::uint64_t id, const ::boost::shared_ptr<T> & value);
+      void set(::boost::uint64_t id, const T & value);
       
       const std::string & tableName(){ return _tableName; }
     private:

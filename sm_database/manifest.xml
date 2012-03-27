@@ -13,6 +13,12 @@
   <depend package="sm_boost"/>
   <rosdep name="sqlite"/>
 
+  <export>
+    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
+	 lflags="`rosboost-cfg --lflags filesystem,system,serialization`"/>
+  </export>
+
+
 </package>
 
 

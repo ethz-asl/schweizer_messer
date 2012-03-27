@@ -82,7 +82,7 @@ TEST(SmDatabaseTestSuite, testSerializedMap)
 }
 
 
-TEST(SmDatabaseTestSuite, testSerializedMap2)
+TEST(SmDatabaseTestSuite, testSerializedMapPersistence)
 {
   boost::filesystem::path testdb("test.db");
   try {
