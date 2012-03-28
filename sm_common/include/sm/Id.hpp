@@ -135,10 +135,10 @@ namespace sm {
 
 
 #define SM_DEFINE_ID(IdTypeName)					\
-  class IdTypeName : public aslam::Id					\
+  class IdTypeName : public sm::Id					\
   {									\
   public:								\
-    explicit IdTypeName (aslam::id_type id = -1) : aslam::Id(id) {}	\
+    explicit IdTypeName (sm::id_type id = -1) : sm::Id(id) {}	\
 									\
     template<class Archive>						\
       void serialize(Archive & ar, const unsigned int version)		\

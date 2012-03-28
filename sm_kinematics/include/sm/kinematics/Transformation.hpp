@@ -1,3 +1,4 @@
+
 #ifndef SM_TRANSFORMATION_HPP
 #define SM_TRANSFORMATION_HPP
 
@@ -73,9 +74,9 @@ namespace sm {
       void setRandom();
 
       
-      Transformation operator*(const Transformation & rhs);
-      Eigen::Vector3d operator*(const Eigen::Vector3d & rhs);
-      Eigen::Vector4d operator*(const Eigen::Vector4d & rhs);
+      Transformation operator*(const Transformation & rhs) const;
+      Eigen::Vector3d operator*(const Eigen::Vector3d & rhs) const;
+      Eigen::Vector4d operator*(const Eigen::Vector4d & rhs) const;
 
       void checkTransformationIsValid( void ) const;
 

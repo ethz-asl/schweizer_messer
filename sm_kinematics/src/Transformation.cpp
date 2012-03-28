@@ -74,17 +74,17 @@ namespace sm {
     }
 
 
-    Transformation Transformation::operator*(const Transformation & rhs)
+    Transformation Transformation::operator*(const Transformation & rhs) const
     {
       return Transformation(qplus(_q_a_b,rhs._q_a_b), quatRotate(_q_a_b,rhs._t_a_b_a) + _t_a_b_a);
     }
 
-    Eigen::Vector3d Transformation::operator*(const Eigen::Vector3d & rhs)
+    Eigen::Vector3d Transformation::operator*(const Eigen::Vector3d & rhs) const
     {
       return quatRotate(_q_a_b, rhs) + _t_a_b_a;
     }
 
-    Eigen::Vector4d Transformation::operator*(const Eigen::Vector4d & rhs)
+    Eigen::Vector4d Transformation::operator*(const Eigen::Vector4d & rhs) const
     {
       Eigen::Vector4d rval;
       rval.head<3>() = quatRotate(_q_a_b, rhs.head<3>()) + rhs[3] * _t_a_b_a;
