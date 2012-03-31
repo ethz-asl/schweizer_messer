@@ -33,7 +33,7 @@ namespace sm {
   namespace detail {
 
     template<typename E>
-    inline void throw_exception(std::string const & exceptionType, sm::source_file_pos sfp, std::string const & message)
+    inline void sm_throw_exception(std::string const & exceptionType, sm::source_file_pos sfp, std::string const & message)
     {
       std::stringstream sm_assert_stringstream;
       sm_assert_stringstream << exceptionType <<  sfp << " " << message;
@@ -42,20 +42,20 @@ namespace sm {
     }
 
     template<typename E>
-    inline void throw_exception(std::string const & exceptionType, std::string const & function, std::string const & file,
+    inline void sm_throw_exception(std::string const & exceptionType, std::string const & function, std::string const & file,
 				int line, std::string const & message)
     {
-      throw_exception<E>(exceptionType, sm::source_file_pos(function,file,line),message);
+      sm_throw_exception<E>(exceptionType, sm::source_file_pos(function,file,line),message);
     }
 
 
   } // namespace sm::detail
 
   template<typename E>
-  inline void assert_throw(bool assert_condition, std::string message, sm::source_file_pos sfp) {
+  inline void sm_assert_throw(bool assert_condition, std::string message, sm::source_file_pos sfp) {
     if(!assert_condition)
       {
-	detail::throw_exception<E>("", sfp,message);
+	detail::sm_throw_exception<E>("", sfp,message);
       }
   }
 
@@ -68,14 +68,14 @@ namespace sm {
 #define SM_THROW(exceptionType, message) {				\
     std::stringstream sm_assert_stringstream;				\
     sm_assert_stringstream << message;					\
-    sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+    sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
   }
 
 
 #define SM_THROW_SFP(exceptionType, SourceFilePos, message){		\
     std::stringstream sm_assert_stringstream;				\
     sm_assert_stringstream << message;					\
-    sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", SourceFilePos, sm_assert_stringstream.str()); \
+    sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", SourceFilePos, sm_assert_stringstream.str()); \
   }
 
 #define SM_ASSERT_TRUE(exceptionType, condition, message)		\
@@ -83,7 +83,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #condition << ") failed: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_FALSE(exceptionType, condition, message)		\
@@ -91,7 +91,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert( not " << #condition << ") failed: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
     }
 
 
@@ -101,7 +101,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #lowerBound << " <= " << #value << " < " << #upperBound << ") failed [" << lowerBound << " <= " << value << " < " << upperBound << "]: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -111,7 +111,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " < " << #upperBound << ") failed [" << value << " < " << upperBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_GE(exceptionType, value, lowerBound, message)		\
@@ -119,7 +119,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " >= " << #lowerBound << ") failed [" << value << " >= " << lowerBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -129,7 +129,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " <= " << #upperBound << ") failed [" << value << " <= " << upperBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_GT(exceptionType, value, lowerBound, message)		\
@@ -137,7 +137,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " > " << #lowerBound << ") failed [" << value << " > " << lowerBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -147,7 +147,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " == " << #testValue << ") failed [" << value << " == " << testValue << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_NE(exceptionType, value, testValue, message)		\
@@ -155,7 +155,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " != " << #testValue << ") failed [" << value << " != " << testValue << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_NEAR(exceptionType, value, testValue, abs_error, message) \
@@ -163,7 +163,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "assert(" << #value << " == " << #testValue << ") failed [" << value << " == " << testValue << " (" << fabs(testValue - value) << " > " << fabs(abs_error) << ")]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -173,7 +173,7 @@ namespace sm {
 #define SM_THROW_DBG(exceptionType, message){				\
     std::stringstream sm_assert_stringstream;				\
     sm_assert_stringstream << message;					\
-    sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+    sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
   }
 
 
@@ -183,7 +183,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #condition << ") failed: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_FALSE_DBG(exceptionType, condition, message)		\
@@ -191,7 +191,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert( not " << #condition << ") failed: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
     }
 
 
@@ -202,7 +202,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #lowerBound << " <= " << #value << " < " << #upperBound << ") failed [" << lowerBound << " <= " << value << " < " << upperBound << "]: " << message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -212,7 +212,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " < " << #upperBound << ") failed [" << value << " < " << upperBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -222,7 +222,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " >= " << #lowerBound << ") failed [" << value << " >= " << lowerBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -232,7 +232,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " <= " << #upperBound << ") failed [" << value << " <= " << upperBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_ASSERT_GT_DBG(exceptionType, value, lowerBound, message)	\
@@ -240,7 +240,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " > " << #lowerBound << ") failed [" << value << " > " << lowerBound << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -250,7 +250,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " == " << #testValue << ") failed [" << value << " == " << testValue << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -259,7 +259,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " != " << #testValue << ") failed [" << value << " != " << testValue << "]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 
@@ -269,7 +269,7 @@ namespace sm {
     {									\
       std::stringstream sm_assert_stringstream;				\
       sm_assert_stringstream << "debug assert(" << #value << " == " << #testValue << ") failed [" << value << " == " << testValue << " (" << fabs(testValue - value) << " > " << fabs(abs_error) << ")]: " <<  message; \
-      sm::detail::throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
 #define SM_OUT(X) std::cout << #X << ": " << X << std::endl

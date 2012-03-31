@@ -1,6 +1,7 @@
 #include <sm/kinematics/rotations.hpp>
 #include <sm/assert_macros.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+#include <boost/math/special_functions/round.hpp>
 
 namespace sm { namespace kinematics {
 
@@ -158,7 +159,7 @@ namespace sm { namespace kinematics {
 
   // Utility functions
   double angleMod(double radians){
-    return (double)(radians - (SM_2PI * rint(radians / SM_2PI)));
+    return (double)(radians - (SM_2PI * boost::math::round(radians / SM_2PI)));
   }
   double deg2rad(double degrees){
     return (double)(degrees * SM_DEG2RAD);
