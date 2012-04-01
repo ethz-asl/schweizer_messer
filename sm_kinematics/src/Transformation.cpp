@@ -101,7 +101,10 @@ namespace sm {
       _t_a_b_a = (Eigen::Vector3d::Random().array() - 0.5) * 100.0;
     }
 
-
+    bool Transformation::isBinaryEqual(const Transformation & rhs) const
+    {
+      return _q_a_b == rhs._q_a_b && _t_a_b_a == rhs._t_a_b_a;
+    }
 
   } // namespace kinematics
 } // namespace sm

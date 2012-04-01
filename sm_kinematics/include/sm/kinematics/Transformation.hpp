@@ -90,6 +90,8 @@ namespace sm {
       template<class Archive>
       void serialize(Archive & ar, const unsigned int version);
       
+      bool isBinaryEqual(const Transformation & rhs) const;
+
     private:
       
       /// The quaternion that will become a rotation matrix C_a_b that 
