@@ -1,0 +1,15 @@
+<package>
+  <description brief="sm_property_tree">
+
+     sm_property_tree
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_property_tree</url>
+
+  <depend package="sm_common"/>
+</package>
+
+
