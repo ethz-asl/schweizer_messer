@@ -12,9 +12,18 @@
 
 #include <gtest/gtest.h>
 #include <sm/source_file_pos.hpp>
-
+#include <Eigen/Core>
 
 namespace sm { namespace eigen {
+
+    template<int N>
+    Eigen::Matrix<double,N,N> randomCovariance()
+    {
+      Eigen::Matrix<double,N,N> U;
+      U.setRandom();
+      return U.transpose() * U + 5.0 * Eigen::Matrix<double,N,N>::Identity();
+    }
+
 
     template<typename M1, typename M2>
     void assertEqual(const M1 & A, const M2 & B, sm::source_file_pos const & sfp, std::string const & message = "")

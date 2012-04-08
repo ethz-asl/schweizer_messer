@@ -33,4 +33,8 @@ using namespace sm::kinematics;
     def("quatJacobian",quatJacobian);
     // Eigen::Vector4d updateQuat(Eigen::Vector4d const & q, Eigen::Vector3d const & dq);
     def("updateQuat",updateQuat);
+    def("quatIdentity",&quatIdentity, "Return the identity quaternion");
+    def("quatRandom",&quatRandom, "Return a random quaternion");
+    def("quatS",&quatS);
+    def("quatInvS",&quatInvS);
   }

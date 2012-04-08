@@ -1,17 +1,20 @@
 #include <sm/kinematics/Transformation.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
+#include <sm/kinematics/rotations.hpp>
+
 
 namespace sm {
   namespace kinematics {
     
     
-    Transformation::Transformation()
+    Transformation::Transformation() :
+      _q_a_b(0.0, 0.0, 0.0, 1.0), _t_a_b_a(0.0, 0.0, 0.0)
     {
       
     }
 
     
-    Transformation::Transformation(transformation_t const & T_a_b) :
+    Transformation::Transformation(Eigen::Matrix4d const & T_a_b) :
       _q_a_b( r2quat(T_a_b.topLeftCorner<3,3>()) ),
       _t_a_b_a( T_a_b.topRightCorner<3,1>() )
     {
@@ -42,7 +45,7 @@ namespace sm {
       return _q_a_b;
     }
     
-    Transformation::transformation_t Transformation::T() const
+    Eigen::Matrix4d Transformation::T() const
     {
       Eigen::Matrix4d T_a_b;
       // \todo...make this do less copying.
@@ -95,6 +98,15 @@ namespace sm {
     }
 
 
+    HomogeneousPoint Transformation::operator*(const HomogeneousPoint & rhs) const
+    {
+      Eigen::Vector4d rval = rhs.toHomogeneous();
+      rval.head<3>() = (quatRotate(_q_a_b, rhs.toHomogeneous().head<3>()) + rval[3] * _t_a_b_a).eval();
+      return HomogeneousPoint(rval);
+      
+    }
+
+
     void Transformation::setRandom()
     {
       _q_a_b = quatRandom();
@@ -104,6 +116,21 @@ namespace sm {
     bool Transformation::isBinaryEqual(const Transformation & rhs) const
     {
       return _q_a_b == rhs._q_a_b && _t_a_b_a == rhs._t_a_b_a;
+    }
+
+    /// \brief The update step for this transformation from a minimal update.
+    void Transformation::oplus(const Eigen::Matrix<double,6,1> & dt)
+    {
+      _q_a_b = updateQuat( _q_a_b, dt.tail<3>() );
+      _t_a_b_a += dt.head<3>();
+    }
+
+    Eigen::Matrix<double,6,6> Transformation::S()
+    {
+      Eigen::Matrix<double,6,6> S;
+      S.setIdentity();
+      S.topLeftCorner<3,3>() = -crossMx(_t_a_b_a);
+      return S;
     }
 
   } // namespace kinematics

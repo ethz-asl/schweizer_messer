@@ -8,6 +8,20 @@
 #include <sm/kinematics/Transformation.hpp>
 
 
+
+TEST(TransformationTestSuite, testConstructor)
+{
+  using namespace sm::kinematics;
+
+  Transformation T_a_b;
+  Eigen::Matrix4d T;
+  T.setIdentity();
+  
+  sm::eigen::assertNear(T, T_a_b.T(), 1e-10, SM_SOURCE_FILE_POS, "Checking for the default constructor creating identity");
+
+}
+
+
 TEST(TransformationTestSuite, testTV4Multiplication)
 {
   using namespace sm::kinematics;
@@ -26,6 +40,27 @@ TEST(TransformationTestSuite, testTV4Multiplication)
 
 
 }
+
+TEST(TransformationTestSuite, testTVhMultiplication)
+{
+  using namespace sm::kinematics;
+
+  for(int i = 0; i < 100; i++)
+    {
+      Transformation T_a_b(quatRandom(), Eigen::Vector3d::Random() * 100);
+      Eigen::Vector3d v_b;
+      v_b.setRandom();
+      v_b *= 100.0;
+      HomogeneousPoint V_b(v_b);
+      
+      Eigen::Vector3d v_a = T_a_b * v_b;
+      HomogeneousPoint V_a = T_a_b * V_b;
+      sm::eigen::assertNear(V_a.toEuclidean(), v_a, 1e-10, SM_SOURCE_FILE_POS, "Checking for composition equal to matrix multiplication");
+    }
+
+
+}
+
 
 TEST(TransformationTestSuite, testTVMultiplication)
 {

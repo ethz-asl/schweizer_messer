@@ -2,6 +2,8 @@
 #include <sm/kinematics/rotations.hpp>
 #include <sm/assert_macros.hpp>
 #include <Eigen/Geometry>
+#include <limits>
+#include <cmath>
 
 namespace sm { namespace kinematics {
 
@@ -183,15 +185,27 @@ namespace sm { namespace kinematics {
 
     Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a)
     {
+      // Method of implementing this function that is accurate to numerical precision from
+      // Grassia, F. S. (1998). Practical parameterization of rotations using the exponential map. journal of graphics, gpu, and game tools, 3(3):29–48.
+      
+      // The threshold for an alternate computation is theta < the fourth root of epsilon
+      static const double threshold = pow(std::numeric_limits<double>::epsilon(),1.0/4.0);
       double theta = a.norm();
-      if(theta < 1e-12)
-        return Eigen::Vector4d(0,0,0,1);
-    
-      Eigen::Vector3d axis = a/theta;
-      theta*=0.5;
-      double st = sin(theta);
-      double ct = cos(theta);
-      axis *= st;
+
+      // na is 1/theta sin(theta/2)
+      double na;
+      if(theta < threshold)
+	{
+	  static const double one_over_48 = 1.0/48.0;
+	  na = 0.5 + (theta * theta) * one_over_48;
+	}
+      else
+	{
+	  
+	  na = sin(theta*0.5) / theta; 
+	}
+      Eigen::Vector3d axis = a*na;
+      double ct = cos(theta*0.5);
       return Eigen::Vector4d(axis[0],axis[1],axis[2],ct);
 
     }
@@ -239,16 +253,8 @@ namespace sm { namespace kinematics {
       // Eigen::Vector4d retq = quatPlus(dq4)*q;
       // return retq;
 
-      double angle = dq.norm();
-      if(angle < 1e-12)
-        return q;
-
-      double angle_2 = angle*0.5;
-      double sa = sin(angle_2);
-      double recip_a = 1.0/angle;
-      double ca = cos(angle_2);
-      double sa_over_a = sa*recip_a;
-      Eigen::Vector3d dq3 = dq * sa_over_a;
+      Eigen::Vector4d dq3 = axisAngle2quat(dq);
+      double ca = dq3[3];
       Eigen::Vector4d retq;
       retq[0] = q[0]*ca+dq3[0]*q[3]-dq3[1]*q[2]+dq3[2]*q[1];
       retq[1] = q[1]*ca+dq3[0]*q[2]+dq3[1]*q[3]-dq3[2]*q[0];
@@ -272,5 +278,44 @@ namespace sm { namespace kinematics {
       return q_a_b;
     }
 
+    Eigen::Vector4d quatIdentity()
+    {
+      return Eigen::Vector4d(0,0,0,1);
+    }
+
+    Eigen::Matrix<double,3,4> quatS(Eigen::Vector4d q)
+    {
+      //   [  q3,  q2, -q1, -q0]
+      // 2 [ -q2,  q3,  q0, -q1]
+      //   [  q1, -q0,  q3, -q2]
+      q *= 2.0;
+      
+      Eigen::Matrix<double,3,4> S;
+      S <<
+	 q[3],  q[2], -q[1], -q[0],
+	-q[2],  q[3],  q[0], -q[1],
+	 q[1], -q[0],  q[3], -q[2];
+
+      return S;
+    }
+
+    Eigen::Matrix<double,4,3> quatInvS(Eigen::Vector4d q)
+    {
+      q *= 0.5;
+
+      // 1 [  q3, -q2,  q1]
+      // - [  q2,  q3, -q0]
+      // 2 [ -q1,  q0,  q3]
+      //   [ -q0, -q1, -q2]
+
+
+      Eigen::Matrix<double,4,3> invS;
+      invS <<
+	 q[3], -q[2],  q[1],
+	 q[2],  q[3], -q[0],
+	-q[1],  q[0],  q[3],
+	-q[0], -q[1], -q[2];
+      return invS;
+    }
   }} // namespace sm::kinematics
 

@@ -4,6 +4,7 @@
 
 #include <sm/kinematics/quaternion_algebra.hpp>
 #include <boost/serialization/nvp.hpp>
+#include "HomogeneousPoint.hpp"
 
 namespace sm {
   namespace kinematics {
@@ -17,17 +18,11 @@ namespace sm {
     {
     public:
       // See: http://eigen.tuxfamily.org/dox-devel/TopicStructHavingEigenMembers.html
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
-      ///
-      /// A 3D Affine transformation (rigid-body translation and rotation).
-      ///
-      typedef Eigen::Matrix4d transformation_t;
-      
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW      
 
       /// 
-      /// Default constructor. The transformation and uncertainty will
-      /// both be set to identity.
+      /// Default constructor. The transformation will
+      /// be set to identity.
       ///
       Transformation();
 
@@ -36,7 +31,7 @@ namespace sm {
       ///
       /// @param T_ab the initializing transformation.
       ///
-      Transformation(const transformation_t & T_a_b);
+      Transformation(const Eigen::Matrix4d & T_a_b);
 
       /// 
       /// Constructor. 
@@ -51,7 +46,7 @@ namespace sm {
       ///
       /// @return The underlying transformation
       ///
-      transformation_t T() const;
+      Eigen::Matrix4d T() const;
 
       /// @return the rotation matrix
       Eigen::Matrix3d C() const;
@@ -68,19 +63,20 @@ namespace sm {
        * 
        * @return The inverted transformation
        */
-      Transformation inverse() const;
+       Transformation inverse() const;
 
       // Set this to a random transformation.
-      void setRandom();
+      virtual void setRandom();
 
       
       Transformation operator*(const Transformation & rhs) const;
       Eigen::Vector3d operator*(const Eigen::Vector3d & rhs) const;
       Eigen::Vector4d operator*(const Eigen::Vector4d & rhs) const;
+      HomogeneousPoint operator*(const HomogeneousPoint & rhs) const;
 
       void checkTransformationIsValid( void ) const;
 
-
+      
       /// 
       /// Serialize the Transformation to a boost::serialization archive.
       ///
@@ -92,7 +88,13 @@ namespace sm {
       
       bool isBinaryEqual(const Transformation & rhs) const;
 
-    private:
+      /// \brief The update step for this transformation from a minimal update.
+      void oplus(const Eigen::Matrix<double,6,1> & dt);
+
+      /// \brief Return the S matrix that puts the oplus operation in the form
+      ///        of a small transformation.
+      Eigen::Matrix<double,6,6> S();
+    protected:
       
       /// The quaternion that will become a rotation matrix C_a_b that 
       /// transforms vectors from b to a.

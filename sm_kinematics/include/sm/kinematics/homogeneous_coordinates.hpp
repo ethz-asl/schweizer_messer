@@ -16,6 +16,23 @@ namespace sm { namespace kinematics {
     Eigen::MatrixXd toHomogeneousColumns(const Eigen::MatrixXd & M);
     Eigen::MatrixXd fromHomogeneousColumns(const Eigen::MatrixXd & M);
 
+    template<int N>
+    Eigen::Matrix<double,N,1> normalize(const Eigen::Matrix<double,N,1> & v)
+    {
+      return v/v.norm();
+    }
+
+    template<int N>
+    Eigen::Matrix<double,N,1> normalizeAndJacobian(const Eigen::Matrix<double,N,1> & v, Eigen::Matrix<double,N,N> & outJacobian)
+    {
+      double recip_s_vtv = 1.0/v.norm();
+      
+      outJacobian = (Eigen::Matrix<double,N,N>::Identity() * recip_s_vtv) - (recip_s_vtv*recip_s_vtv*recip_s_vtv)*v*v.transpose();
+      
+      return v*recip_s_vtv;
+    }
+
+
   }} // namespace sm::kinematics
 
 #endif /* SM_MATH_HOMOGENEOUS_COORDINATES_HPP */

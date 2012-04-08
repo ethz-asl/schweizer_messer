@@ -26,3 +26,12 @@ TEST(QuaternionAlgebraTestSuite, testRotation)
     }
   
 }
+
+
+
+TEST(QuaternionAlgebraTestSuite, testJacobian)
+{
+  // I'm not completely sure how to do this...
+  
+
+}

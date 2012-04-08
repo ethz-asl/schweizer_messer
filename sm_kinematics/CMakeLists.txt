@@ -33,6 +33,9 @@ rosbuild_add_library( ${PROJECT_NAME}
   src/EulerRodriguez.cpp
   src/Transformation.cpp
   src/homogeneous_coordinates.cpp
+  src/HomogeneousPoint.cpp
+  src/UncertainTransformation.cpp
+  src/UncertainHomogeneousPoint.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
@@ -46,7 +49,11 @@ rosbuild_add_gtest( ${PROJECT_NAME}_tests
   test/QuaternionTests.cpp
   test/TransformationTests.cpp
   test/transformations.cpp
+  test/HomogeneousPoint.cpp
+  test/UncertainHomogeneousPoint.cpp
   test/test_main.cpp
+  test/UncertainTransformationTests.cpp
+  test/homogeneous_coordinates.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})

@@ -66,6 +66,6 @@ namespace sm { namespace kinematics{
       return M;
     }
 
-
+    
     
   }} // namespace sm::kinematics
