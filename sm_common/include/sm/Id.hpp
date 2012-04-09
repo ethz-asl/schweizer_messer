@@ -37,6 +37,8 @@
 
 #include <boost/cstdint.hpp>
 #include <iostream>
+// The definition of std::tr1::hash
+#include <tr1/functional>
 
 namespace sm {
 
@@ -145,6 +147,22 @@ namespace sm {
     {									\
       ar & id_;								\
     }									\
-  };
+  };									
+
+// If you need to use the ID in a tr1 hashing container,
+// use this macro outside of any namespace:
+// SM_DEFINE_ID_HASH(my_namespace::myIdType);
+#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)		\
+  namespace std { namespace tr1 {				\
+  template<>							\
+  struct hash<FullyQualifiedIdTypeName>				\
+  {								\
+    hash<boost::uint64_t> _hash;				\
+    size_t operator()(const FullyQualifiedIdTypeName & id)	\
+    {								\
+      return _hash(id.getId());					\
+    }								\
+  };								\
+    }} // namespace std::tr1
 
 #endif /* SM_ID_HPP */
