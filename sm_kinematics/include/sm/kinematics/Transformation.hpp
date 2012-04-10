@@ -31,7 +31,7 @@ namespace sm {
       ///
       /// @param T_ab the initializing transformation.
       ///
-      Transformation(const Eigen::Matrix4d & T_a_b);
+      virtual Transformation(const Eigen::Matrix4d & T_a_b);
 
       /// 
       /// Constructor. 

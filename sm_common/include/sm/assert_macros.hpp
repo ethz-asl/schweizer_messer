@@ -37,6 +37,7 @@ namespace sm {
     {
       std::stringstream sm_assert_stringstream;
 #ifdef _WIN32
+      // I have no idea what broke this on Windows but it doesn't work with the << operator.
       sm_assert_stringstream << exceptionType <<  sfp.toString() << " " << message;
 #else
       sm_assert_stringstream << exceptionType <<  sfp << " " << message;

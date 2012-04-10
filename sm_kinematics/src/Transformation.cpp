@@ -27,6 +27,8 @@ namespace sm {
       
     }
 
+    ~Transformation(){}
+
     /// @return the rotation matrix
     Eigen::Matrix3d Transformation::C() const
     {
