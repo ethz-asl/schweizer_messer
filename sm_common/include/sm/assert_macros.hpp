@@ -36,8 +36,11 @@ namespace sm {
     inline void sm_throw_exception(std::string const & exceptionType, sm::source_file_pos sfp, std::string const & message)
     {
       std::stringstream sm_assert_stringstream;
+#ifdef _WIN32
+      sm_assert_stringstream << exceptionType <<  sfp.toString() << " " << message;
+#else
       sm_assert_stringstream << exceptionType <<  sfp << " " << message;
-
+#endif
       throw(E(sm_assert_stringstream.str()));
     }
 
