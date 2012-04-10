@@ -144,7 +144,7 @@ namespace sm {
     void UncertainHomogeneousPoint::normalize()
     {
       Eigen::Matrix4d J;
-      _ph = sm::kinematics::normalizeAndJacobian(_ph,J);
+      _ph = sm::kinematics::normalizeAndJacobian<4>(_ph,J);
       
       _U = (J * _U * J.transpose()).eval();
     }
