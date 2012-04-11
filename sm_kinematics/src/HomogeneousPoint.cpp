@@ -152,6 +152,11 @@ namespace sm {
       _ph = _ph/_ph.norm();
     }
 
+    void HomogeneousPoint::setZero()
+    {
+      _ph.head<3>().setZero();
+      _ph[3] = 1.0;
+    }
 
   } // namespace kinematics
 } // namespace sm

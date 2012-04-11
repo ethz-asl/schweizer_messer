@@ -8,7 +8,7 @@ namespace sm {
     
     
     Transformation::Transformation() :
-      _q_a_b(0.0, 0.0, 0.0, 1.0), _t_a_b_a(0.0, 0.0, 0.0)
+      _q_a_b(quatIdentity()), _t_a_b_a(0.0, 0.0, 0.0)
     {
       
     }
@@ -36,13 +36,13 @@ namespace sm {
     }
 
     /// @return the translation vector
-    Eigen::Vector3d Transformation::t() const
+    const Eigen::Vector3d & Transformation::t() const
     {
       return _t_a_b_a;
     }
 
 
-    Eigen::Vector4d Transformation::q() const
+    const Eigen::Vector4d & Transformation::q() const
     {
       return _q_a_b;
     }
@@ -127,12 +127,18 @@ namespace sm {
       _t_a_b_a += dt.head<3>();
     }
 
-    Eigen::Matrix<double,6,6> Transformation::S()
+    Eigen::Matrix<double,6,6> Transformation::S() const
     {
       Eigen::Matrix<double,6,6> S;
       S.setIdentity();
-      S.topLeftCorner<3,3>() = -crossMx(_t_a_b_a);
+      S.topRightCorner<3,3>() = -crossMx(_t_a_b_a);
       return S;
+    }
+
+    void Transformation::setIdentity()
+    {
+      _q_a_b = quatIdentity();
+      _t_a_b_a.setZero();
     }
 
   } // namespace kinematics

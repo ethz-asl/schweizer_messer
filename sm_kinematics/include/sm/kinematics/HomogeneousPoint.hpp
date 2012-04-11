@@ -54,18 +54,53 @@ namespace sm {
       /// \brief Set this point from a 3x1 column
       HomogeneousPoint & operator=(const Eigen::Vector3d & rhs);
 
+      template<typename DERIVED>
+      void set(const Eigen::MatrixBase<DERIVED> & p);
+
       /// \brief Implements the "oplus" operator for updating the point from a minimal perturbation
       ///
       /// This oplus operator maps to the \rho(dp)^+ p from quaternion algebra.
       void oplus(const Eigen::Vector3d & dp);
 
+      /// \brief set to a random point.
       void setRandom();
- 
+
+      /// \brief set to the Euclidean point equaling zero
+      void setZero();
+
       /// \brief Normalize the point so that it is unit length
       virtual void normalize();
    protected:
       Eigen::Vector4d _ph;
     };
+
+    
+    template<typename DERIVED>
+    void HomogeneousPoint::set(const Eigen::MatrixBase<DERIVED> & p)
+    {
+      SM_ASSERT_EQ_DBG(Exception, p.cols(), 1, "Trying to set a homogeneous point from a matrix");
+      
+      if(p.rows() == 3)
+	{
+	  _ph[0] = p[0];
+	  _ph[1] = p[1];
+	  _ph[2] = p[2];
+	  _ph[3] = 1.0;
+	}
+      else if(p.rows() == 4)
+	{
+	  _ph[0] = p[0];
+	  _ph[1] = p[1];
+	  _ph[2] = p[2];
+	  _ph[3] = p[3];
+	}
+      else
+	{
+	  SM_THROW(Exception, "Trying to initialize a homogeneous point with a " << p.rows() << "x" << p.cols() << " matrix. Only 3x1 and 4x1 are supported");
+	}
+
+    }
+
 
   } // namespace kinematics
 } // namespace sm

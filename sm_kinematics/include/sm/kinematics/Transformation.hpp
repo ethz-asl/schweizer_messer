@@ -53,9 +53,9 @@ namespace sm {
       Eigen::Matrix3d C() const;
 
       /// @return the translation vector
-      Eigen::Vector3d t() const;
+      const Eigen::Vector3d & t() const;
 
-      Eigen::Vector4d q() const;
+      const Eigen::Vector4d & q() const;
 
       Eigen::Matrix<double, 3,4> T3x4() const;
 
@@ -66,9 +66,11 @@ namespace sm {
        */
        Transformation inverse() const;
 
-      // Set this to a random transformation.
+      /// \brie Set this to a random transformation.
       virtual void setRandom();
 
+      /// \brief Set this transformation to identity
+      void setIdentity();
       
       Transformation operator*(const Transformation & rhs) const;
       Eigen::Vector3d operator*(const Eigen::Vector3d & rhs) const;
@@ -94,7 +96,7 @@ namespace sm {
 
       /// \brief Return the S matrix that puts the oplus operation in the form
       ///        of a small transformation.
-      Eigen::Matrix<double,6,6> S();
+      Eigen::Matrix<double,6,6> S() const;
     protected:
       
       /// The quaternion that will become a rotation matrix C_a_b that 
