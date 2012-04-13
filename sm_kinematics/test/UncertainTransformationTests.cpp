@@ -205,3 +205,24 @@ TEST(UncertainTransformationTestSuite, testComposition2)
   
 }
 
+
+
+TEST(UncertainTransformationTestSuite, testTVMultiplication2)
+{
+  using namespace sm::kinematics;
+
+  for(int i = 0; i < 10; i++)
+    {
+      UncertainTransformation T_a_b;
+      T_a_b.setRandom();
+
+      UncertainHomogeneousPoint v_b;
+      v_b.setRandom();
+      
+      UncertainHomogeneousPoint v_a = T_a_b * v_b;
+      Eigen::Vector3d v_a_prime = T_a_b.C() * v_b.toEuclidean() + T_a_b.t();
+      sm::eigen::assertNear(v_a.toEuclidean(), v_a_prime, 1e-10, SM_SOURCE_FILE_POS, "Checking for composition equal to matrix multiplication");
+    }
+
+
+}

@@ -183,7 +183,7 @@ namespace sm {
       
       UncertainHomogeneousPoint::covariance_t U = Jt * _U * Jt.transpose() + T01 * p_1.U4() * T01.transpose();
       
-      return UncertainHomogeneousPoint(p_1,U);
+      return UncertainHomogeneousPoint(p_0,U);
     }
 
   } // namespace kinematics
