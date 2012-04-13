@@ -27,6 +27,10 @@ namespace sm {
     return get<double>(key,defaultValue);
   }
 
+  double BoostPropertyTreeImplementation::getDouble(const std::string & key, double defaultValue)
+  {
+    return get<double>(key,defaultValue);
+  }
 
   int BoostPropertyTreeImplementation::getInt(const std::string & key) const
   {
@@ -34,6 +38,11 @@ namespace sm {
   }
 
   int BoostPropertyTreeImplementation::getInt(const std::string & key, int defaultValue) const
+  {
+    return get<int>(key, defaultValue);
+  }
+
+  int BoostPropertyTreeImplementation::getInt(const std::string & key, int defaultValue) 
   {
     return get<int>(key, defaultValue);
   }
@@ -49,6 +58,11 @@ namespace sm {
     return get<bool>(key, defaultValue);
   }
 
+ bool BoostPropertyTreeImplementation::getBool(const std::string & key, bool defaultValue) 
+  {
+    return get<bool>(key, defaultValue);
+  }
+
 
   std::string BoostPropertyTreeImplementation::getString(const std::string & key) const
   {
@@ -56,6 +70,11 @@ namespace sm {
   }
 
   std::string BoostPropertyTreeImplementation::getString(const std::string & key, const std::string & defaultValue) const
+  {
+    return get<std::string>(key, defaultValue);
+  }
+
+  std::string BoostPropertyTreeImplementation::getString(const std::string & key, const std::string & defaultValue) 
   {
     return get<std::string>(key, defaultValue);
   }
@@ -112,6 +131,25 @@ namespace sm {
     boost::property_tree::write_info(fileName.string(), _ptree);
   }
 
+  void BoostPropertyTreeImplementation::setDouble(const std::string & key, double value)
+  {
+    set<double>(key,value);
+  }
+
+  void BoostPropertyTreeImplementation::setInt(const std::string & key, int value)
+  {
+    set<int>(key,value);
+  }
+
+  void BoostPropertyTreeImplementation::setBool(const std::string & key, bool value)
+  {
+    set<bool>(key,value);
+  }
+
+  void BoostPropertyTreeImplementation::setString(const std::string & key, const std::string & value)
+  {
+    set<std::string>(key,value);
+  }
 
 
 } // namespace sm

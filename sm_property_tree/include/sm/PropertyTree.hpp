@@ -67,6 +67,22 @@ namespace sm {
    * using the boost::property_tree library is available in this
    * package.
    *
+   * To implement your own variant:
+   * - First, create a subclass of PropertyTreeImplementation and implement all of 
+   *    The virtual functions there. This should do the work of actually getting and
+   *    setting parameter values. All values passed in to these functions will start with "/"
+   *    and namespaces will be delimited by "/" such as "/namespace1/namespace2/key". If your
+   *    middlewear/parameter container uses a different delimiter, you may have to find and 
+   *    replace values.
+   *
+   * - Next create a subclass of PropertyTree that does two things: (1) implements a constructor
+   *   that calls the PropertyTree constructor instantiating the correct implementation class, and 
+   *   (2) forwards any extra functions from the implementation class that are needed on the outside,
+   *   for example save/load functionality. It is important that this class stores no data because it
+   *   will be stripped off when the property tree is passed in to sub-objects.
+   *
+   *   The classes BoostPropertyTreeImplementation and BoostPropertyTree are good examples of how to do this.
+   *
    */
   class PropertyTree
   {
@@ -83,22 +99,34 @@ namespace sm {
     
     double getDouble(const std::string & key) const;
     double getDouble(const std::string & key, double defaultValue) const;
+    double getDouble(const std::string & key, double defaultValue);
 
     int getInt(const std::string & key) const;
     int getInt(const std::string & key, int defaultValue) const;
+    // The non-const version will call "set" if the value is not already set.
+    int getInt(const std::string & key, int defaultValue);
 
     bool getBool(const std::string & key) const;
     bool getBool(const std::string & key, bool defaultValue) const;
+    // The non-const version will call setBool if the value is not already set.
+    bool getBool(const std::string & key, bool defaultValue);
 
     std::string getString(const std::string & key) const;
     std::string getString(const std::string & key, const std::string & defaultValue) const;
+    // The non-const version will call setBool if the value is not already set.
+    std::string getString(const std::string & key, const std::string & defaultValue) ;
+
+    void setDouble(const std::string & key, double value);
+    void setInt(const std::string & key, int value);
+    void setBool(const std::string & key, bool value) ;
+    void setString(const std::string & key, const std::string & value);
+
 
     bool doesKeyExist(const std::string & key) const;
-  private:
-    
-    boost::shared_ptr<PropertyTreeImplementation> _imp;
+  protected:
     std::string _namespace;
     std::string buildQualifiedKeyName(const std::string & key) const;
+    boost::shared_ptr<PropertyTreeImplementation> _imp;
   };
 
 } // namespace sm

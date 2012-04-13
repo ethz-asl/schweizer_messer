@@ -1,29 +1,28 @@
 #include <gtest/gtest.h>
-#include <sm/BoostPropertyTreeImplementation.hpp>
+#include <sm/BoostPropertyTree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
 
 TEST(PTreeTestSuite, testBoostPTree)
 {
-  boost::property_tree::ptree ptree;
+
+  sm::BoostPropertyTree wbpt;
   
-  ptree.put<double>("d",0.1);
-  ptree.put<double>("d.d",0.2);
-  ptree.put<int>("i",1);
-  ptree.put<int>("i.i",2);
-  ptree.put<bool>("b",true);
-  ptree.put<bool>("b.b", false);
-  ptree.put<std::string>("s","hello");
-  ptree.put<std::string>("s.s","goodbye");
-  
-  boost::property_tree::write_xml("test.xml", ptree);
+  wbpt.setDouble("d",0.1);
+  wbpt.setDouble("d/d",0.2);
+  wbpt.setInt("i",1);
+  wbpt.setInt("i/i",2);
+  wbpt.setBool("b",true);
+  wbpt.setBool("b/b", false);
+  wbpt.setString("/s","hello");
+  wbpt.setString("s/s","goodbye");
+  wbpt.saveXml("test.xml");
 
   try 
     {
-      boost::shared_ptr<sm::BoostPropertyTreeImplementation> bbpt(new sm::BoostPropertyTreeImplementation);
+      sm::BoostPropertyTree pt;
       
-      bbpt->loadXml("test.xml");
-      sm::PropertyTree pt(bbpt);
+      pt.loadXml("test.xml");
       
       ASSERT_NEAR(pt.getDouble("d"), 0.1, 1e-16);
       ASSERT_NEAR(pt.getDouble("/d"), 0.1, 1e-16);

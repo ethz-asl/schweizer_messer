@@ -31,8 +31,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 
 rosbuild_add_library(${PROJECT_NAME} 
   src/PropertyTree.cpp
-  src/PropertyTreeImplementation.cpp
   src/BoostPropertyTreeImplementation.cpp
+  src/BoostPropertyTree.cpp
+  src/PropertyTreeImplementation.cpp
 )
 
 rosbuild_link_boost(${PROJECT_NAME} filesystem system)

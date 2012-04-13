@@ -14,20 +14,6 @@ namespace sm {
     BoostPropertyTreeImplementation();
     virtual ~BoostPropertyTreeImplementation();
 
-    virtual double getDouble(const std::string & key) const;
-    virtual double getDouble(const std::string & key, double defaultValue) const;
-
-    virtual int getInt(const std::string & key) const;
-    virtual int getInt(const std::string & key, int defaultValue) const;
-
-    virtual bool getBool(const std::string & key) const;
-    virtual bool getBool(const std::string & key, bool defaultValue) const;
-
-    virtual std::string getString(const std::string & key) const;
-    virtual std::string getString(const std::string & key, const std::string & defaultValue) const;
-
-    virtual bool doesKeyExist(const std::string & key) const;
-
     void loadXml(const boost::filesystem::path & fileName);
     void saveXml(const boost::filesystem::path & fileName) const;
  
@@ -40,6 +26,31 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+    virtual double getDouble(const std::string & key) const;
+    virtual double getDouble(const std::string & key, double defaultValue) const;
+    virtual double getDouble(const std::string & key, double defaultValue);
+
+    virtual int getInt(const std::string & key) const;
+    virtual int getInt(const std::string & key, int defaultValue) const;
+    virtual int getInt(const std::string & key, int defaultValue);
+
+    virtual bool getBool(const std::string & key) const;
+    virtual bool getBool(const std::string & key, bool defaultValue) const;
+    virtual bool getBool(const std::string & key, bool defaultValue);
+
+    virtual std::string getString(const std::string & key) const;
+    virtual std::string getString(const std::string & key, const std::string & defaultValue) const;
+    virtual std::string getString(const std::string & key, const std::string & defaultValue);
+
+    virtual void setDouble(const std::string & key, double value);
+    virtual void setInt(const std::string & key, int value);
+    virtual void setBool(const std::string & key, bool value);
+    virtual void setString(const std::string & key, const std::string & value);
+
+
+    virtual bool doesKeyExist(const std::string & key) const;
+
+
   private:
 
     template<typename T>
@@ -47,7 +58,15 @@ namespace sm {
 
     template<typename T>
     T get(const std::string & key, const T & defaultValue) const;
+
+    template<typename T>
+    T get(const std::string & key, const T & defaultValue);
+
+    template<typename T>
+    void set(const std::string & key, const T & value);
     
+    // Make this a shared pointer so the datastructure can be easily copied around.
+    // and refer to the same tree underneath.
     boost::property_tree::ptree _ptree;
 
   };
@@ -85,6 +104,27 @@ namespace sm {
       {
 	return defaultValue;
       }
+  }
+
+  template<typename T>
+  T BoostPropertyTreeImplementation::get(const std::string & key, const T & defaultValue)
+  {
+    boost::optional<T> val = _ptree.get<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'));
+    if(val)
+      {
+	return *val;
+      }
+    else
+      {
+	set(key,defaultValue);
+	return defaultValue;
+      }
+  }
+
+  template<typename T>
+  void BoostPropertyTreeImplementation::set(const std::string & key, const T & value)
+  {
+    _ptree.put<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'), value);
   }
 
 

@@ -5,7 +5,7 @@
 namespace sm {
   
   PropertyTree::PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace) : 
-    _imp(imp), _namespace(ensureTrailingBackslash(baseNamespace))
+    _namespace(ensureTrailingBackslash(baseNamespace)), _imp(imp)
   {
     if(_namespace.size() > 0 && _namespace[0] != '/')
       _namespace = "/" + _namespace;
@@ -51,6 +51,10 @@ namespace sm {
     return _imp->getDouble(buildQualifiedKeyName(key), defaultValue);
   }
 
+  double PropertyTree::getDouble(const std::string & key, double defaultValue)
+  {
+    return _imp->getDouble(buildQualifiedKeyName(key), defaultValue);
+  }
   
   int PropertyTree::getInt(const std::string & key) const
   {
@@ -62,13 +66,22 @@ namespace sm {
     return _imp->getInt(buildQualifiedKeyName(key),defaultValue);
   }
 
-  
+  int PropertyTree::getInt(const std::string & key, int defaultValue)
+  {
+    return _imp->getInt(buildQualifiedKeyName(key),defaultValue);
+  }
+
   bool PropertyTree::getBool(const std::string & key) const
   {
     return _imp->getBool(buildQualifiedKeyName(key));
   }
 
   bool PropertyTree::getBool(const std::string & key, bool defaultValue) const
+  {
+    return _imp->getBool(buildQualifiedKeyName(key), defaultValue);
+  }
+
+  bool PropertyTree::getBool(const std::string & key, bool defaultValue) 
   {
     return _imp->getBool(buildQualifiedKeyName(key), defaultValue);
   }
@@ -84,10 +97,35 @@ namespace sm {
     return _imp->getString(buildQualifiedKeyName(key), defaultValue);
   }
 
+  std::string PropertyTree::getString(const std::string & key, const std::string & defaultValue) 
+  {
+    return _imp->getString(buildQualifiedKeyName(key), defaultValue);
+  }
   
   bool PropertyTree::doesKeyExist(const std::string & key) const
   {
     return _imp->doesKeyExist(buildQualifiedKeyName(key));
+  }
+
+
+  void PropertyTree::setDouble(const std::string & key, double value)
+  {
+    return _imp->setDouble(buildQualifiedKeyName(key), value);
+  }
+
+  void PropertyTree::setInt(const std::string & key, int value)
+  {
+    return _imp->setInt(buildQualifiedKeyName(key), value);
+  }
+
+  void PropertyTree::setBool(const std::string & key, bool value)
+  {
+    return _imp->setBool(buildQualifiedKeyName(key), value);
+  }
+  
+  void PropertyTree::setString(const std::string & key, const std::string & value)
+  {
+    return _imp->setString(buildQualifiedKeyName(key), value);
   }
 
   
