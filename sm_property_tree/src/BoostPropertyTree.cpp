@@ -62,6 +62,26 @@ namespace sm {
   }
 
 
+    BoostPropertyTree::iterator BoostPropertyTree::begin()
+    {
+      dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->begin();
+    }
+
+    BoostPropertyTree::const_iterator BoostPropertyTree::begin() const
+    {
+      dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->begin();
+    }
+
+    BoostPropertyTree::iterator BoostPropertyTree::end()
+    {
+      dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->end();
+    }
+
+    BoostPropertyTree::const_iterator BoostPropertyTree::end() const
+    {
+      dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->end();
+    }
+
 
 
 } // namespace sm

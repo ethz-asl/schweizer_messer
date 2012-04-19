@@ -20,6 +20,7 @@ namespace sm { namespace eigen {
       NumericalDiffFunctor( boost::function< value_t(input_t) > f) : _f(f){}
       
       value_t operator()(const input_t & x) { return _f(x); }
+
       input_t update(const input_t & x, int c, scalar_t delta) { input_t xnew = x; xnew[c] += delta; return xnew; }
       boost::function<value_t(input_t)> _f;
     };

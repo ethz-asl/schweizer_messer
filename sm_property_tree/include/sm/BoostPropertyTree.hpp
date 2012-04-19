@@ -10,6 +10,11 @@ namespace sm {
   class BoostPropertyTree : public PropertyTree
   {
   public:
+    typedef boost::property_tree::ptree ptree;
+    typedef ptree::iterator iterator;
+    typedef ptree::const_iterator const_iterator;
+    
+
     BoostPropertyTree(const std::string & baseNamespace = "");
     virtual ~BoostPropertyTree();
 
@@ -25,6 +30,10 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+    iterator begin() ;
+    const_iterator begin() const;
+    iterator end() ;
+    const_iterator end() const;    
 
   private:
     // It is important that this implemenation have no members.

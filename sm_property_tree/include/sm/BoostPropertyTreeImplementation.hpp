@@ -11,6 +11,10 @@ namespace sm {
   class BoostPropertyTreeImplementation : public PropertyTreeImplementation
   {
   public:
+    typedef boost::property_tree::ptree ptree;
+    typedef ptree::iterator iterator;
+    typedef ptree::const_iterator const_iterator;
+
     BoostPropertyTreeImplementation();
     virtual ~BoostPropertyTreeImplementation();
 
@@ -49,6 +53,11 @@ namespace sm {
 
 
     virtual bool doesKeyExist(const std::string & key) const;
+
+    iterator begin() ;
+    const_iterator begin() const;
+    iterator end() ;
+    const_iterator end() const;    
 
 
   private:
