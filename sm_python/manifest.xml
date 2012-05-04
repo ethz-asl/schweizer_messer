@@ -15,6 +15,7 @@
 
   <export>
     <python path="${prefix}/python"/>
+    <cpp cflags="-I${prefix}/include"/>
   </export>
 </package>
 

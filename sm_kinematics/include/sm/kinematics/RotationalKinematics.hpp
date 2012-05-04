@@ -12,8 +12,8 @@ namespace sm { namespace kinematics {
     public:
       SM_DEFINE_EXCEPTION(Exception,std::runtime_error);
       virtual ~RotationalKinematics();
-      typedef boost::shared_ptr<RotationalKinematics> Ptr;
-      typedef boost::shared_ptr<const RotationalKinematics> ConstPtr;
+      typedef ::boost::shared_ptr<RotationalKinematics> Ptr;
+      typedef ::boost::shared_ptr<const RotationalKinematics> ConstPtr;
 
       // Three functions that must be implemented.
       virtual Eigen::Matrix3d parametersToRotationMatrix(const Eigen::Vector3d & parameters, Eigen::Matrix3d * S = NULL) const = 0;

@@ -28,6 +28,20 @@
  * 
  * adapted from http://misspent.wordpress.com/2009/09/27/how-to-write-boost-python-converters/
  * General help available http://docs.scipy.org/doc/numpy/reference/c-api.array.html
+ *
+ * To use: 
+ * 
+ * #include <NumpyEigenConverter.hpp>
+ * 
+ * 
+ * BOOST_PYTHON_MODULE(libmy_module_python)
+ * {
+ *   // The converters will cause a segfault unless import_array() is called before the first one
+ *   import_array();
+ *   NumpyEigenConverter<Eigen::Matrix< double, 1, 1 > >::register_converter();
+ *   NumpyEigenConverter<Eigen::Matrix< double, 2, 1 > >::register_converter();
+ * }
+ * 
  */
 template<typename EIGEN_MATRIX_T>
 struct NumpyEigenConverter

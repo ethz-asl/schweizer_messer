@@ -23,6 +23,7 @@ rosbuild_add_boost_directories()
 # Include the custom python export library funciton
 include(cmake/add_python_export_library.cmake)
 
+include_directories("${PROJECT_SOURCE_DIR}/include/numpy_eigen")
 # # Auto generate the export module
 # TODO: My CMake skills are pretty weak. Figure out how to 
 #       autogenerate the source files and compile.

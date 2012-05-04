@@ -28,6 +28,29 @@ template<> struct TypeToNumPy<int>
   }
 };
 
+template<> struct TypeToNumPy<unsigned char>
+{
+  enum { NpyType = NPY_UBYTE };
+  static const char * npyString() { return "NPY_UBYTE"; }
+  static const char * typeString() { return "unsigned char"; }
+  static bool canConvert(int type)
+  {
+    return type == NPY_UBYTE || type == NPY_BYTE || type == NPY_CHAR;
+  }
+};
+
+template<> struct TypeToNumPy<char>
+{
+  enum { NpyType = NPY_BYTE };
+  static const char * npyString() { return "NPY_BYTE"; }
+  static const char * typeString() { return "char"; }
+  static bool canConvert(int type)
+  {
+    return type == NPY_UBYTE || type == NPY_BYTE || type == NPY_CHAR;
+  }
+};
+
+
 template<> struct TypeToNumPy<float>
 {
   enum { NpyType = NPY_FLOAT };
@@ -49,7 +72,6 @@ template<> struct TypeToNumPy<double>
     return type == NPY_INT || type == NPY_FLOAT || type == NPY_DOUBLE || type == NPY_LONG;
   }
 };
-
 
 
 

@@ -66,9 +66,11 @@ namespace sm {
        */
        Transformation inverse() const;
 
-      /// \brie Set this to a random transformation.
+      /// \brief Set this to a random transformation.
       virtual void setRandom();
-
+      
+      /// \brief Set this to a random transformation with bounded rotation and translation.
+      virtual void setRandom( double translationMaxMeters, double rotationMaxRadians);
       /// \brief Set this transformation to identity
       void setIdentity();
       

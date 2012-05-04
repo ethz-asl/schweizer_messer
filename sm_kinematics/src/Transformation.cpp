@@ -1,6 +1,7 @@
 #include <sm/kinematics/Transformation.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
 #include <sm/kinematics/rotations.hpp>
+#include <sm/random.hpp>
 
 
 namespace sm {
@@ -140,6 +141,30 @@ namespace sm {
       _q_a_b = quatIdentity();
       _t_a_b_a.setZero();
     }
+
+    /// \brief Set this to a random transformation.
+    void Transformation::setRandom( double translationMaxMeters, double rotationMaxRadians)
+    {
+      // Create a random unit-length axis.
+      Eigen::Vector3d axis = Eigen::Vector3d::Random().array() - 0.5;
+      
+      // Create a random rotation angle in radians.
+      double angle = sm::random::randLU(0.0, rotationMaxRadians);
+
+      // Now a random axis/angle.cp 
+      axis.array() *= angle/axis.norm(); 
+
+      
+      Eigen::Vector3d t;
+      t.setRandom();
+      t.array() -= 0.5;
+      t.array() *= sm::random::randLU(0.0, translationMaxMeters)/t.norm();
+
+      _q_a_b = axisAngle2quat(axis);
+      _t_a_b_a = t;
+
+    }
+
 
   } // namespace kinematics
 } // namespace sm

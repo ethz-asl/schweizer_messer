@@ -9,7 +9,7 @@
  * assert failures when running on Ubuntu 10.04 32-bit. More information about fixed-size 
  * vectorizable types in Eigen is available here: 
  * http://eigen.tuxfamily.org/dox-devel/TopicFixedSizeVectorizable.html
- * 
+ *
  * This code has been tested on Ubunutu 10.04 64 and 32 bit, OSX Snow Leopard and OSX Lion.
  *
  * This code is derived from boost/python/converter/arg_from_python.hpp

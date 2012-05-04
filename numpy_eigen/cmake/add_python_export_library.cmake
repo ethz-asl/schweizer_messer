@@ -63,7 +63,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   # Cause the library to be output in the correct directory.
   add_custom_command(TARGET ${TARGET_NAME}
     POST_BUILD
-    COMMAND cp ${PYLIB_OUTPUT_FILE} ${PYTHON_MODULE_DIRECTORY}/${PYLIB_SO_NAME}
+    COMMAND cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_MODULE_DIRECTORY}/${PYLIB_SO_NAME}
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Copying library files to python directory" )
 
