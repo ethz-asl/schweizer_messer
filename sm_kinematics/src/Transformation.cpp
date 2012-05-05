@@ -2,6 +2,9 @@
 #include <sm/kinematics/quaternion_algebra.hpp>
 #include <sm/kinematics/rotations.hpp>
 #include <sm/random.hpp>
+#include <sm/kinematics/UncertainHomogeneousPoint.hpp>
+#include <sm/kinematics/UncertainTransformation.hpp>
+#include <sm/kinematics/transformations.hpp>
 
 
 namespace sm {
@@ -163,6 +166,33 @@ namespace sm {
       _q_a_b = axisAngle2quat(axis);
       _t_a_b_a = t;
 
+    }
+
+
+    UncertainTransformation Transformation::operator*(const UncertainTransformation & UT_b_c) const
+    {
+      const Transformation & T_a_b = *this;
+
+      const Transformation & T_b_c = UT_b_c;
+      Transformation T_a_c = T_a_b * T_b_c;
+      UncertainTransformation::covariance_t T_a_b_boxtimes = boxTimes(T_a_b.T());
+      
+      UncertainTransformation::covariance_t U_a_c = T_a_b_boxtimes * UT_b_c.U() * T_a_b_boxtimes.transpose();
+
+      return UncertainTransformation(T_a_c, U_a_c);
+      
+    }
+
+    UncertainHomogeneousPoint Transformation::operator*(const UncertainHomogeneousPoint & p_1) const
+    {
+      const Transformation & T_0_1 = *this;
+      Eigen::Vector4d p_0 = T_0_1 * p_1.toHomogeneous();
+
+      Eigen::Matrix4d T01 = T_0_1.T();
+      
+      UncertainHomogeneousPoint::covariance_t U = T01 * p_1.U4() * T01.transpose();
+      
+      return UncertainHomogeneousPoint(p_0,U);
     }
 
 

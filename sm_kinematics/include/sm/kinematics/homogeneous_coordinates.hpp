@@ -32,6 +32,13 @@ namespace sm { namespace kinematics {
       return v*recip_s_vtv;
     }
 
+    /// \brief to the matrix that implements "plus" for homogeneous coordinates.
+    ///        this operation has the same result as adding the corresponding Euclidean points.
+    Eigen::Matrix4d toHomogeneousPlus(const Eigen::Vector4d & ph);
+
+    /// \brief to the matrix that implements "minus" for homogeneous coordinates.
+    ///        this operation has the same result as adding the corresponding Euclidean points.
+    Eigen::Matrix4d toHomogeneousMinus(const Eigen::Vector4d & ph);
 
   }} // namespace sm::kinematics
 

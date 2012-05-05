@@ -45,12 +45,23 @@ namespace sm {
       /// \brief Add two homogeneous points. 
       /// The result of this operation is the same as adding
       /// the equivelent vectors in R^3
-      HomogeneousPoint operator+(const HomogeneousPoint & rhs) const { return HomogeneousPoint::operator+(rhs); }
+      UncertainHomogeneousPoint operator+(const HomogeneousPoint & rhs) const;
       
       /// \brief Subtract one homogeneous point from another. 
       /// The result of this operation is the same as subtracting
       /// the equivelent vectors in R^3
-      HomogeneousPoint operator-(const HomogeneousPoint & rhs) const { return HomogeneousPoint::operator-(rhs); }
+      UncertainHomogeneousPoint operator-(const HomogeneousPoint & rhs) const;
+
+      /// \brief Add two homogeneous points. 
+      /// The result of this operation is the same as adding
+      /// the equivelent vectors in R^3
+      virtual UncertainHomogeneousPoint operator+(const UncertainHomogeneousPoint & rhs) const;
+      
+      /// \brief Subtract one homogeneous point from another. 
+      /// The result of this operation is the same as subtracting
+      /// the equivelent vectors in R^3
+      virtual UncertainHomogeneousPoint operator-(const UncertainHomogeneousPoint & rhs) const;
+
       
       /// \brief Return the 4x4 uncertainty of the homogeneous point.
       const Eigen::Matrix4d & U4() const;

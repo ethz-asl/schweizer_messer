@@ -11,6 +11,8 @@ void export_rotations();
 void export_transformations();
 void export_quaternion_algebra();
 void export_homogeneous_coordinates();
+void exportTransformation();
+void exportHomogeneousPoint();
 
 BOOST_PYTHON_MODULE(libsm_python)
 {
@@ -19,4 +21,6 @@ BOOST_PYTHON_MODULE(libsm_python)
   export_transformations();
   export_quaternion_algebra();
   export_homogeneous_coordinates();
+  exportTransformation();
+  exportHomogeneousPoint();
 }

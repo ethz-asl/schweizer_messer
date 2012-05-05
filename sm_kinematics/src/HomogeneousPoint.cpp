@@ -1,5 +1,6 @@
 #include <sm/kinematics/HomogeneousPoint.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
+#include <sm/kinematics/UncertainHomogeneousPoint.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -42,6 +43,30 @@ namespace sm {
       rval[3] = _ph[3] * rhs._ph[3];
       return  rval;
     }
+
+    UncertainHomogeneousPoint HomogeneousPoint::operator+(const UncertainHomogeneousPoint & rhs) const
+    {
+      Eigen::Vector4d rval;
+      rval.head<3>() = _ph.head<3>() * rhs._ph[3] + rhs._ph.head<3>() * _ph[3];
+      rval[3] = _ph[3] * rhs._ph[3];
+      
+      return UncertainHomogeneousPoint(rval, rhs.U4());
+
+    }
+      
+
+      /// \brief Subtract one homogeneous point from another. 
+      /// The result of this operation is the same as subtracting
+      /// the equivelent vectors in R^3
+    UncertainHomogeneousPoint HomogeneousPoint::operator-(const UncertainHomogeneousPoint & rhs) const
+    {
+      Eigen::Vector4d rval;
+      rval.head<3>() = _ph.head<3>() * rhs._ph[3] - rhs._ph.head<3>() * _ph[3];
+      rval[3] = _ph[3] * rhs._ph[3];
+      
+      return UncertainHomogeneousPoint(rval, rhs.U4());
+    }
+
 
     HomogeneousPoint & HomogeneousPoint::operator=(const Eigen::Vector4d & rhs)
     {
@@ -157,6 +182,8 @@ namespace sm {
       _ph.head<3>().setZero();
       _ph[3] = 1.0;
     }
+
+
 
   } // namespace kinematics
 } // namespace sm

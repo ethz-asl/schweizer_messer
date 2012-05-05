@@ -9,6 +9,9 @@
 namespace sm {
   namespace kinematics {
     
+    class UncertainTransformation;
+    class UncertainHomogeneousPoint;
+
         ///
     /// @class Transformation
     /// @brief a class that represents a transformation.
@@ -64,7 +67,7 @@ namespace sm {
        * 
        * @return The inverted transformation
        */
-       Transformation inverse() const;
+      Transformation inverse() const;
 
       /// \brief Set this to a random transformation.
       virtual void setRandom();
@@ -78,6 +81,9 @@ namespace sm {
       Eigen::Vector3d operator*(const Eigen::Vector3d & rhs) const;
       Eigen::Vector4d operator*(const Eigen::Vector4d & rhs) const;
       HomogeneousPoint operator*(const HomogeneousPoint & rhs) const;
+
+      virtual UncertainTransformation operator*(const UncertainTransformation & rhs) const;
+      virtual UncertainHomogeneousPoint operator*(const UncertainHomogeneousPoint & rhs) const;
 
       void checkTransformationIsValid( void ) const;
 

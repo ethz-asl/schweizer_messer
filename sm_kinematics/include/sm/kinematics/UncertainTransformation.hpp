@@ -41,12 +41,14 @@ namespace sm {
 
       virtual ~UncertainTransformation();
       
-      UncertainTransformation operator*(const UncertainTransformation & rhs) const;
-      Transformation operator*(const Transformation & rhs) const{ return Transformation::operator*(rhs); }
+      virtual UncertainTransformation operator*(const UncertainTransformation & rhs) const;
+      UncertainTransformation operator*(const Transformation & rhs) const;
+      UncertainHomogeneousPoint operator*(const HomogeneousPoint & rhs) const;
+
       Eigen::Vector3d operator*(const Eigen::Vector3d & rhs) const{ return Transformation::operator*(rhs); }
       Eigen::Vector4d operator*(const Eigen::Vector4d & rhs) const{ return Transformation::operator*(rhs); }
-      HomogeneousPoint operator*(const HomogeneousPoint & rhs) const{ return Transformation::operator*(rhs); }
-      UncertainHomogeneousPoint operator*(const UncertainHomogeneousPoint & rhs) const;
+
+      virtual UncertainHomogeneousPoint operator*(const UncertainHomogeneousPoint & rhs) const;
 
       
       UncertainTransformation inverse() const;
@@ -62,6 +64,8 @@ namespace sm {
 
       // Set this to a random transformation.
       virtual void setRandom();
+
+      virtual void setRandom( double translationMaxMeters, double rotationMaxRadians );
 
       bool isBinaryEqual(const UncertainTransformation & rhs) const;
       

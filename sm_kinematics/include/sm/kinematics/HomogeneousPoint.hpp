@@ -6,6 +6,7 @@
 
 namespace sm {
   namespace kinematics {
+    class UncertainHomogeneousPoint;
 
     class HomogeneousPoint
     {
@@ -43,10 +44,23 @@ namespace sm {
       /// the equivelent vectors in R^3
       HomogeneousPoint operator+(const HomogeneousPoint & rhs) const;
       
+      /// \brief Add two homogeneous points. 
+      /// The result of this operation is the same as adding
+      /// the equivelent vectors in R^3
+      /// This version adds uncertainty.
+      virtual UncertainHomogeneousPoint operator+(const UncertainHomogeneousPoint & rhs) const;
+      
+
       /// \brief Subtract one homogeneous point from another. 
       /// The result of this operation is the same as subtracting
       /// the equivelent vectors in R^3
       HomogeneousPoint operator-(const HomogeneousPoint & rhs) const;
+
+      /// \brief Subtract one homogeneous point from another. 
+      /// The result of this operation is the same as subtracting
+      /// the equivelent vectors in R^3
+      virtual UncertainHomogeneousPoint operator-(const UncertainHomogeneousPoint & rhs) const;
+
 
       /// \brief Set this point from a 4x1 column
       HomogeneousPoint & operator=(const Eigen::Vector4d & rhs);

@@ -65,6 +65,35 @@ namespace sm { namespace kinematics{
 	
       return M;
     }
+    
+    /// \brief to the matrix that implements "plus" for homogeneous coordinates.
+    ///        this operation has the same result as adding the corresponding Euclidean points.
+    Eigen::Matrix4d toHomogeneousPlus(const Eigen::Vector4d & ph)
+    {
+      Eigen::Matrix4d rval;
+      rval << 
+	ph[3],   0.0,   0.0,  ph[0],
+	0.0  , ph[3],   0.0,  ph[1],
+	0.0  ,   0.0, ph[3],  ph[2],
+	0.0  ,   0.0,   0.0,  ph[3];
+
+      return rval;
+
+    }
+
+    /// \brief to the matrix that implements "minus" for homogeneous coordinates.
+    ///        this operation has the same result as adding the corresponding Euclidean points.
+    Eigen::Matrix4d toHomogeneousMinus(const Eigen::Vector4d & ph)
+    {
+      Eigen::Matrix4d rval;
+      rval << 
+	ph[3],   0.0,   0.0, -ph[0],
+	0.0  , ph[3],   0.0, -ph[1],
+	0.0  ,   0.0, ph[3], -ph[2],
+	0.0  ,   0.0,   0.0,  ph[3];
+
+      return rval;
+    }
 
     
     

@@ -110,7 +110,7 @@ namespace sm {
     Eigen::Matrix3d UncertainHomogeneousPoint::U_av_form() const
     {
       SM_ASSERT_NEAR(HomogeneousPoint::Exception, _ph.norm(), 1.0, 1e-6, "The \"oplus\" form of covariance is only valid for points on the unit sphere in R^4"); 
-      std::cout << "uav: " << _ph.transpose() << std::endl;
+      //std::cout << "uav: " << _ph.transpose() << std::endl;
       Eigen::Matrix<double,3,4> S = quatS(_ph);
       return S * _U * S.transpose();
     }
@@ -149,6 +149,65 @@ namespace sm {
       _U = (J * _U * J.transpose()).eval();
     }
 
+
+    /// \brief Add two homogeneous points. 
+    /// The result of this operation is the same as adding
+    /// the equivelent vectors in R^3
+    UncertainHomogeneousPoint UncertainHomogeneousPoint::operator+(const HomogeneousPoint & rhs) const
+    {
+      Eigen::Vector4d rval;
+      const Eigen::Vector4d & pr = rhs.toHomogeneous();
+      rval.head<3>() = _ph.head<3>() * pr[3] + pr.head<3>() * _ph[3];
+      rval[3] = _ph[3] * pr[3];
+      
+      return UncertainHomogeneousPoint(rval, U4());
+
+    }
+    
+      /// \brief Subtract one homogeneous point from another. 
+      /// The result of this operation is the same as subtracting
+      /// the equivelent vectors in R^3
+      UncertainHomogeneousPoint UncertainHomogeneousPoint::operator-(const HomogeneousPoint & rhs) const
+      {
+	Eigen::Vector4d rval;
+	const Eigen::Vector4d & pr = rhs.toHomogeneous();
+	rval.head<3>() = _ph.head<3>() * pr[3] - pr.head<3>() * _ph[3];
+	rval[3] = _ph[3] * pr[3];
+	
+	return UncertainHomogeneousPoint(rval, U4());
+
+      }
+
+      /// \brief Add two homogeneous points. 
+      /// The result of this operation is the same as adding
+      /// the equivelent vectors in R^3
+      UncertainHomogeneousPoint UncertainHomogeneousPoint::operator+(const UncertainHomogeneousPoint & rhs) const
+      {
+	Eigen::Vector4d rval;
+	rval.head<3>() = _ph.head<3>() * rhs._ph[3] + rhs._ph.head<3>() * _ph[3];
+	rval[3] = _ph[3] * rhs._ph[3];
+
+	Eigen::Matrix4d PL = toHomogeneousPlus(_ph);
+	Eigen::Matrix4d PR = toHomogeneousPlus(rhs._ph);
+	
+	return UncertainHomogeneousPoint(rval, (Eigen::Matrix4d)(PR * U4() * PR.transpose() + PL * rhs.U4() * PL.transpose()));
+      }
+      
+      /// \brief Subtract one homogeneous point from another. 
+      /// The result of this operation is the same as subtracting
+      /// the equivelent vectors in R^3
+      UncertainHomogeneousPoint UncertainHomogeneousPoint::operator-(const UncertainHomogeneousPoint & rhs) const
+      {
+	Eigen::Vector4d rval;
+	rval.head<3>() = _ph.head<3>() * rhs._ph[3] - rhs._ph.head<3>() * _ph[3];
+	rval[3] = _ph[3] * rhs._ph[3];
+
+	Eigen::Matrix4d PL = toHomogeneousPlus(_ph);
+	Eigen::Matrix4d PR = toHomogeneousPlus(rhs._ph);
+	
+	return UncertainHomogeneousPoint(rval, (Eigen::Matrix4d)(PR * U4() * PR.transpose() + PL * rhs.U4() * PL.transpose()));	
+	
+      }
 
   } // namespace kinematics
 } // namespace sm

@@ -116,7 +116,7 @@ namespace sm {
       const UncertainTransformation & UT_a_b = *this;
 
       const Transformation & T_b_c = UT_b_c;
-      Transformation T_a_c = UT_a_b * T_b_c;
+      Transformation T_a_c = Transformation::operator*(T_b_c);
       covariance_t T_a_b_boxtimes = boxTimes(UT_a_b.T());
       
       covariance_t U_a_c = UT_a_b.U() + T_a_b_boxtimes * UT_b_c.U() * T_a_b_boxtimes.transpose();
@@ -148,6 +148,13 @@ namespace sm {
       _U = _U * _U.transpose() * covariance_t::Identity();
     }
 
+
+    void UncertainTransformation::setRandom( double translationMaxMeters, double rotationMaxRadians )
+    {
+      Transformation::setRandom(translationMaxMeters, rotationMaxRadians);
+      _U.setRandom();
+      _U = _U * _U.transpose() * covariance_t::Identity();
+    }
 
     bool UncertainTransformation::isBinaryEqual(const UncertainTransformation & rhs) const
     {
@@ -185,6 +192,29 @@ namespace sm {
       
       return UncertainHomogeneousPoint(p_0,U);
     }
+
+    UncertainTransformation UncertainTransformation::operator*(const Transformation & T_b_c) const
+    {
+      const Transformation & T_a_b = *this;
+
+      Transformation T_a_c = T_a_b * T_b_c;
+            
+      return UncertainTransformation(T_a_c, U());
+
+    }
+
+    UncertainHomogeneousPoint UncertainTransformation::operator*(const HomogeneousPoint & p_1) const
+    {
+      const Transformation & T_0_1 = *this;
+      Eigen::Vector4d p_0 = T_0_1 * p_1.toHomogeneous();
+
+      Eigen::Matrix<double,4,6> Jt = boxMinus(p_0);
+      
+      UncertainHomogeneousPoint::covariance_t U = Jt * _U * Jt.transpose();
+      
+      return UncertainHomogeneousPoint(p_0,U);
+    }
+
 
   } // namespace kinematics
 } // namespace sm
