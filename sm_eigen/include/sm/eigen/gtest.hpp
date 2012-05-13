@@ -16,6 +16,8 @@
 
 namespace sm { namespace eigen {
 
+
+
     template<int N>
     Eigen::Matrix<double,N,N> randomCovariance()
     {
@@ -90,7 +92,42 @@ namespace sm { namespace eigen {
 	}
     }
 
+
     
+    inline bool compareRelative(double a, double b, double percentTolerance, double * percentError = NULL)
+    {
+      double fa = fabs(a);
+      double fb = fabs(b);
+      if(fa < 1e-15 && fb < 1e-15)
+	return true;
+      
+      double diff = fabs(fa - fb)/std::max(fa,fb);
+      if(diff > percentTolerance * 1e-2)
+	{
+	  if(percentError)
+	    *percentError = diff * 100.0;
+	  return false;
+	}
+      return true;
+    }
+
+    
+#define ASSERT_DOUBLE_MX_EQ(A, B, PERCENT_TOLERANCE, MSG)					\
+    ASSERT_EQ((A).rows(), (B).rows())  << MSG << "\nMatrix " << #A << ":\n" << A << "\nand matrix " << #B << "\n" << B << "\nare not the same size"; \
+    ASSERT_EQ((A).cols(), (B).cols())  << MSG << "\nMatrix " << #A << ":\n" << A << "\nand matrix " << #B << "\n" << B << "\nare not the same size"; \
+    for(int r = 0; r < (A).rows(); r++)					\
+      {									\
+	for(int c = 0; c < (A).cols(); c++)				\
+	  {								\
+	    double percentError = 0.0;					\
+	    ASSERT_TRUE(sm::eigen::compareRelative( (A)(r,c), (B)(r,c), PERCENT_TOLERANCE, &percentError)) << MSG << "\nTolerance comparison failed at (" << r << "," << c << "). Error was " << percentError << "% > " << PERCENT_TOLERANCE << "%\n" \
+					     << "\nMatrix " << #A << ":\n" << A << "\nand matrix " << #B << "\n" << B; \
+	  }								\
+      }
+    
+    
+
+
 
 }} // namespace sm::eigen
 

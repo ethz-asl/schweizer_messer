@@ -1,8 +1,14 @@
 #ifndef SM_TIMER_HPP
 #define SM_TIMER_HPP
 
-
+#ifndef BOOST_DATE_TIME_NO_LOCALE
+#define BOOST_DATE_TIME_NO_LOCALE
 #include <boost/date_time/posix_time/posix_time.hpp>
+#undef BOOST_DATE_TIME_NO_LOCALE
+#else
+#include <boost/date_time/posix_time/posix_time.hpp>
+#endif
+
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics.hpp>
 #include <boost/accumulators/statistics/rolling_mean.hpp>

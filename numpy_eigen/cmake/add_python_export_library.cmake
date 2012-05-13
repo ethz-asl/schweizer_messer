@@ -28,6 +28,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
       message("Looking in ${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy")
       FIND_PATH(NUMPY_INCLUDE_DIR arrayobject.h
 	${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy
+	${REAL_PYTHON_INCLUDE}/numpy
 	)
       IF(${NUMPY_INCLUDE_DIR} MATCHES NOTFOUND)
 	message("Unable to find numpy include directories: ${NUMPY_INCLUDE_DIR}")
