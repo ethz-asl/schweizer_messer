@@ -10,6 +10,7 @@
   <url>http://ros.org/wiki/sm_timing</url>
   
   <depend package="sm_common"/>
+  <depend package="sm_random"/>
 
   <export>
     <cpp cflags="-I${prefix}/include"
