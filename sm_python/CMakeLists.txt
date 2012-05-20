@@ -44,6 +44,7 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/export_homogeneous.cpp
   src/exportTransformation.cpp
   src/exportHomogeneousPoint.cpp
+  src/exportTimestampCorrector.cpp
   )
 
 rosbuild_link_boost(${PY_PROJECT_NAME} python thread filesystem)

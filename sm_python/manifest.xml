@@ -12,6 +12,7 @@
   <depend package="sm_common"/>
   <depend package="numpy_eigen"/>
   <depend package="sm_kinematics"/>
+  <depend package="sm_timing"/>
 
   <export>
     <python path="${prefix}/python"/>

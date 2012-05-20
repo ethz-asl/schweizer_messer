@@ -62,6 +62,16 @@ namespace sm {
        */
       size_t convexHullSize() const { return _convexHull.size(); }
 
+      void printHullPoints()
+      {
+	for(unsigned i = 0; i < _convexHull.size(); ++i)
+	  {
+	    std::cout << i << "\t" << _convexHull[i].x << "\t" << _convexHull[i].y;
+	    if(i == _midpointSegmentIndex)
+	      std::cout << " <<< Midpoint segment start";
+	    std::cout << std::endl;
+	  }
+      }
     private:
       
       class Point

@@ -102,7 +102,7 @@ namespace sm {
       
       T determinant = v1.x * v2.y - v1.y * v2.x;
 
-      return determinant > 0.0;
+      return determinant >= 0.0;
     }
 
 
