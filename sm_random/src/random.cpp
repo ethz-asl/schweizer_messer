@@ -15,7 +15,8 @@ namespace sm {
     {
     public:
       // http://www.boost.org/doc/libs/1_49_0/doc/html/boost_random/reference.html#boost_random.reference.generators
-      typedef boost::random::mt19937 base_generator_type;
+      typedef boost::mt19937 base_generator_type;
+
       base_generator_type _generator;
       // Define a uniform random number distribution which produces "double"
       // values between 0 and 1 (0 inclusive, 1 exclusive).

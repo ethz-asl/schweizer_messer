@@ -42,7 +42,7 @@ namespace sm {
       _convexHull.push_back(p);
 
       // Update the midpoint pointer...
-      if(_convexHull.size() >= 2)
+      if(_convexHull.size() >= 3)
 	{
 	  T midpoint = (_convexHull[0].x + remoteTime) / 2.0;
 	  
