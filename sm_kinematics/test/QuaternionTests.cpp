@@ -8,6 +8,8 @@
 
 TEST(QuaternionAlgebraTestSuite, testRotation)
 {
+
+  try {
   using namespace sm::kinematics;
   for(int i = 0; i < 1000; i++)
     {
@@ -23,6 +25,10 @@ TEST(QuaternionAlgebraTestSuite, testRotation)
       
       sm::eigen::assertNear(v_a1, v_a2, 1e-10,SM_SOURCE_FILE_POS, "The rotation matrix And shortcut rotations are not equal");
       
+    }
+  } catch(const std::exception & e)
+    {
+      std::cout << "Exception: " << e.what() << std::endl;
     }
   
 }

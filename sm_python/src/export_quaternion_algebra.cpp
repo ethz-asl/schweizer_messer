@@ -37,4 +37,11 @@ using namespace sm::kinematics;
     def("quatRandom",&quatRandom, "Return a random quaternion");
     def("quatS",&quatS);
     def("quatInvS",&quatInvS);
+    // Eigen::Vector3d quatRotate(Eigen::Vector4d const & q_a_b, Eigen::Vector3d const & v_b);
+    def("quatRotate", &quatRotate);
+    // Eigen::Vector4d qoplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
+    def("qoplus", &qoplus);
+    // Eigen::Vector4d qplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
+    def("qplus", &qplus);
+      ;
   }
