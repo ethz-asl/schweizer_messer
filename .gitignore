@@ -30,3 +30,5 @@ sm_timing/doc/
 sm_timing/lib/
 sm_boost/build/
 sm_opencv/build/
+numpy_eigen2/
+sm_doc/build
