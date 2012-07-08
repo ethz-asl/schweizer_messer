@@ -46,7 +46,7 @@ namespace sm { namespace kinematics {
      * 
      * @param T_ba the transformation matrix \f$ \mathbf T_{ba} \f$
      * 
-     * @return the translation \f$\mathbf p_b_{ab} \f$
+     * @return the translation \f$\mathbf p_b^{ab} \f$
      */
     Eigen::Vector3d transform2rho(Eigen::Matrix4d const & T_ba);
 
@@ -55,7 +55,7 @@ namespace sm { namespace kinematics {
      * 
      * @param T_ba the transformation matrix \f$ \mathbf T_{ba} \f$
      * 
-     * @return the translation \f$\mathbf p_b_{ab} \f$
+     * @return the translation \f$\mathbf p_b^{ab} \f$
      */
 
     Eigen::Vector4d transform2rhoHomogeneous(Eigen::Matrix4d const & T_ba);
@@ -164,11 +164,11 @@ namespace sm { namespace kinematics {
 
     
     /** 
-     * Compute the \f$ \mbf T_{ba}^\boxtimes \f$ derived in the documentation.
+     * Compute the \f$ \mathbf T_{ba}^\boxtimes \f$ derived in the documentation.
      * 
      * @param T_ba The input transformation matrix
      * 
-     * @return \f$ \mbf T_{ba}^\boxtimes \f$
+     * @return \f$ \mathbf T_{ba}^\boxtimes \f$
      */
     Eigen::Matrix<double,6,6> boxTimes(Eigen::Matrix4d const & T_ba);
 
