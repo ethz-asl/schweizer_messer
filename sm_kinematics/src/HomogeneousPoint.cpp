@@ -104,6 +104,18 @@ namespace sm {
     {
       _ph = updateQuat(_ph,dp);
     }
+	
+    /// \brief sets the homogeneous coordinate
+    void setHomogeneousCoordinate(double v3)
+    {
+      _ph[3] = v3;
+    }
+	  
+	/// \brief linear scale of the HomogeneousPoint
+	void scale(double scalingFactor)
+    {
+      _ph[3] /= scalingFactor;
+    }
 
     /// \brief get the Euclidean representation
     Eigen::Vector3d HomogeneousPoint::toEuclidean() const

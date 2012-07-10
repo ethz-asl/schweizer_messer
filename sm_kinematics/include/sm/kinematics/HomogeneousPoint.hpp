@@ -75,6 +75,12 @@ namespace sm {
       ///
       /// This oplus operator maps to the \rho(dp)^+ p from quaternion algebra.
       void oplus(const Eigen::Vector3d & dp);
+	  
+	  /// \brief sets the homogeneous coordinate
+	  void setHomogeneousCoordinate(double v3);
+	  
+	  /// \brief linear scale of the HomogeneousPoint
+	  void scale(double scalingFactor);
 
       /// \brief set to a random point.
       void setRandom();
