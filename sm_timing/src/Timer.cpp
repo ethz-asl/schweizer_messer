@@ -16,7 +16,7 @@ namespace timing {
 #ifdef SM_USE_HIGH_PERF_TIMER
     LARGE_INTEGER freq;
     BOOL returnCode = QueryPerformanceFrequency(&freq);
-    SM_ASSERT_NE(returnCode, 0,"Unable to query the performance frequency");
+    SM_ASSERT_NE(TimerException, returnCode, 0, "Unable to query the performance frequency");
     m_clockPeriod = 1.0 / freq.QuadPart;
 #endif
   }
