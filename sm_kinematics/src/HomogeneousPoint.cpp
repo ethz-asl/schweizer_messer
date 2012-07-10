@@ -104,6 +104,20 @@ namespace sm {
     {
       _ph = updateQuat(_ph,dp);
     }
+	
+    /// \brief converts the point to a vector by setting the homogeneous coordinate to zero
+    void convertToVector()
+    {
+      _ph[3] = 0.0;
+    }
+	  
+	/// \brief linear scaling of the HomogeneousPoint
+	void scale(double scalingFactor)
+    {
+      _ph[0] *= scalingFactor;
+	  _ph[1] *= scalingFactor;
+	  _ph[2] *= scalingFactor;
+    }
 
     /// \brief get the Euclidean representation
     Eigen::Vector3d HomogeneousPoint::toEuclidean() const
