@@ -76,8 +76,8 @@ namespace sm {
       /// This oplus operator maps to the \rho(dp)^+ p from quaternion algebra.
       void oplus(const Eigen::Vector3d & dp);
 	  
-	  /// \brief sets the homogeneous coordinate
-	  void setHomogeneousCoordinate(double v3);
+	  /// \brief converts the point to a vector by setting the homogeneous coordinate to zero
+	  void convertToVector();
 	  
 	  /// \brief linear scale of the HomogeneousPoint
 	  void scale(double scalingFactor);

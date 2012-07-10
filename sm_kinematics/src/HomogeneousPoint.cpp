@@ -105,16 +105,18 @@ namespace sm {
       _ph = updateQuat(_ph,dp);
     }
 	
-    /// \brief sets the homogeneous coordinate
-    void setHomogeneousCoordinate(double v3)
+    /// \brief converts the point to a vector by setting the homogeneous coordinate to zero
+    void convertToVector()
     {
-      _ph[3] = v3;
+      _ph[3] = 0.0;
     }
 	  
-	/// \brief linear scale of the HomogeneousPoint
+	/// \brief linear scaling of the HomogeneousPoint
 	void scale(double scalingFactor)
     {
-      _ph[3] /= scalingFactor;
+      _ph[0] *= scalingFactor;
+	  _ph[1] *= scalingFactor;
+	  _ph[2] *= scalingFactor;
     }
 
     /// \brief get the Euclidean representation
