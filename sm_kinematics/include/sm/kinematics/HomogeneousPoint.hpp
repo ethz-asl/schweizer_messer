@@ -78,6 +78,9 @@ namespace sm {
       
       /// \brief converts the homogenous point to a pointing vector by setting the homogeneous coordinate to zero
       void convertToVector();
+
+	  /// \brief converts a pointing vector to a normalized homogeneous point with unit length
+	  void convertToPoint();
       
       /// \brief scale the point by a constant factor
       void scale(double scaleFactor);
@@ -87,6 +90,12 @@ namespace sm {
 
       /// \brief set to the Euclidean point equaling zero
       void setZero();
+
+	  /// \brief checks if homogeneous point is at infinity (if fourth coordinate is zero)
+	  const bool atInfinity() const;
+
+	  /// \brief checks if homogeneous point is a vector, i.e. it has infinite length (if fourth coordinate is zero)
+	  const bool isVector() const;
 
       /// \brief Normalize the point so that it is unit length
       virtual void normalize();

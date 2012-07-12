@@ -110,6 +110,14 @@ namespace sm {
     {
       _ph[3] = 0.0;
     }
+
+	/// \brief converts a pointing vector to a normalized homogeneous point with unit length
+	void HomogeneousPoint::convertToPoint()
+    {
+	  SM_ASSERT_TRUE_DBG(Exception, isVector(), "The homogeneous point is not a vector.");
+	  normalize();
+      _ph[3] = 1.0;
+    }
       
     /// \brief scale the point by a constant factor
     void HomogeneousPoint::scale(double scaleFactor)
@@ -197,6 +205,15 @@ namespace sm {
       _ph[3] = 1.0;
     }
 
+	const bool HomogeneousPoint::atInfinity() const
+	{
+		return (_ph[3] == 0.0);
+	}
+
+	const bool HomogeneousPoint::isVector() const
+	{
+		return atInfinity();
+	}
 
 
   } // namespace kinematics

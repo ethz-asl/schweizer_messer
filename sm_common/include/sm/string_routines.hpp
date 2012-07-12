@@ -157,6 +157,13 @@ namespace sm
 		return s.str();
 	}
 
+	inline std::string fixedFloat(double val, unsigned precision) {
+		std::ostringstream s;
+		s.precision(precision);
+		s << std::fixed << val;
+		return s.str();
+	}
+
 	template<typename T>
 	std::string s_tuple(T t)
 	{
