@@ -106,13 +106,13 @@ namespace sm {
     }
     
     /// \brief converts the homogenous point to a pointing vector by setting the homogeneous coordinate to zero
-    void convertToVector()
+    void HomogeneousPoint::convertToVector()
     {
       _ph[3] = 0.0;
     }
       
     /// \brief scale the point by a constant factor
-    void scale(double scaleFactor)
+    void HomogeneousPoint::scale(double scaleFactor)
     {
       _ph[0] *= scaleFactor;
       _ph[1] *= scaleFactor;
