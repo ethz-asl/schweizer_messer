@@ -50,7 +50,7 @@ namespace sm {
 
       virtual UncertainHomogeneousPoint operator*(const UncertainHomogeneousPoint & rhs) const;
 
-      
+      Transformation toTransformation() const;
       UncertainTransformation inverse() const;
 
       const covariance_t & U() const;
@@ -79,8 +79,10 @@ namespace sm {
     template<class Archive>
     void UncertainTransformation::serialize(Archive & ar, const unsigned int version)
     {
-      ar & boost::serialization::base_object<Transformation>(*this);
-      ar & BOOST_SERIALIZATION_NVP(_U);
+
+	  using ::boost::serialization::make_nvp;
+      ar & ::boost::serialization::base_object<Transformation>(*this);
+      ar & make_nvp("_U", _U);//BOOST_SERIALIZATION_NVP(_U);
     }
 
     
