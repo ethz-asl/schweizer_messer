@@ -10,6 +10,12 @@
   <url>http://ros.org/wiki/sm_property_tree</url>
 
   <depend package="sm_common"/>
+
+  <export>
+    <cpp cflags="`pkg-config --cflags eigen3` -I${prefix}/include"
+	 lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_property_tree" />
+  </export>
+
 </package>
 
 
