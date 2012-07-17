@@ -1,3 +1,4 @@
+sm_doc/doc/doxygen.config
 bblos-driver/
 numpy_eigen/build/
 numpy_eigen/lib/
@@ -32,3 +33,7 @@ sm_boost/build/
 sm_opencv/build/
 numpy_eigen2/
 sm_doc/build
+*.project
+*.cproject
+*.pydevproject
+*/cmake_install.cmake
