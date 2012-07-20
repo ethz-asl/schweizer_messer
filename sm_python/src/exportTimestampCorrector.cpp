@@ -9,8 +9,8 @@ void exportTimestampCorrector(const std::string & className)
   using namespace sm::timing;
   
   class_< TimestampCorrector<TIME_T> >( className.c_str(), init<>() )
-    .def("correctTimestamp", &TimestampCorrector<TIME_T>::correctTimestamp)
-    .def("getLocalTime", &TimestampCorrector<TIME_T>::getLocalTime)
+    .def("correctTimestamp", &TimestampCorrector<TIME_T>::correctTimestamp, "correctedEventLocalTime = correctTimestamp(eventRemoteTime, eventLocalTimes).\nNote: This function must be called with monotonically increasing remote timestamps.")
+    .def("getLocalTime", &TimestampCorrector<TIME_T>::getLocalTime, "eventLocalTime = getLocalTime(eventRemoteTime)")
     .def("convexHullSize", &TimestampCorrector<TIME_T>::convexHullSize)
     .def("printHullPoints", &TimestampCorrector<TIME_T>::printHullPoints)
     ;
