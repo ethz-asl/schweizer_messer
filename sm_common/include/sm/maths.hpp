@@ -35,6 +35,18 @@ namespace sm {
     return std::make_pair(n/(2*a),(2*c)/n);
 
   }
+  
+
+  /** 
+   * \brief An implementation of the signum function
+   * 
+   * @param val the variable to check
+   * 
+   * @return -1 if the variable is negative, +1 if the variable is positive, and 0 if the variable is 0
+   */
+  template <typename T> int sgn(T val) {
+    return (T(0) < val) - (val < T(0));
+  }
 
 } // namespace sm
 
