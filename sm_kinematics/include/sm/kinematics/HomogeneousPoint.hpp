@@ -3,6 +3,10 @@
 
 #include <Eigen/Core>
 #include <sm/assert_macros.hpp>
+#include <sm/eigen/serialization.hpp>
+#include <boost/serialization/nvp.hpp>
+
+
 
 namespace sm {
   namespace kinematics {
@@ -99,6 +103,15 @@ namespace sm {
 
       /// \brief Normalize the point so that it is unit length
       virtual void normalize();
+	  
+	  /// \brief boost::serialization support
+	  template<class Archive>
+	  void serialize(Archive & ar, const unsigned int version)
+	  {
+		ar & BOOST_SERIALIZATION_NVP(_ph);
+	  }
+
+	  bool isBinaryEqual(const HomogeneousPoint & rhs) const;
    protected:
       Eigen::Vector4d _ph;
     };

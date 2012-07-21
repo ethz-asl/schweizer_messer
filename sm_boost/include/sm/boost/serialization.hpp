@@ -13,7 +13,7 @@
 
 // Save and load using boost serailization
 namespace sm { namespace boost { namespace serialization {
-    
+
     template<typename T>
     void save(T & object, ::boost::filesystem::path const & filename)
     {
@@ -66,6 +66,7 @@ namespace sm { namespace boost { namespace serialization {
       ia >> ::boost::serialization::make_nvp(topLevelXmlTag.c_str(), object);
 
     }
+
 
     
     }}} // namespace sm::boost::serialization

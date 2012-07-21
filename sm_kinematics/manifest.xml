@@ -12,6 +12,7 @@
   <depend package="eigen"/>
   <depend package="sm_common"/>
   <depend package="sm_eigen"/>
+  <depend package="sm_boost"/>
   <depend package="sm_random"/>
 
   <export>

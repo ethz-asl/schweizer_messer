@@ -9,7 +9,8 @@
 #include <fstream>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
-
+#include <boost/archive/xml_oarchive.hpp>
+#include <boost/archive/xml_iarchive.hpp>
 #include <boost/filesystem.hpp>
 
 #include <Eigen/Geometry>
@@ -61,6 +62,51 @@ void saveLoadMatrixTest()
 }
 
 
+template<typename T, int A, int B, int C, int D>
+void saveLoadXmlMatrixTest()
+{
+  Eigen::Matrix<T,A,B> T1, T2;
+
+  T1.resize(C,D);
+
+  for(int r = 0; r < T1.rows(); r++)
+    {
+      for(int c = 0; c < T1.cols(); c++)
+	{
+	  T1(r,c) = (T)(((r-1)*T1.cols()) + c);
+	}
+    }
+
+  {
+    std::ofstream ofs("test.xml", std::ios::binary);
+    boost::archive::xml_oarchive oa(ofs);
+  
+    oa << ::boost::serialization::make_nvp("top",T1);
+  
+  }
+
+
+  {
+    std::ifstream ifs("test.xml", std::ios::binary);
+    boost::archive::xml_iarchive ia(ifs);
+  
+    ia >> ::boost::serialization::make_nvp("top",T2);
+  }  
+
+
+  ASSERT_EQ(T1.rows(), T2.rows());
+  ASSERT_EQ(T1.cols(), T2.cols());
+
+  for(int r = 0; r < T1.rows(); r++)
+    {
+      for(int c = 0; c < T1.cols(); c++)
+	{
+	  ASSERT_EQ(T1(r,c),T2(r,c)) << "Value at row " << r << " and col " << c << " is not exactly equal";
+	}
+    }
+
+}
+
 TEST(EigenSerializationTestSuite, testMatrix)
 {
   saveLoadMatrixTest<double,6,6,6,6>();
@@ -79,6 +125,31 @@ TEST(EigenSerializationTestSuite, testMatrix)
   saveLoadMatrixTest<double,Eigen::Dynamic,Eigen::Dynamic,100,100>();
   
 }
+
+TEST(EigenSerializationTestSuite, testMatrixXml)
+{
+  try{
+	saveLoadXmlMatrixTest<double,6,6,6,6>();
+	saveLoadXmlMatrixTest<float,6,6,6,6>();
+	saveLoadXmlMatrixTest<int,6,6,6,6>();
+	saveLoadXmlMatrixTest<unsigned,6,6,6,6>();
+	saveLoadXmlMatrixTest<char,6,6,6,6>();
+
+	saveLoadXmlMatrixTest<double,1,64,1,64>();  
+	saveLoadXmlMatrixTest<double,64,1,64,1>(); 
+	saveLoadXmlMatrixTest<float,1,64,1,64>();  
+	saveLoadXmlMatrixTest<float,64,1,64,1>();  
+
+	saveLoadXmlMatrixTest<double,Eigen::Dynamic,6,100,6>();
+	saveLoadXmlMatrixTest<double,6,Eigen::Dynamic,6,100>();
+	saveLoadXmlMatrixTest<double,Eigen::Dynamic,Eigen::Dynamic,100,100>();
+  }
+  catch(const std::exception & e)
+	{
+	  FAIL() << e.what();
+	}
+}
+
 
 template<typename Transform_t>
 void saveLoadTransformTest()

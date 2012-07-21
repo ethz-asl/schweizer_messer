@@ -70,14 +70,14 @@ namespace boost { namespace serialization {
 		      const unsigned int file_version)
     {
       int rows, cols;
-      ar >> rows;
-      ar >> cols;
+      ar >> BOOST_SERIALIZATION_NVP(rows);
+      ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
       SM_ASSERT_EQ(sm::eigen::SerializationException,cols,B,"Unexpected number of columns found for fixed-sized type");
 
       if(rows > 0 && cols > 0)
 	{
-	  ar >> make_array(&M(0,0),M.rows()*M.cols());
+	  ar >> make_nvp("data", make_array(&M(0,0),M.rows()*M.cols()));
 	}
     }
 
@@ -101,14 +101,14 @@ namespace boost { namespace serialization {
     {
 
       int rows, cols;
-      ar >> rows;
-      ar >> cols;
+      ar >> BOOST_SERIALIZATION_NVP(rows);
+      ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,cols,B,"Unexpected number of columns found for fixed-sized type");
       
       M.resize(rows,Eigen::NoChange);
       if(rows > 0 && cols > 0)
 	{
-	  ar >> make_array(&M(0,0),M.rows()*M.cols());
+	  ar >> make_nvp("data",make_array(&M(0,0),M.rows()*M.cols()));
 	}
     }
 
@@ -131,12 +131,12 @@ namespace boost { namespace serialization {
     {
 
       int rows, cols;
-      ar >> rows;
-      ar >> cols;
+      ar >> BOOST_SERIALIZATION_NVP(rows);
+      ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
     
       M.resize(Eigen::NoChange,cols);
-      ar >> make_array(&M(0,0),M.rows()*M.cols());
+      ar >> make_nvp("data",make_array(&M(0,0),M.rows()*M.cols()));
 
     }
 
@@ -158,13 +158,13 @@ namespace boost { namespace serialization {
 		      const unsigned int file_version)
     {
       int rows, cols;
-      ar >> rows;
-      ar >> cols;    
+      ar >> BOOST_SERIALIZATION_NVP(rows);
+      ar >> BOOST_SERIALIZATION_NVP(cols);    
       
       M.resize(rows,cols);
       if(rows > 0 && cols > 0)
 	{
-	  ar >> make_array(&M(0,0),M.rows()*M.cols());
+	  ar >> make_nvp("data", make_array(&M(0,0),M.rows()*M.cols()));
 	}
     }
 

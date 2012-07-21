@@ -209,5 +209,10 @@ namespace sm {
 	
       }
 
+
+	bool UncertainHomogeneousPoint::isBinaryEqual(const UncertainHomogeneousPoint & rhs) const
+	{
+	  return HomogeneousPoint::isBinaryEqual(rhs) && _U == rhs._U;
+	}
   } // namespace kinematics
 } // namespace sm

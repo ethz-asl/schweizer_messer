@@ -4,6 +4,7 @@
 
 #include <sm/kinematics/quaternion_algebra.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <sm/eigen/serialization.hpp>
 #include "HomogeneousPoint.hpp"
 
 namespace sm {
@@ -105,6 +106,7 @@ namespace sm {
       /// \brief Return the S matrix that puts the oplus operation in the form
       ///        of a small transformation.
       Eigen::Matrix<double,6,6> S() const;
+
     protected:
       
       /// The quaternion that will become a rotation matrix C_a_b that 

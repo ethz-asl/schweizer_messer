@@ -72,6 +72,7 @@ namespace sm {
       template<class Archive>
       void serialize(Archive & ar, const unsigned int version);
 
+	  
     private:
       covariance_t _U;
     };
@@ -81,7 +82,7 @@ namespace sm {
     {
 
 	  using ::boost::serialization::make_nvp;
-      ar & ::boost::serialization::base_object<Transformation>(*this);
+      ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Transformation);
       ar & make_nvp("_U", _U);//BOOST_SERIALIZATION_NVP(_U);
     }
 
