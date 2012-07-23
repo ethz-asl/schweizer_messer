@@ -108,7 +108,7 @@ namespace sm {
 	  template<class Archive>
 	  void serialize(Archive & ar, const unsigned int version)
 	  {
-		ar & BOOST_SERIALIZATION_NVP(_ph);
+		ar & ::boost::serialization::make_nvp("_ph",_ph);
 	  }
 
 	  bool isBinaryEqual(const HomogeneousPoint & rhs) const;

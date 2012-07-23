@@ -12,7 +12,7 @@
 
 
 // Save and load using boost serailization
-namespace sm { namespace boost { namespace serialization {
+namespace sm { namespace boost_serialization {
 
     template<typename T>
     void save(T & object, ::boost::filesystem::path const & filename)
@@ -69,7 +69,7 @@ namespace sm { namespace boost { namespace serialization {
 
 
     
-    }}} // namespace sm::boost::serialization
+    }} // namespace sm::boost_serialization
 
 
 #endif /* ASRL_SERIALIZATION_HPP */
