@@ -22,7 +22,7 @@ namespace sm {
 			{
 			  const uchar * p1 = m1.ptr(r);
 			  const uchar * p2 = m2.ptr(r);
-			  for(int c = 0; isEqual && c < m1.cols * m1.elemSize(); ++c, ++p1, ++p2)
+			  for(int c = 0; isEqual && c < (int)(m1.cols * m1.elemSize()); ++c, ++p1, ++p2)
 				{
 				  isEqual = (*p1) == (*p2);
 				}
