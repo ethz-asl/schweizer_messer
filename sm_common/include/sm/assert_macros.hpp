@@ -277,7 +277,7 @@ namespace sm {
     }
 
 
-#define SM_OUT(X) std::cout << #X << ": " << X << std::endl
+#define SM_OUT(X) std::cout << #X << ": " << (X) << std::endl
 
 #else
 
