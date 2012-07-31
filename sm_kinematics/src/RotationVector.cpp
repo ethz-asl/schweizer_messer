@@ -180,5 +180,22 @@ namespace sm { namespace kinematics {
     }
 
 
+    Eigen::Matrix3d RotationVector::parametersToInverseSMatrix(const Eigen::Vector3d & parameters) const
+    {
+      double phi = std::sqrt(parameters.transpose()*parameters);
+      Eigen::Matrix3d invS;
+      if(phi == 0)
+      {
+        invS = Eigen::Matrix3d::Identity();
+      }
+      else
+      {
+        double cot = - std::sin(phi)/(std::cos(phi)-1);
+        double a1 = 1/(phi*phi) * (1- 0.5*phi*cot);
+        invS = Eigen::Matrix3d::Identity() + 0.5*crossMx(parameters) + a1*crossMx(parameters)*crossMx(parameters);
+      }
+      return invS;
+    }
+
 
   }} // sm::kinematics
