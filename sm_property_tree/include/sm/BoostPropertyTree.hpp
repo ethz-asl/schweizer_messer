@@ -2,6 +2,10 @@
 #define SM_BOOST_PROPERTY_TREE_HPP
 
 #include "PropertyTree.hpp"
+
+#ifdef toupper
+#undef toupper
+#endif
 #include <boost/property_tree/ptree.hpp>
 #include <boost/filesystem/path.hpp>
 #include <typeinfo>

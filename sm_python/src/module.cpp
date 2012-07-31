@@ -14,6 +14,7 @@ void export_homogeneous_coordinates();
 void exportTransformation();
 void exportHomogeneousPoint();
 void exportTimestampCorrectors();
+void exportPropertyTree();
 
 BOOST_PYTHON_MODULE(libsm_python)
 {
@@ -25,4 +26,5 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportTransformation();
   exportHomogeneousPoint();
   exportTimestampCorrectors();
+  exportPropertyTree();
 }
