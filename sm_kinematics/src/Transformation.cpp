@@ -28,7 +28,7 @@ namespace sm {
     Transformation::Transformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a) :
       _q_a_b(q_a_b), _t_a_b_a(t_a_b_a)
     {
-      
+        _q_a_b.normalize();
     }
 
     Transformation::~Transformation(){}

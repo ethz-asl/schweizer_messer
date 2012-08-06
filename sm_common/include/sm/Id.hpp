@@ -43,6 +43,8 @@
 #else
 #include <tr1/functional>
 #endif
+
+#include <boost/serialization/nvp.hpp>
 namespace sm {
 
   typedef boost::uint64_t id_type;
@@ -148,7 +150,7 @@ namespace sm {
     template<class Archive>						\
       void serialize(Archive & ar, const unsigned int version)		\
     {									\
-      ar & id_;								\
+      ar & BOOST_SERIALIZATION_NVP(id_);		\
     }									\
   };									
 

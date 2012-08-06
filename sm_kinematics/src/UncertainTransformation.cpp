@@ -215,6 +215,11 @@ namespace sm {
       return UncertainHomogeneousPoint(p_0,U);
     }
 
+	Transformation UncertainTransformation::toTransformation() const
+	{
+	  return *this;
+	}
+
 
   } // namespace kinematics
 } // namespace sm

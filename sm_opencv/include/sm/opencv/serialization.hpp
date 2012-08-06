@@ -6,6 +6,33 @@
 #include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/split_free.hpp>
 
+namespace sm {
+  namespace opencv {
+	inline bool isBinaryEqual(const cv::Mat & m1, const cv::Mat & m2)
+	{
+	  bool isEqual = m1.rows == m2.rows &&
+		m1.cols == m2.cols &&
+		m1.depth() == m2.depth() &&
+		m1.type() == m2.type() &&
+		m1.elemSize() == m2.elemSize();
+		
+	  if(isEqual)
+		{
+		  for(int r = 0; r < m1.rows; ++r)
+			{
+			  const uchar * p1 = m1.ptr(r);
+			  const uchar * p2 = m2.ptr(r);
+			  for(int c = 0; isEqual && c < (int)(m1.cols * m1.elemSize()); ++c, ++p1, ++p2)
+				{
+				  isEqual = (*p1) == (*p2);
+				}
+			}
+		}
+	  return isEqual;
+	}
+  } // namespace opencv
+} // namespace sm
+
 
 namespace boost {
   namespace serialization {
@@ -86,9 +113,9 @@ namespace boost
       cv::Mat mat_;
       mat_ = mat;
       if (!mat.isContinuous()) {
-	mat_ = mat.clone();
-	//          throw rein::Exception("Only serialising continuous cv::Mat objects");
+		mat_ = mat.clone(); 
       }
+
       int type = mat_.type();
       ar & make_nvp("rows",mat_.rows);
       ar & make_nvp("cols",mat_.cols);
@@ -100,15 +127,16 @@ namespace boost
     void load(Archive & ar, cv::Mat& mat, const unsigned int version)
     {
       int rows, cols, type;
-      ar & rows;
-      ar & cols;
-      ar & type;
+      ar & make_nvp("rows",rows);
+      ar & make_nvp("cols",cols);
+      ar & make_nvp("type",type);
       mat.create(rows, cols, type);
-      ar & boost::serialization::make_binary_object(mat.data, mat.step*mat.rows);
+      ar & make_nvp("data",boost::serialization::make_binary_object(mat.data, mat.step*mat.rows));
     }
  
   }} // namespace boost::serialization.
 BOOST_SERIALIZATION_SPLIT_FREE(cv::Mat);
+
 
 
 

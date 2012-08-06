@@ -2,7 +2,6 @@
 #define SM_BOOST_NULL_DELETER_HPP
 
 namespace sm {
-  namespace boost {
 
     struct null_deleter
     {
@@ -10,7 +9,6 @@ namespace sm {
       void operator()(const T * ){}
     };
 
-  } // namespace boost
 } // namespace sm
 
 

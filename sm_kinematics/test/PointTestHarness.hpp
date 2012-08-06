@@ -4,6 +4,7 @@
 #include <sm/eigen/gtest.hpp>
 #include <boost/bind.hpp>
 #include <sm/eigen/NumericalDiff.hpp>
+#include <sm/boost/serialization.hpp>
 
 namespace sm {
   
@@ -18,6 +19,7 @@ namespace sm {
 
     void testAdd(double threshold = -1)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -41,6 +43,7 @@ namespace sm {
 
     void testSubtract(double threshold = -1)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -64,6 +67,7 @@ namespace sm {
 
     void testAssign3(double threshold = -1)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -83,6 +87,7 @@ namespace sm {
 
     void testAssign4(double threshold = -1.0)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -131,6 +136,7 @@ namespace sm {
     
     void testToEuclideanJacobian(double threshold = -1)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -152,6 +158,7 @@ namespace sm {
 
     struct HomogeneousJacobianFunctor
     {
+	  
       typedef Eigen::Vector4d value_t;
       typedef double scalar_t;
       typedef Eigen::Vector3d input_t;
@@ -177,6 +184,7 @@ namespace sm {
     
     void testToHomogeneousJacobian(double threshold = -1)
     {
+	  SCOPED_TRACE(__FUNCTION__);
       if(threshold < 0) 
 	threshold = _threshold;
 
@@ -195,6 +203,43 @@ namespace sm {
 
     }
 
+
+	void testSerialization()
+	{
+	  SCOPED_TRACE(__FUNCTION__);
+
+	  point_t p1;
+	  p1.setRandom();
+	  
+	  sm::boost_serialization::save(p1, "test.ba");
+
+	  ASSERT_TRUE(p1.isBinaryEqual(p1));
+	  
+	  point_t p2;
+
+	  ASSERT_FALSE(p1.isBinaryEqual(p2));
+	  ASSERT_FALSE(p2.isBinaryEqual(p1));
+
+	  sm::boost_serialization::load(p2, "test.ba");
+
+	  ASSERT_TRUE(p1.isBinaryEqual(p2));
+	  ASSERT_TRUE(p2.isBinaryEqual(p1));
+	  
+	  p1.setRandom();
+
+	  ASSERT_FALSE(p1.isBinaryEqual(p2));
+	  ASSERT_FALSE(p2.isBinaryEqual(p1));
+
+	  sm::boost_serialization::save_xml(p1, "Point", "test.xml");
+
+	  sm::boost_serialization::load_xml(p2, "Point", "test.xml");
+
+	  // Too strict.
+	  //ASSERT_TRUE(p1.isBinaryEqual(p2));
+	  //ASSERT_TRUE(p2.isBinaryEqual(p1));
+
+	}
+
     void testAll()
     {
       testAdd();
@@ -203,6 +248,7 @@ namespace sm {
       testAssign4();
       testToEuclideanJacobian();
       testToHomogeneousJacobian();
+	  testSerialization();
     }
     
   };

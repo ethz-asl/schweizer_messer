@@ -215,6 +215,10 @@ namespace sm {
 		return atInfinity();
 	}
 
+	bool HomogeneousPoint::isBinaryEqual(const HomogeneousPoint & rhs) const
+	{
+	  return _ph == rhs._ph;
+	}
 
   } // namespace kinematics
 } // namespace sm

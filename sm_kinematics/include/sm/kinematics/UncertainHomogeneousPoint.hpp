@@ -82,7 +82,14 @@ namespace sm {
       ///        This function will convert the uncertainty accordingly.
       virtual void normalize();
 
+	  template<class Archive>
+	  void serialize(Archive & ar, const unsigned int version)
+	  {
+		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(HomogeneousPoint);
+		ar & BOOST_SERIALIZATION_NVP(_U);
+	  }
 
+	  bool isBinaryEqual(const UncertainHomogeneousPoint & rhs) const;
     private:
       /// \brief the V matrix from the note.
       Eigen::Matrix<double,4,3> V();
