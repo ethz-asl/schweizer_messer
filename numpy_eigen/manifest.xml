@@ -10,8 +10,6 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/numpy_eigen</url>
 
-  <depend package="eigen"/>
-
   <!-- Python test facility -->
   <depend package="rostest"/>
   
