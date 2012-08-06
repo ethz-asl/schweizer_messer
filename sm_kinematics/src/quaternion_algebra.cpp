@@ -212,7 +212,7 @@ namespace sm { namespace kinematics {
 
         Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
         {
-            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q)) );
+            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q)) ));
                                    if(theta < 1e-12)
                                        return Eigen::Vector3d::Zero();
 

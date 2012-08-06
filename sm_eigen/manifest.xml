@@ -10,8 +10,7 @@
   <url>http://ros.org/wiki/sm_eigen</url>
 
   <depend package="sm_common"/>
-  <depend package="eigen"/>
-
+  
   <export>
     <!-- I'm not sure if -Wl,-rpath,${prefix}/lib is needed below -->
     <cpp cflags="-I${prefix}/include"/>

@@ -9,7 +9,6 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/sm_kinematics</url>
 
-  <depend package="eigen"/>
   <depend package="sm_common"/>
   <depend package="sm_eigen"/>
   <depend package="sm_boost"/>
