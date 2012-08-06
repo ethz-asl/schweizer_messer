@@ -212,110 +212,110 @@ namespace sm { namespace kinematics {
 
         Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
         {
-            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q)) );
-                                   if(theta < 1e-12)
-                                       return Eigen::Vector3d::Zero();
+            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q))) );
+            if(theta < 1e-12)
+                return Eigen::Vector3d::Zero();
 
-                                   Eigen::Vector3d a = qeps(q);
-                                   a /= a.norm();
-                                   a *= theta;
-                                   return a;
-                                   }
+            Eigen::Vector3d a = qeps(q);
+            a /= a.norm();
+            a *= theta;
+            return a;
+        }
 
-                Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
-                {
-                    Eigen::Matrix<double,4,3> J;
-                    // [  p3, -p2,  p1]
-                    // [  p2,  p3, -p0]
-                    // [ -p1,  p0,  p3]
-                    // [ -p0, -p1, -p2]
+        Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
+        {
+            Eigen::Matrix<double,4,3> J;
+            // [  p3, -p2,  p1]
+            // [  p2,  p3, -p0]
+            // [ -p1,  p0,  p3]
+            // [ -p0, -p1, -p2]
     
-                    J(0,0) =  p[3];
-                    J(0,1) = -p[2];
-                    J(0,2) =  p[1];
-                    J(1,0) =  p[2];
-                    J(1,1) =  p[3];
-                    J(1,2) = -p[0];
-                    J(2,0) = -p[1];
-                    J(2,1) =  p[0];
-                    J(2,2) =  p[3];
-                    J(3,0) = -p[0];
-                    J(3,1) = -p[1];
-                    J(3,2) = -p[2];
+            J(0,0) =  p[3];
+            J(0,1) = -p[2];
+            J(0,2) =  p[1];
+            J(1,0) =  p[2];
+            J(1,1) =  p[3];
+            J(1,2) = -p[0];
+            J(2,0) = -p[1];
+            J(2,1) =  p[0];
+            J(2,2) =  p[3];
+            J(3,0) = -p[0];
+            J(3,1) = -p[1];
+            J(3,2) = -p[2];
 
-                    return J*0.5;
-                }
+            return J*0.5;
+        }
 
-            Eigen::Vector4d updateQuat(Eigen::Vector4d const & q, Eigen::Vector3d const & dq)
-            {
-                // the following code is an optimized version of:
-                // Eigen::Vector4d dq4 = axisAngle2quat(dq);
-                // Eigen::Vector4d retq = quatPlus(dq4)*q;
-                // return retq;
+        Eigen::Vector4d updateQuat(Eigen::Vector4d const & q, Eigen::Vector3d const & dq)
+        {
+            // the following code is an optimized version of:
+            // Eigen::Vector4d dq4 = axisAngle2quat(dq);
+            // Eigen::Vector4d retq = quatPlus(dq4)*q;
+            // return retq;
 
-                Eigen::Vector4d dq3 = axisAngle2quat(dq);
-                double ca = dq3[3];
-                Eigen::Vector4d retq;
-                retq[0] = q[0]*ca+dq3[0]*q[3]-dq3[1]*q[2]+dq3[2]*q[1];
-                retq[1] = q[1]*ca+dq3[0]*q[2]+dq3[1]*q[3]-dq3[2]*q[0];
-                retq[2] = q[2]*ca-dq3[0]*q[1]+dq3[1]*q[0]+dq3[2]*q[3];
-                retq[3] = q[3]*ca-dq3[0]*q[0]-dq3[1]*q[1]-dq3[2]*q[2];
+            Eigen::Vector4d dq3 = axisAngle2quat(dq);
+            double ca = dq3[3];
+            Eigen::Vector4d retq;
+            retq[0] = q[0]*ca+dq3[0]*q[3]-dq3[1]*q[2]+dq3[2]*q[1];
+            retq[1] = q[1]*ca+dq3[0]*q[2]+dq3[1]*q[3]-dq3[2]*q[0];
+            retq[2] = q[2]*ca-dq3[0]*q[1]+dq3[1]*q[0]+dq3[2]*q[3];
+            retq[3] = q[3]*ca-dq3[0]*q[0]-dq3[1]*q[1]-dq3[2]*q[2];
 
-                return retq;
-            }
+            return retq;
+        }
 
-            Eigen::Vector3d quatRotate(Eigen::Vector4d const & q_a_b, Eigen::Vector3d const & v_b)
-            {
-                return v_b + 2.0 * q_a_b.head<3>().cross(q_a_b.head<3>().cross(v_b) - q_a_b[3] * v_b);
-            }
+        Eigen::Vector3d quatRotate(Eigen::Vector4d const & q_a_b, Eigen::Vector3d const & v_b)
+        {
+            return v_b + 2.0 * q_a_b.head<3>().cross(q_a_b.head<3>().cross(v_b) - q_a_b[3] * v_b);
+        }
 
-            Eigen::Vector4d quatRandom()
-            {
-                Eigen::Vector4d q_a_b;
-                q_a_b.setRandom();
-                q_a_b.array() -= 0.5;
-                q_a_b /= q_a_b.norm();
-                return q_a_b;
-            }
+        Eigen::Vector4d quatRandom()
+        {
+            Eigen::Vector4d q_a_b;
+            q_a_b.setRandom();
+            q_a_b.array() -= 0.5;
+            q_a_b /= q_a_b.norm();
+            return q_a_b;
+        }
 
-            Eigen::Vector4d quatIdentity()
-            {
-                return Eigen::Vector4d(0,0,0,1);
-            }
+        Eigen::Vector4d quatIdentity()
+        {
+            return Eigen::Vector4d(0,0,0,1);
+        }
 
-            Eigen::Matrix<double,3,4> quatS(Eigen::Vector4d q)
-            {
-                //   [  q3,  q2, -q1, -q0]
-                // 2 [ -q2,  q3,  q0, -q1]
-                //   [  q1, -q0,  q3, -q2]
-                q *= 2.0;
+        Eigen::Matrix<double,3,4> quatS(Eigen::Vector4d q)
+        {
+            //   [  q3,  q2, -q1, -q0]
+            // 2 [ -q2,  q3,  q0, -q1]
+            //   [  q1, -q0,  q3, -q2]
+            q *= 2.0;
       
-                Eigen::Matrix<double,3,4> S;
-                S <<
-                    q[3],  q[2], -q[1], -q[0],
-                    -q[2],  q[3],  q[0], -q[1],
-                    q[1], -q[0],  q[3], -q[2];
+            Eigen::Matrix<double,3,4> S;
+            S <<
+                q[3],  q[2], -q[1], -q[0],
+                -q[2],  q[3],  q[0], -q[1],
+                q[1], -q[0],  q[3], -q[2];
 
-                return S;
-            }
+            return S;
+        }
 
-            Eigen::Matrix<double,4,3> quatInvS(Eigen::Vector4d q)
-            {
-                q *= 0.5;
+        Eigen::Matrix<double,4,3> quatInvS(Eigen::Vector4d q)
+        {
+            q *= 0.5;
 
-                // 1 [  q3, -q2,  q1]
-                // - [  q2,  q3, -q0]
-                // 2 [ -q1,  q0,  q3]
-                //   [ -q0, -q1, -q2]
+            // 1 [  q3, -q2,  q1]
+            // - [  q2,  q3, -q0]
+            // 2 [ -q1,  q0,  q3]
+            //   [ -q0, -q1, -q2]
 
 
-                Eigen::Matrix<double,4,3> invS;
-                invS <<
-                    q[3], -q[2],  q[1],
-                    q[2],  q[3], -q[0],
-                    -q[1],  q[0],  q[3],
-                    -q[0], -q[1], -q[2];
-                return invS;
-            }
-        }} // namespace sm::kinematics
+            Eigen::Matrix<double,4,3> invS;
+            invS <<
+                q[3], -q[2],  q[1],
+                q[2],  q[3], -q[0],
+                -q[1],  q[0],  q[3],
+                -q[0], -q[1], -q[2];
+            return invS;
+        }
+    }} // namespace sm::kinematics
 
