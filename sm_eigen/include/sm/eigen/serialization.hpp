@@ -43,8 +43,9 @@ namespace boost { namespace serialization {
 		      const Eigen::Matrix<Scalar,A,B,C,D,E> & M, 
 		      const unsigned int file_version)
     {
-      uint64_t rows = M.rows();
-      uint64_t cols = M.cols();
+      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      index_t rows = M.rows();
+      index_t cols = M.cols();
       ar << BOOST_SERIALIZATION_NVP(rows);
       ar << BOOST_SERIALIZATION_NVP(cols);
 
@@ -69,7 +70,8 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,A,B,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      uint64_t rows, cols;
+      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
@@ -99,8 +101,8 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E> & M,
 		      const unsigned int file_version)
     {
-
-      int rows, cols;
+      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,cols,B,"Unexpected number of columns found for fixed-sized type");
@@ -129,8 +131,8 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E> & M,
 		      const unsigned int file_version)
     {
-
-      int rows, cols;
+      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
@@ -157,7 +159,8 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      int rows, cols;
+      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);    
       
