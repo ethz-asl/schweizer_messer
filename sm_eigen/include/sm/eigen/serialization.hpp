@@ -43,8 +43,8 @@ namespace boost { namespace serialization {
 		      const Eigen::Matrix<Scalar,A,B,C,D,E> & M, 
 		      const unsigned int file_version)
     {
-      int rows = M.rows();
-      int cols = M.cols();
+      uint64_t rows = M.rows();
+      uint64_t cols = M.cols();
       ar << BOOST_SERIALIZATION_NVP(rows);
       ar << BOOST_SERIALIZATION_NVP(cols);
 
@@ -69,7 +69,7 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,A,B,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      int rows, cols;
+      uint64_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
       SM_ASSERT_EQ(sm::eigen::SerializationException,rows,A,"Unexpected number of rows found for fixed-sized type");
