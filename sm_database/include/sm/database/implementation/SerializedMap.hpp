@@ -130,7 +130,7 @@ namespace sm {
       // http://sqlite.org/c3ref/bind_blob.html
       result = sqlite3_bind_int64(_iStmt, 1, id);
       SM_ASSERT_EQ(SqlException, result, SQLITE_OK, "Unable to bind id " << id << " to INSERT statement: " << sqlite3_errmsg(_db));
-      result = sqlite3_bind_blob(_iStmt, 2, oss.str().c_str(), oss.str().size(), SQLITE_TRANSIENT);
+      result = static_cast<int>(sqlite3_bind_blob(_iStmt, 2, oss.str().c_str(), oss.str().size(), SQLITE_TRANSIENT));
       SM_ASSERT_EQ(SqlException, result, SQLITE_OK, "Unable to bind blob of size " << oss.str().size() << " to INSERT statement: " << sqlite3_errmsg(_db));
       // Finally, we execute the bound insert statement.
       result = sqlite3_step(_iStmt);
