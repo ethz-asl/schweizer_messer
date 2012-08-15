@@ -67,8 +67,6 @@ namespace sm { namespace boost_serialization {
 
     }
 
-
-
     template<typename T>
     void save_xml(T & object, ::boost::filesystem::path const & filename)
     {
@@ -80,7 +78,6 @@ namespace sm { namespace boost_serialization {
     {
         load_xml(object, "object", filename);
     }
-
 
     
     }} // namespace sm::boost_serialization

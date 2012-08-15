@@ -101,7 +101,7 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+        typedef typename Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E>::Index index_t;
       index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
@@ -131,7 +131,7 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      typedef typename Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E>::Index index_t;
       index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);
@@ -159,7 +159,7 @@ namespace boost { namespace serialization {
 		      Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E> & M,
 		      const unsigned int file_version)
     {
-      typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
+      typedef typename Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E>::Index index_t;
       index_t rows, cols;
       ar >> BOOST_SERIALIZATION_NVP(rows);
       ar >> BOOST_SERIALIZATION_NVP(cols);    
