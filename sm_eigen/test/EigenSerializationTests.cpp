@@ -109,6 +109,7 @@ void saveLoadXmlMatrixTest()
 
 TEST(EigenSerializationTestSuite, testMatrix)
 {
+
   saveLoadMatrixTest<double,6,6,6,6>();
   saveLoadMatrixTest<float,6,6,6,6>();
   saveLoadMatrixTest<int,6,6,6,6>();

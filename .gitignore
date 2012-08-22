@@ -40,3 +40,5 @@ sm_doc/build
 *.cproject
 *.pydevproject
 */cmake_install.cmake
+
+*.orig
