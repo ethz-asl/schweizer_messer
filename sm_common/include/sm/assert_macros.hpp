@@ -24,7 +24,6 @@
   public:																\
   exceptionName(const char * message) : exceptionParent(message) {}		\
   exceptionName(std::string const & message) : exceptionParent(message) {} \
-  exceptionName(const exceptionName & rhs) : exceptionParent(rhs) {}	\
   virtual ~exceptionName() throw() {}									\
   };									  
 

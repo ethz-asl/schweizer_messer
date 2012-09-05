@@ -2,6 +2,8 @@
 #define BOOST_SERIALIZATION_HPP
 
 #include <fstream>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/binary_oarchive.hpp>
 #include <boost/archive/binary_iarchive.hpp>
 #include <boost/filesystem.hpp>
@@ -34,6 +36,31 @@ namespace sm { namespace boost_serialization {
       ia >> object;
 
     }
+
+
+
+    template<typename T>
+    void save_txt(T & object, ::boost::filesystem::path const & filename)
+    {
+      std::ofstream ofs(filename.string().c_str(), std::ios::binary);
+      SM_ASSERT_TRUE(std::runtime_error,ofs.good(), "Unable to open file " << filename << " for writing");
+      ::boost::archive::text_oarchive oa(ofs);
+    
+      oa << object;
+    }
+
+    template<typename T>
+    void load_txt(T & object, ::boost::filesystem::path const & filename)
+    {
+      std::ifstream ifs(filename.string().c_str(), std::ios::binary);
+      SM_ASSERT_TRUE(std::runtime_error,ifs.good(), "Unable to open file " << filename << " for reading");
+      ::boost::archive::text_iarchive ia(ifs);
+    
+      ia >> object;
+
+    }
+
+
 
     template<typename T>
     void save_xml(T & object, std::string topLevelXmlTag, ::boost::filesystem::path const & filename)
