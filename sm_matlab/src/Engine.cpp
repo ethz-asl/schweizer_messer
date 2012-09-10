@@ -1,5 +1,6 @@
 #include <sm/matlab/Engine.hpp>
 #include <cctype>
+#include <stdio.h>
 
 namespace sm {
   namespace matlab {
@@ -16,11 +17,11 @@ namespace sm {
     {
 		// make sure the output buffer is NULL terminated
         _outputBuffer[OUTPUT_BUFFER_SIZE] = '\0';
-		
+
 		if (startMatlabAtInitialization)
 		{
 			_engine = engOpen(NULL);
-        
+
 			// tell Matlab where to store the output
 			engOutputBuffer(_engine, _outputBuffer, OUTPUT_BUFFER_SIZE);
 		}
@@ -40,7 +41,7 @@ namespace sm {
 		if (_engine!=NULL)
 		{
 			int success = engClose(_engine);
-			SM_ASSERT_EQ_DBG(EngineCloseException, success, 0, "Closing Matlab was not possible. Maybe already closed.");        
+			SM_ASSERT_EQ_DBG(EngineCloseException, success, 0, "Closing Matlab was not possible. Maybe already closed.");
 		}
     }
 
@@ -50,7 +51,7 @@ namespace sm {
 			return true;
 
 		_engine = engOpen(NULL);
-        
+
 		// tell Matlab where to store the output
 		engOutputBuffer(_engine, _outputBuffer, OUTPUT_BUFFER_SIZE);
 
@@ -62,7 +63,7 @@ namespace sm {
 		bool success = true;
 		if (_engine != NULL)
 		{
-			success = (engClose(_engine) == 0); 
+			success = (engClose(_engine) == 0);
 			_engine = NULL;
 		}
 		return success;
@@ -70,17 +71,17 @@ namespace sm {
 
 	bool Engine::isInitialized()
 	{
-		return (_engine!=NULL);
+		return (_engine != NULL);
 	}
 
 	bool Engine::good()
 	{
-		if (!_engine == NULL)
+		if (!isInitialized())
 			return false;
 
 		bool success = false;
-		try { 
-			success = executeCommand("disp('sm::Matlab Engine-Test')")=="sm::Matlab Engine-Test";
+		try {
+			success = executeCommand("disp('sm::Matlab Engine-Test')") == ">> sm::Matlab Engine-Test";
 		}
 		catch (EngineExecutionException& e)
 		{
@@ -88,7 +89,7 @@ namespace sm {
 		}
 		return success;
 	}
-    
+
     std::string Engine::executeCommand(const std::string& command)
     {
 		assertIsInitialized();
@@ -140,7 +141,6 @@ namespace sm {
             std::cout<<executeCommand(command);
         }
     }
-	
 
 	// TESTERS
 	// *******
@@ -330,28 +330,28 @@ namespace sm {
     {
 		assertIsInitialized();
 		assertValidVariableName(name);
-		
+
 		// Get variable from matlab
         mxArray* mxArray = engGetVariable(_engine, name.c_str());
 
 		// Check if variable exists
 		if (!mxArray)
 			return false;
-		
+
 		SM_ASSERT_EQ(InvalidTypeException, mxIsNumeric(mxArray), 1, "Variable is not numeric");
 		SM_ASSERT_EQ(EmptyVariableException, mxIsEmpty(mxArray), 0, "Variable is empty!");
 		SM_ASSERT_EQ(InvalidSizeException, mxGetNumberOfDimensions(mxArray), 2, "Variable is 2-dimensional");
-		
+
 		size_t rows = mxGetM(mxArray);
 		size_t cols = mxGetN(mxArray);
-		
+
 		rValue.resize(rows, cols);
-	
+
 		void* mxArrayData = mxGetData(mxArray);
 
 		SM_ASSERT_EQ(InvalidTypeException, sizeof(rValue(0,0)), mxGetElementSize(mxArray), "Datatype does not match");
 		std::memcpy(rValue.data(), mxArrayData, mxGetElementSize(mxArray)*mxGetNumberOfElements(mxArray));
-		
+
 		// delete array
         mxDestroyArray(mxArray);
 
