@@ -3,6 +3,7 @@
 #include <sm/boost/serialization.hpp>
 
 
+using namespace sm::database;
 struct tester
 {
   int a, b;
@@ -33,7 +34,7 @@ TEST(SmDatabaseTestSuite, testCreateDb)
     
     
     {
-      sm::database::SerializedMap<tester> smap(testdb, "tester");
+        sm::database::SerializedMap<tester, PortableBinaryArchive> smap(testdb, "tester");
     }
     
     ASSERT_TRUE(boost::filesystem::exists(testdb));
@@ -59,7 +60,7 @@ TEST(SmDatabaseTestSuite, testSerializedMap)
       }
     
     
-    sm::database::SerializedMap<tester> smap(testdb, "tester");
+    sm::database::SerializedMap<tester, PortableBinaryArchive> smap(testdb, "tester");
     ASSERT_EQ(smap.tableName(), "tester");
     //--gtest_catch_exceptions
     ASSERT_THROW(smap.get(1), sm::database::SqlException);
@@ -96,7 +97,7 @@ TEST(SmDatabaseTestSuite, testSerializedMapPersistence)
     std::vector< boost::shared_ptr<tester> > vals;
     
     {   // Scope block so that smap will go out of scope. 
-      sm::database::SerializedMap<tester> smap(testdb, "tester");
+        sm::database::SerializedMap<tester, PortableBinaryArchive> smap(testdb, "tester");
       
 
 
@@ -118,7 +119,7 @@ TEST(SmDatabaseTestSuite, testSerializedMapPersistence)
 
 
     {   // Scope block so that smap will go out of scope. 
-      sm::database::SerializedMap<tester> smap(testdb, "tester");
+        sm::database::SerializedMap<tester, PortableBinaryArchive> smap(testdb, "tester");
             
       for(int i = 0; i < 100; i++)
 	{

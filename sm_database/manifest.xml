@@ -15,7 +15,7 @@
 
   <export>
     <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
-	 lflags="`rosboost-cfg --lflags filesystem,system,serialization`"/>
+	 lflags="`rosboost-cfg --lflags filesystem,system,serialization` -L${prefix}/lib -lsm_database"/>
   </export>
 
 
