@@ -48,8 +48,11 @@ namespace boost { namespace serialization {
       index_t cols = M.cols();
       ar << BOOST_SERIALIZATION_NVP(rows);
       ar << BOOST_SERIALIZATION_NVP(cols);
-
-      ar << make_nvp("data", make_array(&M(0,0),M.rows()*M.cols()));
+      
+      if(rows > 0 && cols > 0)
+      {
+          ar << make_nvp("data", make_array(&M(0,0),M.rows()*M.cols()));
+      }
     }
 
 
