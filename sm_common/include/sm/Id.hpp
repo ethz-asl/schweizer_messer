@@ -46,8 +46,7 @@
 
 #include <boost/serialization/nvp.hpp>
 namespace sm {
-
-  typedef boost::uint64_t id_type;
+    typedef boost::uint64_t id_type;
 
   ///
   /// \class Id
@@ -73,7 +72,7 @@ namespace sm {
   class Id
   {
   public:
-  
+      
     explicit Id (id_type id) : id_(id) {}
 
     /// Only for stl use
