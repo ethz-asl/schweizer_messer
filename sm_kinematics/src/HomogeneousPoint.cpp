@@ -205,12 +205,12 @@ namespace sm {
       _ph[3] = 1.0;
     }
 
-	const bool HomogeneousPoint::atInfinity() const
+	bool HomogeneousPoint::atInfinity() const
 	{
 		return (_ph[3] == 0.0);
 	}
 
-	const bool HomogeneousPoint::isVector() const
+	bool HomogeneousPoint::isVector() const
 	{
 		return atInfinity();
 	}
