@@ -131,13 +131,13 @@ namespace sm { namespace kinematics {
   }
 	
   Eigen::Vector3d R2AxisAngle(Eigen::Matrix3d const & C){
-    double a = acos( (C(0,0) + C(1,1) + C(2,2) - double(1)) * double(0.5));
-    Eigen::Vector3d axis;
 
-    if (boost::math::isnan(a)) {
-      std::cout << "[WARNING]: Improper rotation matrix: trace(C) > 3." << std::endl;
-      return Eigen::Vector3d::Zero();
-    }
+    // Sometimes, because of roundoff error, the value of tr ends up outside
+    // the valid range of arccos. Truncate to the valid range.
+    double tr = std::max(-1.0, std::min( (C(0,0) + C(1,1) + C(2,2) - 1.0) * 0.5, 1.0));
+    double a = acos( tr ) ;
+
+    Eigen::Vector3d axis;
 
     if(fabs(a) < 1e-10) {
       return Eigen::Vector3d::Zero();
