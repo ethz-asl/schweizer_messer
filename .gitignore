@@ -18,7 +18,6 @@ sm_database/bin/
 sm_database/build/
 sm_database/test.db
 sm_omnicam/
-sm_pose_graph/
 sm_property_tree/bin/sm_property_tree_test
 sm_property_tree/build/
 sm_property_tree/lib/
