@@ -72,16 +72,16 @@ void exportPropertyTree()
 	;
   
 
-  class_<BoostPropertyTree>("BoostPropertyTree", init<>())
+  class_<BoostPropertyTree, bases<PropertyTree> >("BoostPropertyTree", init<>())
 	.def(init<std::string>("BoostPropertyTree( string baseNamespace )") )
-	.def("loadXml", &BoostPropertyTree::loadXml)
-	.def("saveXml", &BoostPropertyTree::saveXml)
-	.def("loadJson", &BoostPropertyTree::loadJson)
-	.def("saveJson", &BoostPropertyTree::saveJson)
-	.def("loadIni", &BoostPropertyTree::loadIni)
-	.def("saveIni", &BoostPropertyTree::saveIni)
-	.def("loadInfo", &BoostPropertyTree::loadInfo)
-	.def("saveInfo", &BoostPropertyTree::saveInfo)
+	.def("loadXml", &BoostPropertyTree::loadXmlStr)
+	.def("saveXml", &BoostPropertyTree::saveXmlStr)
+	.def("loadJson", &BoostPropertyTree::loadJsonStr)
+	.def("saveJson", &BoostPropertyTree::saveJsonStr)
+	.def("loadIni", &BoostPropertyTree::loadIniStr)
+	.def("saveIni", &BoostPropertyTree::saveIniStr)
+	.def("loadInfo", &BoostPropertyTree::loadInfoStr)
+	.def("saveInfo", &BoostPropertyTree::saveInfoStr)
 	;
 	
 

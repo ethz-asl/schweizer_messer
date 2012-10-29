@@ -10,7 +10,7 @@
 #include <boost/cstdint.hpp>
 
 // Helpful functions from libsm
-#include <sm/eigen/GTest.hpp>
+#include <sm/eigen/gtest.hpp>
 #include <sm/eigen/NumericalDiff.hpp>
 
 #include <Eigen/LU>
@@ -27,7 +27,7 @@ struct SMatrixFunctor
   typedef ROTATION_TYPE rotation_t;
   typedef Eigen::Vector3d input_t;
   typedef Eigen::Matrix3d jacobian_t;
-  typedef Eigen::Vector3d value_t;
+  typedef Eigen::Vector3d value_t; 
   typedef double scalar_t;
   
   enum { XMinimalDimension = 3 };

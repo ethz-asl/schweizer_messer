@@ -104,7 +104,7 @@ namespace sm {
   template<typename T>
   T BoostPropertyTreeImplementation::get(const std::string & key, const T & defaultValue) const
   {
-    boost::optional<T> val = _ptree.get<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'));
+   boost::optional<T> val = _ptree.get_optional<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'));
     if(val)
       {
 	return *val;
@@ -118,7 +118,7 @@ namespace sm {
   template<typename T>
   T BoostPropertyTreeImplementation::get(const std::string & key, const T & defaultValue)
   {
-    boost::optional<T> val = _ptree.get<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'));
+    boost::optional<T> val = _ptree.get_optional<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'));
     if(val)
       {
 	return *val;

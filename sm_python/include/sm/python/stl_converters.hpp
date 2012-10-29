@@ -1,3 +1,6 @@
+#ifndef SM_PYTHON_STL_CONVERTERS_HPP
+#define SM_PYTHON_STL_CONVERTERS_HPP
+
 #include<boost/python.hpp>
 
 namespace sm {
@@ -29,3 +32,5 @@ namespace sm {
 
     } // namespace python
 } // namespace sm
+
+#endif // SM_PYTHON_STL_CONVERTERS_HPP

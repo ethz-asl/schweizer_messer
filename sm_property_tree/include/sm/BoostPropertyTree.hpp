@@ -34,6 +34,19 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+      void loadXmlStr(const std::string & fileName){loadXml(fileName);}
+      void saveXmlStr(const std::string & fileName) const{saveXml(fileName);}
+ 
+      void loadJsonStr(const std::string & fileName){loadJson(fileName);}
+      void saveJsonStr(const std::string & fileName) const{saveJson(fileName);}
+ 
+      void loadIniStr(const std::string & fileName){loadIni(fileName);}
+      void saveIniStr(const std::string & fileName) const{saveIni(fileName);}
+
+      void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
+      void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
+
+
     iterator begin() ;
     const_iterator begin() const;
     iterator end() ;

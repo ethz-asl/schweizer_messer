@@ -43,5 +43,8 @@ using namespace sm::kinematics;
     def("qoplus", &qoplus);
     // Eigen::Vector4d qplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
     def("qplus", &qplus);
+    def("qlog", &qlog);
+    def("qexp", &qexp);
+    def("qslerp", &qslerp);
       ;
   }

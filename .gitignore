@@ -1,3 +1,6 @@
+sm_eigen/lib
+*.so
+*.pyc
 test.ba
 test.xml
 sm_doc/doc/html

@@ -317,5 +317,24 @@ namespace sm { namespace kinematics {
                 -q[0], -q[1], -q[2];
             return invS;
         }
+
+        Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t)
+        {
+            if(t <= 0.0)
+            {
+                return q0;
+            }
+            else if(t >= 1.0)
+            {
+                return q1;
+            }
+            else
+            {
+                return qplus(q0, qexp(t * qlog( qplus(quatInv(q0),q1))));
+            }
+        }
+        
+
+
     }} // namespace sm::kinematics
 
