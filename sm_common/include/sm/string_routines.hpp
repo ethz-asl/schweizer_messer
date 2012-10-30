@@ -7,108 +7,109 @@
 #include <iostream>
 namespace sm
 {
-  /// replaces the 'target' with 'replacement' searching forward through
-  /// the string and skipping 'skip' occurences
-  inline std::string replace(std::string str, char target, char replacement, unsigned int skip = 0)
-  {
-    std::string::size_type pos = 0;
-    while( (pos = str.find(target, pos)) != std::string::npos)
-      {
-	if(skip)
-	  {
-	    skip--;
-	    pos++;
-	  }
-	else
-	  str[pos] = replacement;
-      }
-    return str;
-  }
-
-  /// replaces the 'target' with 'replacement' searching backward through
-  /// the string and skipping 'skip' occurences
-  inline std::string replace_reverse(std::string str, char target, char replacement, unsigned int skip = 0)
-  {
-    std::string::size_type pos = std::string::npos;
-    while( (pos = str.rfind(target, pos)) != std::string::npos)
-      {
-	if(skip)
-	  {
-	    skip--;
-	    pos--;
-	  }
-	else
-	  str[pos] = replacement;
-      }
-    return str;
-  }
-
-  inline std::string leading_pad( std::string str, unsigned int desiredLength, char padChar )
-  {
-    std::string result;
-    if ( str.length() < desiredLength )
-      {
-	std::string padding( desiredLength - str.length(), padChar );
-	result = padding.append(str);
-      }
-    else
-      {
-	result = str;
-      }
-    return result;
-  }
-
-  inline std::string tolower(std::string s) {
-    for(unsigned int i = 0; i < s.size(); i++)
-      s[i] = ::tolower(s[i]); // call tolower from the c std lib.
-    return s;
-  }
-
-  // Find all substrings of the form $(XXX) and replace them
-  // with the associated environment variable if they exist.
-  inline std::string substituteEnvVars(std::string const & s) {
-    std::string::size_type off = 0, pidx=0, idx=0, idxe=0;
-    std::ostringstream out;
-    idx = s.find("$(",off);
-    while(idx != std::string::npos){
-      //std::cout << "Found \"$(\" at " << idx << std::endl;
-      idxe = s.find(')',idx);
-      if(idxe != std::string::npos) {
-	//std::cout << "Found \")\" at " << idxe << std::endl;
-	// We've found an environment variable.
-	std::string envVar = s.substr(idx+2,idxe-idx-2);
-	//std::cout << "evname: " << envVar << std::endl;
-	char * envSub = getenv(envVar.c_str());
-
-	if(envSub != NULL) {
-	  // Dump everything before the envVar
-	  out << s.substr(pidx,idx-pidx);
-	  out << envSub;
-	  pidx = idxe+1;
-	}
-	off = idxe+1;
-	idx = s.find("$(",off);
-      } else {
-	// No close brackets means no env vars.
-	idx = std::string::npos;
-      }
-
+    /// replaces the 'target' with 'replacement' searching forward through
+    /// the string and skipping 'skip' occurences
+    inline std::string replace(std::string str, char target, char replacement, unsigned int skip = 0)
+    {
+        std::string::size_type pos = 0;
+        while( (pos = str.find(target, pos)) != std::string::npos)
+        {
+            if(skip)
+            {
+                skip--;
+                pos++;
+            }
+            else
+                str[pos] = replacement;
+        }
+        return str;
     }
-    out << s.substr(pidx);
-    return out.str();
-  }
+
+    /// replaces the 'target' with 'replacement' searching backward through
+    /// the string and skipping 'skip' occurences
+    inline std::string replace_reverse(std::string str, char target, char replacement, unsigned int skip = 0)
+    {
+        std::string::size_type pos = std::string::npos;
+        while( (pos = str.rfind(target, pos)) != std::string::npos)
+        {
+            if(skip)
+            {
+                skip--;
+                pos--;
+            }
+            else
+                str[pos] = replacement;
+        }
+        return str;
+    }
+
+    inline std::string leading_pad( std::string str, unsigned int desiredLength, char padChar )
+    {
+        std::string result;
+        if ( str.length() < desiredLength )
+        {
+            std::string padding( desiredLength - str.length(), padChar );
+            result = padding.append(str);
+        }
+        else
+        {
+            result = str;
+        }
+        return result;
+    }
+
+    /*
+    inline std::string tolower(std::string s) {
+        for(unsigned int i = 0; i < s.size(); i++)
+            s[i] = ::tolower(s[i]); // call tolower from the c std lib.
+        return s;
+    }
+    */
+    // Find all substrings of the form $(XXX) and replace them
+    // with the associated environment variable if they exist.
+    inline std::string substituteEnvVars(std::string const & s) {
+        std::string::size_type off = 0, pidx=0, idx=0, idxe=0;
+        std::ostringstream out;
+        idx = s.find("$(",off);
+        while(idx != std::string::npos){
+            //std::cout << "Found \"$(\" at " << idx << std::endl;
+            idxe = s.find(')',idx);
+            if(idxe != std::string::npos) {
+                //std::cout << "Found \")\" at " << idxe << std::endl;
+                // We've found an environment variable.
+                std::string envVar = s.substr(idx+2,idxe-idx-2);
+                //std::cout << "evname: " << envVar << std::endl;
+                char * envSub = getenv(envVar.c_str());
+
+                if(envSub != NULL) {
+                    // Dump everything before the envVar
+                    out << s.substr(pidx,idx-pidx);
+                    out << envSub;
+                    pidx = idxe+1;
+                }
+                off = idxe+1;
+                idx = s.find("$(",off);
+            } else {
+                // No close brackets means no env vars.
+                idx = std::string::npos;
+            }
+
+        }
+        out << s.substr(pidx);
+        return out.str();
+    }
 
 
-  inline std::string ensureTrailingBackslash(std::string const & s)
-  {
-    if(s.size() == 0)
-      return "/";
+    inline std::string ensureTrailingBackslash(std::string const & s)
+    {
+        if(s.size() == 0)
+            return "/";
     
-    if(s[s.size()-1] == '/')
-      return s;
+        if(s[s.size()-1] == '/')
+            return s;
     
-    return s + "/";
-  }
+        return s + "/";
+    }
 
 	// a nice and short to-string function.
 	template<typename T>
@@ -121,8 +122,8 @@ namespace sm
 
 
 	// pad an int with zeros.
-  template<typename T>
-  inline std::string padded(const T & val, unsigned int digits, char fillChar = '0')
+    template<typename T>
+    inline std::string padded(const T & val, unsigned int digits, char fillChar = '0')
 	{
 		std::ostringstream s;
 		s.fill(fillChar);
@@ -242,16 +243,16 @@ namespace sm
 	template<typename Iterator>
 	std::string arrToString(Iterator start, Iterator end)
 	{
-          std::ostringstream s;
-          toStream(s, start, end, ",", "[", "]");
-            return s.str();
+        std::ostringstream s;
+        toStream(s, start, end, ",", "[", "]");
+        return s.str();
 	}
 
 	template<typename T>
 	std::string arrToString(T * thearr, unsigned int size)
 	{
           
-	  return arrToString((T*)thearr, (T*)(thearr + size));
+        return arrToString((T*)thearr, (T*)(thearr + size));
 	}
 
 
@@ -289,10 +290,10 @@ namespace sm
 	template<typename ConstIterator>
 	inline std::string paddedToString( int padLength, int decimalLength, ConstIterator begin, ConstIterator end, std::string delimiter = " ", std::string prefix = "", std::string postfix = "")
 	{
-          std::ostringstream stream;
-          paddedToStream(stream,padLength,decimalLength,begin,end,delimiter,prefix,postfix);
-          return stream.str();
-        }
+        std::ostringstream stream;
+        paddedToStream(stream,padLength,decimalLength,begin,end,delimiter,prefix,postfix);
+        return stream.str();
+    }
 
 
 } // namespace sm
