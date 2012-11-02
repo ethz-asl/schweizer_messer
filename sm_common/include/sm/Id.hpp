@@ -105,9 +105,11 @@ namespace sm {
     }
 
     // postincrement.
-    void operator++ (int unused)
+    Id operator++ (int unused)
     {
-      id_++;
+        Id rval(id_);
+      ++id_;
+      return rval;
     }
 
     // preincrement
@@ -140,51 +142,51 @@ namespace sm {
 } // namespace aslam
 
 
-#define SM_DEFINE_ID(IdTypeName)					\
-  class IdTypeName : public sm::Id					\
-  {									\
-  public:								\
-    explicit IdTypeName (sm::id_type id = -1) : sm::Id(id) {}	\
-									\
-    template<class Archive>						\
-      void serialize(Archive & ar, const unsigned int version)		\
-    {									\
-      ar & BOOST_SERIALIZATION_NVP(id_);		\
-    }									\
-  };									
+#define SM_DEFINE_ID(IdTypeName)                                        \
+    class IdTypeName : public sm::Id                                    \
+    {                                                                   \
+    public:                                                             \
+        explicit IdTypeName (sm::id_type id = -1) : sm::Id(id) {}       \
+        IdTypeName(const sm::Id & id) : sm::Id(id){}                    \
+        template<class Archive>                                         \
+            void serialize(Archive & ar, const unsigned int version)    \
+        {                                                               \
+            ar & BOOST_SERIALIZATION_NVP(id_);                          \
+        }                                                               \
+    };									
 
 #ifdef _WIN32
 // If you need to use the ID in a tr1 hashing container,
 // use this macro outside of any namespace:
 // SM_DEFINE_ID_HASH(my_namespace::myIdType);
-#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)		\
-  namespace std {						\
-  template<>							\
-  struct hash<FullyQualifiedIdTypeName>				\
-  {								\
-    hash<boost::uint64_t> _hash;				\
-    size_t operator()(const FullyQualifiedIdTypeName & id)	\
-    {								\
-      return _hash(id.getId());					\
-    }								\
-  };								\
+#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)                 \
+    namespace std {                                                 \
+        template<>                                                  \
+        struct hash<FullyQualifiedIdTypeName>                       \
+        {                                                           \
+            hash<boost::uint64_t> _hash;                            \
+            size_t operator()(const FullyQualifiedIdTypeName & id)	\
+            {                                                       \
+                return _hash(id.getId());                           \
+            }                                                       \
+        };                                                          \
     } // namespace std
 #else
 // If you need to use the ID in a tr1 hashing container,
 // use this macro outside of any namespace:
 // SM_DEFINE_ID_HASH(my_namespace::myIdType);
-#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)		\
-  namespace std { namespace tr1 {				\
-  template<>							\
-  struct hash<FullyQualifiedIdTypeName>				\
-  {								\
-    hash<boost::uint64_t> _hash;				\
-    size_t operator()(const FullyQualifiedIdTypeName & id)	\
-    {								\
-      return _hash(id.getId());					\
-    }								\
-  };								\
-    }} // namespace std::tr1
+#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)                     \
+    namespace std { namespace tr1 {                                     \
+            template<>                                                  \
+            struct hash<FullyQualifiedIdTypeName>                       \
+            {                                                           \
+                hash<boost::uint64_t> _hash;                            \
+                size_t operator()(const FullyQualifiedIdTypeName & id)	\
+                {                                                       \
+                    return _hash(id.getId());                           \
+                }                                                       \
+            };                                                          \
+        }} // namespace std::tr1
 #endif
 
 #endif /* SM_ID_HPP */
