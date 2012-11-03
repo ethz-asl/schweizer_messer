@@ -6,6 +6,8 @@
 #include <boost/serialization/nvp.hpp>
 #include <sm/eigen/serialization.hpp>
 #include "HomogeneousPoint.hpp"
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/version.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -89,6 +91,10 @@ namespace sm {
       void checkTransformationIsValid( void ) const;
 
       
+        enum {CLASS_SERIALIZATION_VERSION = 0};
+
+
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
       /// 
       /// Serialize the Transformation to a boost::serialization archive.
       ///
@@ -96,7 +102,11 @@ namespace sm {
       /// @param version The archive file version number.
       ///
       template<class Archive>
-      void serialize(Archive & ar, const unsigned int version);
+      void save(Archive & ar, const unsigned int version) const;
+
+      template<class Archive>
+      void load(Archive & ar, const unsigned int version);
+
       
       bool isBinaryEqual(const Transformation & rhs) const;
 
@@ -120,16 +130,26 @@ namespace sm {
 
     
     template<class Archive>
-    void Transformation::serialize(Archive & ar, const unsigned int version)
+    void Transformation::save(Archive & ar, const unsigned int version) const
     {
       ar & BOOST_SERIALIZATION_NVP(_q_a_b);
       ar & BOOST_SERIALIZATION_NVP(_t_a_b_a);
+    }
+
+    template<class Archive>
+    void Transformation::load(Archive & ar, const unsigned int version)
+    {
+        SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+        ar >> BOOST_SERIALIZATION_NVP(_q_a_b);
+        ar >> BOOST_SERIALIZATION_NVP(_t_a_b_a);
     }
 
 
   } // namespace kinematics
   
 } // namespace sm
+
+BOOST_CLASS_VERSION(sm::kinematics::Transformation, sm::kinematics::Transformation::CLASS_SERIALIZATION_VERSION)
 
 
 #endif /* SM_TRANSFORMATION_HPP */

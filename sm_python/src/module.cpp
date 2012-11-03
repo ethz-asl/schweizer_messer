@@ -1,6 +1,6 @@
 #include <numpy_eigen/boost_python_headers.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
-
+#include <sm/timing/Timer.hpp>
 using namespace boost::python;
 
 //typedef UniformCubicBSpline<Eigen::Dynamic> UniformCubicBSplineX;
@@ -16,8 +16,14 @@ void exportHomogeneousPoint();
 void exportTimestampCorrectors();
 void exportPropertyTree();
 
+void printTiming()
+{
+    sm::timing::Timing::print(std::cout);
+}
+
 BOOST_PYTHON_MODULE(libsm_python)
 {
+    def("printTiming", &printTiming);
   import_rotational_kinematics_python();
   export_rotations();
   export_transformations();

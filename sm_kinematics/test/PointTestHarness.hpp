@@ -103,7 +103,7 @@ namespace sm {
 	  Eigen::Vector4d p1a = p1/p1.norm();
 	  Eigen::Vector4d P1a = P1.toHomogeneous() / P1.toHomogeneous().norm();
 
-	  sm::eigen::assertNear(p1a, p1a, threshold, SM_SOURCE_FILE_POS);
+	  sm::eigen::assertNear(p1a, P1a, threshold, SM_SOURCE_FILE_POS);
 	}
  
     }
