@@ -44,3 +44,4 @@ sm_doc/build
 */cmake_install.cmake
 
 *.orig
+sm_database/lib
