@@ -44,4 +44,5 @@ sm_doc/build
 */cmake_install.cmake
 
 *.orig
+sm_pose_graph/build/
 sm_database/lib
