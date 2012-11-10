@@ -43,6 +43,7 @@ rosbuild_add_library( ${PROJECT_NAME}
   src/HomogeneousPoint.cpp
   src/UncertainTransformation.cpp
   src/UncertainHomogeneousPoint.cpp
+  src/three_point_methods.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
@@ -61,6 +62,7 @@ rosbuild_add_gtest( ${PROJECT_NAME}_tests
   test/test_main.cpp
   test/UncertainTransformationTests.cpp
   test/homogeneous_coordinates.cpp
+  test/three_point_methods.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
