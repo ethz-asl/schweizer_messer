@@ -17,12 +17,13 @@ def plotCoordinateFrame(axis, T_0f, size=1, linewidth=3):
 
     Usage is a bit irritating:
     import mpl_toolkits.mplot3d.axes3d as p3
-    import pylab
+    import pylab as pl
 
-    f1 = pylab.figure(1)
+    f1 = pl.figure(1)
     # old syntax
     # a3d = p3.Axes3D(f1)
-    ax = f1.add_subplot(111, projection='3d')
+    # new syntax
+    a3d = f1.add_subplot(111, projection='3d')
     # ... Fill in T_0f, the 4x4 transformation matrix
     plotCoordinateFrame(a3d, T_0f)
 
