@@ -13,46 +13,73 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/filesystem.hpp>
 #include <string>
+#include "../../boost/portable_binary_oarchive.hpp"
+#include "../../boost/portable_binary_iarchive.hpp"
 
 
 namespace sm {
-  namespace database {
-    SM_DEFINE_EXCEPTION(Exception,std::runtime_error);
-    SM_DEFINE_EXCEPTION(SqlException,Exception);
-    SM_DEFINE_EXCEPTION(UnknownIdException, Exception);
-    SM_DEFINE_EXCEPTION(UnableToOpenDatabaseException, Exception);
-    SM_DEFINE_EXCEPTION(InvalidTableNameException, Exception);
-    SM_DEFINE_EXCEPTION(InvalidDbNameException, Exception);
-    SM_DEFINE_EXCEPTION(NullValueException, Exception);
+    namespace database {
+        SM_DEFINE_EXCEPTION(Exception,std::runtime_error);
+        SM_DEFINE_EXCEPTION(SqlException,Exception);
+        SM_DEFINE_EXCEPTION(UnknownIdException, Exception);
+        SM_DEFINE_EXCEPTION(UnableToOpenDatabaseException, Exception);
+        SM_DEFINE_EXCEPTION(InvalidTableNameException, Exception);
+        SM_DEFINE_EXCEPTION(InvalidDbNameException, Exception);
+        SM_DEFINE_EXCEPTION(NullValueException, Exception);
+
+
+        struct PortableBinaryArchive
+        {
+            typedef ::boost::archive::portable_binary_oarchive oarchive_t;
+            typedef ::boost::archive::portable_binary_iarchive iarchive_t;
+        };
+
+
+        struct BinaryArchive
+        {
+            typedef ::boost::archive::binary_oarchive oarchive_t;
+            typedef ::boost::archive::binary_iarchive iarchive_t;
+        };
+
+        struct TextArchive
+        {
+            typedef ::boost::archive::text_oarchive oarchive_t;
+            typedef ::boost::archive::text_iarchive iarchive_t;
+        };
+
     
-    template<typename T>
-    class SerializedMap 
-    {
-    public:
-      typedef T value_t;
+        template<typename T, typename ARCHIVE_T>
+        class SerializedMap 
+        {
+        public:
+            typedef T value_t;
+            typedef ARCHIVE_T archive_t;
+            typedef typename archive_t::iarchive_t iarchive_t;
+            typedef typename archive_t::oarchive_t oarchive_t;
       
-      SerializedMap(const ::boost::filesystem::path & dbFileName, 
-		    const std::string & tableName);
-      virtual ~SerializedMap();
+            SerializedMap(const ::boost::filesystem::path & dbFileName, 
+                          const std::string & tableName);
+            virtual ~SerializedMap();
       
-      ::boost::shared_ptr<T> get(::boost::uint64_t id);      
-      void get(::boost::uint64_t id, T & outValue);      
-      void set(::boost::uint64_t id, const ::boost::shared_ptr<T> & value);
-      void set(::boost::uint64_t id, const T & value);
-      
-      const std::string & tableName(){ return _tableName; }
-    private:
-      void validateTableName();
+            ::boost::shared_ptr<T> get(::boost::uint64_t id);      
 
-      ::boost::filesystem::path _dbName;
-      std::string _tableName;
-      sqlite3 * _db;
-      sqlite3_stmt * _iStmt, * _sStmt;
+            void get(::boost::uint64_t id, value_t & outValue);
+            void set(::boost::uint64_t id, const ::boost::shared_ptr<T> & value);
+            void set(::boost::uint64_t id, const T & value);
       
-    };
+            const std::string & tableName(){ return _tableName; }
+        private:
+            void validateTableName();
+
+            ::boost::filesystem::path _dbName;
+            std::string _tableName;
+            sqlite3 * _db;
+            sqlite3_stmt * _iStmt, * _sStmt;
+      
+        };
 
 
-  } // namespace database
+    } // namespace database
   
 } // namespace sm
 

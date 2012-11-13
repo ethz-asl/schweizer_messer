@@ -3,7 +3,7 @@
 #include <boost/cstdint.hpp>
 
 // Helpful functions from libsm
-#include <sm/eigen/GTest.hpp>
+#include <sm/eigen/gtest.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
 #include <sm/kinematics/Transformation.hpp>
 

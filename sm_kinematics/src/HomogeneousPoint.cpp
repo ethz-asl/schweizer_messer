@@ -159,7 +159,7 @@ namespace sm {
       return _ph;
     }
 
-    /// \brief get the homogeneous representation and the Jacobian of the oplus operator with respect to this point. The Jacobian should be 3x3.
+    /// \brief get the homogeneous representation and the Jacobian of the oplus operator with respect to this point. The Jacobian should be 4x3.
     const Eigen::Vector4d & HomogeneousPoint::toHomogeneousAndJacobian(homogeneous_jacobian_t & J) const
     {
 
@@ -205,12 +205,12 @@ namespace sm {
       _ph[3] = 1.0;
     }
 
-	const bool HomogeneousPoint::atInfinity() const
+	bool HomogeneousPoint::atInfinity() const
 	{
 		return (_ph[3] == 0.0);
 	}
 
-	const bool HomogeneousPoint::isVector() const
+	bool HomogeneousPoint::isVector() const
 	{
 		return atInfinity();
 	}

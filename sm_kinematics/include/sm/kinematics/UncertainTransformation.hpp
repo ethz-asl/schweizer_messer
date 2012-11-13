@@ -68,27 +68,44 @@ namespace sm {
       virtual void setRandom( double translationMaxMeters, double rotationMaxRadians );
 
       bool isBinaryEqual(const UncertainTransformation & rhs) const;
-      
+
+        enum {CLASS_SERIALIZATION_VERSION = 0};
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
       template<class Archive>
-      void serialize(Archive & ar, const unsigned int version);
+      void save(Archive & ar, const unsigned int version) const;
+        template<class Archive>
+      void load(Archive & ar, const unsigned int version);
 
 	  
     private:
       covariance_t _U;
     };
 
+
+
     template<class Archive>
-    void UncertainTransformation::serialize(Archive & ar, const unsigned int version)
+    void UncertainTransformation::save(Archive & ar, const unsigned int version) const
     {
 
 	  using ::boost::serialization::make_nvp;
-      ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Transformation);
-      ar & make_nvp("_U", _U);//BOOST_SERIALIZATION_NVP(_U);
+      ar << BOOST_SERIALIZATION_BASE_OBJECT_NVP(Transformation);
+      ar << make_nvp("_U", _U);//BOOST_SERIALIZATION_NVP(_U);
+    }
+
+    template<class Archive>
+    void UncertainTransformation::load(Archive & ar, const unsigned int version)
+    {
+        SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+
+	  using ::boost::serialization::make_nvp;
+      ar >> BOOST_SERIALIZATION_BASE_OBJECT_NVP(Transformation);
+      ar >> make_nvp("_U", _U);//BOOST_SERIALIZATION_NVP(_U);
     }
 
     
   } // namespace kinematics
 } // namespace sm
 
+BOOST_CLASS_VERSION(sm::kinematics::UncertainTransformation, sm::kinematics::UncertainTransformation::CLASS_SERIALIZATION_VERSION);      
 
 #endif /* SM_UNCERTAIN_TRANSFORMATION_HPP */

@@ -82,12 +82,25 @@ namespace sm {
       ///        This function will convert the uncertainty accordingly.
       virtual void normalize();
 
+
+        enum {CLASS_SERIALIZATION_VERSION = 0};
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+        
 	  template<class Archive>
-	  void serialize(Archive & ar, const unsigned int version)
+	  void save(Archive & ar, const unsigned int version) const
 	  {
-		ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(HomogeneousPoint);
-		ar & BOOST_SERIALIZATION_NVP(_U);
+          ar << BOOST_SERIALIZATION_BASE_OBJECT_NVP(HomogeneousPoint);
+          ar << BOOST_SERIALIZATION_NVP(_U);
 	  }
+
+	  template<class Archive>
+	  void load(Archive & ar, const unsigned int version)
+	  {
+          SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+          ar >> BOOST_SERIALIZATION_BASE_OBJECT_NVP(HomogeneousPoint);
+          ar >> BOOST_SERIALIZATION_NVP(_U);
+	  }
+
 
 	  bool isBinaryEqual(const UncertainHomogeneousPoint & rhs) const;
     private:
@@ -98,6 +111,9 @@ namespace sm {
     
   } // namespace kinematics
 } // namespace sm
+
+BOOST_CLASS_VERSION(sm::kinematics::UncertainHomogeneousPoint, sm::kinematics::UncertainHomogeneousPoint::CLASS_SERIALIZATION_VERSION);
+
 
 
 #endif /* SM_UNCERTAIN_HOMOGENEOUS_POINT_HPP */

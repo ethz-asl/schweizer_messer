@@ -2,8 +2,8 @@
 namespace sm {
   namespace database {
     
-    template<typename T>
-    SerializedMap<T>::SerializedMap(const ::boost::filesystem::path & dbFileName, const std::string & tableName) : _tableName(tableName), _db(NULL), _iStmt(NULL), _sStmt(NULL)
+    template<typename T, typename A>
+    SerializedMap<T,A>::SerializedMap(const ::boost::filesystem::path & dbFileName, const std::string & tableName) : _tableName(tableName), _db(NULL), _iStmt(NULL), _sStmt(NULL)
     {
       SM_ASSERT_GT(InvalidDbNameException, dbFileName.string().size(), 0, "The database filename must be greater than zero");
       validateTableName();
@@ -45,8 +45,8 @@ namespace sm {
     }
 
 
-    template<typename T>
-    SerializedMap<T>::~SerializedMap()
+    template<typename T, typename A>
+    SerializedMap<T,A>::~SerializedMap()
     {
       // Finalize and close
       sqlite3_finalize(_iStmt);
@@ -55,8 +55,8 @@ namespace sm {
     }
 
     
-    template<typename T>
-    ::boost::shared_ptr<T> SerializedMap<T>::get( ::boost::uint64_t id)
+    template<typename T, typename A>
+    ::boost::shared_ptr<T> SerializedMap<T,A>::get( ::boost::uint64_t id)
     { 
       ::boost::shared_ptr<T> value(new T);
       
@@ -64,8 +64,8 @@ namespace sm {
       return value;
     }
 
-    template<typename T>
-    void SerializedMap<T>::get( ::boost::uint64_t id, T & outValue)
+    template<typename T, typename A>
+    void SerializedMap<T,A>::get( ::boost::uint64_t id, T & outValue)
     {
       int result;
       try {
@@ -83,9 +83,9 @@ namespace sm {
 	// Deserialize the blob
 	// This allows us to create a stream from the blob without incurring a copy
 	typedef ::boost::iostreams::basic_array_source<char> Device;
-	::boost::iostreams::stream_buffer<Device> buffer(reinterpret_cast<const char *>(sqlite3_column_blob(_sStmt, 0)),sqlite3_column_bytes(_sStmt, 0));
+	::boost::iostreams::stream<Device> buffer(reinterpret_cast<const char *>(sqlite3_column_blob(_sStmt, 0)),sqlite3_column_bytes(_sStmt, 0));
 	
-	::boost::archive::binary_iarchive ia(buffer);
+	iarchive_t ia(buffer);
 	
 	ia >> outValue;
       
@@ -104,15 +104,15 @@ namespace sm {
   }
 
 
-  template<typename T>
-  void SerializedMap<T>::set(::boost::uint64_t id, const ::boost::shared_ptr<T> & value)
+  template<typename T, typename A>
+  void SerializedMap<T,A>::set(::boost::uint64_t id, const ::boost::shared_ptr<T> & value)
   {
     SM_ASSERT_TRUE(NullValueException, value, "It is illegal to call this function with a null value");
     set(id,*value);
   }
 
-  template<typename T>
-  void SerializedMap<T>::set(::boost::uint64_t id, const T & value)
+  template<typename T, typename A>
+  void SerializedMap<T,A>::set(::boost::uint64_t id, const T & value)
   {  
     
     int result;
@@ -122,7 +122,7 @@ namespace sm {
       
       // The binary flag is important here.
       std::ostringstream oss(std::ios_base::binary);
-      ::boost::archive::binary_oarchive oa(oss);
+      oarchive_t oa(oss);
       oa << value;
 	
       //std::cout << "Saving " << oss.str().size() << " bytes\n";
@@ -149,8 +149,8 @@ namespace sm {
     SM_ASSERT_EQ(SqlException, result, SQLITE_OK, "Unable to reset the INSERT  statement: " << sqlite3_errmsg(_db));
   }
 
-  template<typename T>
-  void SerializedMap<T>::validateTableName()
+  template<typename T, typename A>
+  void SerializedMap<T,A>::validateTableName()
   {
     SM_ASSERT_GE(InvalidTableNameException,_tableName.size(),1,"Table name \"" << _tableName << "\" is invalid.");
     SM_ASSERT_TRUE(InvalidTableNameException,isalpha(_tableName[0]), "Table name \"" << _tableName << "\" is invalid.");

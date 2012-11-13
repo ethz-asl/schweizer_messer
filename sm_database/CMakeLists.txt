@@ -35,10 +35,15 @@ find_package(Sqlite3 REQUIRED)
 include_directories(${SQLITE3_DIRECTORIES})
 rosbuild_add_boost_directories()
 
+rosbuild_add_library(${PROJECT_NAME}
+  src/portable_binary_iarchive.cpp
+  src/portable_binary_oarchive.cpp
+)
+
 rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp
   test/SerializedMap.cpp
 )
 
 rosbuild_link_boost(${PROJECT_NAME}_tests filesystem system)
-target_link_libraries(${PROJECT_NAME}_tests ${SQLITE3_LIBRARIES})
+target_link_libraries(${PROJECT_NAME}_tests ${SQLITE3_LIBRARIES} ${PROJECT_NAME})

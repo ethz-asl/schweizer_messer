@@ -5,7 +5,8 @@
 #include <sm/assert_macros.hpp>
 #include <sm/eigen/serialization.hpp>
 #include <boost/serialization/nvp.hpp>
-
+#include <boost/serialization/split_member.hpp>
+#include <boost/serialization/version.hpp>
 
 
 namespace sm {
@@ -96,20 +97,30 @@ namespace sm {
       void setZero();
 
 	  /// \brief checks if homogeneous point is at infinity (if fourth coordinate is zero)
-	  const bool atInfinity() const;
+      bool atInfinity() const;
 
 	  /// \brief checks if homogeneous point is a vector, i.e. it has infinite length (if fourth coordinate is zero)
-	  const bool isVector() const;
+	  bool isVector() const;
 
       /// \brief Normalize the point so that it is unit length
       virtual void normalize();
 	  
 	  /// \brief boost::serialization support
+        enum {CLASS_SERIALIZATION_VERSION = 0};
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
+
 	  template<class Archive>
-	  void serialize(Archive & ar, const unsigned int version)
+	  void save(Archive & ar, const unsigned int version) const
 	  {
-		ar & ::boost::serialization::make_nvp("_ph",_ph);
+          ar << ::boost::serialization::make_nvp("_ph",_ph);
 	  }
+
+	  template<class Archive>
+	  void load(Archive & ar, const unsigned int version)
+	  {
+          SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+          ar >> ::boost::serialization::make_nvp("_ph",_ph);
+      }
 
 	  bool isBinaryEqual(const HomogeneousPoint & rhs) const;
    protected:
@@ -146,6 +157,8 @@ namespace sm {
 
   } // namespace kinematics
 } // namespace sm
+
+BOOST_CLASS_VERSION(sm::kinematics::HomogeneousPoint, sm::kinematics::HomogeneousPoint::CLASS_SERIALIZATION_VERSION);
 
 
 #endif /* SM_HOMOGENEOUS_POINT_HPP */

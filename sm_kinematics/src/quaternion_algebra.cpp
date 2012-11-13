@@ -213,11 +213,12 @@ namespace sm { namespace kinematics {
         Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
         {
             double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q))) );
-            if(theta < 1e-12)
+            Eigen::Vector3d a = qeps(q);
+            double na = a.norm();
+            if(fabs(theta) < 1e-12 || na < 1e-12)
                 return Eigen::Vector3d::Zero();
 
-            Eigen::Vector3d a = qeps(q);
-            a /= a.norm();
+            a /= na;
             a *= theta;
             return a;
         }
@@ -317,5 +318,24 @@ namespace sm { namespace kinematics {
                 -q[0], -q[1], -q[2];
             return invS;
         }
+
+        Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t)
+        {
+            if(t <= 0.0)
+            {
+                return q0;
+            }
+            else if(t >= 1.0)
+            {
+                return q1;
+            }
+            else
+            {
+                return qplus(q0, qexp(t * qlog( qplus(quatInv(q0),q1))));
+            }
+        }
+        
+
+
     }} // namespace sm::kinematics
 
