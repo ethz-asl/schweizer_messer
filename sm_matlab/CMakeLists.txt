@@ -43,8 +43,9 @@ target_link_libraries( ${PROJECT_NAME} ${MATLAB_LIBRARIES} )
 rosbuild_add_executable(demo demo/demo.cpp)
 target_link_libraries(demo ${PROJECT_NAME} ${MATLAB_LIBRARIES})
 
-rosbuild_add_gtest( ${PROJECT_NAME}_tests 
+rosbuild_add_gtest(${PROJECT_NAME}_tests 
+  test/test_main.cpp
   test/MatlabInterfaceTests.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
+target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME} ${MATLAB_LIBRARIES})
