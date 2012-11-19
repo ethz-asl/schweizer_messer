@@ -125,7 +125,8 @@ namespace sm {
             std::cout<<">> ";
             
             // Read from console
-            fgets(_inputBuffer, INPUT_BUFFER_SIZE, stdin);
+            if (!fgets(_inputBuffer, INPUT_BUFFER_SIZE, stdin))
+                break;
             
             // Convert to string
             std::string command(_inputBuffer);
@@ -358,17 +359,18 @@ namespace sm {
 		return true;
 	}
 	
-	void inline Engine::assertValidVariableName(const std::string& name) const
+	void Engine::assertValidVariableName(const std::string& name) const
 	{
 		// Maybe better use regular expressions here?
         SM_ASSERT_EQ(InvalidVariableNameException, name.find_first_not_of("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890_"), std::string::npos, "Illegal character in Variable name");
         SM_ASSERT_FALSE(InvalidVariableNameException, std::isdigit(name[0]), "First character of variable name must not be a number");
 	}
 	
-	void inline Engine::assertIsInitialized() const
+	void Engine::assertIsInitialized() const
 	{
 		SM_ASSERT_NE(EngineNotInitializedException, _engine, NULL, "Matlab Engine is not initialized");
 	}
+
     
   } // namespace matlab
 } // namespace sm

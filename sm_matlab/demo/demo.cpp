@@ -1,7 +1,4 @@
-// Bring in gtest
-#include <gtest/gtest.h>
 #include <boost/cstdint.hpp>
-
 #include <sm/random.hpp>
 
 // Bring in the Matlab Interface
@@ -15,20 +12,20 @@ int main(int argc, char **argv)
 	
 	if (!engine.initialize())
 	{
-		std::cout<<"Could not start Matlab"<<endl;
+		std::cout<<"Could not start Matlab"<<std::endl;
 		return -1;
 	}
 	
 	if (!engine.good())
 	{
-		std::cout<<"Matlab interface not working properly"<<endl;
+		std::cout<<"Matlab interface not working properly"<<std::endl;
 		return -1;
 	}
 	
 	// create a few variables 
 	double a = sm::random::rand();
 	double b = sm::random::rand();
-	Eigen::Matrix3d A = Eigen::Matrix2d::Random();
+	Eigen::Matrix3d A = Eigen::Matrix3d::Random();
     Eigen::Matrix3d B = Eigen::Matrix3d::Random();
 	
 	// and send them to Matlab
@@ -47,7 +44,7 @@ int main(int argc, char **argv)
 	Eigen::MatrixXd C;
 	
 	// retrieve data
-	engine.getEigen("c", c);
+	engine.get("c", c);
 	engine.getEigen("C", C);
 	
 	// go into command line mode

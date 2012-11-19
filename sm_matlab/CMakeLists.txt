@@ -20,7 +20,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 find_package(Matlab REQUIRED)
-include_directories(${MATLAB_INCLUDE_DIRS})
+include_directories(${MATLAB_INCLUDE_DIR})
 
 
 #uncomment if you have defined messages
@@ -40,9 +40,11 @@ target_link_libraries( ${PROJECT_NAME} ${MATLAB_LIBRARIES} )
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
+rosbuild_add_executable(demo demo/demo.cpp)
+target_link_libraries(demo ${PROJECT_NAME} ${MATLAB_LIBRARIES})
 
 rosbuild_add_gtest( ${PROJECT_NAME}_tests 
-  test/MatlabInterfaceTest.cpp
+  test/MatlabInterfaceTests.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})

@@ -172,27 +172,26 @@ namespace sm {
 	 
    
     private:
+      void assertValidVariableName(const std::string& name) const;
+	  void assertIsInitialized() const;
+
       /// The handle for the matlab engine
       ::Engine *_engine;
       
       /// The output buffer in which returns of a command are stored
       char _outputBuffer[OUTPUT_BUFFER_SIZE+1];
       char _inputBuffer[OUTPUT_BUFFER_SIZE+1];
-
-	  void inline assertValidVariableName(const std::string& name) const;
-	  void inline assertIsInitialized() const;
     };
 
 
-
-	template <typename Derived>
+    template <typename Derived>
     void Engine::putEigen(const std::string& name, const Eigen::MatrixBase<Derived>& matrixBase)
     {
 		assertIsInitialized();
         assertValidVariableName(name);
 
 		// convert to double
-		Eigen::MatrixXd matrix = matrixBase.cast<double>();
+		Eigen::MatrixXd matrix = matrixBase.template cast<double>();
     
         mxArray* mxArray = mxCreateDoubleMatrix(matrix.rows(), matrix.cols(), mxREAL);
         

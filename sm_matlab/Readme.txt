@@ -4,7 +4,13 @@ C++ Matlab Interface (written by Michael Neunert, neunertm@gmail.com)
 This is a basic C++ Wrapper for Matlab. You can use it to send and read data/variables from Matlab and execute Matlab commands. It is less efficient than directly working with mxArrays but it provides a very intuitive and easy to use interface.
 
 1. Installation
+
+1a. Schweizer-Messer
 If you do not build it within the Schweizer-Messer written by Paul Furgale, you will have to remove SM specific types, manually compile it and then link against libeng and libmx, which should either be in your Matlab folder or common library directories.
+
+1b. Packages
+Under linux you have to install csh. Under Ubuntu/Mint you can simply type
+> sudo apt-get install csh
 
 
 2. Usage
