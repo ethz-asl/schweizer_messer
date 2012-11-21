@@ -41,6 +41,8 @@ rosbuild_add_library(${PROJECT_NAME}
   src/Database.cpp
 )
 
+target_link_libraries(${PROJECT_NAME} ${SQLITE3_LIBRARIES})
+
 rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp
   test/SerializedMap.cpp
