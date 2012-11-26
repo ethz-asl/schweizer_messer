@@ -74,85 +74,104 @@ namespace sm {
   {
   public:
       
-    explicit Id (id_type id) : id_(id) {}
+    explicit Id (id_type id) : _id(id) {}
 
     /// Only for stl use
-    Id () : id_(-1) {}
+    Id () : _id(-1) {}
 
     friend std::ostream& operator<< (std::ostream& str, const Id& n)
     {
-      str << n.id_;
+      str << n._id;
       return str;
     }
 
     bool operator== (const Id& other) const
     {
-      return other.id_ == id_;
+      return other._id == _id;
     }
 
     bool operator!= (const Id& other) const
     {
-      return other.id_ != id_;
+      return other._id != _id;
     }
 
     bool operator< (const Id& other) const
     {
-      return id_ < other.id_;
+      return _id < other._id;
     }
 
     bool operator> (const Id& other) const
     {
-      return id_ > other.id_;
+      return _id > other._id;
     }
 
     bool operator<=(const Id& other) const
     {
-      return id_ <= other.id_;
+      return _id <= other._id;
     }
 
     bool operator>=(const Id& other) const
     {
-      return id_ >= other.id_;
+      return _id >= other._id;
     }
-
 
     id_type getId () const
     {
-      return id_;
+      return _id;
     }
 
     // postincrement.
     Id operator++ (int unused)
     {
-        Id rval(id_);
-      ++id_;
+        Id rval(_id);
+      ++_id;
       return rval;
     }
 
     // preincrement
     Id & operator++ ()
     {
-      ++id_;
+      ++_id;
       return (*this);
     }
 
     Id& operator= (const Id& other)
     {
-      id_ = other.id_;
+      _id = other._id;
       return *this;
     }
 
     bool isSet() const
     {
-      return id_ != id_type(-1);
+      return _id != id_type(-1);
     }
 
     id_type value() const
     {
-      return id_;
+      return _id;
+    }
+
+    void clear()
+    {
+      _id = -1;
+    }
+
+    void swap( Id & rhs)
+    {
+      std::swap(_id,rhs._id);
+    }
+
+    void setRandom()
+    {
+      _id = rand();
+    }
+
+    bool isBinaryEqual(const Id & rhs)
+    {
+      return _id == rhs._id;
     }
   protected:
-    id_type id_;
+    id_type _id;
   
   };
 
@@ -168,7 +187,7 @@ namespace sm {
         template<class Archive>                                         \
             void serialize(Archive & ar, const unsigned int version)    \
         {                                                               \
-            ar & BOOST_SERIALIZATION_NVP(id_);                          \
+            ar & BOOST_SERIALIZATION_NVP(_id);                          \
         }                                                               \
     };									
 
