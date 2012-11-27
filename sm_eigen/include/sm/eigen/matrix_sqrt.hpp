@@ -18,8 +18,8 @@ namespace sm {
          * @param outMatrixSqrt The output square root.
          */
         template<typename DERIVED1, typename DERIVED2>
-        Eigen::ComputationInfo computeMatrixSqrt(const Eigen::MatrixBase<DERIVED1> & inMatrix,
-                                                 const Eigen::MatrixBase<DERIVED2> & outMatrixSqrt)
+        /*Eigen::ComputationInfo*/ void computeMatrixSqrt(const Eigen::MatrixBase<DERIVED1> & inMatrix,
+                                                          const Eigen::MatrixBase<DERIVED2> & outMatrixSqrt)
         {
             SM_ASSERT_EQ_DBG(std::runtime_error, inMatrix.rows(), inMatrix.cols(), "This method is only valid for square input matrices");
             
@@ -35,7 +35,7 @@ namespace sm {
             result = ldlt.transpositionsP().transpose() * result;
             result *= ldlt.vectorD().array().sqrt().matrix().asDiagonal();
             
-            return ldlt.info();
+            //return ldlt.info();
             
         }
 
