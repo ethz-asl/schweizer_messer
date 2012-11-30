@@ -5,6 +5,7 @@
 #include <opencv2/core/core.hpp>
 #include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/split_free.hpp>
+#include <opencv2/features2d/features2d.hpp>
 
 namespace sm {
   namespace opencv {
