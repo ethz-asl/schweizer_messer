@@ -5,9 +5,17 @@
 #include <sm/Id.hpp>
 
 
-namespace sm { namespace pose_graph {
-    
-    SM_DEFINE_ID(VertexId);
+namespace sm { 
+    namespace pose_graph {
+        SM_DEFINE_ID(VertexId);
+    }
+
+}
+
+SM_DEFINE_ID_HASH(sm::pose_graph::VertexId);
+
+namespace sm { 
+    namespace pose_graph {
 
     ///
     /// @class Vertex
@@ -76,6 +84,9 @@ namespace sm { namespace pose_graph {
       ar & id_;
     }
   
-  }} // namespace sm::pose_graph
+  }
+} // namespace sm::pose_graph
+
+
 
 #endif

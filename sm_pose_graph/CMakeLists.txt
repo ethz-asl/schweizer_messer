@@ -41,3 +41,10 @@ rosbuild_add_library(${PROJECT_NAME}
 
 rosbuild_add_boost_directories()
 rosbuild_link_boost(${PROJECT_NAME} system filesystem)
+
+rosbuild_add_gtest(${PROJECT_NAME}_tests
+  test/test_main.cpp
+  test/PoseGraphTests.cpp
+)
+
+target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
