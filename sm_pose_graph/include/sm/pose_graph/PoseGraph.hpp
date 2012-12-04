@@ -47,6 +47,7 @@
 #include <boost/unordered_map.hpp>
 #include "Edge.hpp"
 #include "Vertex.hpp"
+#include <sm/boost/serialization.hpp>
 
 
 namespace sm { 
@@ -81,8 +82,8 @@ namespace sm {
             //typedef std::map<VertexId, PoseGraph::graph_vertex_t> VertexMap;
             typedef boost::unordered_map<VertexId, PoseGraph::graph_vertex_t> VertexMap;
             typedef boost::unordered_map<EdgeId, PoseGraph::graph_edge_t> EdgeMap;
-            typedef std::set<EdgeId> EdgeSet;
-            typedef std::set<VertexId> VertexSet;
+            typedef boost::unordered_set<EdgeId> EdgeSet;
+            typedef boost::unordered_set<VertexId> VertexSet;
 
 
             /****************************************
@@ -204,9 +205,10 @@ namespace sm {
             transformation_t getTransformation(VertexId to, VertexId from) const;
             transformation_t getTransformation(graph_vertex_t to, graph_vertex_t from) const;
 
-                const Edge & getEdge(EdgeId edgeId) const;
+            const Edge & getEdge(EdgeId edgeId) const;
             const Edge & getEdge(VertexId v1, VertexId v2) const;
             const Vertex & getVertex(VertexId vertexId) const;
+
 
             void updateEdgeTransformation(EdgeId edgeId, const transformation_t & T_to_from); 
 
@@ -224,7 +226,8 @@ namespace sm {
             /****************************************
              * Serialization convenience
              ****************************************/
-      
+            enum {CLASS_SERIALIZATION_VERSION = 0};
+
             /// \brief Save the graph to disk.
             void save(const boost::filesystem::path & graphFileName) const;
             /// \brief Load the graph from disk.
@@ -233,6 +236,7 @@ namespace sm {
             EdgeId nextEdgeId();
             VertexId nextVertexId();
 
+            bool isBinaryEqual(const PoseGraph & rhs);
 
         private:
       
@@ -276,7 +280,8 @@ namespace sm {
             std::pair<const Edge *, bool> getEdgeInternal(VertexId to, VertexId from) const;
             std::pair<graph_edge_t, bool> getEdgeInternal(VertexId to, graph_vertex_t from) const;
 
-
+            
+        
 
         private:
             template<typename T>
@@ -304,12 +309,12 @@ namespace sm {
              ****************************************/
             //void initializeFrom (const PoseGraph& other);
   
-            VertexId nextVertexId_;
-            EdgeId nextEdgeId_;
+            VertexId _nextVertexId;
+            EdgeId _nextEdgeId;
 
-            VertexMap vertexMap_;
-            EdgeMap edgeMap_;
-            graph_t graph_;
+            VertexMap _vertexMap;
+            EdgeMap _edgeMap;
+            graph_t _graph;
 
         };
 
@@ -318,13 +323,13 @@ namespace sm {
          ***********************************************************/
 
         //typedef std::map<VertexId, geometry_msgs::Pose> VertexPoseMap;
-
+        
 
         template<class Archive>
         void PoseGraph::save(Archive & ar, const unsigned int version) const
         {
-            ar << nextVertexId_;
-            ar << nextEdgeId_;
+            ar << BOOST_SERIALIZATION_NVP(_nextVertexId);
+            ar << BOOST_SERIALIZATION_NVP(_nextEdgeId);
       
             // PTF: The vertex and edge maps are just for convenience.
             // Plus, this doesn't actually work. :P
@@ -334,50 +339,53 @@ namespace sm {
             // as an int).
             // In any case, they can be reconstituted from the graph. See the
             // implementaion of load() below.
-            //ar << vertex_map_;
-            //ar << edge_map_;
+            //ar << BOOST_SERIALIZATION_NVP(_vertex_map);
+            //ar << BOOST_SERIALIZATION_NVP(_edge_map);
 
-            ar << graph_;
+            ar << BOOST_SERIALIZATION_NVP(_graph);
         }
     
 
         template<class Archive>
         void PoseGraph::load(Archive & ar, const unsigned int version)
         {
-            graph_.clear();
-            ar >> nextVertexId_;
-            ar >> nextEdgeId_; 
-            ar >> graph_;
+            SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+
+            _graph.clear();
+            ar >> BOOST_SERIALIZATION_NVP(_nextVertexId);
+            ar >> BOOST_SERIALIZATION_NVP(_nextEdgeId); 
+            ar >> BOOST_SERIALIZATION_NVP(_graph);
       
 
             // Now restore the vertex and edge maps.
             // See the implementation of save() above to see why this is necessary.
             // First the vertex map
-            vertexMap_.clear();
+            _vertexMap.clear();
             boost::graph_traits<graph_t>::vertex_iterator v, vend;
-            boost::tie(v,vend) = vertices(graph_);
+            boost::tie(v,vend) = vertices(_graph);
             for( ; v != vend; v++)
             {
                 // *v is a vertex descriptor.
-                // calling graph_[*v] returns the object stored at the vertex.
-                vertexMap_[graph_[*v].id()] = *v;
+                // calling _graph[*v] returns the object stored at the vertex.
+                _vertexMap[_graph[*v].id()] = *v;
             }
 
             // A similar process holds for the edge map
-            edgeMap_.clear();
+            _edgeMap.clear();
             boost::graph_traits<graph_t>::edge_iterator e, eend;
-            boost::tie(e,eend) = edges(graph_);
+            boost::tie(e,eend) = edges(_graph);
             for( ; e != eend; e++)
             {
                 // *e is an edge descriptor.
-                // calling graph_[*e] returns the object stored at the edge.
-                edgeMap_[graph_[*e].id()] = *e;
+                // calling _graph[*e] returns the object stored at the edge.
+                _edgeMap[_graph[*e].id()] = *e;
             }
-
-            //newGraphLoaded();
 
         }
 
     }} // sm::pose_graph
+
+SM_BOOST_CLASS_VERSION(sm::pose_graph::PoseGraph);
+
 
 #endif // SM_POSE_GRAPH_GRAPH_HPP

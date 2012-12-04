@@ -136,4 +136,13 @@ namespace sm { namespace pose_graph {
             _type = type;
         }
 
+        bool Edge::isBinaryEqual(const Edge & rhs) const
+        {
+            return _id == rhs._id &&
+                _to == rhs._to &&
+                _from == rhs._from &&
+                _type == rhs._type &&
+                _T_to_from->isBinaryEqual(*rhs._T_to_from);
+        }
+
     }} // namespace asrl::pose_graph

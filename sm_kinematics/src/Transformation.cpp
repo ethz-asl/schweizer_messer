@@ -195,6 +195,31 @@ namespace sm {
       return UncertainHomogeneousPoint(p_0,U);
     }
 
+      /// \brief rotate a point (do not translate)
+      Eigen::Vector3d Transformation::rotate(const Eigen::Vector3d & p)
+      {
+          return quatRotate(_q_a_b, p);
+      }
+
+      /// \brief rotate a point (do not translate)
+      Eigen::Vector4d Transformation::rotate(const Eigen::Vector4d & p)
+      {
+          Eigen::Vector4d rval = p;
+          rval.head<3>() = quatRotate(_q_a_b, rval.head<3>());
+          return rval;
+      }
+
+      UncertainVector3 Transformation::rotate(const UncertainVector3 & p)
+      {
+          
+          Eigen::Vector3d mean = rotate(p.mean());
+          Eigen::Matrix3d R = C();
+          Eigen::Matrix3d P = R * p.covariance() * R.transpose();
+          
+          return UncertainVector3(mean, P);
+      }
+
+
 
   } // namespace kinematics
 } // namespace sm

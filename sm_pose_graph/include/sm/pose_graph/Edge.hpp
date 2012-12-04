@@ -6,6 +6,8 @@
 #include "Transformation.hpp"
 #include <boost/shared_ptr.hpp>
 #include <boost/serialization/shared_ptr.hpp>
+#include <sm/boost/serialization.hpp>
+
 
 namespace sm { 
     namespace pose_graph {
@@ -121,7 +123,10 @@ namespace sm {
              */
             void set_T_to_from(const transformation_t & T_to_from);
 
-      
+
+            BOOST_SERIALIZATION_SPLIT_MEMBER();
+            enum {CLASS_SERIALIZATION_VERSION = 0};
+            
             /// 
             /// Serialize the Edge to a boost::serialization archive.
             ///
@@ -129,13 +134,18 @@ namespace sm {
             /// @param version The archive file version number.
             ///
             template<class Archive>
-            void serialize(Archive & ar, const unsigned int version);
+            void save(Archive & ar, const unsigned int version) const;
+
+            template<class Archive>
+            void load(Archive & ar, const unsigned int version);
 
             /// \brief get the edge type
             boost::uint64_t type() const;
 
             /// \brief set the edge type
             void setType(boost::uint64_t type);
+
+            bool isBinaryEqual(const Edge & rhs) const;
 
         private:
 
@@ -159,16 +169,32 @@ namespace sm {
         };
 
         template<class Archive>
-        void Edge::serialize(Archive & ar, const unsigned int version)
+        void Edge::load(Archive & ar, const unsigned int version)
         {
-            ar & _id;
-            ar & _T_to_from;
-            ar & _to;
-            ar & _from;
+            SM_ASSERT_LE(std::runtime_error, version, (unsigned int)CLASS_SERIALIZATION_VERSION, "Unsupported serialization version");
+
+            ar >> BOOST_SERIALIZATION_NVP(_id);
+            ar >> BOOST_SERIALIZATION_NVP(_T_to_from);
+            ar >> BOOST_SERIALIZATION_NVP(_to);
+            ar >> BOOST_SERIALIZATION_NVP(_from);
+            ar >> BOOST_SERIALIZATION_NVP(_type);
+        }
+
+
+        template<class Archive>
+        void Edge::save(Archive & ar, const unsigned int version) const
+        {
+            ar << BOOST_SERIALIZATION_NVP(_id);
+            ar << BOOST_SERIALIZATION_NVP(_T_to_from);
+            ar << BOOST_SERIALIZATION_NVP(_to);
+            ar << BOOST_SERIALIZATION_NVP(_from);
+            ar << BOOST_SERIALIZATION_NVP(_type);
         }
 
     }
 } // namespace sm::pose_graph
+
+SM_BOOST_CLASS_VERSION(sm::pose_graph::Edge);
 
 
 #endif

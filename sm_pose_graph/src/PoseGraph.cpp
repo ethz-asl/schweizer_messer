@@ -68,7 +68,7 @@ namespace sm { namespace pose_graph {
          ***********************************************************/
 
         PoseGraph::PoseGraph () :
-            nextVertexId_(1), nextEdgeId_(1)
+            _nextVertexId(1), _nextEdgeId(1)
         {
             clearGraph();
         }
@@ -84,10 +84,10 @@ namespace sm { namespace pose_graph {
 
         VertexId PoseGraph::addVertex()
         {
-            while (vertexExists(nextVertexId_))
-                nextVertexId_++;
-            PoseGraph::addVertex(nextVertexId_);
-            return nextVertexId_;
+            while (vertexExists(_nextVertexId))
+                _nextVertexId++;
+            PoseGraph::addVertex(_nextVertexId);
+            return _nextVertexId;
         }
 
         void PoseGraph::addVertex (const VertexId id)
@@ -95,20 +95,20 @@ namespace sm { namespace pose_graph {
             if (vertexExists(id))
                 throw DuplicateVertexIdException(id);
       
-            graph_vertex_t v = add_vertex(Vertex(id), graph_);
-            vertexMap_[id] = v;
-            //vertexUpdated(graph_[v]);
+            graph_vertex_t v = add_vertex(Vertex(id), _graph);
+            _vertexMap[id] = v;
+            //vertexUpdated(_graph[v]);
         }
 
 
 
         EdgeId PoseGraph::addEdge (const VertexId to, const VertexId from, const transformation_t& T_to_from)
         {
-            while (edgeExists(nextEdgeId_))
-                nextEdgeId_++;
-            PoseGraph::addEdge(nextEdgeId_, to, from, T_to_from);
-            EdgeId eid = nextEdgeId_;
-            nextEdgeId_++;
+            while (edgeExists(_nextEdgeId))
+                _nextEdgeId++;
+            PoseGraph::addEdge(_nextEdgeId, to, from, T_to_from);
+            EdgeId eid = _nextEdgeId;
+            _nextEdgeId++;
             return eid;
         }
 
@@ -123,20 +123,20 @@ namespace sm { namespace pose_graph {
             if (edgeExists(id))
                 throw DuplicateEdgeIdException(id);
 
-            pair<graph_edge_t, bool> result = add_edge(from_vertex, to_vertex, Edge(id, to, from, T_to_from), graph_);
+            pair<graph_edge_t, bool> result = add_edge(from_vertex, to_vertex, Edge(id, to, from, T_to_from), _graph);
             SM_ASSERT_TRUE(PoseGraphException,result.second,"Unable to add edge " << id << " from " << from << " to " << to << " to the graph");
 
-            edgeMap_[id] = result.first;
-            //edgeUpdated(graph_[result.first]);
+            _edgeMap[id] = result.first;
+            //edgeUpdated(_graph[result.first]);
         }
 
         void PoseGraph::updateEdgeTransformation(EdgeId edgeId, const transformation_t & T_to_from)
         {
-            EdgeMap::const_iterator i = edgeMap_.find(edgeId);   
-            if(i == edgeMap_.end())
+            EdgeMap::const_iterator i = _edgeMap.find(edgeId);   
+            if(i == _edgeMap.end())
                 throw UnknownEdgeIdException(edgeId);
       
-            Edge & e = graph_[i->second];
+            Edge & e = _graph[i->second];
 
             e.T_to_from() = T_to_from;      
         }
@@ -144,11 +144,11 @@ namespace sm { namespace pose_graph {
         void PoseGraph::clearGraph (void)
         {
             /// Clear out data associated with the graph
-            graph_.clear();
-            nextVertexId_ = VertexId(1);
-            nextEdgeId_ = EdgeId(1);
-            vertexMap_.clear();
-            edgeMap_.clear();
+            _graph.clear();
+            _nextVertexId = VertexId(1);
+            _nextEdgeId = EdgeId(1);
+            _vertexMap.clear();
+            _edgeMap.clear();
             //graphCleared();
 
         }
@@ -160,23 +160,23 @@ namespace sm { namespace pose_graph {
          ***********************************************************/
         EdgeId PoseGraph::nextEdgeId()
         {
-            while (edgeExists(nextEdgeId_))
-                nextEdgeId_++;
-            return nextEdgeId_;
+            while (edgeExists(_nextEdgeId))
+                _nextEdgeId++;
+            return _nextEdgeId;
         }
 
         VertexId PoseGraph::nextVertexId() 
         {
-            while (vertexExists(nextVertexId_))
-                nextVertexId_++;
-            return nextVertexId_;
+            while (vertexExists(_nextVertexId))
+                _nextVertexId++;
+            return _nextVertexId;
         }
 
     
         PoseGraph::VertexSet PoseGraph::allVertices () const
         {
             VertexSet nodes;
-            BOOST_FOREACH (const VertexMap::value_type& e, vertexMap_) 
+            BOOST_FOREACH (const VertexMap::value_type& e, _vertexMap) 
                 nodes.insert(e.first);
             return nodes;
         }
@@ -184,7 +184,7 @@ namespace sm { namespace pose_graph {
         PoseGraph::EdgeSet PoseGraph::allEdges () const
         {
             EdgeSet edges;
-            BOOST_FOREACH (const EdgeMap::value_type& e, edgeMap_) {
+            BOOST_FOREACH (const EdgeMap::value_type& e, _edgeMap) {
                 edges.insert(e.first);
             }
             return edges;
@@ -194,21 +194,21 @@ namespace sm { namespace pose_graph {
         {
             EdgeSet edges;
             graph_vertex_t v = idVertex(n);
-            BOOST_FOREACH (const graph_edge_t& e, out_edges(v, graph_))
-                edges.insert(EdgeId(graph_[e].id()));
+            BOOST_FOREACH (const graph_edge_t& e, out_edges(v, _graph))
+                edges.insert(EdgeId(_graph[e].id()));
             return edges;
         }
 
         PoseGraph::IncidentVertices PoseGraph::incidentVertices (const EdgeId e) const
         {
-            const Edge & edge = graph_[idEdge(e)];
+            const Edge & edge = _graph[idEdge(e)];
       
             return IncidentVertices(edge.to(), edge.from());
         }
 
         const transformation_t& PoseGraph::getTransformation (const EdgeId e) const
         {
-            return graph_[idEdge(e)].T_to_from();
+            return _graph[idEdge(e)].T_to_from();
         }
 
     
@@ -218,15 +218,15 @@ namespace sm { namespace pose_graph {
             SM_ASSERT_TRUE(std::runtime_error,fout.good(), "Unable to open graphviz file " << dotFile << " for writing");
 
 
-            //boost::write_graphviz(fout,graph_,idWriter(graph_),idWriter(graph_));
+            //boost::write_graphviz(fout,_graph,idWriter(_graph),idWriter(_graph));
       
             fout << "digraph G {\n";
             // iterate through printing each edge.
             boost::graph_traits<graph_t>::edge_iterator e, e_end;
-            boost::tie(e,e_end) = boost::edges(graph_);
+            boost::tie(e,e_end) = boost::edges(_graph);
             for( ; e != e_end; e++)
             {
-                fout << "\t" << graph_[*e].from() << " -> " << graph_[*e].to() << " [label=" << graph_[*e].id() << "] \n";
+                fout << "\t" << _graph[*e].from() << " -> " << _graph[*e].to() << " [label=" << _graph[*e].id() << "] \n";
             }
             fout << "}";
       
@@ -238,27 +238,27 @@ namespace sm { namespace pose_graph {
 
         const PoseGraph::graph_t & PoseGraph::graph () const
         {
-            return graph_;
+            return _graph;
         }
 
         PoseGraph::graph_t& PoseGraph::graph ()
         {
-            return graph_;
+            return _graph;
         }
 
 
         PoseGraph::graph_edge_t PoseGraph::idEdge (const EdgeId e) const
         {
-            EdgeMap::const_iterator pos = edgeMap_.find(e);
-            if (pos == edgeMap_.end())
+            EdgeMap::const_iterator pos = _edgeMap.find(e);
+            if (pos == _edgeMap.end())
                 throw UnknownEdgeIdException(e);
             return pos->second;
         }
 
         PoseGraph::graph_vertex_t PoseGraph::idVertex (const VertexId e) const
         {
-            VertexMap::const_iterator pos = vertexMap_.find(e);
-            if (pos == vertexMap_.end())
+            VertexMap::const_iterator pos = _vertexMap.find(e);
+            if (pos == _vertexMap.end())
                 throw UnknownVertexIdException(e);
             return pos->second;
         }
@@ -276,12 +276,12 @@ namespace sm { namespace pose_graph {
 
         bool PoseGraph::vertexExists (const VertexId n) const
         {
-            return contains(vertexMap_, n);
+            return contains(_vertexMap, n);
         }
 
         bool PoseGraph::edgeExists (const EdgeId e) const
         {
-            return contains(edgeMap_, e);
+            return contains(_edgeMap, e);
         }
 
 
@@ -312,7 +312,7 @@ namespace sm { namespace pose_graph {
             graph_vertex_t v = idVertex(from);
             std::pair<graph_edge_t, bool> G = getEdgeInternal(to,v);
       
-            return std::make_pair(&graph_[G.first],G.second);
+            return std::make_pair(&_graph[G.first],G.second);
         }
 
         std::pair<PoseGraph::graph_edge_t, bool> PoseGraph::getEdgeInternal(VertexId to, graph_vertex_t from) const
@@ -322,9 +322,9 @@ namespace sm { namespace pose_graph {
             bool found = false;
             bool invert = false;
 
-            BOOST_FOREACH(e, out_edges(from,graph_))
+            BOOST_FOREACH(e, out_edges(from,_graph))
             {
-                const Edge & edge = graph_[e];
+                const Edge & edge = _graph[e];
                 if(edge.to() == to)
                 {
                     found = true;
@@ -355,9 +355,9 @@ namespace sm { namespace pose_graph {
             bool found = false;
             bool invert = false;
 
-            BOOST_FOREACH(e, out_edges(v,graph_))
+            BOOST_FOREACH(e, out_edges(v,_graph))
             {
-                const Edge & edge = graph_[e];
+                const Edge & edge = _graph[e];
                 if(edge.to() == to)
                 {
                     found = true;
@@ -389,11 +389,11 @@ namespace sm { namespace pose_graph {
       
             if(G.second)
             {
-                return graph_[G.first].T_to_from().T().inverse().matrix();
+                return _graph[G.first].T_to_from().T().inverse().matrix();
             }
             else
             {
-                return graph_[G.first].T_to_from().T().matrix();
+                return _graph[G.first].T_to_from().T().matrix();
             }
         }
 
@@ -409,11 +409,11 @@ namespace sm { namespace pose_graph {
             std::pair<graph_edge_t, bool> G = getEdgeInternal(to,from);
             if(G.second)
             {
-                return graph_[G.first].T_to_from().inverse();
+                return _graph[G.first].T_to_from().inverse();
             }
             else
             {
-                return graph_[G.first].T_to_from();
+                return _graph[G.first].T_to_from();
             }
   
         }
@@ -423,11 +423,11 @@ namespace sm { namespace pose_graph {
             std::pair<graph_edge_t, bool> G = getEdgeInternal(from, to);
             if(!G.second)
             {
-                return graph_[G.first].T_to_from().inverse();
+                return _graph[G.first].T_to_from().inverse();
             }
             else
             {
-                return graph_[G.first].T_to_from();
+                return _graph[G.first].T_to_from();
             }
   
         }
@@ -455,16 +455,16 @@ namespace detail {
             {
                 typedef boost::on_discover_vertex event_filter;
       
-                FoundTargetEvent(VertexId id) : id_(id) {}
+                FoundTargetEvent(VertexId id) : _id(id) {}
                 template<typename VERTEX, typename GRAPH>
                 void operator()(VERTEX v, const GRAPH & g)
                     {
-                        if(g[v].id() == id_)
+                        if(g[v].id() == _id)
                         {
                             throw FoundTargetException();
                         }
                     }
-                VertexId id_;
+                VertexId _id;
             };
     
 } // namespace detail
@@ -473,7 +473,7 @@ namespace detail {
         {
 
             // Adapted with difficulty from http://www.boost.org/doc/libs/1_45_0/libs/graph/example/bfs.cpp
-            std::vector<graph_vertex_t> predecessor(boost::num_vertices(graph_));
+            std::vector<graph_vertex_t> predecessor(boost::num_vertices(_graph));
       
             graph_vertex_t from = idVertex(fromId);
             graph_vertex_t to   = idVertex(toId);
@@ -483,7 +483,7 @@ namespace detail {
             try {
                 boost::breadth_first_search
                     (
-                        graph_, from, //boost::visitor(boost::bfs_visitor<boost::null_visitor>())); 
+                        _graph, from, //boost::visitor(boost::bfs_visitor<boost::null_visitor>())); 
                         boost::visitor
                         (
                             boost::make_bfs_visitor
@@ -516,12 +516,12 @@ namespace detail {
                     thePath = &path;
                 }
                 graph_vertex_t vidx = to;
-                const Vertex * V = &graph_[vidx];
+                const Vertex * V = &_graph[vidx];
                 thePath->push_back(V->id());
                 while(vidx != from)
                 {
                     graph_vertex_t pidx = predecessor[vidx];
-                    const Vertex * P = &graph_[pidx];
+                    const Vertex * P = &_graph[pidx];
                     T_to_from =  T_to_from * getEdgeTransformation(vidx, P->id());
 
                     vidx = pidx;
@@ -544,20 +544,20 @@ namespace detail {
 
         const Edge & PoseGraph::getEdge(EdgeId edgeId) const
         {
-            EdgeMap::const_iterator i = edgeMap_.find(edgeId);   
-            if(i == edgeMap_.end())
+            EdgeMap::const_iterator i = _edgeMap.find(edgeId);   
+            if(i == _edgeMap.end())
                 throw UnknownEdgeIdException(edgeId);
       
-            return graph_[i->second];
+            return _graph[i->second];
         }
 
         const Vertex & PoseGraph::getVertex(VertexId vertexId) const
         {
-            VertexMap::const_iterator i = vertexMap_.find(vertexId);   
-            if(i == vertexMap_.end())
+            VertexMap::const_iterator i = _vertexMap.find(vertexId);   
+            if(i == _vertexMap.end())
                 throw UnknownVertexIdException(vertexId);
       
-            return graph_[i->second];
+            return _graph[i->second];
         }
 
         const Edge & PoseGraph::getEdge(VertexId v1, VertexId v2) const
@@ -565,8 +565,6 @@ namespace detail {
             std::pair<const Edge *, bool> p = getEdgeInternal(v1, v2);
             return *p.first;
         }
-
-
     
         template<typename T>
         bool PoseGraph::pathExistsInternal(const std::vector<T> & path) const
@@ -591,6 +589,76 @@ namespace detail {
             return pathExistsInternal<VertexId>(path);
         }
 
+
+        bool PoseGraph::isBinaryEqual(const PoseGraph & rhs)
+        {
+            bool isEqual = _nextVertexId == rhs._nextVertexId &&
+                _nextEdgeId == rhs._nextEdgeId &&
+                _vertexMap.size() == rhs._vertexMap.size() &&
+                _edgeMap.size() == rhs._edgeMap.size() 
+                ;
+            
+            int lcount = 0;
+            boost::graph_traits<graph_t>::edge_iterator e, e_end;
+            boost::tie(e,e_end) = boost::edges(_graph);
+            for( ; e != e_end; ++e)
+            {
+                ++lcount;
+            }
+
+            int rcount = 0;
+            boost::graph_traits<graph_t>::edge_iterator re, re_end;
+            boost::tie(re,re_end) = boost::edges(rhs._graph);
+            for( ; re != re_end; ++re)
+            {
+                ++rcount;
+            }
+            isEqual = isEqual && lcount == rcount;
+
+
+            lcount = 0;
+            boost::graph_traits<graph_t>::vertex_iterator lv, lv_end;
+            boost::tie(lv,lv_end) = boost::vertices(_graph);
+            for( ; lv != lv_end; ++lv)
+            {
+                ++lcount;
+            }
+
+            rcount = 0;
+            boost::graph_traits<graph_t>::vertex_iterator rv, rv_end;
+            boost::tie(rv,rv_end) = boost::vertices(_graph);
+            for( ; rv != rv_end; ++rv)
+            {
+                ++rcount;
+            }
+
+            isEqual = isEqual && lcount == rcount;
+
+
+           
+            BOOST_FOREACH (const VertexMap::value_type& v, _vertexMap) 
+            {
+                isEqual = isEqual && rhs.vertexExists(v.first);
+                if(isEqual)
+                {
+                    const Vertex & vx = rhs.getVertex(v.first);
+                    isEqual = isEqual && vx.isBinaryEqual(getVertex(v.first));
+                }
+            }
+
+            BOOST_FOREACH (const EdgeMap::value_type& ed, _edgeMap) 
+            {
+                isEqual = isEqual && rhs.edgeExists(ed.first);
+                if( isEqual)
+                {
+                    const Edge & red = rhs.getEdge(ed.first);
+                    const Edge & led = getEdge(ed.first);
+                    isEqual = isEqual && led.isBinaryEqual(red);
+                }
+            }
+
+            return isEqual;
+        }
 
     }} // namespace sm::pose_graph
 

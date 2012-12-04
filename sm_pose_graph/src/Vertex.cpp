@@ -15,7 +15,7 @@ namespace sm { namespace pose_graph {
 
 
     Vertex::Vertex(VertexId id) :
-      id_(id)
+      _id(id)
     {
 
     }
@@ -23,15 +23,19 @@ namespace sm { namespace pose_graph {
 
     void Vertex::setId(VertexId id)
     {
-      id_ = id;
+      _id = id;
     }
 
 
     VertexId Vertex::id() const
     {
-      return id_;
+      return _id;
     }
 
-
+        
+        bool Vertex::isBinaryEqual(const Vertex & rhs) const
+        {
+            return _id == rhs._id;
+        }
 
   }} // namespace sm::pose_graph

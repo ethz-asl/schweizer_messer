@@ -178,3 +178,27 @@ TEST(PoseGraphTestSuite, testBfs)
     }
     
 }
+
+
+TEST(PoseGraphTestSuite, testPoseGraphSerialization)
+{
+    try {
+        PoseGraph PG1;
+        populateTestPoseGraph(PG1);
+
+        PG1.save("test.graph");
+    
+        PoseGraph PG2;
+        ASSERT_FALSE(PG1.isBinaryEqual(PG2));
+        ASSERT_FALSE(PG2.isBinaryEqual(PG1));
+    
+        PG2.load("test.graph");
+
+        ASSERT_TRUE(PG1.isBinaryEqual(PG2));
+        ASSERT_TRUE(PG2.isBinaryEqual(PG1));
+    }
+    catch(std::exception const & e)
+    {
+        FAIL() << e.what();
+    }
+}
