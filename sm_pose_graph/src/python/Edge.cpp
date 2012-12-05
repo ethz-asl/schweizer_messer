@@ -26,6 +26,8 @@ void export_Edge()
         .def("from", &Edge::from)
         .def("T_to_from", getTFromEdge, return_value_policy<copy_const_reference>())
         .def("set_T_to_from", &Edge::set_T_to_from)
+        .def("type", &Edge::type)
+        .def("setType", &Edge::setType)
         .def("isBinaryEqual", &Edge::isBinaryEqual)
     ;
 }
