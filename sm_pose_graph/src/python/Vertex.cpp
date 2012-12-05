@@ -13,7 +13,8 @@ void export_Vertex()
 
     class_<Vertex>("Vertex",init<>())
         .def(init<VertexId>("Vertex(id)"))
-        .def("setId",&Vertex::setId)
-        .def("id",&Vertex::id)
+        .def("setId", &Vertex::setId)
+        .def("id", &Vertex::id)
+        .def("isBinaryEqual", &Vertex::isBinaryEqual)
     ;
 }

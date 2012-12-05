@@ -180,6 +180,7 @@ void export_PoseGraph()
         .def("allVertices", allVertices)
         .def("incidentEdges", incidentEdges)
         .def("incidentVertices", incidentVertices)
+        .def("isBinaryEqual", &PoseGraph::isBinaryEqual)
         ;
 
     def("populateTestPoseGraph",populateTestPoseGraph);
