@@ -46,4 +46,5 @@ sm_doc/build
 
 *.orig
 sm_pose_graph/build/
+sm_pose_graph/lib/
 sm_database/lib
