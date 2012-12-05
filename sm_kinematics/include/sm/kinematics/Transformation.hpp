@@ -92,13 +92,13 @@ namespace sm {
       void checkTransformationIsValid( void ) const;
 
         /// \brief rotate a point (do not translate)
-        Eigen::Vector3d rotate(const Eigen::Vector3d & p);
+        Eigen::Vector3d rotate(const Eigen::Vector3d & p) const;
 
         /// \brief rotate a point (do not translate)
-        Eigen::Vector4d rotate(const Eigen::Vector4d & p);
+        Eigen::Vector4d rotate(const Eigen::Vector4d & p) const;
 
         /// \brief rotate a point (do not translate)
-        UncertainVector3 rotate(const UncertainVector3 & p);
+        UncertainVector3 rotate(const UncertainVector3 & p) const;
 
       
         enum {CLASS_SERIALIZATION_VERSION = 0};
