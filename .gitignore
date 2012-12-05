@@ -2,6 +2,10 @@ sm_eigen/lib
 *~
 *.so
 *.pyc
+sm_console/build/
+sm_console/include/
+sm_console/lib/
+sm_console/src/
 test.ba
 test.xml
 sm_doc/doc/html
