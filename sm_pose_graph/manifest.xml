@@ -13,7 +13,10 @@
   <depend package="sm_kinematics"/>
   <depend package="sm_eigen"/>
   <depend package="sm_boost"/>
+  
+  <depend package="sm_python"/>
+  <export>
+    <python path="${prefix}/src"/>
+  </export>
 
 </package>
-
-
