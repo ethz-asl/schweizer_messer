@@ -12,7 +12,7 @@
   <depend package="sm_common"/>
   <export>
     <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
-	 lflags="`rosboost-cfg --lflags filesystem,system,serialization`"/>
+         lflags="`rosboost-cfg --lflags filesystem,system,serialization` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_boost"/>
   </export>
 
 </package>
