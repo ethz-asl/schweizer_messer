@@ -2,6 +2,12 @@ sm_eigen/lib
 *~
 *.so
 *.pyc
+build
+sm_boost/bin/
+sm_boost/lib/
+sm_matlab/Makefile
+sm_matrix_archive/build/
+sm_matrix_archive/lib/
 sm_console/build/
 sm_console/lib/
 test.ba
