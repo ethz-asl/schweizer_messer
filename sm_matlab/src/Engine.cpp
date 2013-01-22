@@ -32,7 +32,7 @@ namespace sm {
     {
         // it would be possible to run Matlab on a different Machine under Linux
         // due to time constraints and lack of need, this is not implemnted yet
-        SM_ASSERT_THROW(std::runtime_error, "Not implemented!");
+        SM_THROW(std::runtime_error, "Not implemented!");
     }
 #endif
 
