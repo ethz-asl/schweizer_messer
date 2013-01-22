@@ -18,15 +18,15 @@ namespace sm {
          * @param outMatrixSqrt The output square root.
          */
         template<typename DERIVED1, typename DERIVED2>
-        void computeMatrixSqrt(const Eigen::MatrixBase<DERIVED1> & inMatrix,
-                               const Eigen::MatrixBase<DERIVED2> & outMatrixSqrt)
+        /*Eigen::ComputationInfo*/ void computeMatrixSqrt(const Eigen::MatrixBase<DERIVED1> & inMatrix,
+                                                          const Eigen::MatrixBase<DERIVED2> & outMatrixSqrt)
         {
             SM_ASSERT_EQ_DBG(std::runtime_error, inMatrix.rows(), inMatrix.cols(), "This method is only valid for square input matrices");
             
             DERIVED2 & result = const_cast<DERIVED2 &>(outMatrixSqrt.derived());
 
             // This is tricky. Using the output matrix type causes the input matrix
-            // type to be upgraded to a real numeric matrix. This is usefule if, 
+            // type to be upgraded to a real numeric matrix. This is useful if, 
             // for example, the inMatrix is something like Eigen::Matrix3d::Identity(),
             // which is not an actual matrix. Using DERIVED1 as the template argument
             // in that case will cause a firestorm of compiler errors.
@@ -34,6 +34,8 @@ namespace sm {
             result = ldlt.matrixL();
             result = ldlt.transpositionsP().transpose() * result;
             result *= ldlt.vectorD().array().sqrt().matrix().asDiagonal();
+            
+            //return ldlt.info();
             
         }
 

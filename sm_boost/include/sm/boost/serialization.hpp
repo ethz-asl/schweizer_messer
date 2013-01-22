@@ -178,6 +178,49 @@ namespace sm { namespace boost_serialization {
         }                                                               \
     }
 
+#define SM_BOOST_CLASS_VERSION_T1T2T3T4(CLASS_T)                        \
+    namespace boost {                                                   \
+        namespace serialization {                                       \
+                                                                        \
+            template<typename T1, typename T2, typename T3, typename T4> \
+            struct version< CLASS_T<T1,T2,T3,T4> >                      \
+            {                                                           \
+                enum { NNN = CLASS_T<T1,T2,T3,T4>::CLASS_SERIALIZATION_VERSION }; \
+                typedef mpl::int_<  NNN  > type;                        \
+                typedef mpl::integral_c_tag tag;                        \
+                BOOST_STATIC_CONSTANT(int, value = version::type::value); \
+                BOOST_MPL_ASSERT((                                      \
+                                     boost::mpl::less<                  \
+                                                                        boost::mpl::int_<NNN>, \
+                                                                        boost::mpl::int_<256> \
+                                                                        > \
+                    ));                                                 \
+            };                                                          \
+        }                                                               \
+    }
+
+
+
+#define SM_BOOST_CLASS_VERSION_I1(CLASS_T)                              \
+    namespace boost {                                                   \
+        namespace serialization {                                       \
+                                                                        \
+            template<int I1>                                            \
+            struct version< CLASS_T<I1> >                               \
+            {                                                           \
+                enum { NNN = CLASS_T<I1>::CLASS_SERIALIZATION_VERSION }; \
+                typedef mpl::int_<  NNN  > type;                        \
+                typedef mpl::integral_c_tag tag;                        \
+                BOOST_STATIC_CONSTANT(int, value = version::type::value); \
+                BOOST_MPL_ASSERT((                                      \
+                                     boost::mpl::less<                  \
+                                                                        boost::mpl::int_<NNN>, \
+                                                                        boost::mpl::int_<256> \
+                                                                        > \
+                    ));                                                 \
+            };                                                          \
+        }                                                               \
+    }
 
 
 #define SM_BOOST_CLASS_VERSION_I1T2(CLASS_T)                            \

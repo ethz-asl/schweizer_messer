@@ -113,7 +113,7 @@ namespace sm { namespace eigen {
 		  (fb == 0.0  && fa < 1e-6) )    // ditto
 		return true;
       
-      double diff = fabs(fa - fb)/std::max(fa,fb);
+      double diff = fabs(a - b)/std::max(fa,fb);
       if(diff > percentTolerance * 1e-2)
 		{
 		  if(percentError)

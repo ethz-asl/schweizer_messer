@@ -38,7 +38,10 @@ rosbuild_add_boost_directories()
 rosbuild_add_library(${PROJECT_NAME}
   src/portable_binary_iarchive.cpp
   src/portable_binary_oarchive.cpp
+  src/Database.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} ${SQLITE3_LIBRARIES})
 
 rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp

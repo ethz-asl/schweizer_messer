@@ -15,6 +15,9 @@ void exportTransformation();
 void exportHomogeneousPoint();
 void exportTimestampCorrectors();
 void exportPropertyTree();
+void exportEigen();
+void exportUncertainVector();
+void exportMatrixArchive();
 
 void printTiming()
 {
@@ -33,4 +36,7 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportHomogeneousPoint();
   exportTimestampCorrectors();
   exportPropertyTree();
+  exportEigen();
+  exportUncertainVector();
+  exportMatrixArchive();
 }

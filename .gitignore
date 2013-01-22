@@ -1,6 +1,15 @@
 sm_eigen/lib
+*~
 *.so
 *.pyc
+build
+sm_boost/bin/
+sm_boost/lib/
+sm_matlab/Makefile
+sm_matrix_archive/build/
+sm_matrix_archive/lib/
+sm_console/build/
+sm_console/lib/
 test.ba
 test.xml
 sm_doc/doc/html
@@ -23,6 +32,12 @@ sm_database/test.db
 sm_omnicam/
 sm_property_tree/bin/sm_property_tree_test
 sm_property_tree/build/
+sm_matlab/bin/
+sm_matlab/build/
+sm_matlab/lib/
+sm_pose_graph/bin/
+sm_pose_graph/lib/
+sm_pose_graph/test.graph
 sm_property_tree/lib/
 sm_property_tree/src/#BoostPropertyTreeImplementation.cpp#
 sm_property_tree/test.xml
@@ -45,4 +60,5 @@ sm_doc/build
 
 *.orig
 sm_pose_graph/build/
+sm_pose_graph/lib/
 sm_database/lib

@@ -15,7 +15,8 @@
   
   <export>
     <python path="${prefix}/python"/>
-    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"/>
+    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
+         lflags="-L/usr/local/lib"/>
   </export>
 
 </package>

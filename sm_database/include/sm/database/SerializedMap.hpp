@@ -15,17 +15,10 @@
 #include <string>
 #include "../../boost/portable_binary_oarchive.hpp"
 #include "../../boost/portable_binary_iarchive.hpp"
-
+#include <sm/database/Database.hpp>
 
 namespace sm {
     namespace database {
-        SM_DEFINE_EXCEPTION(Exception,std::runtime_error);
-        SM_DEFINE_EXCEPTION(SqlException,Exception);
-        SM_DEFINE_EXCEPTION(UnknownIdException, Exception);
-        SM_DEFINE_EXCEPTION(UnableToOpenDatabaseException, Exception);
-        SM_DEFINE_EXCEPTION(InvalidTableNameException, Exception);
-        SM_DEFINE_EXCEPTION(InvalidDbNameException, Exception);
-        SM_DEFINE_EXCEPTION(NullValueException, Exception);
 
 
         struct PortableBinaryArchive
@@ -59,6 +52,10 @@ namespace sm {
       
             SerializedMap(const ::boost::filesystem::path & dbFileName, 
                           const std::string & tableName);
+
+            SerializedMap(boost::shared_ptr<Database> db,
+                          const std::string & tableName);
+
             virtual ~SerializedMap();
       
             ::boost::shared_ptr<T> get(::boost::uint64_t id);      
@@ -69,11 +66,12 @@ namespace sm {
       
             const std::string & tableName(){ return _tableName; }
         private:
+            void setUpTable();
             void validateTableName();
 
             ::boost::filesystem::path _dbName;
             std::string _tableName;
-            sqlite3 * _db;
+            boost::shared_ptr<Database> _db;
             sqlite3_stmt * _iStmt, * _sStmt;
       
         };

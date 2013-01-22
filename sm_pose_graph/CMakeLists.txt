@@ -41,3 +41,22 @@ rosbuild_add_library(${PROJECT_NAME}
 
 rosbuild_add_boost_directories()
 rosbuild_link_boost(${PROJECT_NAME} system filesystem)
+
+rosbuild_add_gtest(${PROJECT_NAME}_tests
+  test/test_main.cpp
+  test/PoseGraphTests.cpp
+)
+
+target_link_libraries(${PROJECT_NAME}_tests ${PROJECT_NAME})
+
+# Use this handy cmake function
+rosbuild_find_ros_package(numpy_eigen)
+include(${numpy_eigen_PACKAGE_PATH}/cmake/add_python_export_library.cmake)
+# This functions take TARGET_NAME PYTHON_MODULE_DIRECTORY sourceFile1 [sourceFile2 ...]
+add_python_export_library(${PROJECT_NAME}_python src/${PROJECT_NAME}
+  src/module.cpp
+  src/python/Vertex.cpp
+  src/python/Edge.cpp
+  src/python/PoseGraph.cpp
+)
+target_link_libraries(${PROJECT_NAME}_python ${PROJECT_NAME})

@@ -8,6 +8,7 @@
 #include "HomogeneousPoint.hpp"
 #include <boost/serialization/split_member.hpp>
 #include <boost/serialization/version.hpp>
+#include <sm/kinematics/UncertainVector.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -15,7 +16,7 @@ namespace sm {
     class UncertainTransformation;
     class UncertainHomogeneousPoint;
 
-        ///
+      ///
     /// @class Transformation
     /// @brief a class that represents a transformation.
     /// @todo describe how these transformations work
@@ -89,6 +90,15 @@ namespace sm {
       virtual UncertainHomogeneousPoint operator*(const UncertainHomogeneousPoint & rhs) const;
 
       void checkTransformationIsValid( void ) const;
+
+        /// \brief rotate a point (do not translate)
+        Eigen::Vector3d rotate(const Eigen::Vector3d & p) const;
+
+        /// \brief rotate a point (do not translate)
+        Eigen::Vector4d rotate(const Eigen::Vector4d & p) const;
+
+        /// \brief rotate a point (do not translate)
+        UncertainVector3 rotate(const UncertainVector3 & p) const;
 
       
         enum {CLASS_SERIALIZATION_VERSION = 0};
