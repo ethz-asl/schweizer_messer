@@ -4,6 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/thread/mutex.hpp>
 
+#include <stdarg.h>
 #include <vector>
 #include <set>
 
