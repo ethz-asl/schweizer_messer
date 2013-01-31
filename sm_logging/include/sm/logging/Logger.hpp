@@ -20,8 +20,8 @@ namespace sm {
             
             void log(const LoggingEvent & event);
         protected:
-            virtual double currentTimeSecondsUtcImplementation() const = 0;
-            virtual std::string currentTimeStringImplementation() const = 0;
+            virtual double currentTimeSecondsUtcImplementation() const;
+            virtual std::string currentTimeStringImplementation() const;
             virtual void logImplementation(const LoggingEvent & event) = 0;
         };
 
