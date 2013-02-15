@@ -24,12 +24,12 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
+rosbuild_add_boost_directories()
 #
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-link_directories(/usr/local/lib)
+
 
 rosbuild_add_library(${PROJECT_NAME} 
   src/Logger.cpp
@@ -40,7 +40,7 @@ rosbuild_add_library(${PROJECT_NAME}
   src/Tokens.cpp
   )
 
-rosbuild_link_boost(${PROJECT_NAME} thread regex)
+rosbuild_link_boost(${PROJECT_NAME} thread regex system)
 
 rosbuild_add_gtest(${PROJECT_NAME}_test
   test/test_main.cpp

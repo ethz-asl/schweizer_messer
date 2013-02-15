@@ -7,7 +7,7 @@
 namespace sm {
     namespace logging {
         
-        class LoggingEvent;
+        struct LoggingEvent;
         
         class Logger
         {

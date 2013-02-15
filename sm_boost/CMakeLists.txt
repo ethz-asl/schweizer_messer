@@ -29,13 +29,10 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-IF(APPLE)
-  link_directories( /usr/local/lib )
-ENDIF(APPLE)
 
 
 rosbuild_add_library(${PROJECT_NAME} src/JobQueue.cpp)
-rosbuild_link_boost(${PROJECT_NAME} thread)
+rosbuild_link_boost(${PROJECT_NAME} system thread)
 
 rosbuild_add_gtest(${PROJECT_NAME}_test 
   test/test_main.cpp
