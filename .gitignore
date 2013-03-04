@@ -62,3 +62,7 @@ sm_doc/build
 sm_pose_graph/build/
 sm_pose_graph/lib/
 sm_database/lib
+
+sm_logging/bin/sm_logging_test
+
+*.dylib
