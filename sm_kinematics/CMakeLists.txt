@@ -44,6 +44,7 @@ rosbuild_add_library( ${PROJECT_NAME}
   src/UncertainTransformation.cpp
   src/UncertainHomogeneousPoint.cpp
   src/three_point_methods.cpp
+  src/EulerAnglesZXY.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
