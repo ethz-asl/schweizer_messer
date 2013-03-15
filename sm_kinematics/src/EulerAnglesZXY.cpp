@@ -71,10 +71,8 @@ namespace sm {
         const Eigen::Matrix3d& rotationMatrix) const {
       const double sx = rotationMatrix(2, 1);
       const double r_x = asin(sx);
-      const double ty = -rotationMatrix(2, 0) / rotationMatrix(2, 2);
-      const double r_y = atan(ty);
-      const double tz = -rotationMatrix(0, 1) / rotationMatrix(1, 1);
-      const double r_z = atan(tz);
+      const double r_y = atan2(-rotationMatrix(2, 0), rotationMatrix(2, 2));
+      const double r_z = atan2(-rotationMatrix(0, 1), rotationMatrix(1, 1));
       return Eigen::Vector3d(r_z, r_x, r_y);
     }
 
