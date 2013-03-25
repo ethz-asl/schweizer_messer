@@ -48,19 +48,16 @@ namespace sm {
 /* Methods                                                                    */
 /******************************************************************************/
 
-
     Eigen::Matrix3d EulerAnglesZXY::parametersToRotationMatrix(
         const Eigen::Vector3d& parameters, Eigen::Matrix3d * S ) const {
-      if (S != NULL)
-        SM_THROW(Exception,"Not implemented")
-
+      if (S)
+        *S = parametersToSMatrix(parameters);
       const double cx = cos(parameters(1));
       const double sx = sin(parameters(1));
       const double cy = cos(parameters(2));
       const double sy = sin(parameters(2));
       const double cz = cos(parameters(0));
       const double sz = sin(parameters(0));
-
       return (Eigen::Matrix3d() <<
         cz * cy - sz * sx * sy, -sz * cx, cz * sy + sz * sx * cy,
         sz * cy + cz * sx * sy, cz * cx, sz * sy - cz * sx * cy,
@@ -78,15 +75,23 @@ namespace sm {
 
     Eigen::Matrix3d EulerAnglesZXY::parametersToSMatrix(
         const Eigen::Vector3d& parameters) const {
-      SM_THROW(Exception,"Not implemented")
-      return Eigen::Matrix3d::Zero();
+      const double cx = cos(parameters(1));
+      const double sx = sin(parameters(1));
+      const double cz = cos(parameters(0));
+      const double sz = sin(parameters(0));
+      return (Eigen::Matrix3d() <<
+        0, cz, -cx * sz,
+        0, sz, cx * cz,
+        1, 0, sx).finished();
     }
 
     Eigen::Vector3d EulerAnglesZXY::angularVelocityAndJacobian(
         const Eigen::Vector3d& p, const Eigen::Vector3d& pdot,
         Eigen::Matrix<double, 3, 6>* Jacobian) const {
-      SM_THROW(Exception,"Not implemented")
-      return Eigen::Vector3d::Zero();
+      if (Jacobian) {
+        SM_THROW(Exception,"Not implemented")
+      }
+      return parametersToSMatrix(p) * pdot;
     }
 
   }

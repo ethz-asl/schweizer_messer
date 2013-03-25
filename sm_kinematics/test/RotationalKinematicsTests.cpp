@@ -4,6 +4,7 @@
 #include <sm/kinematics/RotationVector.hpp>
 #include <sm/kinematics/EulerRodriguez.hpp>
 #include <sm/kinematics/EulerAnglesYawPitchRoll.hpp>
+#include <sm/kinematics/EulerAnglesZXY.h>
 
 // Bring in gtest
 #include <gtest/gtest.h>
@@ -296,3 +297,13 @@ TEST(RotationalKinematicsTestSuite, testYpr)
    rotationvector.testAll();
    rotationvector.testAngularVelocity();
  }
+
+TEST(RotationalKinematicsTestSuite, testZXY)
+{
+  SCOPED_TRACE("EulerAnglesZXY");
+  RotationalKinematicsTestHarness<EulerAnglesZXY> eulerzxy;
+  eulerzxy.testParametersToRotationMatrix();
+  eulerzxy.testInvertibleParameterTransformation();
+  eulerzxy.testSMatrix();
+//  eulerzxy.testAngularVelocity();
+}
