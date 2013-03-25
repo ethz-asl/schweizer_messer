@@ -302,8 +302,6 @@ TEST(RotationalKinematicsTestSuite, testZXY)
 {
   SCOPED_TRACE("EulerAnglesZXY");
   RotationalKinematicsTestHarness<EulerAnglesZXY> eulerzxy;
-  eulerzxy.testParametersToRotationMatrix();
-  eulerzxy.testInvertibleParameterTransformation();
-  eulerzxy.testSMatrix();
-//  eulerzxy.testAngularVelocity();
+  eulerzxy.testAll();
+  eulerzxy.testAngularVelocity();
 }

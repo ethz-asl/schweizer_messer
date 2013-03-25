@@ -80,18 +80,29 @@ namespace sm {
       const double cz = cos(parameters(0));
       const double sz = sin(parameters(0));
       return (Eigen::Matrix3d() <<
-        0, cz, -cx * sz,
-        0, sz, cx * cz,
-        1, 0, sx).finished();
+        0, -cz, cx * sz,
+        0, -sz, -cx * cz,
+        -1, 0, -sx).finished();
     }
 
     Eigen::Vector3d EulerAnglesZXY::angularVelocityAndJacobian(
         const Eigen::Vector3d& p, const Eigen::Vector3d& pdot,
         Eigen::Matrix<double, 3, 6>* Jacobian) const {
+      const double cx = cos(p(1));
+      const double sx = sin(p(1));
+      const double cz = cos(p(0));
+      const double sz = sin(p(0));
+      Eigen::Matrix3d S = parametersToSMatrix(p);
       if (Jacobian) {
-        SM_THROW(Exception,"Not implemented")
+        *Jacobian = Eigen::Matrix<double, 3, 6>::Zero();
+        (*Jacobian)(0, 0) = sz * pdot[1] + cx * cz * pdot[2];
+        (*Jacobian)(0, 1) = -sx * sz * pdot[2];
+        (*Jacobian)(1, 0) = -cz * pdot[1] + cx * sz * pdot[2];
+        (*Jacobian)(1, 1) = sx * cz * pdot[2];
+        (*Jacobian)(2, 1) = -cx * pdot[2];
+        Jacobian->topRightCorner<3, 3>() = S;
       }
-      return parametersToSMatrix(p) * pdot;
+      return S * pdot;
     }
 
   }
