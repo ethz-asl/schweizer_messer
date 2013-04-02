@@ -68,7 +68,7 @@ namespace sm {
       /// Returns the angular velocity for given input parameters and derivative
       virtual Eigen::Vector3d angularVelocityAndJacobian(const Eigen::Vector3d&
         p, const Eigen::Vector3d& pdot,
-        Eigen::Matrix<double, 3, 6>* Jacobian) const;
+        Eigen::Matrix<double, 3, 6>* Jacobian = NULL) const;
       /** @}
         */
 
