@@ -76,6 +76,8 @@ namespace sm {
       /// \brief Set this to a random transformation.
       virtual void setRandom();
       
+        virtual void set( const Eigen::Matrix4d & T_a_b );
+
       /// \brief Set this to a random transformation with bounded rotation and translation.
       virtual void setRandom( double translationMaxMeters, double rotationMaxRadians);
       /// \brief Set this transformation to identity
