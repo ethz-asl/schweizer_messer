@@ -21,7 +21,7 @@ TEST(SmKinematicsTests, testThreePoint)
   
   sm::kinematics::Transformation T;
   T.setRandom();
-  matrix4 T_ba = T.T();
+  //matrix4 T_ba = T.T();
   matrix3 C_ba = T.C();
   vector3 rho_b_ab = T.t();
   

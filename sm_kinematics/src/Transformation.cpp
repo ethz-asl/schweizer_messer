@@ -51,6 +51,12 @@ namespace sm {
       return _q_a_b;
     }
     
+      void Transformation::set( const Eigen::Matrix4d & T_a_b )
+      {
+          _q_a_b = r2quat(T_a_b.topLeftCorner<3,3>());
+          _t_a_b_a = T_a_b.topRightCorner<3,1>();
+      }
+
     Eigen::Matrix4d Transformation::T() const
     {
       Eigen::Matrix4d T_a_b;
