@@ -12,8 +12,17 @@ namespace sm {
   }
   
   PropertyTree::PropertyTree(const PropertyTree & parent, const std::string & childNamespace) :
-    _namespace(ensureTrailingBackslash(parent._namespace + childNamespace)), _imp(parent._imp)
+     _imp(parent._imp)
   {
+      if(childNamespace.size() > 0 && childNamespace[0] == '/')
+      {
+          _namespace = ensureTrailingBackslash(childNamespace);
+      }
+      else 
+      {
+          _namespace = ensureTrailingBackslash(parent._namespace + childNamespace);
+      }
+
     if(_namespace.size() > 0 && _namespace[0] != '/')
       _namespace = "/" + _namespace;    
   }
