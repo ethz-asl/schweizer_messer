@@ -8,6 +8,8 @@
 
 namespace sm { namespace python {
 
+        // to use:     sm::python::Id_python_converter<FrameId>::register_converter();
+
 
     // adapted from http://misspent.wordpress.com/2009/09/27/how-to-write-boost-python-converters/
     
