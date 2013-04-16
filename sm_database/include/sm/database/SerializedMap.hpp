@@ -13,8 +13,8 @@
 #include <boost/iostreams/stream.hpp>
 #include <boost/filesystem.hpp>
 #include <string>
-#include "../../boost/portable_binary_oarchive.hpp"
-#include "../../boost/portable_binary_iarchive.hpp"
+#include <boost/portable_binary_oarchive.hpp>
+#include <boost/portable_binary_iarchive.hpp>
 #include <sm/database/Database.hpp>
 
 namespace sm {

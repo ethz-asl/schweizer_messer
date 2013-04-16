@@ -36,8 +36,6 @@ include_directories(${SQLITE3_DIRECTORIES})
 rosbuild_add_boost_directories()
 
 rosbuild_add_library(${PROJECT_NAME}
-  src/portable_binary_iarchive.cpp
-  src/portable_binary_oarchive.cpp
   src/Database.cpp
 )
 
