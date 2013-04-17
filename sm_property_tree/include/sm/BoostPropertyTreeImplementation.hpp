@@ -91,7 +91,7 @@ namespace sm {
       }
     catch(const ptree_bad_data & e)
       {
-          SM_THROW(PropertyTree::InvalidValueException, "Unable to get the value for key \"" << key << "\" as type " << typeid(T).name() << ": " << e.what());
+          SM_THROW(PropertyTree::InvalidValueException, "Unable to get the value for key \"" << key << "\" with value \"" << _ptree.get<std::string>(ptree::path_type(key.substr(1),'/')) << "\" as type " << typeid(T).name() << ": " << e.what());
       }
     catch(const ptree_bad_path & e)
       {
