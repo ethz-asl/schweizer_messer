@@ -210,7 +210,9 @@ namespace sm {
 
             std::vector<char> str;
             ss.swap_vector(str);
-
+            // make sure the string is null terminated.
+            str.push_back('\0');
+            
             boost::mutex::scoped_lock lock(_print_mutex);
 
             _printing_thread_id = boost::this_thread::get_id();
