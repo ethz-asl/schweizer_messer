@@ -2,6 +2,7 @@ sm_eigen/lib
 *~
 *.so
 *.pyc
+SFM
 build
 sm_boost/bin/
 sm_boost/lib/
