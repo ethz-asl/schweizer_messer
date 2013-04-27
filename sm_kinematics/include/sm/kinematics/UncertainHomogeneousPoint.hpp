@@ -8,6 +8,8 @@ namespace sm {
     class UncertainHomogeneousPoint : public HomogeneousPoint
     {
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
       typedef Eigen::Matrix4d covariance_t;
 
       /// \brief set the point to the origin with zero uncertainty.
