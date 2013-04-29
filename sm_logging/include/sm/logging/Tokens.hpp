@@ -107,13 +107,14 @@ namespace sm {
         {
             virtual std::string getString(const ::sm::logging::LoggingEvent& event)
                 {
-#ifdef _MSC_VER
-                    // has to handle LogString with wchar types.
-                    LOG4CXX_ENCODE_CHAR(ret, event.getMessage());
-                    return ret;
-#else
+                    // \todo Does this still work on Windows?
+// #ifdef _MSC_VER
+//                     // has to handle LogString with wchar types.
+//                     LOG4CXX_ENCODE_CHAR(ret, event.getMessage());
+//                     return ret;
+// #else
                     return event.message;
-#endif
+//#endif
                 }
         };
 
