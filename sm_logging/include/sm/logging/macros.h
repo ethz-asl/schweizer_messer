@@ -26,7 +26,7 @@
  */
 
 #ifndef SMLIB_MACROS_H_INCLUDED
-#define ROSLIB_MACROS_H_INCLUDED
+#define SMLIB_MACROS_H_INCLUDED
 
 #if defined(__GNUC__)
 #define SM_DEPRECATED __attribute__((deprecated))

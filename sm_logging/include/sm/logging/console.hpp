@@ -240,4 +240,4 @@ namespace sm
 
 #include "macros_generated.hpp"
 
-#endif // ROSCONSOLE_ROSCONSOLE_H
+#endif // SMCONSOLE_SMCONSOLE_H
