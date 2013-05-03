@@ -9,6 +9,9 @@ void exportTransformation()
   void (Transformation::*setRandom1)() = &Transformation::setRandom;
   void (Transformation::*setRandom2)( double , double ) = &Transformation::setRandom;
 
+  def("interpolateTransformations", &interpolateTransformations);
+  def("slerpTransformations", &slerpTransformations);
+
 
   class_<Transformation, boost::shared_ptr<Transformation> >("Transformation", init<>())
     .def(init<const Eigen::Matrix4d &>())

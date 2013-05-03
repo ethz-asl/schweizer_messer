@@ -226,6 +226,34 @@ namespace sm {
       }
 
 
+      // Interpolate the transformation at time si between T0 (at time s0) and T1 (at time s1)
+      Transformation interpolateTransformations(const Transformation & T0, double s0,
+                                                const Transformation & T1, double s1,
+                                                double si)
+      {
+          if( s0 > s1 )
+          {
+              return interpolateTransformations( T1, s1, T0, s0, si );
+          }
+          
+          // The time span of interpolation. Make sure this is greater than zero.
+          double ds = std::max(1e-14, s1 - s0);
+          // The place of si on this timespan 0.0 --> s0, 1.0 -> s1
+          double di = (si - s0) / ds;
+          return slerpTransformations(T0, T1, di);
+          
+      }
+
+      /// brief linear interpolate between T0 and T1 as si moves from 0.0 to 1.0
+      Transformation slerpTransformations(const Transformation & T0, 
+                                          const Transformation & T1, 
+                                          double si)
+      {
+          // lazy. interpolate separately.
+          return Transformation( qslerp( T0.q(), T1.q(), si), lerp( T0.t(), T1.t(), si) );
+      }
+
+
 
   } // namespace kinematics
 } // namespace sm
