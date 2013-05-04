@@ -28,10 +28,10 @@ namespace sm { namespace python {
       // Two functions: convertible() and construct()
       static void * convertible(PyObject* obj_ptr)
       {
-	if (!PyInt_Check(obj_ptr)) 
-	  return 0;
-    
-	return obj_ptr;
+          if (!(PyInt_Check(obj_ptr) || PyLong_Check(obj_ptr)))
+              return 0;
+          
+          return obj_ptr;
       }
 
       static void construct(
