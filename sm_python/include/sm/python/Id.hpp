@@ -40,17 +40,21 @@ namespace sm { namespace python {
       {
 
 	// Get the value.
-	boost::uint64_t value = PyInt_AS_LONG(obj_ptr);
-    
-    
-	void* storage = ((boost::python::converter::rvalue_from_python_storage<id_t>*)
-			 data)->storage.bytes;
-    
-
-	new (storage) id_t(value);
-    
-	// Stash the memory chunk pointer for later use by boost.python
-	data->convertible = storage;
+          boost::uint64_t value;
+          if ( PyInt_Check(obj_ptr) ) {
+              value = PyInt_AsUnsignedLongLongMask(obj_ptr);
+          } else {
+              value = PyLong_AsUnsignedLongLong(obj_ptr);
+          }
+        
+          void* storage = ((boost::python::converter::rvalue_from_python_storage<id_t>*)
+                           data)->storage.bytes;
+          
+          
+          new (storage) id_t(value);
+          
+          // Stash the memory chunk pointer for later use by boost.python
+          data->convertible = storage;
       }
   
 
