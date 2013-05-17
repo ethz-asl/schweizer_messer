@@ -42,6 +42,11 @@ namespace sm { namespace kinematics {
 
         /// \brief do spherical linear interpolation between q0 and q1 for times t = [0.0,1.0]
         Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t);
+
+
+        /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
+        Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t);
+
   }} // namespace sm::kinematics
 
 

@@ -7,6 +7,7 @@
 //  exception_ptr.hpp/cpp copyright Peter Dimov 
 //  Adapted by Paul Furgale (2010/2011/2012)
 
+#include <deque>
 
 #include <boost/thread/future.hpp>
 #include <boost/thread.hpp>

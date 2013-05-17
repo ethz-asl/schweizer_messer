@@ -336,6 +336,25 @@ namespace sm { namespace kinematics {
         }
         
 
+        /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
+        Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t)
+        {
+            SM_ASSERT_EQ(std::runtime_error, p0.size(), p1.size(), "The vectors must be the same size");
+            if(t <= 0.0)
+            {
+                return p0;
+            }
+            else if(t >= 1.0)
+            {
+                return p1;
+            }
+            else
+            {
+                return (1-t) * p0  +  t * p1;
+            }
+        }
+
+
 
     }} // namespace sm::kinematics
 

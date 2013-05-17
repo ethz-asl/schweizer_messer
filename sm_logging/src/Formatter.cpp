@@ -82,17 +82,17 @@ namespace sm {
             void Formatter::print(const ::sm::logging::LoggingEvent& event, std::ostream & ss)
                 {
                     const char* color = COLOR_NORMAL;
-                    FILE* f = stdout;
+                    //FILE * f = stdout;
 
                     if (event.level == SMCONSOLE_SEVERITY_FATAL)
                     {
                         color = COLOR_RED;
-                        f = stderr;
+                        //f = stderr;
                     }
                     else if (event.level == SMCONSOLE_SEVERITY_ERROR)
                     {
                         color = COLOR_RED;
-                        f = stderr;
+                        //f = stderr;
                     }
                     else if (event.level == SMCONSOLE_SEVERITY_WARN)
                     {

@@ -143,7 +143,7 @@ namespace sm {
          UncertainVector<D> UncertainVector<D>::normalized()
          {
              covariance_t nJ;
-             value_t v = normalizeAndJacobian( _v, nJ);
+             value_t v = normalizeAndJacobian<D>( _v, nJ);
              
              return UncertainVector<D>(v, nJ * _E * nJ.transpose());
          }
@@ -153,7 +153,7 @@ namespace sm {
          void UncertainVector<D>::normalize()
          {
              covariance_t nJ;
-             _v = normalizeAndJacobian( _v, nJ);
+             _v = normalizeAndJacobian<D>( _v, nJ);
              _E = nJ * _E * nJ.transpose();
    
          }
