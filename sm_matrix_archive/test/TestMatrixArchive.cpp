@@ -5,6 +5,7 @@
  *      Author: hannes
  */
 #include <gtest/gtest.h>
+#include <unistd.h>
 
 #include <sm/MatrixArchive.hpp>
 
@@ -33,6 +34,7 @@ TEST(MatrixArchive, testMatrixLoadAndSaveWorkTogether) {
     ASSERT_EQ(testMat.cols(), resultMat.cols());
     ASSERT_EQ(testMat(0, 0), resultMat(0,0));
 
+    unlink(tempfile.c_str());
   } catch (const std::exception & e) {
     FAIL()<< e.what();
   }
