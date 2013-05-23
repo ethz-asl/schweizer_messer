@@ -1,4 +1,4 @@
-
+#include <sm/serialization_macros.hpp>
 
 template<int D>
 sm::kinematics::UncertainVector<D> operator*(const typename sm::kinematics::UncertainVector<D>::linear_operator_t & M, const sm::kinematics::UncertainVector<D> & v)
@@ -181,7 +181,7 @@ namespace sm {
          template<int D>
          bool UncertainVector<D>::isBinaryEqual(const UncertainVector<D> & rhs) const
          {
-             return _v == rhs._v && _E == rhs._E;
+             return SM_CHECKMEMBERSSAME(rhs, _v) && SM_CHECKMEMBERSSAME(rhs, _E);
          }
 
 
@@ -196,7 +196,7 @@ namespace sm {
 
          inline bool UncertainVector<1>::isBinaryEqual(const UncertainVector<1> & rhs) const
          {
-             return _v == rhs._v && _sigma2 == rhs._sigma2;
+             return SM_CHECKMEMBERSSAME(rhs, _v) && SM_CHECKMEMBERSSAME(rhs, _sigma2);
          }
 
 
