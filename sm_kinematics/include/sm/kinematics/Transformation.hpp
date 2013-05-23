@@ -102,6 +102,10 @@ namespace sm {
         /// \brief rotate a point (do not translate)
         UncertainVector3 rotate(const UncertainVector3 & p) const;
 
+        
+        double * qptr();
+        double * tptr();
+
       
         enum {CLASS_SERIALIZATION_VERSION = 0};
 
@@ -129,6 +133,8 @@ namespace sm {
       ///        of a small transformation.
       Eigen::Matrix<double,6,6> S() const;
 
+
+      
     protected:
       
       /// The quaternion that will become a rotation matrix C_a_b that 

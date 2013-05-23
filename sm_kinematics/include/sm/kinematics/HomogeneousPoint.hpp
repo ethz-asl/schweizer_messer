@@ -102,6 +102,8 @@ namespace sm {
 	  /// \brief checks if homogeneous point is a vector, i.e. it has infinite length (if fourth coordinate is zero)
 	  bool isVector() const;
 
+        double * pptr(){ return &_ph[0]; }
+
       /// \brief Normalize the point so that it is unit length
       virtual void normalize();
 	  
