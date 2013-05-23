@@ -155,6 +155,34 @@ TEST(SerializationMacros, TestSharedPointer) {
   ASSERT_FALSE(SM_CHECKSAME(e1, e3));
 }
 
+TEST(SerializationMacros, TestPointer) {
+  ComplexEntry* e1 = new ComplexEntry;
+  ComplexEntry* e2 = new ComplexEntry;
+  ComplexEntry* e3 = new ComplexEntry;
+
+  e1->setRandom();
+  e2->setRandom();
+  e3->setRandom();
+
+  ASSERT_FALSE(SM_CHECKSAME(e1, e2));
+
+  ComplexEntry* tmpe1 = e1;
+  e1 = e2;
+
+  ASSERT_TRUE(SM_CHECKSAME(e1, e2));
+
+  ComplexEntry* e4 = new ComplexEntry(*e1);
+
+  ASSERT_TRUE(SM_CHECKSAME(e1, e4));
+  ASSERT_TRUE(SM_CHECKSAME(e1, e4));
+  ASSERT_FALSE(SM_CHECKSAME(e1, e3));
+
+  delete tmpe1;
+  delete e2;
+  delete e3;
+  delete e4;
+}
+
 
 TEST(SerializationMacros, TestClassHasMethodDeduction) {
   ASSERT_EQ(HasIsBinaryEqual<ComplexEntry>::value, 1);
@@ -210,4 +238,6 @@ TEST(SerializationMacros, TestPtrHasStreamOperator) {
 
   ASSERT_EQ((HasOStreamOperator<std::ostream, T2>::value), 1);
   ASSERT_EQ((HasOStreamOperator<std::ostream, T1>::value), 0);
+
+  delete e1;
 }
