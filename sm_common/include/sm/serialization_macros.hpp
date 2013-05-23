@@ -42,6 +42,7 @@ class HasOStreamOperator {
     value = sizeof(check(stream << x)) == sizeof(yes)
   };
 };
+
 template<typename StreamType, typename T>
 class HasOStreamOperator<StreamType, boost::shared_ptr<T> > {
  public:
@@ -49,8 +50,17 @@ class HasOStreamOperator<StreamType, boost::shared_ptr<T> > {
      value = HasOStreamOperator<StreamType, T>::value
    };
 };
+
 template<typename StreamType, typename T>
 class HasOStreamOperator<StreamType, T* > {
+ public:
+  enum {
+     value = HasOStreamOperator<StreamType, T>::value
+   };
+};
+
+template<typename StreamType, typename T>
+class HasOStreamOperator<StreamType, T& > {
  public:
   enum {
      value = HasOStreamOperator<StreamType, T>::value
@@ -78,6 +88,13 @@ class HasIsBinaryEqual<boost::shared_ptr<T> > {
 };
 template<typename T>
 class HasIsBinaryEqual<T*> {
+ public:
+  enum {
+    value = HasIsBinaryEqual<T>::value
+  };
+};
+template<typename T>
+class HasIsBinaryEqual<T&> {
  public:
   enum {
     value = HasIsBinaryEqual<T>::value
