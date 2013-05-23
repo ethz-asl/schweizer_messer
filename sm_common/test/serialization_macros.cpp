@@ -168,6 +168,13 @@ TEST(SerializationMacros, TestClassSharedPtrHasMethodDeduction) {
   ASSERT_EQ(HasIsBinaryEqual<T2>::value, 0);
 }
 
+TEST(SerializationMacros, TestClassPtrHasMethodDeduction) {
+  typedef ComplexEntry* T1;
+  typedef SimpleEntry* T2;
+  ASSERT_EQ(HasIsBinaryEqual<T1>::value, 1);
+  ASSERT_EQ(HasIsBinaryEqual<T2>::value, 0);
+}
+
 TEST(SerializationMacros, TestClassHasStreamOperator) {
   ComplexEntry e1;
   e1.setRandom();
@@ -191,3 +198,16 @@ TEST(SerializationMacros, TestSharedPtrHasStreamOperator) {
   ASSERT_EQ((HasOStreamOperator<std::ostream, T1>::value), 0);
 }
 
+
+TEST(SerializationMacros, TestPtrHasStreamOperator) {
+  typedef ComplexEntry* T1;
+  typedef SimpleEntry* T2;
+
+  T1 e1 = new ComplexEntry;
+  e1->setRandom();
+
+  streamIf<HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
+
+  ASSERT_EQ((HasOStreamOperator<std::ostream, T2>::value), 1);
+  ASSERT_EQ((HasOStreamOperator<std::ostream, T1>::value), 0);
+}
