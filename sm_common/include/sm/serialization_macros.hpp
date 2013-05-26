@@ -14,8 +14,14 @@
 #include <type_traits>
 #include <sstream>
 #include <ostream>
+#include <iostream>
 #include <boost/static_assert.hpp>
 #include <boost/shared_ptr.hpp>
+#include <sm/typetraits.hpp>
+
+namespace cv{
+class Mat;
+}
 
 namespace {
 namespace {
@@ -23,13 +29,23 @@ typedef char yes;
 typedef int no;
 
 struct AnyT {
-  template<class T> AnyT(const T &);
+  template<class T> AnyT(const T &){};
 };
 
-no operator <<(const AnyT &, const AnyT &);
+no operator <<(const AnyT &, const AnyT &){return no();};
 
 template<class T> yes check(const T&);
-no check(no);
+no check(no){return no();};
+}
+
+namespace{
+struct makeCompilerSilent{ //rm warning about unused functions
+  void foo(){
+    check(no());
+    AnyT t(5);
+    operator <<(t, t);
+  }
+};
 }
 
 //this template metaprogramming struct can tell us if there is the operator<< defined somewhere
@@ -71,12 +87,17 @@ class HasOStreamOperator<StreamType, T& > {
 //function isBinaryEqual
 template<typename T>
 class HasIsBinaryEqual {
-  template<typename U, bool (U::*)(const T&) const> struct Check;
+  //for non const methods (which is actually wrong)
+  template<typename U, bool (U::*)(const T&)> struct Check;
   template<typename U> static char func(Check<U, &U::isBinaryEqual> *);
   template<typename U> static int func(...);
+  //for const methods
+  template<typename U, bool (U::*)(const T&) const> struct CheckConst;
+  template<typename U> static char funcconst(CheckConst<U, &U::isBinaryEqual> *);
+  template<typename U> static int funcconst(...);
  public:
   enum {
-    value = (sizeof(func<T>(0)) == sizeof(char))
+    value = (sizeof(func<T>(0)) == sizeof(char)) || (sizeof(funcconst<T>(0)) == sizeof(char))
   };
 };
 template<typename T>
@@ -172,6 +193,39 @@ struct isSame<false, boost::shared_ptr<A> > {
   }
 };
 
+//for opencv Mat we have to use the sm opencv isBinaryEqual method otherwise sm_common has to depend on sm_opencv
+
+template<typename T, bool B>
+struct checkTypeIsNotOpencvMat {
+  enum{
+    value = true,
+  };
+};
+
+template<bool B>
+struct checkTypeIsNotOpencvMat<cv::Mat, B> {
+  enum{
+    value = true, //yes true is correct here
+  };
+  BOOST_STATIC_ASSERT_MSG((B == !B) /*false*/, "You cannot use the macro SM_CHECKSAME or SM_CHECKSAMEMEMBER on opencv mat. Use sm::opencv::isBinaryEqual instead");
+};
+
+template<bool B>
+struct checkTypeIsNotOpencvMat<boost::shared_ptr<cv::Mat>, B > {
+  enum{
+    value = true, //yes true is correct here
+  };
+  BOOST_STATIC_ASSERT_MSG((B == !B) /*false*/, "You cannot use the macro SM_CHECKSAME or SM_CHECKSAMEMEMBER on opencv mat. Use sm::opencv::isBinaryEqual instead");
+};
+
+template<bool B>
+struct checkTypeIsNotOpencvMat<cv::Mat*, B> {
+  enum{
+    value = true, //yes true is correct here
+  };
+  BOOST_STATIC_ASSERT_MSG((B == !B) /*false*/, "You cannot use the macro SM_CHECKSAME or SM_CHECKSAMEMEMBER on opencv mat. Use sm::opencv::isBinaryEqual instead");
+};
+
 //if the object supports it stream to ostream, otherwise put NA
 template<bool, typename A>
 struct streamIf;
@@ -229,25 +283,34 @@ struct streamIf<false, A> {
 };
 }
 
+
 //these defines set the default behaviour if no verbosity argument is given
 #define SM_SERIALIZATION_CHECKSAME_VERBOSE(THIS, OTHER) SM_SERIALIZATION_CHECKSAME_IMPL(THIS, OTHER, true)
 #define SM_SERIALIZATION_CHECKMEMBERSSAME_VERBOSE(OTHER, MEMBER) SM_SERIALIZATION_CHECKMEMBERSSAME_IMPL(OTHER, MEMBER, true)
 
 #define SM_SERIALIZATION_CHECKSAME_IMPL(THIS, OTHER, VERBOSE) \
-    (isSame<HasIsBinaryEqual<decltype(OTHER)>::value, decltype(OTHER) >::eval(THIS, OTHER)) ? true :\
-        (VERBOSE ? (std::cout <<  "*** Validation failed on " << #OTHER << ": "<< \
-            streamIf<HasOStreamOperator<std::ostream, decltype(OTHER)>::value, decltype(OTHER) >::eval(THIS) << \
-            " other " << streamIf<HasOStreamOperator<std::ostream, decltype(OTHER)>::value, decltype(OTHER)>::eval(OTHER) \
-            << " at " << __PRETTY_FUNCTION__ << \
-            " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false)
+    (checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/ \
+    isSame<HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*first run the test of equality: either isBinaryEqual or op==*/ \
+    typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS, OTHER)) ? true : /*return true if good*/ \
+    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #OTHER << ": "<< /*if not true, check whether VERBOSE and then try to output the failed values using operator<<*/  \
+    streamIf<HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*here we check whether operator<< is available*/ \
+    typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS) << \
+    " other " << streamIf<HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, \
+    typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::eval(OTHER) \
+    << " at " << __PRETTY_FUNCTION__ << /*we print the function where this happened*/ \
+    " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false) /*we print the line and file where this happened*/
 
 #define SM_SERIALIZATION_CHECKMEMBERSSAME_IMPL(OTHER, MEMBER, VERBOSE) \
-    (isSame<HasIsBinaryEqual<decltype(MEMBER)>::value, decltype(MEMBER) >::eval(this->MEMBER, OTHER.MEMBER)) ? true :\
-        (VERBOSE ? (std::cout <<  "*** Validation failed on " << #MEMBER << ": "<< \
-            streamIf<HasOStreamOperator<std::ostream, decltype(MEMBER)>::value, decltype(MEMBER) >::eval(this->MEMBER) << \
-            " other " << streamIf<HasOStreamOperator<std::ostream, decltype(MEMBER)>::value, decltype(MEMBER) >::eval(OTHER.MEMBER) \
-            << " at " << __PRETTY_FUNCTION__ << \
-            " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false)
+    (checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/\
+    isSame<HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER, OTHER.MEMBER)) ? true :\
+    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #MEMBER << ": "<< \
+    streamIf<HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER) << \
+    " other " << streamIf<HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(OTHER.MEMBER) \
+    << " at " << __PRETTY_FUNCTION__ << \
+    " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false)
 
 //this is some internal default macro parameter deduction
 #define SM_SERIALIZATION_GET_3RD_ARG(arg1, arg2, arg3, ...) arg3

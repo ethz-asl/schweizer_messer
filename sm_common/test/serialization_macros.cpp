@@ -2,6 +2,96 @@
 #include <boost/shared_ptr.hpp>
 #include "gtest/gtest.h"
 #include <sm/serialization_macros.hpp>
+#include <sm/typetraits.hpp>
+
+class PolyBase {
+ public:
+  virtual ~PolyBase(){};
+ virtual bool isBinaryEqual(const PolyBase& rhs) const = 0;
+};
+
+class PolyDerived : public PolyBase {
+ private:
+  int key_;
+  double value_;
+ public:
+  virtual ~PolyDerived(){};
+ void setRandom() {
+   key_ = rand();
+   value_ = static_cast<double>(rand()) / RAND_MAX;
+ }
+ virtual bool isBinaryEqual(const PolyDerived& rhs) const {
+   bool same = true;
+   same = same && SM_CHECKMEMBERSSAME(rhs, key_);
+   same = same && SM_CHECKMEMBERSSAME(rhs, value_);
+   return same;
+ }
+};
+
+template<typename T>
+class ctPoly{
+ private:
+  int key_;
+  double value_;
+ public:
+  void setRandom() {
+    key_ = rand();
+    value_ = static_cast<double>(rand()) / RAND_MAX;
+  }
+  bool isBinaryEqual(const ctPoly<T>& rhs) const {
+    bool same = true;
+    same = same && SM_CHECKMEMBERSSAME(rhs, key_);
+    same = same && SM_CHECKMEMBERSSAME(rhs, value_);
+    return same;
+  }
+};
+
+
+template<typename T>
+class ctPoly2{
+ private:
+  int key_;
+  double value_;
+ public:
+  void setRandom() {
+    key_ = rand();
+    value_ = static_cast<double>(rand()) / RAND_MAX;
+  }
+  bool operator==(const ctPoly2<T>& other) const {
+    bool same = true;
+    same = same && SM_CHECKMEMBERSSAME(other, key_);
+    same = same && SM_CHECKMEMBERSSAME(other, value_);
+    return same;
+  }
+  friend std::ostream& operator<<(std::ostream &os, const ctPoly2<T>& lhs);
+};
+
+
+class OverloadBase {
+public:
+  int key_;
+  double value_;
+};
+
+class Overload : public OverloadBase {
+ public:
+  void setRandom() {
+    key_ = rand();
+    value_ = static_cast<double>(rand()) / RAND_MAX;
+  }
+  bool isBinaryEqual(const Overload& other) const {
+    bool same = true;
+    same = same && SM_CHECKMEMBERSSAME(other, key_);
+    same = same && SM_CHECKMEMBERSSAME(other, value_);
+    return same;
+  }
+  bool isBinaryEqual(const OverloadBase& other) const {
+    bool same = true;
+      same = same && SM_CHECKMEMBERSSAME(other, key_);
+      same = same && SM_CHECKMEMBERSSAME(other, value_);
+      return same;
+  }
+};
 
 class SimpleEntry {
  private:
@@ -20,6 +110,7 @@ class SimpleEntry {
   }
   friend std::ostream& operator<<(std::ostream &os, const SimpleEntry& lhs);
 };
+
 
 std::ostream& operator<<(std::ostream &os, const SimpleEntry& lhs)
 {
@@ -194,6 +285,25 @@ TEST(SerializationMacros, TestClassSharedPtrHasMethodDeduction) {
   typedef boost::shared_ptr<SimpleEntry> T2;
   ASSERT_EQ(HasIsBinaryEqual<T1>::value, 1);
   ASSERT_EQ(HasIsBinaryEqual<T2>::value, 0);
+
+  T1 t1;
+  T2 t2;
+
+  ASSERT_EQ(HasIsBinaryEqual<decltype(t1) >::value, 1);
+  ASSERT_EQ(HasIsBinaryEqual<decltype(t2) >::value, 0);
+
+  T1& t1r = t1;
+  T2& t2r = t2;
+
+  ASSERT_EQ(HasIsBinaryEqual<decltype(t1r) >::value, 1);
+  ASSERT_EQ(HasIsBinaryEqual<decltype(t2r) >::value, 0);
+
+  const T1& t1cr = t1;
+  const T2& t2cr = t2;
+
+  ASSERT_EQ(HasIsBinaryEqual<sm::common::StripConstReference<decltype(t1cr)>::result_t >::value, 1);
+  ASSERT_EQ(HasIsBinaryEqual<sm::common::StripConstReference<decltype(t2cr)>::result_t >::value, 0);
+
 }
 
 TEST(SerializationMacros, TestClassPtrHasMethodDeduction) {
@@ -202,6 +312,7 @@ TEST(SerializationMacros, TestClassPtrHasMethodDeduction) {
   ASSERT_EQ(HasIsBinaryEqual<T1>::value, 1);
   ASSERT_EQ(HasIsBinaryEqual<T2>::value, 0);
 }
+
 
 TEST(SerializationMacros, TestClassHasStreamOperator) {
   ComplexEntry e1;
@@ -240,4 +351,34 @@ TEST(SerializationMacros, TestPtrHasStreamOperator) {
   ASSERT_EQ((HasOStreamOperator<std::ostream, T1>::value), 0);
 
   delete e1;
+}
+
+TEST(SerializationMacros, TestClassCTPolyHasMethodDeduction) {
+  typedef ctPoly<int> T1;
+  typedef ctPoly<int>* T2;
+  typedef ctPoly2<int> T3;
+  typedef ctPoly2<int>* T4;
+  typedef ctPoly<T3> T5;
+  typedef ctPoly<T3>* T6;
+  typedef ctPoly2<T1> T7;
+  typedef ctPoly2<T1>* T8;
+  ASSERT_TRUE(HasIsBinaryEqual<T1>::value);
+  ASSERT_TRUE(HasIsBinaryEqual<T2>::value);
+  ASSERT_FALSE(HasIsBinaryEqual<T3>::value);
+  ASSERT_FALSE(HasIsBinaryEqual<T4>::value);
+  ASSERT_TRUE(HasIsBinaryEqual<T5>::value);
+  ASSERT_TRUE(HasIsBinaryEqual<T6>::value);
+  ASSERT_FALSE(HasIsBinaryEqual<T7>::value);
+  ASSERT_FALSE(HasIsBinaryEqual<T8>::value);
+}
+
+TEST(SerializationMacros, TestClassPolyPtrHasMethodDeduction) {
+  typedef PolyDerived T1;
+  ASSERT_EQ(HasIsBinaryEqual<T1>::value, 1);
+}
+
+
+TEST(SerializationMacros, TestClassOverloadHasMethodDeduction) {
+  typedef Overload T1;
+  ASSERT_EQ(HasIsBinaryEqual<T1>::value, 1);
 }
