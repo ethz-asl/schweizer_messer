@@ -1,6 +1,7 @@
 #include <sm/kinematics/UncertainHomogeneousPoint.hpp>
 #include <sm/kinematics/homogeneous_coordinates.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
+#include <sm/serialization_macros.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -212,7 +213,7 @@ namespace sm {
 
 	bool UncertainHomogeneousPoint::isBinaryEqual(const UncertainHomogeneousPoint & rhs) const
 	{
-	  return HomogeneousPoint::isBinaryEqual(rhs) && _U == rhs._U;
+	  return HomogeneousPoint::isBinaryEqual(rhs) && SM_CHECKMEMBERSSAME(rhs, _U);
 	}
   } // namespace kinematics
 } // namespace sm
