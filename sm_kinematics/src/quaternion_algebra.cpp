@@ -354,6 +354,32 @@ namespace sm { namespace kinematics {
             }
         }
 
+        Eigen::Matrix<double,3,4> quatLogJacobian(const Eigen::Vector4d& p)
+		{
+        	// 		[qx]
+        	//		[qy]				2*x*cos(2*acos(qw))
+        	// p =  [qz], 	g(x) = --------------------------------
+        	//		[qw]			sqrt(1-wq²)(sin(2 acos(qw)))²
+        	//
+        	//
+        	//		[1/sin(2acos(qw))	0					0					g(qx)]
+        	// J = 	[0					1/sin(2acos(qw))	0					g(qy)]
+        	// 		[0					0					1/sin(2acos(qw))	g(qz)]
+
+        	Eigen::Matrix<double, 3,4> J;
+        	J.setZero();
+        	double u = 1 / sin(2*acos(p(3)));
+        	double v = (2*cos(2*acos(p(3)))) / (sqrt(1-pow(p(3), 2))*pow(sin(2*acos(p(3))), 2));
+        	J(0,0) = u;
+        	J(1,1) = u;
+        	J(2,2) = u;
+        	J(0,3) = p(0)*v;
+        	J(1,3) = p(1)*v;
+        	J(2,3) = p(2)*v;
+
+        	return J;
+		}
+
 
 
     }} // namespace sm::kinematics
