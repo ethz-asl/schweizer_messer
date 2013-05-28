@@ -369,24 +369,16 @@ namespace sm { namespace kinematics {
 
         	Eigen::Matrix<double, 3,4> J;
         	J.setZero();
-//        	double u = 2*acos(p(3));
-//        	double v = -2 / sqrt(1-pow(p(3),2));
-//        	J(0,0) = u;
-//        	J(1,1) = u;
-//        	J(2,2) = u;
-//        	J(0,3) = p(0)*v;
-//        	J(1,3) = p(1)*v;
-//        	J(2,3) = p(2)*v;
 
         	double n = qeps(p).norm();
 
 
-        	double de = pow(n, 3);
-        	double u12 = pow(p(1), 2) + pow(p(2), 2);
-        	double u02 = pow(p(0), 2) + pow(p(2), 2);
-        	double u01 = pow(p(0), 2) + pow(p(1), 2);
+        	double de = n*n*n;//pow(n, 3);
+        	double u12 = p(1)*p(1) + p(2)*p(2);//pow(p(1), 2) + pow(p(2), 2);
+        	double u02 = p(0)*p(0) + p(2)*p(2);//pow(p(0), 2) + pow(p(2), 2);
+        	double u01 = p(0)*p(0) + p(1)*p(1);//pow(p(0), 2) + pow(p(1), 2);
         	double a = acos(p(3));
-        	double uw = sqrt(-(pow(p(3), 2) - 1)*pow(n, 2));
+        	double uw = sqrt(-(p(3)*p(3) - 1)*n*n);
 
         	J(0,0) = 2*a*u12 / de;
         	J(0,1) = -2*a*p(1)*p(0) / de;
