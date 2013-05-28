@@ -1,5 +1,6 @@
 #include <sm/kinematics/UncertainTransformation.hpp>
 #include <sm/kinematics/transformations.hpp>
+#include <sm/serialization_macros.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -158,7 +159,7 @@ namespace sm {
 
     bool UncertainTransformation::isBinaryEqual(const UncertainTransformation & rhs) const
     {
-      return Transformation::isBinaryEqual(rhs) && _U == rhs._U;
+      return Transformation::isBinaryEqual(rhs) && SM_CHECKMEMBERSSAME(rhs, _U);
     }
 
     /// \brief This sets the uncertainty directly.

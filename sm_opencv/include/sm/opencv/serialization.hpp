@@ -7,16 +7,17 @@
 #include <boost/serialization/binary_object.hpp>
 #include <boost/serialization/split_free.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <sm/serialization_macros.hpp>
 
 namespace sm {
   namespace opencv {
 	inline bool isBinaryEqual(const cv::Mat & m1, const cv::Mat & m2)
 	{
-	  bool isEqual = m1.rows == m2.rows &&
-		m1.cols == m2.cols &&
-		m1.depth() == m2.depth() &&
-		m1.type() == m2.type() &&
-		m1.elemSize() == m2.elemSize();
+	  bool isEqual = SM_CHECKSAME(m1.rows, m2.rows) &&
+	      SM_CHECKSAME(m1.cols, m2.cols) &&
+	      SM_CHECKSAME(m1.depth(), m2.depth()) &&
+	      SM_CHECKSAME(m1.type(), m2.type()) &&
+	      SM_CHECKSAME(m1.elemSize(), m2.elemSize());
 		
 	  if(isEqual)
 		{
@@ -26,7 +27,7 @@ namespace sm {
 			  const uchar * p2 = m2.ptr(r);
 			  for(int c = 0; isEqual && c < (int)(m1.cols * m1.elemSize()); ++c, ++p1, ++p2)
 				{
-				  isEqual = (*p1) == (*p2);
+				  isEqual = SM_CHECKSAME((*p1), (*p2));
 				}
 			}
 		}
