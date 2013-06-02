@@ -29,7 +29,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-add_definitions(-std=gnu++11 -D__STRICT_ANSI__)
+add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
 rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp
