@@ -276,41 +276,41 @@ TEST(SerializationMacros, TestPointer) {
 
 
 TEST(SerializationMacros, TestClassHasMethodDeduction) {
-  ASSERT_EQ(internal::HasIsBinaryEqual<ComplexEntry>::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<SimpleEntry>::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<ComplexEntry>::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<SimpleEntry>::value, 0);
 }
 
 TEST(SerializationMacros, TestClassSharedPtrHasMethodDeduction) {
   typedef boost::shared_ptr<ComplexEntry> T1;
   typedef boost::shared_ptr<SimpleEntry> T2;
-  ASSERT_EQ(internal::HasIsBinaryEqual<T1>::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<T2>::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T1>::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T2>::value, 0);
 
   T1 t1;
   T2 t2;
 
-  ASSERT_EQ(internal::HasIsBinaryEqual<decltype(t1) >::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<decltype(t2) >::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<decltype(t1) >::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<decltype(t2) >::value, 0);
 
   T1& t1r = t1;
   T2& t2r = t2;
 
-  ASSERT_EQ(internal::HasIsBinaryEqual<decltype(t1r) >::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<decltype(t2r) >::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<decltype(t1r) >::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<decltype(t2r) >::value, 0);
 
   const T1& t1cr = t1;
   const T2& t2cr = t2;
 
-  ASSERT_EQ(internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t1cr)>::result_t >::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t2cr)>::result_t >::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t1cr)>::result_t >::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t2cr)>::result_t >::value, 0);
 
 }
 
 TEST(SerializationMacros, TestClassPtrHasMethodDeduction) {
   typedef ComplexEntry* T1;
   typedef SimpleEntry* T2;
-  ASSERT_EQ(internal::HasIsBinaryEqual<T1>::value, 1);
-  ASSERT_EQ(internal::HasIsBinaryEqual<T2>::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T1>::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T2>::value, 0);
 }
 
 
@@ -318,10 +318,10 @@ TEST(SerializationMacros, TestClassHasStreamOperator) {
   ComplexEntry e1;
   e1.setRandom();
 
-  internal::streamIf<internal::HasOStreamOperator<std::ostream, decltype(e1)>::value, decltype(e1) >::eval(e1);
+  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, decltype(e1)>::value, decltype(e1) >::eval(e1);
 
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, SimpleEntry>::value), 1);
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, ComplexEntry>::value), 0);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, SimpleEntry>::value), 1);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, ComplexEntry>::value), 0);
 }
 
 TEST(SerializationMacros, TestSharedPtrHasStreamOperator) {
@@ -331,10 +331,10 @@ TEST(SerializationMacros, TestSharedPtrHasStreamOperator) {
   T1 e1(new ComplexEntry);
   e1->setRandom();
 
-  internal::streamIf<internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
+  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
 
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, T2>::value), 1);
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, T1>::value), 0);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T2>::value), 1);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value), 0);
 }
 
 
@@ -345,10 +345,10 @@ TEST(SerializationMacros, TestPtrHasStreamOperator) {
   T1 e1 = new ComplexEntry;
   e1->setRandom();
 
-  internal::streamIf<internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
+  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
 
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, T2>::value), 1);
-  ASSERT_EQ((internal::HasOStreamOperator<std::ostream, T1>::value), 0);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T2>::value), 1);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value), 0);
 
   delete e1;
 }
@@ -362,23 +362,23 @@ TEST(SerializationMacros, TestClassCTPolyHasMethodDeduction) {
   typedef ctPoly<T3>* T6;
   typedef ctPoly2<T1> T7;
   typedef ctPoly2<T1>* T8;
-  ASSERT_TRUE(internal::HasIsBinaryEqual<T1>::value);
-  ASSERT_TRUE(internal::HasIsBinaryEqual<T2>::value);
-  ASSERT_FALSE(internal::HasIsBinaryEqual<T3>::value);
-  ASSERT_FALSE(internal::HasIsBinaryEqual<T4>::value);
-  ASSERT_TRUE(internal::HasIsBinaryEqual<T5>::value);
-  ASSERT_TRUE(internal::HasIsBinaryEqual<T6>::value);
-  ASSERT_FALSE(internal::HasIsBinaryEqual<T7>::value);
-  ASSERT_FALSE(internal::HasIsBinaryEqual<T8>::value);
+  ASSERT_TRUE(sm::serialization::internal::HasIsBinaryEqual<T1>::value);
+  ASSERT_TRUE(sm::serialization::internal::HasIsBinaryEqual<T2>::value);
+  ASSERT_FALSE(sm::serialization::internal::HasIsBinaryEqual<T3>::value);
+  ASSERT_FALSE(sm::serialization::internal::HasIsBinaryEqual<T4>::value);
+  ASSERT_TRUE(sm::serialization::internal::HasIsBinaryEqual<T5>::value);
+  ASSERT_TRUE(sm::serialization::internal::HasIsBinaryEqual<T6>::value);
+  ASSERT_FALSE(sm::serialization::internal::HasIsBinaryEqual<T7>::value);
+  ASSERT_FALSE(sm::serialization::internal::HasIsBinaryEqual<T8>::value);
 }
 
 TEST(SerializationMacros, TestClassPolyPtrHasMethodDeduction) {
   typedef PolyDerived T1;
-  ASSERT_EQ(internal::HasIsBinaryEqual<T1>::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T1>::value, 1);
 }
 
 
 TEST(SerializationMacros, TestClassOverloadHasMethodDeduction) {
   typedef Overload T1;
-  ASSERT_EQ(internal::HasIsBinaryEqual<T1>::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<T1>::value, 1);
 }
