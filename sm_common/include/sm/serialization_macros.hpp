@@ -41,7 +41,7 @@ namespace serialization{
 namespace internal{
 
 template<class T> sm::serialization::internal_types::yes check(const T&);
-sm::serialization::internal_types::no check(sm::serialization::internal_types::no){return sm::serialization::internal_types::no();};
+sm::serialization::internal_types::no check(sm::serialization::internal_types::no);
 
 struct makeCompilerSilent{ //rm warning about unused functions
   void foo(){
