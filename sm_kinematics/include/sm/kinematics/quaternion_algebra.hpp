@@ -46,6 +46,8 @@ namespace sm { namespace kinematics {
 
         /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
         Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t);
+   /// Jacobian of the quat log function evaluated at p
+   Eigen::Matrix<double, 3,4> quatLogJacobian(const Eigen::Vector4d& p);
 
   }} // namespace sm::kinematics
 
