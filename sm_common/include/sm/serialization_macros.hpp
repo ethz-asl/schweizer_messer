@@ -24,7 +24,7 @@ class Mat;
 }
 
 namespace {
-namespace internal{
+namespace internal_types{
 typedef char yes;
 typedef int no;
 }
@@ -34,17 +34,17 @@ struct AnyT {
   template<class T> AnyT(const T &);
 };
 
-internal::no operator <<(const AnyT &, const AnyT &);
+internal_types::no operator <<(const AnyT &, const AnyT &);
 
 namespace {
 namespace internal{
 
-template<class T> ::internal::yes check(const T&);
-::internal::no check(::internal::no){return ::internal::no();};
+template<class T> ::internal_types::yes check(const T&);
+::internal_types::no check(::internal_types::no){return ::internal_types::no();};
 
 struct makeCompilerSilent{ //rm warning about unused functions
   void foo(){
-    check(::internal::no());
+    check(::internal_types::no());
     AnyT t(5);
     operator <<(t, t);
   }
@@ -57,7 +57,7 @@ class HasOStreamOperator {
   static T & x;
  public:
   enum {
-    value = sizeof(check(stream << x)) == sizeof(::internal::yes)
+    value = sizeof(check(stream << x)) == sizeof(::internal_types::yes)
   };
 };
 
