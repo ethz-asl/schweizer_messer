@@ -23,7 +23,7 @@ namespace cv{
 class Mat;
 }
 
-namespace {
+namespace sm_serialization{
 namespace internal_types{
 typedef char yes;
 typedef int no;
@@ -34,17 +34,17 @@ struct AnyT {
   template<class T> AnyT(const T &);
 };
 
-internal_types::no operator <<(const AnyT &, const AnyT &);
+sm_serialization::internal_types::no operator <<(const AnyT &, const AnyT &);
 
-namespace {
+namespace sm_serialization{
 namespace internal{
 
-template<class T> ::internal_types::yes check(const T&);
-::internal_types::no check(::internal_types::no){return ::internal_types::no();};
+template<class T> sm_serialization::internal_types::yes check(const T&);
+sm_serialization::internal_types::no check(sm_serialization::internal_types::no){return sm_serialization::internal_types::no();};
 
 struct makeCompilerSilent{ //rm warning about unused functions
   void foo(){
-    check(::internal_types::no());
+    check(sm_serialization::internal_types::no());
     AnyT t(5);
     operator <<(t, t);
   }
@@ -57,7 +57,7 @@ class HasOStreamOperator {
   static T & x;
  public:
   enum {
-    value = sizeof(check(stream << x)) == sizeof(::internal_types::yes)
+    value = sizeof(check(stream << x)) == sizeof(sm_serialization::internal_types::yes)
   };
 };
 
@@ -291,25 +291,25 @@ struct streamIf<false, A> {
 #define SM_SERIALIZATION_CHECKMEMBERSSAME_VERBOSE(OTHER, MEMBER) SM_SERIALIZATION_CHECKMEMBERSSAME_IMPL(OTHER, MEMBER, true)
 
 #define SM_SERIALIZATION_CHECKSAME_IMPL(THIS, OTHER, VERBOSE) \
-    (internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/ \
-    internal::isSame<internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*first run the test of equality: either isBinaryEqual or op==*/ \
+    (sm_serialization::internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/ \
+    sm_serialization::internal::isSame<sm_serialization::internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*first run the test of equality: either isBinaryEqual or op==*/ \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS, OTHER)) ? true : /*return true if good*/ \
     (VERBOSE ? (std::cout <<  "*** Validation failed on " << #OTHER << ": "<< /*if not true, check whether VERBOSE and then try to output the failed values using operator<<*/  \
-    internal::streamIf<internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*here we check whether operator<< is available*/ \
+    sm_serialization::internal::streamIf<sm_serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*here we check whether operator<< is available*/ \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS) << \
-    " other " << internal::streamIf<internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, \
+    " other " << sm_serialization::internal::streamIf<sm_serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::eval(OTHER) \
     << " at " << __PRETTY_FUNCTION__ << /*we print the function where this happened*/ \
     " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false) /*we print the line and file where this happened*/
 
 #define SM_SERIALIZATION_CHECKMEMBERSSAME_IMPL(OTHER, MEMBER, VERBOSE) \
-    ((internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value) &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/\
-    (internal::isSame<internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    ((sm_serialization::internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value) &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/\
+    (sm_serialization::internal::isSame<sm_serialization::internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER, OTHER.MEMBER))) ? true :\
     (VERBOSE ? (std::cout <<  "*** Validation failed on " << #MEMBER << ": "<< \
-        internal::streamIf<internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+        sm_serialization::internal::streamIf<sm_serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER) << \
-    " other " << internal::streamIf<internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    " other " << sm_serialization::internal::streamIf<sm_serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(OTHER.MEMBER) \
     << " at " << __PRETTY_FUNCTION__ << \
     " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false)
