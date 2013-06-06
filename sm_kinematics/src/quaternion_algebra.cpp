@@ -354,6 +354,48 @@ namespace sm { namespace kinematics {
             }
         }
 
+        Eigen::Matrix<double,3,4> quatLogJacobian(const Eigen::Vector4d& p)
+		{
+        	// 		[qx]
+        	//		[qy]				-2*x
+        	// p =  [qz], 	g(x) = ----------------
+        	//		[qw]			sqrt(1-qw²)
+        	//
+        	//
+        	//		[2*acos(qw)		0				0				g(qx)]
+        	// J = 	[0				2*acos(qw)		0				g(qy)]
+        	// 		[0				0				2*acos(qw)		g(qz)]
+
+
+        	Eigen::Matrix<double, 3,4> J;
+        	J.setZero();
+
+        	double n = qeps(p).norm();
+
+
+        	double de = n*n*n;//pow(n, 3);
+        	double u12 = p(1)*p(1) + p(2)*p(2);//pow(p(1), 2) + pow(p(2), 2);
+        	double u02 = p(0)*p(0) + p(2)*p(2);//pow(p(0), 2) + pow(p(2), 2);
+        	double u01 = p(0)*p(0) + p(1)*p(1);//pow(p(0), 2) + pow(p(1), 2);
+        	double a = acos(p(3));
+        	double uw = sqrt(-(p(3)*p(3) - 1)*n*n);
+
+        	J(0,0) = 2*a*u12 / de;
+        	J(0,1) = -2*a*p(1)*p(0) / de;
+        	J(0,2) = -2*a*p(2)*p(0) / de;
+        	J(0,3) = -2*p(0) / uw;
+        	J(1,0) = -2*a*p(0)*p(1) / de;
+        	J(1,1) = 2*a*u02 / de;
+        	J(1,2) = -2*a*p(1)*p(2) / de;
+        	J(1,3) = -2*p(1) / uw;
+        	J(2,0) = -2*a*p(0)*p(2) / de;
+        	J(2,1) = -2*a*p(1)*p(2) / de;
+        	J(2,2) = 2*a*u01 / de;
+        	J(2,3) = -2*p(2) / uw;
+
+        	return J;
+		}
+
 
 
     }} // namespace sm::kinematics
