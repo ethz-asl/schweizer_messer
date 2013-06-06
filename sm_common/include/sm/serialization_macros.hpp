@@ -23,8 +23,7 @@ namespace cv{
 class Mat;
 }
 
-namespace sm{
-namespace serialization{
+namespace sm_serialization{
 namespace internal_types{
 typedef char yes;
 typedef int no;
@@ -35,17 +34,18 @@ struct AnyT {
   template<class T> AnyT(const T &);
 };
 
-sm::serialization::internal_types::no operator <<(const AnyT &, const AnyT &);
+sm_serialization::internal_types::no operator <<(const AnyT &, const AnyT &);
 
+namespace sm{
 namespace serialization{
 namespace internal{
 
-template<class T> sm::serialization::internal_types::yes check(const T&);
-sm::serialization::internal_types::no check(sm::serialization::internal_types::no);
+template<class T> sm_serialization::internal_types::yes check(const T&);
+sm_serialization::internal_types::no check(sm_serialization::internal_types::no);
 
 struct makeCompilerSilent{ //rm warning about unused functions
   void foo(){
-    check(sm::serialization::internal_types::no());
+    check(sm_serialization::internal_types::no());
     AnyT t(5);
     operator <<(t, t);
   }
@@ -58,7 +58,7 @@ class HasOStreamOperator {
   static T & x;
  public:
   enum {
-    value = sizeof(check(stream << x)) == sizeof(sm::serialization::internal_types::yes)
+    value = sizeof(check(stream << x)) == sizeof(sm_serialization::internal_types::yes)
   };
 };
 
