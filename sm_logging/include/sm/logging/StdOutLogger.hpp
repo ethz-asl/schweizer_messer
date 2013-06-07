@@ -15,12 +15,7 @@ namespace sm {
             
             Formatter formatter;
         protected:
-
-            virtual double currentTimeSecondsUtcImplementation() const;
-            virtual std::string currentTimeStringImplementation() const;
             virtual void logImplementation(const LoggingEvent & event);
-            
-            
         };
 
     } // namespace logger

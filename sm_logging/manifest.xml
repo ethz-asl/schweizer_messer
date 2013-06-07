@@ -10,7 +10,7 @@
   <url>http://ros.org/wiki/sm_logging</url>
 
   <export>
-    <cpp cflags="-I${prefix}/include"
+    <cpp cflags="-I${prefix}/include -std=c++0x"
      lflags="`rosboost-cfg --lflags filesystem,system` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_logging"/>
        
   </export>
