@@ -50,6 +50,7 @@ namespace sm {
         void waitForEmptyQueue();
 
 
+
         /// \brief schedule a future for processing.
         template <class T>
         void scheduleFuture(boost::function<T (void)> const& fn, boost::unique_future<T> & outFuture); 

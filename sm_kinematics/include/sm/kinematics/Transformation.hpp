@@ -136,7 +136,7 @@ namespace sm {
 
       
     protected:
-      
+        
       /// The quaternion that will become a rotation matrix C_a_b that 
       /// transforms vectors from b to a.
       Eigen::Vector4d _q_a_b;

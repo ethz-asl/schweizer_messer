@@ -100,7 +100,7 @@ class HasIsBinaryEqual {
   template<typename U> static int funcconst(...);
  public:
   enum {
-    value = (sizeof(func<T>(0)) == sizeof(char)) || (sizeof(funcconst<T>(0)) == sizeof(char))
+      value = (int)((sizeof(func<T>(0)) == sizeof(char)) || (sizeof(funcconst<T>(0)) == sizeof(char)))
   };
 };
 template<typename T>
@@ -296,24 +296,24 @@ struct streamIf<false, A> {
     (sm::serialization::internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/ \
     sm::serialization::internal::isSame<sm::serialization::internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*first run the test of equality: either isBinaryEqual or op==*/ \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS, OTHER)) ? true : /*return true if good*/ \
-    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #OTHER << ": "<< /*if not true, check whether VERBOSE and then try to output the failed values using operator<<*/  \
+    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #OTHER << ":\n"<< /*if not true, check whether VERBOSE and then try to output the failed values using operator<<*/  \
     sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, /*here we check whether operator<< is available*/ \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t >::eval(THIS) << \
-    " other " << sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, \
+    "other:\n" << sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(OTHER)>::result_t>::eval(OTHER) \
-    << " at " << __PRETTY_FUNCTION__ << /*we print the function where this happened*/ \
+    << "\nat " << __PRETTY_FUNCTION__ << /*we print the function where this happened*/ \
     " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false) /*we print the line and file where this happened*/
 
 #define SM_SERIALIZATION_CHECKMEMBERSSAME_IMPL(OTHER, MEMBER, VERBOSE) \
     ((sm::serialization::internal::checkTypeIsNotOpencvMat<typename sm::common::StripConstReference<decltype(OTHER)>::result_t, false>::value) &&  /*for opencvMats we have to use sm::opencv::isBinaryEqual otherwise this code has to depend on opencv*/\
     (sm::serialization::internal::isSame<sm::serialization::internal::HasIsBinaryEqual<typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER, OTHER.MEMBER))) ? true :\
-    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #MEMBER << ": "<< \
+    (VERBOSE ? (std::cout <<  "*** Validation failed on " << #MEMBER << ":\n"<< \
         sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(this->MEMBER) << \
-    " other " << sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
+    "\nother:\n" << sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, typename sm::common::StripConstReference<decltype(MEMBER)>::result_t>::value, \
     typename sm::common::StripConstReference<decltype(MEMBER)>::result_t >::eval(OTHER.MEMBER) \
-    << " at " << __PRETTY_FUNCTION__ << \
+    << "\nat " << __PRETTY_FUNCTION__ << \
     " In: " << __FILE__ << ":" << __LINE__ << std::endl << std::endl) && false : false)
 
 //this is some internal default macro parameter deduction
