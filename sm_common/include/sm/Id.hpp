@@ -39,7 +39,7 @@
 #include <boost/functional/hash.hpp>
 #include <iostream>
 // The definition of std::tr1::hash
-#ifdef _WIN32
+#if defined( _WIN32)
 #include <functional>
 #else
 #include <tr1/functional>

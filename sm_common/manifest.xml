@@ -12,7 +12,7 @@
   <export>
     <!-- I'm not sure if -Wl,-rpath,${prefix}/lib is needed below -->
     <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
-         lflags="`rosboost-cfg --lflags filesystem system` -L`rosboost-cfg --root`/lib"/>
+         lflags="`rosboost-cfg --lflags filesystem,system` -L`rosboost-cfg --root`/lib"/>
     <!-- python path="${prefix}/python"/ -->
   </export>
   
