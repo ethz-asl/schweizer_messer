@@ -5,11 +5,14 @@
 #include <sm/kinematics/UncertainHomogeneousPoint.hpp>
 #include <sm/kinematics/UncertainTransformation.hpp>
 #include <sm/kinematics/transformations.hpp>
+#include <sm/serialization_macros.hpp>
 
 
 namespace sm {
   namespace kinematics {
     
+      double * Transformation::qptr() { return &_q_a_b[0]; }
+      double * Transformation::tptr() { return &_t_a_b_a[0]; }
     
     Transformation::Transformation() :
       _q_a_b(quatIdentity()), _t_a_b_a(0.0, 0.0, 0.0)
@@ -127,7 +130,7 @@ namespace sm {
 
     bool Transformation::isBinaryEqual(const Transformation & rhs) const
     {
-      return _q_a_b == rhs._q_a_b && _t_a_b_a == rhs._t_a_b_a;
+      return SM_CHECKMEMBERSSAME(rhs, _q_a_b) && SM_CHECKMEMBERSSAME(rhs, _t_a_b_a);
     }
 
     /// \brief The update step for this transformation from a minimal update.

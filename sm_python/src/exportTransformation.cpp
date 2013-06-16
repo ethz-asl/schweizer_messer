@@ -1,6 +1,17 @@
 #include <numpy_eigen/boost_python_headers.hpp>
 #include <sm/kinematics/Transformation.hpp>
 #include <sm/kinematics/UncertainTransformation.hpp>
+#include <sm/boost/serialization.hpp>
+
+template<typename T>
+void loadobj( T * obj, std::string fname) {
+    sm::boost_serialization::load( *obj, fname );
+}
+
+template<typename T>
+void saveobj( T * obj, std::string fname) {
+    sm::boost_serialization::save( *obj, fname );
+}
 
 void exportTransformation()
 {
@@ -16,6 +27,8 @@ void exportTransformation()
   class_<Transformation, boost::shared_ptr<Transformation> >("Transformation", init<>())
     .def(init<const Eigen::Matrix4d &>())
     .def(init<const Eigen::Vector4d &, const Eigen::Vector3d>())
+      .def("save", &saveobj<Transformation>)
+      .def("load", &loadobj<Transformation>)
     .def("T", &Transformation::T)
     .def("C", &Transformation::C)
       .def("t", &Transformation::t, return_value_policy<copy_const_reference>())
@@ -47,6 +60,8 @@ void exportTransformation()
     .def(init<const Transformation &>())
     .def(init<const Eigen::Matrix4d &>())
     .def(init<const Eigen::Vector4d &, const Eigen::Vector3d>())
+      .def("save", &saveobj<UncertainTransformation>)
+      .def("load", &loadobj<UncertainTransformation>)
     .def(self * self)
     .def(self * UncertainHomogeneousPoint())
     .def(self * HomogeneousPoint())

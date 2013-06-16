@@ -2,7 +2,7 @@
 #define SM_LOGGER_HPP
 
 #include <string>
-
+#include <chrono>
 
 namespace sm {
     namespace logging {
@@ -17,11 +17,11 @@ namespace sm {
             
             double currentTimeSecondsUtc() const;
             std::string currentTimeString() const;
-            
+            std::chrono::system_clock::time_point currentTime() const;
+
             void log(const LoggingEvent & event);
         protected:
-            virtual double currentTimeSecondsUtcImplementation() const;
-            virtual std::string currentTimeStringImplementation() const;
+            virtual std::chrono::system_clock::time_point currentTimeImplementation() const;
             virtual void logImplementation(const LoggingEvent & event) = 0;
         };
 

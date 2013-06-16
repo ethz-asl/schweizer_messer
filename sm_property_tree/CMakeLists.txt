@@ -36,6 +36,8 @@ rosbuild_add_library(${PROJECT_NAME}
   src/PropertyTreeImplementation.cpp
 )
 
+rosbuild_remove_compile_flags(${PROJECT_NAME} -std=c++0x -std-c++11)
+
 rosbuild_link_boost(${PROJECT_NAME} filesystem system)
 
 
