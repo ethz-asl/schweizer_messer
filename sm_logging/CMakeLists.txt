@@ -47,8 +47,11 @@ rosbuild_add_library(${PROJECT_NAME}
   src/Tokens.cpp
   )
 
+IF(APPLE)
+rosbuild_link_boost(${PROJECT_NAME} thread regex system chrono)
+ELSE()
 rosbuild_link_boost(${PROJECT_NAME} thread regex system)
-
+ENDIF()
 rosbuild_add_gtest(${PROJECT_NAME}_test
   test/test_main.cpp
   test/logTest.cpp

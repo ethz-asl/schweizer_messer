@@ -10,9 +10,12 @@ namespace sm {
 
         double Logger::currentTimeSecondsUtc() const
         {
-            std::chrono::system_clock::time_point t = currentTimeImplementation();
+            Time t = currentTimeImplementation();
+#ifdef __APPLE__
+            boost::int64_t us = boost::chrono::duration_cast<boost::chrono::microseconds>( t.time_since_epoch() ).count();
+#else
             boost::int64_t us = std::chrono::duration_cast<std::chrono::microseconds>( t.time_since_epoch() ).count();
-            // \todo
+#endif
             return (double)us/1000000.0;
         }
 
@@ -29,7 +32,7 @@ namespace sm {
 
         }
 
-        std::chrono::system_clock::time_point Logger::currentTime() const {
+        Logger::Time Logger::currentTime() const {
             return currentTimeImplementation();
         }
 
@@ -40,9 +43,9 @@ namespace sm {
         }
 
         
-        std::chrono::system_clock::time_point Logger::currentTimeImplementation() const
+        Logger::Time Logger::currentTimeImplementation() const
         {
-            return std::chrono::system_clock::now();
+            return Clock::now();
             
         }
 
