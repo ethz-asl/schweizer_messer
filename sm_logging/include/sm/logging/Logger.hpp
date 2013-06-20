@@ -18,7 +18,7 @@ namespace sm {
 #ifdef __APPLE__
             typedef boost::chrono::system_clock Clock;
 #else
-            typedef std::chrono::system_clock::Clock;
+            typedef std::chrono::system_clock Clock;
 #endif
             typedef Clock::time_point Time;
             typedef Clock::duration Duration;
