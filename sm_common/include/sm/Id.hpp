@@ -39,7 +39,7 @@
 #include <boost/functional/hash.hpp>
 #include <iostream>
 // The definition of std::tr1::hash
-#ifdef _WIN32
+#if defined( _WIN32)
 #include <functional>
 #else
 #include <tr1/functional>
@@ -228,7 +228,7 @@ namespace sm {
             struct hash<FullyQualifiedIdTypeName>                       \
             {                                                           \
                 hash<boost::uint64_t> _hash;                            \
-                size_t operator()(const FullyQualifiedIdTypeName & id)	\
+                size_t operator()(const FullyQualifiedIdTypeName & id) const	\
                 {                                                       \
                     return _hash(id.getId());                           \
                 }                                                       \

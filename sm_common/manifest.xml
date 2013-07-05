@@ -11,12 +11,11 @@
 
   <export>
     <!-- I'm not sure if -Wl,-rpath,${prefix}/lib is needed below -->
-    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
-         lflags="`rosboost-cfg --lflags filesystem system` -L`rosboost-cfg --root`/lib"/>
+    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include -std=c++0x -D__STRICT_ANSI__"
+         lflags="`rosboost-cfg --lflags filesystem,system` -L`rosboost-cfg --root`/lib"/>
     <!-- python path="${prefix}/python"/ -->
   </export>
   
-
 </package>
 
 

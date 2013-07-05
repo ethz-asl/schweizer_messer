@@ -11,10 +11,17 @@ include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
 
 rosbuild_init()
 
+if(APPLE)
+  link_directories(/usr/local/lib)
+endif()
+
 #set the default path for built executables to the "bin" directory
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 #set the default path for built libraries to the "lib" directory
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
+add_definitions(-std=c++0x)
+
 
 #uncomment if you have defined messages
 #rosbuild_genmsg()
@@ -40,8 +47,11 @@ rosbuild_add_library(${PROJECT_NAME}
   src/Tokens.cpp
   )
 
+IF(APPLE)
+rosbuild_link_boost(${PROJECT_NAME} thread regex system chrono)
+ELSE()
 rosbuild_link_boost(${PROJECT_NAME} thread regex system)
-
+ENDIF()
 rosbuild_add_gtest(${PROJECT_NAME}_test
   test/test_main.cpp
   test/logTest.cpp

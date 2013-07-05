@@ -17,7 +17,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
 
   rosbuild_add_boost_directories()
   # Find Python
-  FIND_PACKAGE(PythonLibs REQUIRED)
+  FIND_PACKAGE(PythonLibs 2.7 REQUIRED)
   INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
   IF(APPLE)

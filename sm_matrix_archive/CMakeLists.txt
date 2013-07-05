@@ -35,5 +35,13 @@ include_directories(${EIGEN_INCLUDE_DIRS})
 add_definitions(${EIGEN_DEFINITIONS})
 
 
+
 rosbuild_add_library(${PROJECT_NAME} src/MatrixArchive.cpp)
 rosbuild_link_boost(${PROJECT_NAME} system)
+
+rosbuild_add_gtest(${PROJECT_NAME}_test
+  test/test_main.cpp
+  test/TestMatrixArchive.cpp
+)
+
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})

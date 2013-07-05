@@ -10,47 +10,45 @@ namespace sm {
 
         double Logger::currentTimeSecondsUtc() const
         {
-            return currentTimeSecondsUtcImplementation();
+            Time t = currentTimeImplementation();
+#ifdef __APPLE__
+            boost::int64_t us = boost::chrono::duration_cast<boost::chrono::microseconds>( t.time_since_epoch() ).count();
+#else
+            boost::int64_t us = std::chrono::duration_cast<std::chrono::microseconds>( t.time_since_epoch() ).count();
+#endif
+            return (double)us/1000000.0;
         }
 
         std::string Logger::currentTimeString() const
         {
-            return currentTimeStringImplementation();
+            double cts = currentTimeSecondsUtc();
+            std::stringstream ss;
+            ss.fill(' ');
+            ss.setf(std::ios::fixed,std::ios::floatfield);   // floatfield set to fixed
+            ss.precision(6);
+
+            ss << cts;
+            return ss.str();
+
         }
+
+        Logger::Time Logger::currentTime() const {
+            return currentTimeImplementation();
+        }
+
             
         void Logger::log(const LoggingEvent & event)
         {
             logImplementation(event);
         }
 
-
-
-        boost::uint64_t epochMicroseconds()
-        {
-            const static boost::posix_time::ptime UNIX_EPOCH( boost::gregorian::date(1970,1,1));
-            boost::posix_time::ptime pt = boost::posix_time::microsec_clock::universal_time();
-            boost::posix_time::time_duration duration( pt - UNIX_EPOCH );
-            return duration.total_microseconds();
-        }
-
         
-        double Logger::currentTimeSecondsUtcImplementation() const
+        Logger::Time Logger::currentTimeImplementation() const
         {
+            return Clock::now();
             
-            return (double)epochMicroseconds() * 1e-6;
-
         }
 
-        std::string Logger::currentTimeStringImplementation() const
-        {
-            std::stringstream ss;
-            ss.fill(' ');
-            ss.setf(std::ios::fixed,std::ios::floatfield);   // floatfield set to fixed
-            ss.precision(6);
-
-            ss << ((double)epochMicroseconds()*1e-6);
-            return ss.str();
-        }
 
 
     } // namespace logging

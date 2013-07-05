@@ -46,5 +46,6 @@ using namespace sm::kinematics;
     def("qlog", &qlog);
     def("qexp", &qexp);
     def("qslerp", &qslerp);
+    def("lerp", &lerp);
       ;
   }

@@ -11,6 +11,8 @@ namespace sm {
     class UncertainTransformation : public Transformation
     {
     public:
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
       typedef Eigen::Matrix<double,6,6> covariance_t;
       EIGEN_MAKE_ALIGNED_OPERATOR_NEW
       /// 

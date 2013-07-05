@@ -56,7 +56,7 @@ namespace sm {
             _log_locations.push_back(loc);
                 
             checkLogLocationEnabledNoLock(loc);
-                
+            
             loc->_initialized = true;
         }
 

@@ -11,10 +11,10 @@ namespace sm {
         inline void stlToList(const LIST_ITERATOR_T & begin, const LIST_ITERATOR_T & end, boost::python::list & outlist)
         {
             LIST_ITERATOR_T it = begin;
-            boost::python::list outList;
+            
             for( ; it != end; ++it)
             {
-                outList.append(*it);
+                outlist.append(*it);
             }
 
             

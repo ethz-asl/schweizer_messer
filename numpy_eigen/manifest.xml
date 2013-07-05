@@ -11,7 +11,7 @@
   <url>http://ros.org/wiki/numpy_eigen</url>
 
   <!-- Python test facility -->
-  <depend package="rostest"/>
+  <!--depend package="rostest"/-->
   
   <export>
     <python path="${prefix}/python"/>
