@@ -110,6 +110,13 @@ namespace sm {
       return _U;
     }
 
+    UncertainTransformation::covariance_t UncertainTransformation::UOplus() const
+    {
+      Eigen::Matrix<double,6,6> S;
+      S.setIdentity();
+      S.topRightCorner<3,3>() = -sm::kinematics::crossMx(_t);
+      return S.inverse().eval()*_U*S.transpose().inverse().eval();
+    }
      
     UncertainTransformation UncertainTransformation::operator*(const UncertainTransformation & UT_b_c) const
     {
