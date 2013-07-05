@@ -14,7 +14,6 @@ namespace sm {
       EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
       typedef Eigen::Matrix<double,6,6> covariance_t;
-      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
       /// 
       /// Default constructor. The transformation and uncertainty will
       /// both be set to identity.
