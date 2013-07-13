@@ -71,6 +71,7 @@ namespace sm {
 
       void getMatrix(std::string const & matrixName, Eigen::MatrixXd & outMatrix) const;
       const Eigen::MatrixXd & getMatrix(std::string const & matrixName) const;
+      Eigen::MatrixXd & getMatrix(std::string const & matrixName);
       void getVector(std::string const & vectorName, Eigen::VectorXd & outVector) const;
       void getScalar(std::string const & scalarName, double & outScalar) const;
       double getScalar(std::string const & scalarName) const;
