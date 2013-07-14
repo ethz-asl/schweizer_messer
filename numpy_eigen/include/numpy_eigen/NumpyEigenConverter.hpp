@@ -13,7 +13,10 @@
 #define NUMPY_EIGEN_CONVERTER_HPP
 
 #include <numpy_eigen/boost_python_headers.hpp>
-#include <iostream>
+//#include <iostream>
+
+
+#define PY_ARRAY_UNIQUE_SYMBOL NP_Eigen_AS
 #include <numpy/arrayobject.h> 
 
 #include "type_traits.hpp"
