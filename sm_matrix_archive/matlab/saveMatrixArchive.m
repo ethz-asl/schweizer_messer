@@ -44,7 +44,7 @@ end
 
 % Now that the field names have been verified, open the archive.
 [fid, message] = fopen(filename,openMode,'ieee-le');
-if fid == 0
+if fid < 0
     error('unable to open file %s for writing: %s',filename, message);
 end
 

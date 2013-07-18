@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import roslib; roslib.load_manifest('numpy_eigen'); 
+import roslib; roslib.load_manifest('numpy_eigen'); roslib.load_manifest('rostest'); 
 import numpy_eigen
 import numpy_eigen.test as npe
 import numpy
@@ -98,7 +98,8 @@ class TestEigen(unittest.TestCase):
         
     def test_eigen(self):
         T = ['double']
-        N = ('01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','D')
+        #N = ('01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','D')
+        N = ('1','2','3','4','5','6','D')
         #N = (1,2,3,4,'dynamic')
         for t in T:
             for i in N:
