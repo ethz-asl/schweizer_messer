@@ -87,6 +87,7 @@ namespace sm {
       Random::instance().seed(s);
     }
 
+  
   } // namespace random
 
 } // namespace sm

@@ -10,11 +10,12 @@
   <url>http://ros.org/wiki/sm_eigen</url>
 
   <depend package="sm_common"/>
+  <depend package="sm_random"/>
   
   <export>
     <!-- I'm not sure if -Wl,-rpath,${prefix}/lib is needed below -->
-    <cpp cflags="-I${prefix}/include"/>
-    <!--lflags="`rosboost-cfg - -lflags filesystem system` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_common"/ -->
+    <cpp cflags="-I${prefix}/include"
+         lflags="-Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_eigen"/>
     <!-- python path="${prefix}/python"/ -->
   </export>
 
