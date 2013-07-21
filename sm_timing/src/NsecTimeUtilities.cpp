@@ -13,7 +13,7 @@ std::chrono::system_clock::time_point nsecToChrono( const NsecTime & time ) {
 
 /// \brief Convert std::chrono to nanoseconds since the epoch.
 NsecTime chronoToNsec( const std::chrono::system_clock::time_point & time ) {
-  return std::chrono::duration_cast<std::chrono::nanoseconds>( time.time_since_epoch() ).count();
+  return std::chrono::duration_cast<std::chrono::nanoseconds>( time.time_since_epoch()).count();
 }
 
 
