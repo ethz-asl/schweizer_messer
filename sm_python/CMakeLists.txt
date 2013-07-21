@@ -55,6 +55,8 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/exportUncertainVector.cpp
   src/exportMatrixArchive.cpp
   src/Logging.cpp
+  src/exportNsecTime.cpp
+
   )
 
 rosbuild_link_boost(${PY_PROJECT_NAME} python thread filesystem)
