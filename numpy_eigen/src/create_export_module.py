@@ -15,8 +15,8 @@ dimTags = ['1','2','3','4','5','6','D']
 
 #types =    ['char','short','int','long','unsigned char', 'unsigned short', 'unsigned int', 'unsigned long', 'float', 'double', 'std::complex<float>','std::complex<double>']
 #typeTags = ['char','short','int','long','uchar', 'ushort', 'uint', 'ulong', 'float', 'double', 'cfloat','cdouble']
-types = ['int', 'float', 'double', 'boost::uint8_t']
-typeTags = ['int', 'float', 'double', 'uchar']
+types = ['int', 'float', 'double', 'boost::uint8_t', 'boost::int64_t']
+typeTags = ['int', 'float', 'double', 'uchar', 'long']
 
 
 
