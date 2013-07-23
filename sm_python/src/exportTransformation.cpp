@@ -2,6 +2,7 @@
 #include <sm/kinematics/Transformation.hpp>
 #include <sm/kinematics/UncertainTransformation.hpp>
 #include <sm/boost/serialization.hpp>
+#include <sm/python/boost_serialization_pickle.hpp>
 
 template<typename T>
 void loadobj( T * obj, std::string fname) {
@@ -46,7 +47,8 @@ void exportTransformation()
     //.def(self * Eigen::Vector4d())
     .def("checkTransformationIsValid", &Transformation::checkTransformationIsValid)
     .def("S", &Transformation::S)
-    ;
+      .def_pickle( sm::python::pickle_suite<Transformation>() )
+      ;
 
   typedef UncertainTransformation::covariance_t covariance_t;
 
