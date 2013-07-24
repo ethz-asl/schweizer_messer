@@ -15,7 +15,7 @@ endMagic   = 'B';
 nameFixedSize = 32;
 
 [fid, message] = fopen(filename,'r','ieee-le');
-if fid == 0
+if fid < 0
     error('unable to open file %s for reading: %s',filename, message);
 end
 

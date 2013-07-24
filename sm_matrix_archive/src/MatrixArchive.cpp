@@ -62,6 +62,7 @@ namespace sm
   {
     outMatrix = getMatrix(matrixName);
   }
+
   const Eigen::MatrixXd & MatrixArchive::getMatrix(std::string const & matrixName) const
   {
     matrix_map_t::const_iterator it = m_values.find(matrixName);
@@ -72,7 +73,10 @@ namespace sm
 
     return it->second;
   }
-  
+  Eigen::MatrixXd & MatrixArchive::getMatrix(std::string const & matrixName)
+  {
+    return const_cast<Eigen::MatrixXd &>(const_cast<const MatrixArchive &>(*this).getMatrix(matrixName));
+  }
 
   void MatrixArchive::getVector(std::string const & vectorName, Eigen::VectorXd & outVector) const
   {

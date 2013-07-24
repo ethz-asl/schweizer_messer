@@ -28,6 +28,17 @@ template<> struct TypeToNumPy<int>
   }
 };
 
+template<> struct TypeToNumPy<boost::int64_t>
+{
+  enum { NpyType = NPY_LONG };
+  static const char * npyString() { return "NPY_LONG"; }
+  static const char * typeString() { return "long"; }
+  static bool canConvert(int type)
+  {
+    return type == NPY_INT || type == NPY_LONG;
+  }
+};
+
 template<> struct TypeToNumPy<unsigned char>
 {
   enum { NpyType = NPY_UBYTE };

@@ -39,36 +39,36 @@ namespace sm { namespace eigen {
       
       jacobian_t estimateJacobian(input_t const & x0)
       {
-	// evaluate the function at the operating point:
-	value_t fx0 = functor(x0);
-	size_t N = x0.size();
-	size_t M = fx0.size();
-	
-	//std::cout << "Size: " << M << ", " << N << std::endl;
-	jacobian_t J;
-	J.resize(M, N);
-	
-	SM_ASSERT_EQ(std::runtime_error,x0.size(),J.cols(),"Unexpected number of columns for input size");
-	SM_ASSERT_EQ(std::runtime_error,fx0.size(),J.rows(),"Unexpected number of columns for output size");	
+        // evaluate the function at the operating point:
+        value_t fx0 = functor(x0);
+        size_t N = x0.size();
+        size_t M = fx0.size();
 
-	for(unsigned c = 0; c < N; c++) {
-	  // Calculate a central difference.
-	  // This step size was stolen from cminpack: temp = eps * fabs(x[j]);
-	  scalar_t rcEps = std::max(fabs(x0(c)) * eps,eps);
-			
-	  //input_t x(x0);
-	  //scalar_t xc = x(c);
-	  //x(c) = xc + rcEps;
-	  value_t fxp = functor(functor.update(x0,c,rcEps));
-	  //x(c) = xc - rcEps;
-	  value_t fxm = functor(functor.update(x0,c,-rcEps));
-	  value_t dfx = (fxp - fxm)/(rcEps*(scalar_t)2.0);
-	  
-	  for(unsigned r = 0; r < M; r++) {
-	    J(r,c) = dfx(r);
-	  }
-	}
-	return J;
+        //std::cout << "Size: " << M << ", " << N << std::endl;
+        jacobian_t J;
+        J.resize(M, N);
+
+        SM_ASSERT_EQ(std::runtime_error,x0.size(),J.cols(),"Unexpected number of columns for input size");
+        SM_ASSERT_EQ(std::runtime_error,fx0.size(),J.rows(),"Unexpected number of columns for output size");
+
+        for(unsigned c = 0; c < N; c++) {
+          // Calculate a central difference.
+          // This step size was stolen from cminpack: temp = eps * fabs(x[j]);
+          scalar_t rcEps = std::max(fabs(x0(c)) * eps,eps);
+
+          //input_t x(x0);
+          //scalar_t xc = x(c);
+          //x(c) = xc + rcEps;
+          value_t fxp = functor(functor.update(x0,c,rcEps));
+          //x(c) = xc - rcEps;
+          value_t fxm = functor(functor.update(x0,c,-rcEps));
+          value_t dfx = (fxp - fxm)/(rcEps*(scalar_t)2.0);
+
+          for(unsigned r = 0; r < M; r++) {
+            J(r,c) = dfx(r);
+          }
+        }
+        return J;
       }
 
       functor_t functor;

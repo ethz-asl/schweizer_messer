@@ -68,3 +68,4 @@ sm_logging/bin/sm_logging_test
 sm_logging/lib/
 
 *.dylib
+opencv2

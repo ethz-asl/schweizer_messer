@@ -149,10 +149,11 @@ namespace sm
 	inline std::string scientific(double val, unsigned width, unsigned precision) {
 		std::ostringstream s;
 		s.fill(' ');
-		s.width(width);
-		s.setf(std::ios::fixed,std::ios::floatfield);   // floatfield set to fixed
+        /// The min width will be the precision plus
+        /// (the leading -) + (1.) + (e-02) = 7 extra characters
+		s.width(std::max(width,precision + 7));
+		s.setf(std::ios::scientific,std::ios::floatfield);   // floatfield set to fixed
 		s.precision(precision);
-		s.setf(std::ios_base::scientific);
 		s << val;
 
 		return s.str();

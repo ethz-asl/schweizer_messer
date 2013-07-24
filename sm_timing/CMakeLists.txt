@@ -21,9 +21,13 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #uncomment if you have defined services
 #rosbuild_gensrv()
 
+add_definitions(-std=c++0x -D__STRICT_ANSI__)
+
+
 #common commands for building c++ executables and libraries
 rosbuild_add_library( ${PROJECT_NAME} 
   src/Timer.cpp
+  src/NsecTimeUtilities.cpp
 )
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
@@ -34,4 +38,7 @@ rosbuild_add_library( ${PROJECT_NAME}
 rosbuild_add_gtest( ${PROJECT_NAME}_test
   test/test_main.cpp
   test/TestTimestampCorrector.cpp
+  test/TestNsecTimeUtilities.cpp
 )
+target_link_libraries(${PROJECT_NAME}_test ${PROJECT_NAME})
+
