@@ -241,7 +241,45 @@ TEST(UncertainTransformationTestSuite, testUOplus)
       
       UncertainTransformation T_a_b_2=T_a_b_1;
       T_a_b_2.setUOplus(UOplus);
-      sm::eigen::assertNear(T_a_b_1.U(), T_a_b_2.U(), 1e-10, SM_SOURCE_FILE_POS, "Checking for getting and sett OPlus-type uncertainties");
+      sm::eigen::assertNear(T_a_b_1.U(), T_a_b_2.U(), 1e-10, SM_SOURCE_FILE_POS, "Checking for getting and setting OPlus-type uncertainties");
+    }
+
+
+}
+
+// lestefan: added this
+TEST(UncertainTransformationTestSuite, testSeparaton)
+{
+  using namespace sm::kinematics;
+
+  for(int i = 0; i < 10; i++)
+    {
+      UncertainTransformation T_a_c;
+      T_a_c.setRandom();
+
+      UncertainTransformation::covariance_t UOplus_a_c = T_a_c.UOplus();
+
+      UncertainTransformation T_a_b(Eigen::Vector4d(0,0,0,1),T_a_c.t());
+      UncertainTransformation::covariance_t UOplus_a_b = UOplus_a_c;
+      UOplus_a_b.col(3).setZero();
+      UOplus_a_b.col(4).setZero();
+      UOplus_a_b.row(3).setZero();
+      UOplus_a_b.row(4).setZero();
+      T_a_b.setUOplus(UOplus_a_b);
+
+      UncertainTransformation T_b_c(T_a_c.q(),Eigen::Vector3d(0,0,0));
+      UncertainTransformation::covariance_t UOplus_b_c;
+      UOplus_b_c.setZero();
+      UOplus_b_c.col(3)=UOplus_a_c.col(3);
+      UOplus_b_c.col(4)=UOplus_a_c.col(4);
+      UOplus_b_c.row(3)=UOplus_a_c.row(3);
+      UOplus_b_c.row(4)=UOplus_a_c.row(4);
+      T_b_c.setUOplus(UOplus_b_c);
+
+      UncertainTransformation T_a_c_2=T_a_b*T_b_c;
+      
+      sm::eigen::assertNear(T_a_c.T(), T_a_c_2.T(), 1e-10, SM_SOURCE_FILE_POS, "Checking uncertainty separation");
+      sm::eigen::assertNear(T_a_c.U(), T_a_c_2.U(), 1e-10, SM_SOURCE_FILE_POS, "Checking uncertainty separation");
     }
 
 
