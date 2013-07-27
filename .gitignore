@@ -69,3 +69,14 @@ sm_logging/lib/
 
 *.dylib
 opencv2
+*~
+#*
+bin
+build
+lib
+*.o
+*.so
+*.pyc
+.project
+.cproject
+.pydevproject
