@@ -8,6 +8,8 @@
  * 
  */
 
+#ifndef SM_ROTATIONS_HPP
+#define SM_ROTATIONS_HPP
 
 #define SM_2_PI 		0.6366197723675814 // 2/pi
 #define SM_PI 		3.141592653589793  // pi
@@ -65,3 +67,5 @@ namespace sm { namespace kinematics {
   double rad2deg(double radians);
 
 }} // namespace sm::kinematics
+
+#endif // ndef SM_ROTATIONS_HPP
