@@ -74,22 +74,22 @@ namespace sm { namespace kinematics {
 	
 
   //// Small angle approximation.
-  Eigen::Matrix3d crossMx(double x, double y, double z){
-    Eigen::Matrix3d C;
+  template <typename Scalar_ = double>
+  Eigen::Matrix<Scalar_, 3, 3> crossMx(Scalar_ x, Scalar_ y, Scalar_ z){
+    Eigen::Matrix<Scalar_, 3, 3> C;
     C(0,0) =  0.0; C(0,1) = -z;   C(0,2) =   y;
     C(1,0) =  z;   C(1,1) =  0.0; C(1,2) =  -x;
     C(2,0) = -y;   C(2,1) =  x;   C(2,2) =   0.0;
-
     return C;
   }
+  template Eigen::Matrix<double, 3, 3> crossMx(double x, double y, double z);
+  template Eigen::Matrix<float, 3, 3> crossMx(float x, float y, float z);
 
-  Eigen::Matrix3d crossMx(Eigen::Vector3d const & x){
-    return crossMx(x[0],x[1],x[2]);
-  }
+  template Eigen::Matrix<double, 3, 3> crossMx(Eigen::MatrixBase<Eigen::Matrix<double, 3, 1> > const &);
+  template Eigen::Matrix<float, 3, 3> crossMx(Eigen::MatrixBase<Eigen::Matrix<float, 3, 1> > const &);
 
-  Eigen::Matrix3d crossMx(Eigen::VectorXd const & x){
-    return crossMx(x[0],x[1],x[2]);
-  }
+  template Eigen::Matrix<double, 3, 3> crossMx(Eigen::MatrixBase<Eigen::Matrix<double, Eigen::Dynamic, 1> > const &);
+  template Eigen::Matrix<float, 3, 3> crossMx(Eigen::MatrixBase<Eigen::Matrix<float, Eigen::Dynamic, 1> > const &);
 
   // Axis Angle rotation.
   Eigen::Matrix3d axisAngle2R(double a, double ax, double ay, double az){
