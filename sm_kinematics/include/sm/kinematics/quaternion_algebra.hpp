@@ -37,16 +37,17 @@ namespace sm { namespace kinematics {
     Eigen::Matrix<double,3,4> quatS(Eigen::Vector4d q);
     Eigen::Matrix<double,4,3> quatInvS(Eigen::Vector4d q);
 
-        inline Eigen::Vector3d qlog(const Eigen::Vector4d & q){ return quat2AxisAngle(q); }
-        inline Eigen::Vector4d qexp(const Eigen::Vector3d & theta){ return axisAngle2quat(theta); }
+   inline Eigen::Vector3d qlog(const Eigen::Vector4d & q){ return quat2AxisAngle(q); }
+   inline Eigen::Vector4d qexp(const Eigen::Vector3d & theta){ return axisAngle2quat(theta); }
 
-        /// \brief do spherical linear interpolation between q0 and q1 for times t = [0.0,1.0]
-        Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t);
+   /// \brief do spherical linear interpolation between q0 and q1 for times t = [0.0,1.0]
+   Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t);
+
+   /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
+   Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t);
 
 
-        /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
-        Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t);
-   /// Jacobian of the quat log function evaluated at p
+   /// \brief Jacobian of the quat log function evaluated at p
    Eigen::Matrix<double, 3,4> quatLogJacobian(const Eigen::Vector4d& p);
 
   }} // namespace sm::kinematics
