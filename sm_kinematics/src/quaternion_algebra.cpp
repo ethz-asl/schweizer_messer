@@ -6,6 +6,11 @@
 #include <cmath>
 
 namespace sm { namespace kinematics {
+        template <typename Scalar_ = double>
+        inline const Scalar_ & epsilon6thRoot(){
+          static const Scalar_ epsilon6thRoot = pow(std::numeric_limits<Scalar_>::epsilon(), 1.0/6);;
+          return epsilon6thRoot;
+        }
 
         // quaternion rotation.
         Eigen::Vector4d r2quat(Eigen::Matrix3d const & R){
@@ -208,19 +213,62 @@ namespace sm { namespace kinematics {
             return Eigen::Vector4d(axis[0],axis[1],axis[2],ct);
         }
 
+        template <typename Scalar_>
+        inline Scalar_ arcSinOverXPowerSeriesArroundZero(Scalar_ x){
+          const Scalar_ x2 = x * x;
+          return Scalar_(1.0) + x2 * Scalar_(1/6) + x2 * x2 * Scalar_(3.0 / 40.0); // power series expansion around zero.
+        }
+
+        /**
+         * calculate arcsin(x)/x
+         * @param x
+         * @return
+         */
+        template <typename Scalar_>
+        inline Scalar_ arcSinXOverX(Scalar_ x) {
+          if(fabs(x) < epsilon6thRoot<Scalar_>()){
+            return arcSinOverXPowerSeriesArroundZero(x);
+          }
+          return asin(x) / x;
         }
 
         Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
         {
-            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q))) );
-            Eigen::Vector3d a = qeps(q);
-            double na = a.norm();
-            if(fabs(theta) < 1e-12 || na < 1e-12)
-                return Eigen::Vector3d::Zero();
-
-            a /= na;
-            a *= theta;
-            return a;
+          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<double>::epsilon(), "This function is inteded for unit quternions only.");
+          const Eigen::Vector3d a = qeps(q);
+          const double na = a.norm(), eta = qeta(q);
+          double scale;
+          if(fabs(eta) < na){ // use eta because it is more precise than na to calculate the scale. No singularities here.
+            scale = acos(eta) / na;
+          } else {
+            /*
+             * In this case more precision is in na than in eta so lets use na only to calculate the scale:
+             *
+             * assume first eta > 0 and 1 > na > 0.
+             *               u = asin (na) / na  (this implies u in [1, pi/2], because na i in [0, 1]
+             *    sin (u * na) = na
+             *  sin^2 (u * na) = na^2
+             *  cos^2 (u * na) = 1 - na^2
+             *                              (1 = ||q|| = eta^2 + na^2)
+             *    cos^2 (u * na) = eta^2
+             *                              (eta > 0,  u * na = asin(na) in [0, pi/2] => cos(u * na) >= 0 )
+             *      cos (u * na) = eta
+             *                              (u * na in [ 0, pi/2] )
+             *                 u = acos (eta) / na
+             *
+             * So the for eta > 0 it is acos(eta) / na == asin(na) / na.
+             * From some geometric considerations (mirror the setting at the hyper plane q==0) it follows for eta < 0 that (pi - asin(na)) / na = acos(eta) / na.
+             */
+            if(eta > 0){
+              // For asin(na)/ na the singularity na == 0 can be removed. We can ask (e.g. Wolfram alpha) for its series expansion at na = 0. And that is done in the following function.
+              scale = arcSinXOverX(na);
+            }else{
+              // (pi - asin(na))/ na has a pole at na == 0. So we cannot remove this singularity.
+              // It is just the cut locus of the unit quaternion manifold at identity and thus the axis angle description becomes necessarily unstable there.
+              scale = (M_PI - asin(na)) / na;
+            }
+          }
+          return a * (2 * scale);
         }
 
         Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
