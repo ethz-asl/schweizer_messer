@@ -6,6 +6,11 @@
 #include <cmath>
 
 namespace sm { namespace kinematics {
+        template <typename Scalar_ = double>
+        inline const Scalar_ & epsilon6thRoot(){
+          static const Scalar_ epsilon6thRoot = pow(std::numeric_limits<Scalar_>::epsilon(), 1.0/6);;
+          return epsilon6thRoot;
+        }
 
         // quaternion rotation.
         Eigen::Vector4d r2quat(Eigen::Matrix3d const & R){
@@ -201,26 +206,69 @@ namespace sm { namespace kinematics {
             }
             else
             {
-      
                 na = sin(theta*0.5) / theta; 
             }
             Eigen::Vector3d axis = a*na;
             double ct = cos(theta*0.5);
             return Eigen::Vector4d(axis[0],axis[1],axis[2],ct);
+        }
 
+        template <typename Scalar_>
+        inline Scalar_ arcSinOverXPowerSeriesArroundZero(Scalar_ x){
+          const Scalar_ x2 = x * x;
+          return Scalar_(1.0) + x2 * Scalar_(1/6) + x2 * x2 * Scalar_(3.0 / 40.0); // power series expansion around zero.
+        }
+
+        /**
+         * calculate arcsin(x)/x
+         * @param x
+         * @return
+         */
+        template <typename Scalar_>
+        inline Scalar_ arcSinXOverX(Scalar_ x) {
+          if(fabs(x) < epsilon6thRoot<Scalar_>()){
+            return arcSinOverXPowerSeriesArroundZero(x);
+          }
+          return asin(x) / x;
         }
 
         Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
         {
-            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q))) );
-            Eigen::Vector3d a = qeps(q);
-            double na = a.norm();
-            if(fabs(theta) < 1e-12 || na < 1e-12)
-                return Eigen::Vector3d::Zero();
-
-            a /= na;
-            a *= theta;
-            return a;
+          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<double>::epsilon(), "This function is inteded for unit quternions only.");
+          const Eigen::Vector3d a = qeps(q);
+          const double na = a.norm(), eta = qeta(q);
+          double scale;
+          if(fabs(eta) < na){ // use eta because it is more precise than na to calculate the scale. No singularities here.
+            scale = acos(eta) / na;
+          } else {
+            /*
+             * In this case more precision is in na than in eta so lets use na only to calculate the scale:
+             *
+             * assume first eta > 0 and 1 > na > 0.
+             *               u = asin (na) / na  (this implies u in [1, pi/2], because na i in [0, 1]
+             *    sin (u * na) = na
+             *  sin^2 (u * na) = na^2
+             *  cos^2 (u * na) = 1 - na^2
+             *                              (1 = ||q|| = eta^2 + na^2)
+             *    cos^2 (u * na) = eta^2
+             *                              (eta > 0,  u * na = asin(na) in [0, pi/2] => cos(u * na) >= 0 )
+             *      cos (u * na) = eta
+             *                              (u * na in [ 0, pi/2] )
+             *                 u = acos (eta) / na
+             *
+             * So the for eta > 0 it is acos(eta) / na == asin(na) / na.
+             * From some geometric considerations (mirror the setting at the hyper plane q==0) it follows for eta < 0 that (pi - asin(na)) / na = acos(eta) / na.
+             */
+            if(eta > 0){
+              // For asin(na)/ na the singularity na == 0 can be removed. We can ask (e.g. Wolfram alpha) for its series expansion at na = 0. And that is done in the following function.
+              scale = arcSinXOverX(na);
+            }else{
+              // (pi - asin(na))/ na has a pole at na == 0. So we cannot remove this singularity.
+              // It is just the cut locus of the unit quaternion manifold at identity and thus the axis angle description becomes necessarily unstable there.
+              scale = (M_PI - asin(na)) / na;
+            }
+          }
+          return a * (2 * scale);
         }
 
         Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
@@ -355,48 +403,46 @@ namespace sm { namespace kinematics {
         }
 
         Eigen::Matrix<double,3,4> quatLogJacobian(const Eigen::Vector4d& p)
-		{
-        	// 		[qx]
-        	//		[qy]				-2*x
-        	// p =  [qz], 	g(x) = ----------------
-        	//		[qw]			sqrt(1-qw²)
-        	//
-        	//
-        	//		[2*acos(qw)		0				0				g(qx)]
-        	// J = 	[0				2*acos(qw)		0				g(qy)]
-        	// 		[0				0				2*acos(qw)		g(qz)]
+        {
+          //      [qx]
+          //      [qy]                -2*x
+          // p =  [qz],    g(x) = ----------------
+          //      [qw]               sqrt(1-qw²)
+          //
+          //
+          //      [2*acos(qw)      0            0            g(qx)]
+          // J =  [0            2*acos(qw)      0            g(qy)]
+          //      [0            0            2*acos(qw)      g(qz)]
 
 
-        	Eigen::Matrix<double, 3,4> J;
-        	J.setZero();
+          Eigen::Matrix<double, 3,4> J;
+          J.setZero();
 
-        	double n = qeps(p).norm();
-
-
-        	double de = n*n*n;//pow(n, 3);
-        	double u12 = p(1)*p(1) + p(2)*p(2);//pow(p(1), 2) + pow(p(2), 2);
-        	double u02 = p(0)*p(0) + p(2)*p(2);//pow(p(0), 2) + pow(p(2), 2);
-        	double u01 = p(0)*p(0) + p(1)*p(1);//pow(p(0), 2) + pow(p(1), 2);
-        	double a = acos(p(3));
-        	double uw = sqrt(-(p(3)*p(3) - 1)*n*n);
-
-        	J(0,0) = 2*a*u12 / de;
-        	J(0,1) = -2*a*p(1)*p(0) / de;
-        	J(0,2) = -2*a*p(2)*p(0) / de;
-        	J(0,3) = -2*p(0) / uw;
-        	J(1,0) = -2*a*p(0)*p(1) / de;
-        	J(1,1) = 2*a*u02 / de;
-        	J(1,2) = -2*a*p(1)*p(2) / de;
-        	J(1,3) = -2*p(1) / uw;
-        	J(2,0) = -2*a*p(0)*p(2) / de;
-        	J(2,1) = -2*a*p(1)*p(2) / de;
-        	J(2,2) = 2*a*u01 / de;
-        	J(2,3) = -2*p(2) / uw;
-
-        	return J;
-		}
+          double n = qeps(p).norm();
 
 
+          double de = n*n*n;//pow(n, 3);
+          double u12 = p(1)*p(1) + p(2)*p(2);//pow(p(1), 2) + pow(p(2), 2);
+          double u02 = p(0)*p(0) + p(2)*p(2);//pow(p(0), 2) + pow(p(2), 2);
+          double u01 = p(0)*p(0) + p(1)*p(1);//pow(p(0), 2) + pow(p(1), 2);
+          double a = acos(p(3));
+          double uw = sqrt(-(p(3)*p(3) - 1)*n*n);
+
+          J(0,0) = 2*a*u12 / de;
+          J(0,1) = -2*a*p(1)*p(0) / de;
+          J(0,2) = -2*a*p(2)*p(0) / de;
+          J(0,3) = -2*p(0) / uw;
+          J(1,0) = -2*a*p(0)*p(1) / de;
+          J(1,1) = 2*a*u02 / de;
+          J(1,2) = -2*a*p(1)*p(2) / de;
+          J(1,3) = -2*p(1) / uw;
+          J(2,0) = -2*a*p(0)*p(2) / de;
+          J(2,1) = -2*a*p(1)*p(2) / de;
+          J(2,2) = 2*a*u01 / de;
+          J(2,3) = -2*p(2) / uw;
+
+          return J;
+        }
 
     }} // namespace sm::kinematics
 

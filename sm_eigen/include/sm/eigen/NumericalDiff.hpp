@@ -54,7 +54,7 @@ namespace sm { namespace eigen {
         for(unsigned c = 0; c < N; c++) {
           // Calculate a central difference.
           // This step size was stolen from cminpack: temp = eps * fabs(x[j]);
-          scalar_t rcEps = std::max(fabs(x0(c)) * eps,eps);
+          scalar_t rcEps = std::max(static_cast<scalar_t>(fabs(x0(c))) * eps,eps);
 
           //input_t x(x0);
           //scalar_t xc = x(c);
