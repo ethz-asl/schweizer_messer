@@ -57,6 +57,8 @@ namespace sm { namespace kinematics {
   template <typename Derived_>
   Eigen::Matrix<typename Eigen::internal::traits< Derived_ >::Scalar, 3, 3> crossMx(Eigen::MatrixBase<Derived_> const & x){ return crossMx(x(0, 0),x(1, 0),x(2, 0)); }
 
+
+
   // Axis Angle rotation.
   Eigen::Matrix3d axisAngle2R(double a, double ax, double ay, double az);
   Eigen::Matrix3d axisAngle2R(double x, double y, double z);
