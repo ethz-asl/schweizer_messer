@@ -8,7 +8,9 @@
 
 // Helpful functions from libsm
 #include <sm/eigen/gtest.hpp>
+#include <sm/eigen/NumericalDiff.hpp>
 #include <sm/kinematics/quaternion_algebra.hpp>
+
 
 TEST(QuaternionAlgebraTestSuite, testRotation)
 {
@@ -122,10 +124,26 @@ TEST(QuaternionAlgebraTestSuite, testAxisAngle2QuatAndBack)
   }
 }
 
-TEST(QuaternionAlgebraTestSuite, testJacobian)
+TEST(QuaternionAlgebraTestSuite, testExpJacobian)
 {
-  // I'm not completely sure how to do this...
-  
+  Eigen::Vector3d zero3 = Eigen::Vector3d::Zero();
+  using namespace sm::kinematics;
+  for(int i = 0; i < 100; i ++){
+    const Eigen::Vector3d v = Eigen::Vector3d::Random();
+    sm::eigen::assertNear(quatExpJacobian(v), sm::eigen::numericalDiff<Eigen::Vector4d, Eigen::Vector3d >( [&v](const Eigen::Vector3d & x) { return  axisAngle2quat(v + x); }, zero3), 1E-7, SM_SOURCE_FILE_POS,  "");
+  }
+}
 
+
+TEST(QuaternionAlgebraTestSuite, testLogJacobian)
+{
+  Eigen::Vector4d zero4 = Eigen::Vector4d::Zero();
+  using namespace sm::kinematics;
+  for(int i = 0; i < 100; i ++){
+    const Eigen::Vector4d q = quatRandom();
+    sm::eigen::assertNear(quatLogJacobian2(q), sm::eigen::numericalDiff<Eigen::Vector3d, Eigen::Vector4d >( [&q](const Eigen::Vector4d & x) { return  quat2AxisAngle(qplus(axisAngle2quat(2 * qeps(qplus(x, quatInv(q)))), q)); }, zero4), 1E-7, SM_SOURCE_FILE_POS,  "");
+//TODO figure out how quatLogJacobian was meant to work and write test (the following does not work)
+// sm::eigen::assertNear(quatLogJacobian(q), sm::eigen::numericalDiff<Eigen::Vector3d, Eigen::Vector4d >( [&q](const Eigen::Vector4d & x) { return  quat2AxisAngle(qplus(axisAngle2quat(2 * qeps(qplus(x, quatInv(q)))), q)); }, zero4), 1E-7, SM_SOURCE_FILE_POS,  "");
+  }
 }
 
