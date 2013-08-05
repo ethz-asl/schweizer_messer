@@ -180,12 +180,21 @@ namespace sm { namespace kinematics {
         {
             return q.head<3>();
         }
-  
+
+        Eigen::Vector3f qeps(Eigen::Vector4f const & q)
+        {
+            return q.head<3>();
+        }
+
         double qeta(Eigen::Vector4d const & q)
         {
             return q[3];
         }
 
+        float qeta(Eigen::Vector4f const & q)
+        {
+            return q[3];
+        }
 
 
         Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a)
@@ -232,12 +241,13 @@ namespace sm { namespace kinematics {
           return asin(x) / x;
         }
 
-        Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
+        template <typename Scalar_>
+        Eigen::Matrix<Scalar_, 3, 1> quat2AxisAngle(Eigen::Matrix<Scalar_, 4, 1> const & q)
         {
-          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<double>::epsilon(), "This function is inteded for unit quternions only.");
-          const Eigen::Vector3d a = qeps(q);
-          const double na = a.norm(), eta = qeta(q);
-          double scale;
+          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<Scalar_>::epsilon(), "This function is inteded for unit quternions only.");
+          const Eigen::Matrix<Scalar_, 3, 1> a = qeps(q);
+          const Scalar_ na = a.norm(), eta = qeta(q);
+          Scalar_ scale;
           if(fabs(eta) < na){ // use eta because it is more precise than na to calculate the scale. No singularities here.
             scale = acos(eta) / na;
           } else {
@@ -268,8 +278,10 @@ namespace sm { namespace kinematics {
               scale = (M_PI - asin(na)) / na;
             }
           }
-          return a * (2 * scale);
+          return a * (Scalar_(2) * scale);
         }
+        template Eigen::Matrix<double, 3, 1> quat2AxisAngle(Eigen::Matrix<double, 4, 1> const & q);
+        template Eigen::Matrix<float, 3, 1> quat2AxisAngle(Eigen::Matrix<float, 4, 1> const & q);
 
         Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
         {
@@ -521,9 +533,9 @@ namespace sm { namespace kinematics {
 
         template <typename Scalar_ = double>
         Eigen::Matrix<Scalar_ , 3, 4> quatLogJacobian2(const Eigen::Matrix<Scalar_ , 4, 1>& p){
-          auto pDouble = p.template cast<double>();
-          return (logDiffMat(quat2AxisAngle(pDouble)) * (quatV<double>().transpose() * 4.0) * quatOPlus(quatInv(pDouble))).template cast<Scalar_>();
+          return logDiffMat(quat2AxisAngle<>(p)) * (quatV<Scalar_>().transpose() * Scalar_(4.0)) * quatOPlus(quatInv(p.template cast<double>())).template cast<Scalar_>();
         }
+        
         template Eigen::Matrix<double, 3, 4> quatLogJacobian2(const Eigen::Matrix<double, 4, 1>&);
         template Eigen::Matrix<float, 3, 4> quatLogJacobian2(const Eigen::Matrix<float, 4, 1>& );
     }} // namespace sm::kinematics

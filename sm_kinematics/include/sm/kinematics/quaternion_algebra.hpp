@@ -19,7 +19,13 @@ namespace sm { namespace kinematics {
     Eigen::Vector4d r2quat(Eigen::Matrix3d const & C);
     Eigen::Vector4d r2quat(Eigen::Matrix3d const & C);
     Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a);
-    Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q);
+
+    template <typename Scalar_>
+    Eigen::Matrix<Scalar_, 3, 1> quat2AxisAngle(Eigen::Matrix<Scalar_, 4, 1> const & q);
+    extern template Eigen::Matrix<double, 3, 1> quat2AxisAngle(Eigen::Matrix<double, 4, 1> const & q);
+    extern template Eigen::Matrix<float, 3, 1> quat2AxisAngle(Eigen::Matrix<float, 4, 1> const & q);
+    inline Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q) { return quat2AxisAngle<>(q); }
+
     Eigen::Matrix4d quatPlus(Eigen::Vector4d const & q);
     Eigen::Vector4d qplus(Eigen::Vector4d const & q, Eigen::Vector4d const & p);
     Eigen::Matrix4d quatOPlus(Eigen::Vector4d const & q);
