@@ -13,6 +13,8 @@ void exportTimestampCorrector(const std::string & className)
     .def("getLocalTime", &TimestampCorrector<TIME_T>::getLocalTime, "eventLocalTime = getLocalTime(eventRemoteTime)")
     .def("convexHullSize", &TimestampCorrector<TIME_T>::convexHullSize)
     .def("printHullPoints", &TimestampCorrector<TIME_T>::printHullPoints)
+      .def("getSlope", &TimestampCorrector<TIME_T>::getSlope)
+      .def("getOffset", &TimestampCorrector<TIME_T>::getOffset)
     ;
 
 }

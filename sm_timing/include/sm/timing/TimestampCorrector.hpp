@@ -62,6 +62,9 @@ namespace sm {
        */
       size_t convexHullSize() const { return _convexHull.size(); }
 
+      double getSlope() const;
+      double getOffset() const;
+      
       void printHullPoints()
       {
 	for(unsigned i = 0; i < _convexHull.size(); ++i)
