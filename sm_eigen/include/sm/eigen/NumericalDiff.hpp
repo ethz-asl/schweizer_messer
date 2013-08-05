@@ -75,6 +75,15 @@ namespace sm { namespace eigen {
       scalar_t eps;
     };
 
+
+    template < typename ValueType_, typename InputType_>
+    Eigen::MatrixXd numericalDiff(std::function<ValueType_ (const InputType_ &) > function, InputType_ const & input, double eps = sqrt(std::numeric_limits<typename NumericalDiffFunctor<ValueType_, InputType_>::scalar_t>::epsilon())){
+      typedef NumericalDiffFunctor<ValueType_, InputType_> Functor;
+
+      NumericalDiff<Functor> numDiff(Functor(function), eps);
+      return numDiff.estimateJacobian(input);
+    }
+
   }}
 
 
