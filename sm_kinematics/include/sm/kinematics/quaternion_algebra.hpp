@@ -50,7 +50,34 @@ namespace sm { namespace kinematics {
    /// \brief Jacobian of the quat log function evaluated at p
    Eigen::Matrix<double, 3,4> quatLogJacobian(const Eigen::Vector4d& p);
 
-  }} // namespace sm::kinematics
+   /// \brief Jacobian of the quat exp function evaluated at vec
+   template <typename Scalar_ = double>
+   Eigen::Matrix<Scalar_, 4,3> quatExpJacobian(const Eigen::Matrix<Scalar_, 3, 1>& vec);
+
+   template <typename Scalar_ = double>
+   Eigen::Matrix<Scalar_ , 3, 4> quatLogJacobian2(const Eigen::Matrix<Scalar_ , 4, 1>& p);
+
+
+   template <typename Scalar_ = double>
+   const Eigen::Matrix<Scalar_, 4, 3> & quatV();
+
+   template <typename Scalar_ = double>
+   Eigen::Matrix<Scalar_, 3, 3> logDiffMat(const Eigen::Matrix<Scalar_, 3, 1> & vec);
+
+   template <typename Scalar_ = double>
+   Eigen::Matrix<Scalar_, 3, 3> expDiffMat(const Eigen::Matrix<Scalar_, 3, 1>  & vec);
+
+   extern template const Eigen::Matrix<double, 4, 3> & quatV();
+   extern template const Eigen::Matrix<float, 4, 3> & quatV();
+   extern template Eigen::Matrix<double, 4,3> quatExpJacobian(const Eigen::Matrix<double, 3, 1>& vec);
+   extern template Eigen::Matrix<float, 4,3> quatExpJacobian(const Eigen::Matrix<float, 3, 1>& vec);
+   extern template Eigen::Matrix<double, 3, 4> quatLogJacobian2(const Eigen::Matrix<double, 4, 1>& p);
+   extern template Eigen::Matrix<float, 3, 4> quatLogJacobian2(const Eigen::Matrix<float, 4, 1>& p);
+   extern template Eigen::Matrix<double, 3, 3> logDiffMat(const Eigen::Matrix<double, 3, 1> & vec);
+   extern template Eigen::Matrix<float, 3, 3> logDiffMat(const Eigen::Matrix<float, 3, 1> & vec);
+   extern template Eigen::Matrix<double, 3, 3> expDiffMat(const Eigen::Matrix<double, 3, 1> & vec);
+   extern template Eigen::Matrix<float, 3, 3> expDiffMat(const Eigen::Matrix<float, 3, 1> & vec);
+}} // namespace sm::kinematics
 
 
 
