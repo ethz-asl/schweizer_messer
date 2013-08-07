@@ -7,9 +7,9 @@
 
 namespace sm { namespace kinematics {
         template <typename Scalar_ = double>
-        inline const Scalar_ & epsilon6thRoot(){
-          static const Scalar_ epsilon6thRoot = pow(std::numeric_limits<Scalar_>::epsilon(), 1.0/6);;
-          return epsilon6thRoot;
+        inline bool isLessThenEpsilons4thRoot(Scalar_ x){
+          static const Scalar_ epsilon4thRoot = pow(std::numeric_limits<Scalar_>::epsilon(), 1.0/4.0);
+          return x < epsilon4thRoot;
         }
 
         // quaternion rotation.
@@ -202,13 +202,11 @@ namespace sm { namespace kinematics {
             // Method of implementing this function that is accurate to numerical precision from
             // Grassia, F. S. (1998). Practical parameterization of rotations using the exponential map. journal of graphics, gpu, and game tools, 3(3):29–48.
       
-            // The threshold for an alternate computation is theta < the fourth root of epsilon
-            static const double threshold = pow(std::numeric_limits<double>::epsilon(),1.0/4.0);
             double theta = a.norm();
 
             // na is 1/theta sin(theta/2)
             double na;
-            if(theta < threshold)
+            if(isLessThenEpsilons4thRoot(theta))
             {
                 static const double one_over_48 = 1.0/48.0;
                 na = 0.5 + (theta * theta) * one_over_48;
@@ -222,12 +220,6 @@ namespace sm { namespace kinematics {
             return Eigen::Vector4d(axis[0],axis[1],axis[2],ct);
         }
 
-        template <typename Scalar_>
-        inline Scalar_ arcSinOverXPowerSeriesArroundZero(Scalar_ x){
-          const Scalar_ x2 = x * x;
-          return Scalar_(1.0) + x2 * Scalar_(1/6) + x2 * x2 * Scalar_(3.0 / 40.0); // power series expansion around zero.
-        }
-
         /**
          * calculate arcsin(x)/x
          * @param x
@@ -235,8 +227,8 @@ namespace sm { namespace kinematics {
          */
         template <typename Scalar_>
         inline Scalar_ arcSinXOverX(Scalar_ x) {
-          if(fabs(x) < epsilon6thRoot<Scalar_>()){
-            return arcSinOverXPowerSeriesArroundZero(x);
+          if(isLessThenEpsilons4thRoot(fabs(x))){
+            return Scalar_(1.0) + x * x * Scalar_(1/6);
           }
           return asin(x) / x;
         }
@@ -479,20 +471,15 @@ namespace sm { namespace kinematics {
           Scalar_ phiSquare = phi * phi;
 
           Scalar_ a;
-          if(phiAbs > epsilon6thRoot<Scalar_>()){
+          Scalar_ b;
+          if(!isLessThenEpsilons4thRoot(phiAbs)){
             Scalar_ siPhiHalf = sin(phi / 2);
             a = (2 * siPhiHalf * siPhiHalf / phiSquare);
-          }
-          else{
-            a = (1.0/2) * (1 - (1.0 / (24 / 2)) * phiSquare * (1 - (1.0 / (720 / 24)) * phiSquare));
-          }
-
-          Scalar_ b;
-          if(phiAbs > epsilon6thRoot()){
             b = ((1 - sin(phi) / phi)/phiSquare);
           }
           else{
-            b = (1.0/6) * (1 - (1.0 / (120 / 6)) * phiSquare * (1 - (1.0 / (5040 / 120)) * phiSquare));
+            a = (1.0/2) * (1 - (1.0 / (24 / 2)) * phiSquare);
+            b = (1.0/6) * (1 - (1.0 / (120 / 6)) * phiSquare);
           }
 
           return Eigen::Matrix<Scalar_, 3, 3>::Identity() - a * vecCross + b * vecCross * vecCross;
@@ -518,13 +505,12 @@ namespace sm { namespace kinematics {
           Eigen::Matrix<Scalar_, 3, 3> vecCross = crossMx(vec);
 
           Scalar_ a;
-          if(phiAbs > epsilon6thRoot<Scalar_>()){
+          if(!isLessThenEpsilons4thRoot(phiAbs)){
             Scalar_ phiHalf = 0.5 * phi;
             a = ((1 - phiHalf / tan(phiHalf))/phi/phi);
           }
           else{
-            Scalar_ phiSquare = phi * phi;
-            a = 1.0 / 12 * (1 + 1.0 / 60 * phiSquare * (1 + 1.0/(30240 / 720) * phiSquare));
+            a = 1.0 / 12 * (1 + 1.0 / 60 * phi * phi);
           }
           return Eigen::Matrix<Scalar_, 3, 3>::Identity() + 0.5 * vecCross + a * vecCross * vecCross;
         }
