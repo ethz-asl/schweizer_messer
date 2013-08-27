@@ -1,6 +1,5 @@
 #include <sm/BoostPropertyTreeImplementation.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
 
@@ -97,18 +96,6 @@ namespace sm {
   {
     boost::property_tree::write_xml(fileName.string(), _ptree);
   }
-
- 
-  void BoostPropertyTreeImplementation::loadJson(const boost::filesystem::path & fileName)
-  {
-    boost::property_tree::read_json(fileName.string(), _ptree);
-  }
-
-  void BoostPropertyTreeImplementation::saveJson(const boost::filesystem::path & fileName) const
-  {
-    boost::property_tree::write_json(fileName.string(), _ptree);
-  }
-
  
   void BoostPropertyTreeImplementation::loadIni(const boost::filesystem::path & fileName)
   {
