@@ -1,4 +1,4 @@
-function [ ma ] = loadMatrixArchive( filename )
+function [ ama ] = loadMatrixArchive( filename )
 %LOADMATRIXARCHIVE Loads an  matrix archive
 %
 % Input:
@@ -9,12 +9,13 @@ function [ ma ] = loadMatrixArchive( filename )
 %      matrix archive
 %
 
-startMagic = 'A';
+startMagicMatrix = 'A';
+startMagicString = 'S';
 endMagic   = 'B';
 nameFixedSize = 32;
 
 [fid, message] = fopen(filename,'r','ieee-le');
-if fid == 0
+if fid < 0
     error('unable to open file %s for reading: %s',filename, message);
 end
 
@@ -26,23 +27,30 @@ try
     % Read the start magic character
     start = fread(fid,1,'uint8=>char');
     while ~feof(fid)
-        if start ~= startMagic
-            error('The start of a matrix block did not have the expected character. Wanted %s, got %s', startMagic, start);
+        if start ~= startMagicString && start ~= startMagicMatrix
+            error('The start of a matrix block did not have the expected character. Wanted %s or %s, got %s', startMagicMatrix, startMagicString, start);
         end
-    
+      
         % Read the name
         name = strtrim(fread(fid,nameFixedSize,'uint8=>char')');
         if isempty(name)
             error('Failed to read the matrix name');
         end
         
-        % Read the data size
-        mxSize = fread(fid,2,'uint32');
-        
-        % Read the data
-        M = fread(fid,mxSize(1)*mxSize(2),'double');
-        M = reshape(M,mxSize(1),mxSize(2));
-    
+        if(start == startMagicString)
+            % Read the data size
+            mxSize = fread(fid,1,'uint32');
+
+            % Read the data
+            M = fread(fid, [1, mxSize(1)],'uint8=>char');
+        else
+            % Read the data size
+            mxSize = fread(fid,2,'uint32');
+
+            % Read the data
+            M = fread(fid,mxSize(1)*mxSize(2),'double');
+            M = reshape(M,mxSize(1),mxSize(2));
+        end
     
         % Read the end magic character
         endchar = fread(fid,1,'uint8=>char');

@@ -1,5 +1,6 @@
 #include <sm/kinematics/UncertainTransformation.hpp>
 #include <sm/kinematics/transformations.hpp>
+#include <sm/serialization_macros.hpp>
 
 namespace sm {
   namespace kinematics {
@@ -110,6 +111,13 @@ namespace sm {
       return _U;
     }
 
+    UncertainTransformation::covariance_t UncertainTransformation::UOplus() const
+    {
+      Eigen::Matrix<double,6,6> S;
+      S.setIdentity();
+      S.topRightCorner<3,3>() = -sm::kinematics::crossMx(_t_a_b_a);
+      return S.inverse().eval()*_U*S.transpose().inverse().eval();
+    }
      
     UncertainTransformation UncertainTransformation::operator*(const UncertainTransformation & UT_b_c) const
     {
@@ -158,7 +166,7 @@ namespace sm {
 
     bool UncertainTransformation::isBinaryEqual(const UncertainTransformation & rhs) const
     {
-      return Transformation::isBinaryEqual(rhs) && _U == rhs._U;
+      return Transformation::isBinaryEqual(rhs) && SM_CHECKMEMBERSSAME(rhs, _U);
     }
 
     /// \brief This sets the uncertainty directly.

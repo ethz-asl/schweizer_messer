@@ -162,7 +162,7 @@ namespace sm {
     }
 
 #define SM_ASSERT_NEAR(exceptionType, value, testValue, abs_error, message) \
-  if(fabs((testValue) - (value)) > fabs(abs_error))						\
+  if(!(fabs((testValue) - (value)) <= fabs(abs_error)))						\
     {																	\
       std::stringstream sm_assert_stringstream;							\
       sm_assert_stringstream << "assert(" << #value << " == " << #testValue << ") failed [" << (value) << " == " << (testValue) << " (" << fabs((testValue) - (value)) << " > " << fabs(abs_error) << ")]: " <<  message; \
@@ -268,7 +268,7 @@ namespace sm {
 
 
 #define SM_ASSERT_NEAR_DBG(exceptionType, value, testValue, abs_error, message) \
-  if(fabs((testValue) - (value)) > fabs(abs_error))						\
+  if(!(fabs((testValue) - (value)) <= fabs(abs_error)))						\
     {																	\
       std::stringstream sm_assert_stringstream;							\
       sm_assert_stringstream << "debug assert(" << #value << " == " << #testValue << ") failed [" << (value) << " == " << (testValue) << " (" << fabs((testValue) - (value)) << " > " << fabs(abs_error) << ")]: " <<  message; \

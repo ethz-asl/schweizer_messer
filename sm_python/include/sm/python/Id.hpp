@@ -8,6 +8,8 @@
 
 namespace sm { namespace python {
 
+        // to use:     sm::python::Id_python_converter<FrameId>::register_converter();
+
 
     // adapted from http://misspent.wordpress.com/2009/09/27/how-to-write-boost-python-converters/
     
@@ -26,10 +28,10 @@ namespace sm { namespace python {
       // Two functions: convertible() and construct()
       static void * convertible(PyObject* obj_ptr)
       {
-	if (!PyInt_Check(obj_ptr)) 
-	  return 0;
-    
-	return obj_ptr;
+          if (!(PyInt_Check(obj_ptr) || PyLong_Check(obj_ptr)))
+              return 0;
+          
+          return obj_ptr;
       }
 
       static void construct(
@@ -38,17 +40,21 @@ namespace sm { namespace python {
       {
 
 	// Get the value.
-	boost::uint64_t value = PyInt_AS_LONG(obj_ptr);
-    
-    
-	void* storage = ((boost::python::converter::rvalue_from_python_storage<id_t>*)
-			 data)->storage.bytes;
-    
-
-	new (storage) id_t(value);
-    
-	// Stash the memory chunk pointer for later use by boost.python
-	data->convertible = storage;
+          boost::uint64_t value;
+          if ( PyInt_Check(obj_ptr) ) {
+              value = PyInt_AsUnsignedLongLongMask(obj_ptr);
+          } else {
+              value = PyLong_AsUnsignedLongLong(obj_ptr);
+          }
+        
+          void* storage = ((boost::python::converter::rvalue_from_python_storage<id_t>*)
+                           data)->storage.bytes;
+          
+          
+          new (storage) id_t(value);
+          
+          // Stash the memory chunk pointer for later use by boost.python
+          data->convertible = storage;
       }
   
 
@@ -57,11 +63,21 @@ namespace sm { namespace python {
       // The registration function.
       static void register_converter()
       {
-	boost::python::to_python_converter<id_t,Id_python_converter>();
-	boost::python::converter::registry::push_back(
-						      &convertible,
-						      &construct,
-						      boost::python::type_id<id_t>());
+         
+          // This code checks if the type has already been registered.
+          // http://stackoverflow.com/questions/9888289/checking-whether-a-converter-has-already-been-registered
+          boost::python::type_info info = boost::python::type_id<id_t>(); 
+          const boost::python::converter::registration* reg = boost::python::converter::registry::query(info); 
+          if (reg == NULL || reg->m_to_python == NULL) {
+              // This is the code to register the type.
+              boost::python::to_python_converter<id_t,Id_python_converter>();
+              boost::python::converter::registry::push_back(
+                  &convertible,
+                  &construct,
+                  boost::python::type_id<id_t>());
+
+          }
+
 
       }
   

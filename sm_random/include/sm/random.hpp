@@ -26,7 +26,7 @@ namespace sm {
 
     /// \brief Seed the random number generator.
     void seed(boost::uint64_t s);
-
+  
   } // namespace random
 } // namespace sm
 

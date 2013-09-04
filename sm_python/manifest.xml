@@ -13,6 +13,7 @@
   <depend package="numpy_eigen"/>
   <depend package="sm_kinematics"/>
   <depend package="sm_timing"/>
+  <depend package="sm_logging"/>
   <depend package="sm_matrix_archive"/>
   <depend package="sm_property_tree"/>
 

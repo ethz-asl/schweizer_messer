@@ -26,6 +26,8 @@ namespace sm {
       template<typename T, typename A>
       void SerializedMap<T,A>::setUpTable()
       {
+          SM_ASSERT_TRUE(UnableToOpenDatabaseException, _db.get() != NULL, "The database is null");
+
           validateTableName();
           int result;
 

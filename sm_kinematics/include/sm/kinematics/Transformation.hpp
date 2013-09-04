@@ -76,6 +76,8 @@ namespace sm {
       /// \brief Set this to a random transformation.
       virtual void setRandom();
       
+        virtual void set( const Eigen::Matrix4d & T_a_b );
+
       /// \brief Set this to a random transformation with bounded rotation and translation.
       virtual void setRandom( double translationMaxMeters, double rotationMaxRadians);
       /// \brief Set this transformation to identity
@@ -100,6 +102,10 @@ namespace sm {
         /// \brief rotate a point (do not translate)
         UncertainVector3 rotate(const UncertainVector3 & p) const;
 
+        
+        double * qptr();
+        double * tptr();
+
       
         enum {CLASS_SERIALIZATION_VERSION = 0};
 
@@ -121,14 +127,16 @@ namespace sm {
       bool isBinaryEqual(const Transformation & rhs) const;
 
       /// \brief The update step for this transformation from a minimal update.
-      void oplus(const Eigen::Matrix<double,6,1> & dt);
+      void oplus(const Eigen::Matrix<double,6,1> & dt);        
 
       /// \brief Return the S matrix that puts the oplus operation in the form
       ///        of a small transformation.
       Eigen::Matrix<double,6,6> S() const;
 
-    protected:
+
       
+    protected:
+        
       /// The quaternion that will become a rotation matrix C_a_b that 
       /// transforms vectors from b to a.
       Eigen::Vector4d _q_a_b;
@@ -153,6 +161,19 @@ namespace sm {
         ar >> BOOST_SERIALIZATION_NVP(_q_a_b);
         ar >> BOOST_SERIALIZATION_NVP(_t_a_b_a);
     }
+
+
+
+      // Interpolate the transformation at time si between T0 (at time s0) and T1 (at time s1)
+      Transformation interpolateTransformations(const Transformation & T0, double s0,
+                                                const Transformation & T1, double s1,
+                                                double si);
+
+      /// brief linear interpolate between T0 and T1 as si moves from 0.0 to 1.0
+      Transformation slerpTransformations(const Transformation & T0, 
+                                                const Transformation & T1, 
+                                                double si);
+
 
 
   } // namespace kinematics

@@ -25,17 +25,18 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
 #target_link_libraries(${PROJECT_NAME} another_library)
 #rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
+
 #rosbuild_add_executable(example examples/example.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
 
-IF(APPLE)
-  link_directories( /usr/local/lib )
-ENDIF(APPLE)
 
 
-rosbuild_add_library(${PROJECT_NAME} src/JobQueue.cpp)
-rosbuild_link_boost(${PROJECT_NAME} thread)
+rosbuild_add_library(${PROJECT_NAME} 
+  src/JobQueue.cpp
+  src/portable_binary_iarchive.cpp
+  src/portable_binary_oarchive.cpp
+  )
+rosbuild_link_boost(${PROJECT_NAME} system thread serialization)
 
 rosbuild_add_gtest(${PROJECT_NAME}_test 
   test/test_main.cpp

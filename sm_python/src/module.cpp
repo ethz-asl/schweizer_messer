@@ -18,6 +18,9 @@ void exportPropertyTree();
 void exportEigen();
 void exportUncertainVector();
 void exportMatrixArchive();
+void exportLogging();
+void exportNsecTime();
+void exportRandom();
 
 void printTiming()
 {
@@ -39,4 +42,7 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportEigen();
   exportUncertainVector();
   exportMatrixArchive();
+  exportLogging();
+  exportNsecTime();
+  exportRandom();
 }

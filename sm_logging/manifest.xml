@@ -1,0 +1,22 @@
+<package>
+  <description brief="sm_logging">
+
+     sm_logging
+
+  </description>
+  <author>Paul Furgale</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/sm_logging</url>
+
+  <export>
+    <cpp cflags="-I${prefix}/include -std=c++0x"
+     lflags="`rosboost-cfg --lflags filesystem,system` -Wl,-rpath,${prefix}/lib -L${prefix}/lib -lsm_logging"/>
+       
+  </export>
+
+
+
+</package>
+
+

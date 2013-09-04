@@ -21,9 +21,6 @@ namespace sm {
     void loadXml(const boost::filesystem::path & fileName);
     void saveXml(const boost::filesystem::path & fileName) const;
  
-    void loadJson(const boost::filesystem::path & fileName);
-    void saveJson(const boost::filesystem::path & fileName) const;
- 
     void loadIni(const boost::filesystem::path & fileName);
     void saveIni(const boost::filesystem::path & fileName) const;
 
@@ -91,7 +88,7 @@ namespace sm {
       }
     catch(const ptree_bad_data & e)
       {
-	SM_THROW(PropertyTree::InvalidValueException, "Unable to get the value as type " << typeid(T).name() << ": " << e.what());
+          SM_THROW(PropertyTree::InvalidValueException, "Unable to get the value for key \"" << key << "\" with value \"" << _ptree.get<std::string>(ptree::path_type(key.substr(1),'/')) << "\" as type " << typeid(T).name() << ": " << e.what());
       }
     catch(const ptree_bad_path & e)
       {

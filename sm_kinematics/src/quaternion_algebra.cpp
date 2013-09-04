@@ -6,6 +6,11 @@
 #include <cmath>
 
 namespace sm { namespace kinematics {
+        template <typename Scalar_ = double>
+        inline bool isLessThenEpsilons4thRoot(Scalar_ x){
+          static const Scalar_ epsilon4thRoot = pow(std::numeric_limits<Scalar_>::epsilon(), 1.0/4.0);
+          return x < epsilon4thRoot;
+        }
 
         // quaternion rotation.
         Eigen::Vector4d r2quat(Eigen::Matrix3d const & R){
@@ -175,12 +180,21 @@ namespace sm { namespace kinematics {
         {
             return q.head<3>();
         }
-  
+
+        Eigen::Vector3f qeps(Eigen::Vector4f const & q)
+        {
+            return q.head<3>();
+        }
+
         double qeta(Eigen::Vector4d const & q)
         {
             return q[3];
         }
 
+        float qeta(Eigen::Vector4f const & q)
+        {
+            return q[3];
+        }
 
 
         Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a)
@@ -188,40 +202,78 @@ namespace sm { namespace kinematics {
             // Method of implementing this function that is accurate to numerical precision from
             // Grassia, F. S. (1998). Practical parameterization of rotations using the exponential map. journal of graphics, gpu, and game tools, 3(3):29–48.
       
-            // The threshold for an alternate computation is theta < the fourth root of epsilon
-            static const double threshold = pow(std::numeric_limits<double>::epsilon(),1.0/4.0);
             double theta = a.norm();
 
             // na is 1/theta sin(theta/2)
             double na;
-            if(theta < threshold)
+            if(isLessThenEpsilons4thRoot(theta))
             {
                 static const double one_over_48 = 1.0/48.0;
                 na = 0.5 + (theta * theta) * one_over_48;
             }
             else
             {
-      
                 na = sin(theta*0.5) / theta; 
             }
             Eigen::Vector3d axis = a*na;
             double ct = cos(theta*0.5);
             return Eigen::Vector4d(axis[0],axis[1],axis[2],ct);
-
         }
 
-        Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q)
+        /**
+         * calculate arcsin(x)/x
+         * @param x
+         * @return
+         */
+        template <typename Scalar_>
+        inline Scalar_ arcSinXOverX(Scalar_ x) {
+          if(isLessThenEpsilons4thRoot(fabs(x))){
+            return Scalar_(1.0) + x * x * Scalar_(1/6);
+          }
+          return asin(x) / x;
+        }
+
+        template <typename Scalar_>
+        Eigen::Matrix<Scalar_, 3, 1> quat2AxisAngle(Eigen::Matrix<Scalar_, 4, 1> const & q)
         {
-            double theta = 2*acos( std::min(1.0, std::max(-1.0,qeta(q))) );
-            Eigen::Vector3d a = qeps(q);
-            double na = a.norm();
-            if(fabs(theta) < 1e-12 || na < 1e-12)
-                return Eigen::Vector3d::Zero();
-
-            a /= na;
-            a *= theta;
-            return a;
+          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<Scalar_>::epsilon(), "This function is inteded for unit quternions only.");
+          const Eigen::Matrix<Scalar_, 3, 1> a = qeps(q);
+          const Scalar_ na = a.norm(), eta = qeta(q);
+          Scalar_ scale;
+          if(fabs(eta) < na){ // use eta because it is more precise than na to calculate the scale. No singularities here.
+            scale = acos(eta) / na;
+          } else {
+            /*
+             * In this case more precision is in na than in eta so lets use na only to calculate the scale:
+             *
+             * assume first eta > 0 and 1 > na > 0.
+             *               u = asin (na) / na  (this implies u in [1, pi/2], because na i in [0, 1]
+             *    sin (u * na) = na
+             *  sin^2 (u * na) = na^2
+             *  cos^2 (u * na) = 1 - na^2
+             *                              (1 = ||q|| = eta^2 + na^2)
+             *    cos^2 (u * na) = eta^2
+             *                              (eta > 0,  u * na = asin(na) in [0, pi/2] => cos(u * na) >= 0 )
+             *      cos (u * na) = eta
+             *                              (u * na in [ 0, pi/2] )
+             *                 u = acos (eta) / na
+             *
+             * So the for eta > 0 it is acos(eta) / na == asin(na) / na.
+             * From some geometric considerations (mirror the setting at the hyper plane q==0) it follows for eta < 0 that (pi - asin(na)) / na = acos(eta) / na.
+             */
+            if(eta > 0){
+              // For asin(na)/ na the singularity na == 0 can be removed. We can ask (e.g. Wolfram alpha) for its series expansion at na = 0. And that is done in the following function.
+              scale = arcSinXOverX(na);
+            }else{
+              // (pi - asin(na))/ na has a pole at na == 0. So we cannot remove this singularity.
+              // It is just the cut locus of the unit quaternion manifold at identity and thus the axis angle description becomes necessarily unstable there.
+              scale = (M_PI - asin(na)) / na;
+            }
+          }
+          return a * (Scalar_(2) * scale);
         }
+        template Eigen::Matrix<double, 3, 1> quat2AxisAngle(Eigen::Matrix<double, 4, 1> const & q);
+        template Eigen::Matrix<float, 3, 1> quat2AxisAngle(Eigen::Matrix<float, 4, 1> const & q);
 
         Eigen::Matrix<double,4,3> quatJacobian(Eigen::Vector4d const & p)
         {
@@ -336,6 +388,141 @@ namespace sm { namespace kinematics {
         }
         
 
+        /// \brief do linear interpolation between p0 and p1 for times t = [0.0,1.0]
+        Eigen::VectorXd lerp(const Eigen::VectorXd & p0, const Eigen::VectorXd & p1, double t)
+        {
+            SM_ASSERT_EQ(std::runtime_error, p0.size(), p1.size(), "The vectors must be the same size");
+            if(t <= 0.0)
+            {
+                return p0;
+            }
+            else if(t >= 1.0)
+            {
+                return p1;
+            }
+            else
+            {
+                return (1-t) * p0  +  t * p1;
+            }
+        }
 
+        Eigen::Matrix<double,3,4> quatLogJacobian(const Eigen::Vector4d& p)
+        {
+          //      [qx]
+          //      [qy]                -2*x
+          // p =  [qz],    g(x) = ----------------
+          //      [qw]               sqrt(1-qw²)
+          //
+          //
+          //      [2*acos(qw)      0            0            g(qx)]
+          // J =  [0            2*acos(qw)      0            g(qy)]
+          //      [0            0            2*acos(qw)      g(qz)]
+
+
+          Eigen::Matrix<double, 3,4> J;
+          J.setZero();
+
+          double n = qeps(p).norm();
+
+
+          double de = n*n*n;//pow(n, 3);
+          double u12 = p(1)*p(1) + p(2)*p(2);//pow(p(1), 2) + pow(p(2), 2);
+          double u02 = p(0)*p(0) + p(2)*p(2);//pow(p(0), 2) + pow(p(2), 2);
+          double u01 = p(0)*p(0) + p(1)*p(1);//pow(p(0), 2) + pow(p(1), 2);
+          double a = acos(p(3));
+          double uw = sqrt(-(p(3)*p(3) - 1)*n*n);
+
+          J(0,0) = 2*a*u12 / de;
+          J(0,1) = -2*a*p(1)*p(0) / de;
+          J(0,2) = -2*a*p(2)*p(0) / de;
+          J(0,3) = -2*p(0) / uw;
+          J(1,0) = -2*a*p(0)*p(1) / de;
+          J(1,1) = 2*a*u02 / de;
+          J(1,2) = -2*a*p(1)*p(2) / de;
+          J(1,3) = -2*p(1) / uw;
+          J(2,0) = -2*a*p(0)*p(2) / de;
+          J(2,1) = -2*a*p(1)*p(2) / de;
+          J(2,2) = 2*a*u01 / de;
+          J(2,3) = -2*p(2) / uw;
+
+          return J;
+        }
+
+        template <typename Scalar_ = double>
+        inline const typename Eigen::Matrix<Scalar_, 4, 3> & quatV(){
+          static const Eigen::Matrix<Scalar_, 4, 3> V = 0.5 * Eigen::Matrix<Scalar_, 4, 3>::Identity();
+          return V;
+        }
+        template const Eigen::Matrix<double, 4, 3> & quatV();
+        template const Eigen::Matrix<float, 4, 3> & quatV();
+
+
+        template <typename Scalar_ = double>
+        Eigen::Matrix<Scalar_, 3, 3> expDiffMat(const Eigen::Matrix<Scalar_, 3, 1> & vec){
+          Scalar_ phi = vec.norm();
+
+          if(phi == 0){
+            return Eigen::Matrix<Scalar_, 3, 3>::Identity();
+          }
+
+          Eigen::Matrix<Scalar_, 3, 3> vecCross = crossMx(vec);
+
+          Scalar_ phiAbs = fabs(phi);
+          Scalar_ phiSquare = phi * phi;
+
+          Scalar_ a;
+          Scalar_ b;
+          if(!isLessThenEpsilons4thRoot(phiAbs)){
+            Scalar_ siPhiHalf = sin(phi / 2);
+            a = (2 * siPhiHalf * siPhiHalf / phiSquare);
+            b = ((1 - sin(phi) / phi)/phiSquare);
+          }
+          else{
+            a = (1.0/2) * (1 - (1.0 / (24 / 2)) * phiSquare);
+            b = (1.0/6) * (1 - (1.0 / (120 / 6)) * phiSquare);
+          }
+
+          return Eigen::Matrix<Scalar_, 3, 3>::Identity() - a * vecCross + b * vecCross * vecCross;
+        }
+        template Eigen::Matrix<double, 3, 3> expDiffMat<double>(const Eigen::Matrix<double, 3, 1>  &);
+        template Eigen::Matrix<float, 3, 3> expDiffMat<float>(const Eigen::Matrix<float, 3, 1>  &);
+
+        template <typename Scalar_ = double>
+        Eigen::Matrix<Scalar_ , 4, 3> quatExpJacobian(const Eigen::Matrix<Scalar_ , 3, 1>& vec){
+          return quatOPlus(axisAngle2quat(vec.template cast<double>())).template cast<Scalar_>() * quatV<Scalar_>() * expDiffMat(vec);
+        }
+        template Eigen::Matrix<double, 4,3> quatExpJacobian(const Eigen::Matrix<double, 3, 1>& vec);
+        template Eigen::Matrix<float, 4,3> quatExpJacobian(const Eigen::Matrix<float, 3, 1>& vec);
+
+        template <typename Scalar_ = double>
+        Eigen::Matrix<Scalar_, 3, 3> logDiffMat(const Eigen::Matrix<Scalar_, 3, 1>  & vec){
+          Scalar_ phi = vec.norm();
+          if(phi == 0){
+            return Eigen::Matrix<Scalar_, 3, 3>::Identity();
+          }
+
+          Scalar_ phiAbs = fabs(phi);
+          Eigen::Matrix<Scalar_, 3, 3> vecCross = crossMx(vec);
+
+          Scalar_ a;
+          if(!isLessThenEpsilons4thRoot(phiAbs)){
+            Scalar_ phiHalf = 0.5 * phi;
+            a = ((1 - phiHalf / tan(phiHalf))/phi/phi);
+          }
+          else{
+            a = 1.0 / 12 * (1 + 1.0 / 60 * phi * phi);
+          }
+          return Eigen::Matrix<Scalar_, 3, 3>::Identity() + 0.5 * vecCross + a * vecCross * vecCross;
+        }
+        template Eigen::Matrix<double, 3, 3> logDiffMat<double>(const Eigen::Matrix<double, 3, 1>  &);
+        template Eigen::Matrix<float, 3, 3> logDiffMat<float>(const Eigen::Matrix<float, 3, 1>  &);
+
+        template <typename Scalar_ = double>
+        Eigen::Matrix<Scalar_ , 3, 4> quatLogJacobian2(const Eigen::Matrix<Scalar_ , 4, 1>& p){
+          return logDiffMat(quat2AxisAngle<>(p)) * (quatV<Scalar_>().transpose() * Scalar_(4.0)) * quatOPlus(quatInv(p.template cast<double>())).template cast<Scalar_>();
+        }
+        
+        template Eigen::Matrix<double, 3, 4> quatLogJacobian2(const Eigen::Matrix<double, 4, 1>&);
+        template Eigen::Matrix<float, 3, 4> quatLogJacobian2(const Eigen::Matrix<float, 4, 1>& );
     }} // namespace sm::kinematics
 

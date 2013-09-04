@@ -5,11 +5,14 @@
 #include <sm/kinematics/UncertainHomogeneousPoint.hpp>
 #include <sm/kinematics/UncertainTransformation.hpp>
 #include <sm/kinematics/transformations.hpp>
+#include <sm/serialization_macros.hpp>
 
 
 namespace sm {
   namespace kinematics {
     
+      double * Transformation::qptr() { return &_q_a_b[0]; }
+      double * Transformation::tptr() { return &_t_a_b_a[0]; }
     
     Transformation::Transformation() :
       _q_a_b(quatIdentity()), _t_a_b_a(0.0, 0.0, 0.0)
@@ -51,6 +54,12 @@ namespace sm {
       return _q_a_b;
     }
     
+      void Transformation::set( const Eigen::Matrix4d & T_a_b )
+      {
+          _q_a_b = r2quat(T_a_b.topLeftCorner<3,3>());
+          _t_a_b_a = T_a_b.topRightCorner<3,1>();
+      }
+
     Eigen::Matrix4d Transformation::T() const
     {
       Eigen::Matrix4d T_a_b;
@@ -121,7 +130,7 @@ namespace sm {
 
     bool Transformation::isBinaryEqual(const Transformation & rhs) const
     {
-      return _q_a_b == rhs._q_a_b && _t_a_b_a == rhs._t_a_b_a;
+      return SM_CHECKMEMBERSSAME(rhs, _q_a_b) && SM_CHECKMEMBERSSAME(rhs, _t_a_b_a);
     }
 
     /// \brief The update step for this transformation from a minimal update.
@@ -217,6 +226,34 @@ namespace sm {
           Eigen::Matrix3d P = R * p.covariance() * R.transpose();
           
           return UncertainVector3(mean, P);
+      }
+
+
+      // Interpolate the transformation at time si between T0 (at time s0) and T1 (at time s1)
+      Transformation interpolateTransformations(const Transformation & T0, double s0,
+                                                const Transformation & T1, double s1,
+                                                double si)
+      {
+          if( s0 > s1 )
+          {
+              return interpolateTransformations( T1, s1, T0, s0, si );
+          }
+          
+          // The time span of interpolation. Make sure this is greater than zero.
+          double ds = std::max(1e-14, s1 - s0);
+          // The place of si on this timespan 0.0 --> s0, 1.0 -> s1
+          double di = (si - s0) / ds;
+          return slerpTransformations(T0, T1, di);
+          
+      }
+
+      /// brief linear interpolate between T0 and T1 as si moves from 0.0 to 1.0
+      Transformation slerpTransformations(const Transformation & T0, 
+                                          const Transformation & T1, 
+                                          double si)
+      {
+          // lazy. interpolate separately.
+          return Transformation( qslerp( T0.q(), T1.q(), si), lerp( T0.t(), T1.t(), si) );
       }
 
 

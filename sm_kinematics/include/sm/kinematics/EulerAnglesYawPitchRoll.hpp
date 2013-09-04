@@ -17,6 +17,11 @@ namespace sm { namespace kinematics {
    * return the vector [heading, pitch, roll] where these represent the usual
    * meaning with respect to aerospace vehicles.
    *
+   * This assumes that the vehicle frame has:
+   * x-axis pointing to the front.
+   * y-axis pointing to the left.
+   * z-axis pointing up.
+   *
    * heading: positive is vehicle nose left (counter clockwise).
    * pitch:   positive is vehicle nose down.
    * roll:    positive is left wing up.

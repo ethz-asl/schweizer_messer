@@ -11,8 +11,9 @@ namespace sm {
     class UncertainTransformation : public Transformation
     {
     public:
-      typedef Eigen::Matrix<double,6,6> covariance_t;
+      EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
+      typedef Eigen::Matrix<double,6,6> covariance_t;
       /// 
       /// Default constructor. The transformation and uncertainty will
       /// both be set to identity.
@@ -54,6 +55,9 @@ namespace sm {
       UncertainTransformation inverse() const;
 
       const covariance_t & U() const;
+
+      /// \brief hhis gets the uncertainty based on the "oplus" function for updating the transformation matrix.
+      covariance_t UOplus() const;
 
       /// \brief This sets the uncertainty directly.
       void setU(const covariance_t & U);

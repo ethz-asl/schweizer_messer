@@ -39,7 +39,7 @@
 #include <boost/functional/hash.hpp>
 #include <iostream>
 // The definition of std::tr1::hash
-#ifdef _WIN32
+#if defined( _WIN32)
 #include <functional>
 #else
 #include <tr1/functional>
@@ -223,12 +223,23 @@ namespace sm {
 // use this macro outside of any namespace:
 // SM_DEFINE_ID_HASH(my_namespace::myIdType);
 #define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)                     \
+    namespace std {                                                     \
+        template<>                                                      \
+        struct hash<FullyQualifiedIdTypeName>                           \
+        {                                                               \
+            hash<boost::uint64_t> _hash;                                \
+            size_t operator()(const FullyQualifiedIdTypeName & id) const \
+            {                                                           \
+                return _hash(id.getId());                               \
+            }                                                           \
+        };                                                              \
+    }                                                                   \
     namespace std { namespace tr1 {                                     \
             template<>                                                  \
             struct hash<FullyQualifiedIdTypeName>                       \
             {                                                           \
                 hash<boost::uint64_t> _hash;                            \
-                size_t operator()(const FullyQualifiedIdTypeName & id)	\
+                size_t operator()(const FullyQualifiedIdTypeName & id) const	\
                 {                                                       \
                     return _hash(id.getId());                           \
                 }                                                       \

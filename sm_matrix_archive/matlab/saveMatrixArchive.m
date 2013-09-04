@@ -1,4 +1,4 @@
-function saveMatrixArchive( filename, ma, append )
+function saveMatrixArchive( filename, ama, append )
 %SAVEMATRIXARCHIVE Saves the fields of a struct as an asrl mat archive
 %  
 % Input:
@@ -8,7 +8,8 @@ function saveMatrixArchive( filename, ma, append )
 % append   - optional parameter. If true, the data is appended to the file
 %
 
-startMagic = 'A';
+startMagicMatrix = 'A';
+startMagicString = 'S';
 endMagic   = 'B';
 nameFixedSize = 32;
 nameFormatSpec = sprintf('%%%ds',nameFixedSize);
@@ -43,7 +44,7 @@ end
 
 % Now that the field names have been verified, open the archive.
 [fid, message] = fopen(filename,openMode,'ieee-le');
-if fid == 0
+if fid < 0
     error('unable to open file %s for writing: %s',filename, message);
 end
 
@@ -54,9 +55,16 @@ try
         
         
         
-        if ~(islogical(M) || isnumeric(M)) | isempty(M)
-            error('Matrix Archives can only save double matrices. Field %s failed', name);
+        if ~(islogical(M) || isnumeric(M) || ischar(M)) | isempty(M)
+            error('Matrix Archives can only save double matrices or strings (char vectors). Field %s failed', name);
         end
+        
+        if(ischar(M))
+            startMagic = startMagicString;
+        else
+            startMagic = startMagicMatrix;
+        end
+        
         % Magic number to start.
         fwrite(fid,startMagic,'uint8');
         
@@ -66,24 +74,31 @@ try
         
         % 32bit rows and cols.
         sz = size(M);
+        
         if length(sz) < 1 || length(sz) > 2
             error('Matrix %s has an unsupported number of dimensions %d. Only 1 or 2 are supported',name, length(sz));
         end
-        
-        fprintf('Saving matrix %s with size (%d, %d)\n',name,size(M,1),size(M,2));
-        
-        if length(sz) == 1
-            sz = [sz 1];
+        if(ischar(M))
+            fprintf('Saving string %s with size (%d) : %s\n',name,size(M,2), M);
+            sz = [size(M,2)];
+        else
+            fprintf('Saving matrix %s with size (%d, %d)\n',name,size(M,1),size(M,2));
+            if length(sz) == 1
+                sz = [sz 1];
+            end
         end
-   
+        
         fwrite(fid,sz,'uint32');
         
         % Now write the data.
-        fwrite(fid,M,'double');
+        if(ischar(M))
+            fwrite(fid,M,'char');
+        else
+            fwrite(fid,M,'double');
+        end
         
         % Now the magic end character
         fwrite(fid,endMagic,'uint8');
-        
     end
     fclose(fid);
 catch ME

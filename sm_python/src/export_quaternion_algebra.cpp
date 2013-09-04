@@ -15,8 +15,8 @@ using namespace sm::kinematics;
     def("r2quat",r2quat,"Build a rotation matrix from unit-length quaternion");
     // Eigen::Vector4d axisAngle2quat(Eigen::Vector3d const & a);
     def("axisAngle2quat",axisAngle2quat, "Build a quaternion from a axis/angle representation (the input is the unit-length axis times the angle of rotation about that axis)");
-    // Eigen::Vector3d quat2AxisAngle(Eigen::Vector4d const & q);
-    def("quat2AxisAngle",quat2AxisAngle, "Build an axis angle from a quaternion. The output is the unit-length axis times the angle of rotation about that axis");
+    // Eigen::Vector3d quat2AxisAngle<double>(Eigen::Vector4d const & q);
+    def("quat2AxisAngle",quat2AxisAngle<double>, "Build an axis angle from a quaternion. The output is the unit-length axis times the angle of rotation about that axis");
     // Eigen::Matrix4d quatPlus(Eigen::Vector4d const & q);
     def("quatPlus",quatPlus, "Build a q-plus matrix");
     // Eigen::Matrix4d quatOPlus(Eigen::Vector4d const & q);
@@ -46,5 +46,6 @@ using namespace sm::kinematics;
     def("qlog", &qlog);
     def("qexp", &qexp);
     def("qslerp", &qslerp);
+    def("lerp", &lerp);
       ;
   }

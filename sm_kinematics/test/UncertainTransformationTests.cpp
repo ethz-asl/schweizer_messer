@@ -226,3 +226,23 @@ TEST(UncertainTransformationTestSuite, testTVMultiplication2)
 
 
 }
+
+// lestefan: added this
+TEST(UncertainTransformationTestSuite, testUOplus)
+{
+  using namespace sm::kinematics;
+
+  for(int i = 0; i < 10; i++)
+    {
+      UncertainTransformation T_a_b_1;
+      T_a_b_1.setRandom();
+
+      UncertainTransformation::covariance_t UOplus = T_a_b_1.UOplus();
+      
+      UncertainTransformation T_a_b_2=T_a_b_1;
+      T_a_b_2.setUOplus(UOplus);
+      sm::eigen::assertNear(T_a_b_1.U(), T_a_b_2.U(), 1e-10, SM_SOURCE_FILE_POS, "Checking for getting and setting OPlus-type uncertainties");
+    }
+
+
+}

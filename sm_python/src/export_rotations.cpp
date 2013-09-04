@@ -5,6 +5,11 @@
 using namespace boost::python;
 using namespace sm::kinematics;
 
+    Eigen::Matrix3d crossMxWrap( const Eigen::Vector3d & v ) {
+      return crossMx(v[0],v[1],v[2]);
+    }
+
+
   void export_rotations()
   {
     using namespace boost::python;
@@ -47,9 +52,15 @@ using namespace sm::kinematics;
     //   Eigen::Matrix3d crossMx(double x, double y, double z);
     Eigen::Matrix3d (*crossMx1)(double , double , double ) = &crossMx;
     def("crossMx",crossMx1);
+
+    def("crossMx",&crossMxWrap);
+    
+        
+
+    
     //   Eigen::Matrix3d crossMx(Eigen::Vector3d const & x);
-    Eigen::Matrix3d (*crossMx2)(Eigen::Vector3d const & ) = &crossMx;
-    def("crossMx",crossMx2);
+    //Eigen::Matrix3d (*crossMx2)(Eigen::Vector3d const & ) = &crossMx<Eigen::Vector3d>;
+    //def("crossMx",crossMx2);
     //   // Axis Angle rotation.
 
     //   Eigen::Matrix3d axisAngle2r(double x, double y, double z);

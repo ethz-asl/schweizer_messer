@@ -1,6 +1,8 @@
 #ifndef SM_MATHS_HPP
 #define SM_MATHS_HPP
 
+#include <cmath>
+
 #include <utility> // std::pair, if you can believe that.
 #include "assert_macros.hpp"
 namespace sm {

@@ -11,11 +11,11 @@
   <url>http://ros.org/wiki/numpy_eigen</url>
 
   <!-- Python test facility -->
-  <depend package="rostest"/>
+  <!--depend package="rostest"/-->
   
   <export>
     <python path="${prefix}/python"/>
-    <cpp cflags="`rosboost-cfg --cflags` -I${prefix}/include"
+    <cpp cflags="`pkg-config --cflags eigen3` `rosboost-cfg --cflags` -I${prefix}/include"
          lflags="-L/usr/local/lib"/>
   </export>
 

@@ -28,6 +28,11 @@ rosbuild_add_boost_directories()
 # Include the custom python export library funciton
 include(cmake/add_python_export_library.cmake)
 
+IF(APPLE)
+  link_directories( /usr/local/lib )
+ENDIF(APPLE)
+
+
 include_directories("${PROJECT_SOURCE_DIR}/include/numpy_eigen")
 # # Auto generate the export module
 # TODO: My CMake skills are pretty weak. Figure out how to 
@@ -51,7 +56,7 @@ INCLUDE(src/autogen_files.cmake)
 add_python_export_library(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
  ${AUTOGEN_FILES}
 )
-
+rosbuild_link_boost(${PROJECT_NAME} system)
 INCLUDE(src/autogen_test_files.cmake)
 add_python_export_library(${PROJECT_NAME}_test ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
   ${AUTOGEN_TEST_FILES}
@@ -59,4 +64,5 @@ add_python_export_library(${PROJECT_NAME}_test ${PROJECT_SOURCE_DIR}/python/${PR
 
 rosbuild_add_pyunit( test/numpy_eigen_tests.py TIMEOUT 600)
 
+rosbuild_link_boost(${PROJECT_NAME}_test thread system)
 

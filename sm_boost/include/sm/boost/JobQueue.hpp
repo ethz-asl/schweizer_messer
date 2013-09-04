@@ -7,6 +7,7 @@
 //  exception_ptr.hpp/cpp copyright Peter Dimov 
 //  Adapted by Paul Furgale (2010/2011/2012)
 
+#include <deque>
 
 #include <boost/thread/future.hpp>
 #include <boost/thread.hpp>
@@ -47,6 +48,7 @@ namespace sm {
         /// \brief block untill all the items in the queue have been processed.
         ///        Be careful! If the queue has not been started with some threads, this will never exit.
         void waitForEmptyQueue();
+
 
 
         /// \brief schedule a future for processing.

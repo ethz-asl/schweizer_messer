@@ -8,6 +8,8 @@
  * 
  */
 
+#ifndef SM_ROTATIONS_HPP
+#define SM_ROTATIONS_HPP
 
 #define SM_2_PI 		0.6366197723675814 // 2/pi
 #define SM_PI 		3.141592653589793  // pi
@@ -49,8 +51,13 @@ namespace sm { namespace kinematics {
   Eigen::Vector3d C2rph(Eigen::Matrix3d const & C);
   
   // Small angle approximation.
-  Eigen::Matrix3d crossMx(double x, double y, double z);
-  Eigen::Matrix3d crossMx(Eigen::Vector3d const & x);
+  template <typename Scalar_ = double>
+  Eigen::Matrix<Scalar_, 3, 3> crossMx(Scalar_ x, Scalar_ y, Scalar_ z);
+
+  template <typename Derived_>
+  Eigen::Matrix<typename Eigen::internal::traits< Derived_ >::Scalar, 3, 3> crossMx(Eigen::MatrixBase<Derived_> const & x){ return crossMx(x(0, 0),x(1, 0),x(2, 0)); }
+
+
 
   // Axis Angle rotation.
   Eigen::Matrix3d axisAngle2R(double a, double ax, double ay, double az);
@@ -64,4 +71,12 @@ namespace sm { namespace kinematics {
   double deg2rad(double degrees);
   double rad2deg(double radians);
 
+  extern template Eigen::Matrix<double, 3, 3> crossMx<double>(double x, double y, double z);
+  extern template Eigen::Matrix<float, 3, 3> crossMx<float>(float x, float y, float z);
+  extern template Eigen::Matrix<double, 3, 3> crossMx(const Eigen::MatrixBase<Eigen::Matrix<double, 3, 1> > &);
+  extern template Eigen::Matrix<float, 3, 3> crossMx(const Eigen::MatrixBase<Eigen::Matrix<float, 3, 1> > &);
+  extern template Eigen::Matrix<double, 3, 3> crossMx(const Eigen::MatrixBase<Eigen::Matrix<double, Eigen::Dynamic, 1> > &);
+  extern template Eigen::Matrix<float, 3, 3> crossMx(const Eigen::MatrixBase<Eigen::Matrix<float, Eigen::Dynamic, 1> > &);
 }} // namespace sm::kinematics
+
+#endif // ndef SM_ROTATIONS_HPP

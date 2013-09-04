@@ -16,6 +16,7 @@
 #include <sm/assert_macros.hpp>
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/nvp.hpp>
+#include <boost/serialization/array.hpp>
 
 namespace sm { namespace eigen {
     // An exception for errors during serialization/deserialization
