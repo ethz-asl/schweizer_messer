@@ -9,6 +9,10 @@
 #ifndef SM_NUMERICALCOMPARISON_HPP_
 #define SM_NUMERICALCOMPARISON_HPP_
 
+#include <algorithm> // std::max
+#include <limits> // std::numeric_limits
+#include <cmath> // std::abs
+#include <stdexcept> // std::invalid_argument
 #include "assert_macros.hpp"
 
 namespace sm {
@@ -40,8 +44,8 @@ namespace internal {
 template<typename ValueType_>
 static inline ValueType_ maxTimesEpsilon(const ValueType_ a, const ValueType_ b, const ValueType_ epsilon)
 {
-  SM_ASSERT_GT(std::invalid_argument, epsilon, 0.0, "This method is only valid for an epsilon greater than 0.");
-  return std::max(abs(a), abs(b)) * epsilon;
+  SM_ASSERT_GT_DBG(std::invalid_argument, epsilon, 0.0, "This method is only valid for an epsilon greater than 0.");
+  return std::max(std::abs(a), std::abs(b)) * epsilon;
 }
 
 } /* namespace internal */
@@ -56,7 +60,7 @@ static inline ValueType_ maxTimesEpsilon(const ValueType_ a, const ValueType_ b,
 template<typename ValueType_>
 static bool approximatelyEqual(const ValueType_ a, const ValueType_ b, ValueType_ epsilon = std::numeric_limits<ValueType_>::epsilon())
 {
-  return abs(a - b) <= internal::maxTimesEpsilon(a, b, epsilon);
+  return std::abs(a - b) <= internal::maxTimesEpsilon(a, b, epsilon);
 }
 
 /*!
