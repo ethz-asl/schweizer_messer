@@ -35,5 +35,6 @@ rosbuild_add_gtest(${PROJECT_NAME}_tests
   test/test_main.cpp
   test/maths.cpp
   test/serialization_macros.cpp
+  test/numerical_comparisons.cpp
 )
 target_link_libraries(${PROJECT_NAME}_tests pthread)
