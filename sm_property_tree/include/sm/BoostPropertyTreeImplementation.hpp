@@ -21,9 +21,6 @@ namespace sm {
     void loadXml(const boost::filesystem::path & fileName);
     void saveXml(const boost::filesystem::path & fileName) const;
  
-    void loadJson(const boost::filesystem::path & fileName);
-    void saveJson(const boost::filesystem::path & fileName) const;
- 
     void loadIni(const boost::filesystem::path & fileName);
     void saveIni(const boost::filesystem::path & fileName) const;
 

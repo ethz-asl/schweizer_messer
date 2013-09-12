@@ -21,7 +21,9 @@ namespace sm { namespace python {
       // The "Convert from C to Python" API
       static PyObject * convert(id_t const & id){
 	PyObject * i = PyInt_FromLong(id.getId());
-	return boost::python::incref(i);
+    // It seems that the call to "incref(.)" caused a memory leak!
+    // I will check this in hoping it doesn't cause any instability.
+	return i;//boost::python::incref(i);
       }
       
       // The "Convert from Python to C" API

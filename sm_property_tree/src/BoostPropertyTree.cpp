@@ -28,18 +28,6 @@ namespace sm {
     dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->saveXml(fileName);
   }
 
- 
-  void BoostPropertyTree::loadJson(const boost::filesystem::path & fileName)
-  {
-    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadJson(fileName);
-  }
-
-  void BoostPropertyTree::saveJson(const boost::filesystem::path & fileName) const
-  {
-    dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->saveJson(fileName);
-  }
-
- 
   void BoostPropertyTree::loadIni(const boost::filesystem::path & fileName)
   {
     dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadIni(fileName);
