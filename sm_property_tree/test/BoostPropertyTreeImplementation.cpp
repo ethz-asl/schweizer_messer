@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <sm/BoostPropertyTree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
-#include <boost/filesystem/operations.hpp>
 
 TEST(PTreeTestSuite, testBoostPTree)
 {
@@ -64,26 +63,19 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
       ASSERT_EQ(spt.getString("/s/s"), std::string("goodbye"));
-      
-      
-      // Try the findFile function
-      
-      // Not finding should throw
-      EXPECT_THROW( sm::findFile("BoostPropertyTreeImplementation.cpp", "RIDICULOUS_ENVIRONMENT_VARIABLE_THAT_CANNOT_EXIST"), std::runtime_error );
-      EXPECT_THROW( sm::findFile("RidiculousFilenameThatCannotExist", "ROS_PACKAGE_PATH"), std::runtime_error );
-      
-      // Let's test whether we can find a file
-      // TODO: Is there a file we can be sure that exists on linux?
-      char* dir = std::getenv("HOME");
-      if (dir) {
-        if ( boost::filesystem::exists(std::string(dir) + "/.bashrc") ) {
-          EXPECT_NO_THROW( sm::findFile(".bashrc", "HOME") );
-        }
-      }
-
     }
   catch(const std::exception & e)
     {
       FAIL() << "Unhandled exception: " << e.what();
     }
+}
+
+TEST(PTreeTestSuite, testFindFile)
+{
+  // Not finding should throw
+  EXPECT_THROW(sm::findFile("BoostPropertyTreeImplementation.cpp", "RIDICULOUS_ENVIRONMENT_VARIABLE_THAT_CANNOT_EXIST"), std::runtime_error);
+  EXPECT_THROW(sm::findFile("RidiculousFilenameThatCannotExist", "ROS_PACKAGE_PATH"), std::runtime_error);
+
+  // Let's test whether we can find a file
+  EXPECT_NO_THROW(sm::findFile(".", "PWD"));
 }

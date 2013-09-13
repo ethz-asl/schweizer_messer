@@ -8,7 +8,7 @@
 namespace sm {
   
   /** 
-   * @brief Helper to find a file with name filenameToFind in the directory specified by an environemnt variable envVarNameContainingSearchDir
+   * @brief Helper to find a file with name filenameToFind in the directory specified by an environment variable envVarNameContainingSearchDir
    **/
   boost::filesystem::path findFile(const std::string& filenameToFind, const std::string& envVarNameContainingSearchDir) {
 
@@ -25,7 +25,6 @@ namespace sm {
 
     fileFound = boost::filesystem::path(fullPath.c_str());
     return fileFound;
-
   }
 
 } /* namespace sm */
