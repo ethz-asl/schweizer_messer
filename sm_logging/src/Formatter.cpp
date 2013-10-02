@@ -35,6 +35,10 @@ namespace sm {
                     {
                         return TokenPtr(new FunctionToken());
                     }
+                    else if (type == "streamname")
+                    {
+                        return TokenPtr(new StreamNameToken());
+                    }
 
                     return TokenPtr(new FixedMapToken(type, extra_fixed_tokens_));
                 }
