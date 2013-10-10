@@ -275,15 +275,15 @@ namespace sm {
         }
         bool isNamedStreamEnabled( const std::string & name )
         {
-            return g_logging_globals.isNamedStreamEnabled( std::string(SMCONSOLE_NAME_PREFIX) + "." + name);
+            return g_logging_globals.isNamedStreamEnabled( name );
         }
         void enableNamedStream( const std::string & name )
         {
-            g_logging_globals.enableNamedStream( std::string(SMCONSOLE_NAME_PREFIX) + "." + name);
+            g_logging_globals.enableNamedStream( name );
         }
         void disableNamedStream( const std::string & name )
         {
-            g_logging_globals.disableNamedStream(std::string(SMCONSOLE_NAME_PREFIX) + "." + name);
+            g_logging_globals.disableNamedStream( name );
         }
 
         

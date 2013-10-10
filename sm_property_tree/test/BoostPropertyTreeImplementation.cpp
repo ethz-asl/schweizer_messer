@@ -2,7 +2,6 @@
 #include <sm/BoostPropertyTree.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 
-
 TEST(PTreeTestSuite, testBoostPTree)
 {
 
@@ -64,10 +63,19 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
       ASSERT_EQ(spt.getString("/s/s"), std::string("goodbye"));
-
     }
   catch(const std::exception & e)
     {
       FAIL() << "Unhandled exception: " << e.what();
     }
+}
+
+TEST(PTreeTestSuite, testFindFile)
+{
+  // Not finding should throw
+  EXPECT_THROW(sm::findFile("BoostPropertyTreeImplementation.cpp", "RIDICULOUS_ENVIRONMENT_VARIABLE_THAT_CANNOT_EXIST"), std::runtime_error);
+  EXPECT_THROW(sm::findFile("RidiculousFilenameThatCannotExist", "ROS_PACKAGE_PATH"), std::runtime_error);
+
+  // Let's test whether we can find a file
+  EXPECT_NO_THROW(sm::findFile(".", "PWD"));
 }

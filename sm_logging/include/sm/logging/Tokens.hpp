@@ -118,6 +118,15 @@ namespace sm {
                 }
         };
 
+        struct StreamNameToken : public Token
+        {
+            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+                {
+                    return event.streamName;
+                }
+        };
+
+    
         struct TimeToken : public Token
         {
             virtual std::string getString(const ::sm::logging::LoggingEvent&e)

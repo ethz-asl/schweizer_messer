@@ -9,6 +9,8 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/filesystem/path.hpp>
 #include <typeinfo>
+#include <sm/BoostPropertyTreeSupport.hpp>
+
 namespace sm {
   
   class BoostPropertyTree : public PropertyTree

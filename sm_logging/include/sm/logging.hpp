@@ -3,6 +3,7 @@
 
 #include <sm/logging/console.hpp>
 
+
 namespace sm {
     namespace logging {
         
@@ -20,6 +21,10 @@ namespace sm {
         
     } // namespace logging
 } // namespace sm
+
+#define SM_INIT_LOGGING() \
+  sm::logging::enableNamedStream( SMCONSOLE_NAME_PREFIX );
+
 
 
 #endif /* SM_LOGGING_HPP */
