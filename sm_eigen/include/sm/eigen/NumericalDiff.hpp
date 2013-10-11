@@ -56,17 +56,9 @@ namespace sm { namespace eigen {
           // This step size was stolen from cminpack: temp = eps * fabs(x[j]);
           scalar_t rcEps = std::max(static_cast<scalar_t>(fabs(x0(c))) * eps,eps);
 
-          //input_t x(x0);
-          //scalar_t xc = x(c);
-          //x(c) = xc + rcEps;
           value_t fxp = functor(functor.update(x0,c,rcEps));
-          //x(c) = xc - rcEps;
           value_t fxm = functor(functor.update(x0,c,-rcEps));
-          value_t dfx = (fxp - fxm)/(rcEps*(scalar_t)2.0);
-
-          for(unsigned r = 0; r < M; r++) {
-            J(r,c) = dfx(r);
-          }
+          J.block(0, c, M, 1) = (fxp - fxm).template cast<typename jacobian_t::Scalar>()/(typename jacobian_t::Scalar)(rcEps*(scalar_t)2.0);
         }
         return J;
       }
