@@ -2,12 +2,18 @@
 #define SM_LOGGING_LEVELS_HPP
 
 // These allow you to compile-out everything below a certain severity level if necessary
-#define SMCONSOLE_SEVERITY_DEBUG 0
-#define SMCONSOLE_SEVERITY_INFO 1
-#define SMCONSOLE_SEVERITY_WARN 2
-#define SMCONSOLE_SEVERITY_ERROR 3
-#define SMCONSOLE_SEVERITY_FATAL 4
-#define SMCONSOLE_SEVERITY_NONE 5
+#define SMCONSOLE_SEVERITY_ALL 0
+#define SMCONSOLE_SEVERITY_FINEST 1
+#define SMCONSOLE_SEVERITY_VERBOSE 2
+#define SMCONSOLE_SEVERITY_FINER 3
+#define SMCONSOLE_SEVERITY_TRACE 4
+#define SMCONSOLE_SEVERITY_FINE 5
+#define SMCONSOLE_SEVERITY_DEBUG 6
+#define SMCONSOLE_SEVERITY_INFO 7
+#define SMCONSOLE_SEVERITY_WARN 8
+#define SMCONSOLE_SEVERITY_ERROR 9
+#define SMCONSOLE_SEVERITY_FATAL 10
+#define SMCONSOLE_SEVERITY_NONE 11
 
 
 namespace sm {
@@ -17,6 +23,12 @@ namespace sm {
         {
             enum Level
             {
+                All,
+                Finest,
+                Verbose,
+                Finer,
+                Trace,
+                Fine,
                 Debug,
                 Info,
                 Warn,
