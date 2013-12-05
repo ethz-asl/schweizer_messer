@@ -10,6 +10,7 @@ namespace sm {
 
         LoggingGlobals::LoggingGlobals()
         {
+            _shutting_down = false;
             _logger.reset( new StdOutLogger() );
             _level = levels::Info;
             enableNamedStream(SMCONSOLE_DEFAULT_NAME);

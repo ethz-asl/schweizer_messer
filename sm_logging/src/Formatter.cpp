@@ -90,7 +90,7 @@ namespace sm {
 
                     if (event.level == SMCONSOLE_SEVERITY_FATAL)
                     {
-                        color = COLOR_RED;
+                        color = COLOR_LIGHT_RED;
                         //f = stderr;
                     }
                     else if (event.level == SMCONSOLE_SEVERITY_ERROR)
@@ -109,6 +109,30 @@ namespace sm {
                     else if (event.level == SMCONSOLE_SEVERITY_DEBUG)
                     {
                         color = COLOR_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_FINE)
+                    {
+                        color = COLOR_LIGHT_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_TRACE)
+                    {
+                        color = COLOR_LIGHT_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_FINER)
+                    {
+                        color = COLOR_LIGHT_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_VERBOSE)
+                    {
+                        color = COLOR_LIGHT_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_FINEST)
+                    {
+                        color = COLOR_LIGHT_GREEN;
+                    }
+                    else if (event.level == SMCONSOLE_SEVERITY_ALL)
+                    {
+                        color = COLOR_LIGHT_GREEN;
                     }
 
                     if(doColor_)

@@ -8,8 +8,20 @@ void print(int a, const char* fmt, ... ) SMCONSOLE_PRINTF_ATTRIBUTE(2, 3);
 TEST(LoggingTestSuite, testBasic)
 {
     try {
+
+        sm::logging::setLevel(sm::logging::Level::All);
+
         int x = 1;
+        SM_ALL_STREAM("Hey there: " << x );
+        SM_FINEST_STREAM("Hey there: " << x );
+        SM_VERBOSE_STREAM("Hey there: " << x );
+        SM_FINER_STREAM("Hey there: " << x );
+        SM_TRACE_STREAM("Hey there: " << x );
+        SM_FINE_STREAM("Hey there: " << x );
+        SM_DEBUG_STREAM("Hey there: " << x );
         SM_INFO_STREAM("Hey there: " << x );
+        SM_WARN_STREAM("Hey there: " << x );
+        SM_ERROR_STREAM("Hey there: " << x );
         SM_FATAL_STREAM("Hey there: " << x );
         SM_INFO_STREAM_NAMED("test", "Hey there: " << x);
         sm::logging::enableNamedStream("test");
