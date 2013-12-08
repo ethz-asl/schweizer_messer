@@ -2,27 +2,18 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sm_common)
 
 find_package(catkin REQUIRED)
+include_directories(${catkin_INCLUDE_DIRS})
 find_package(Boost REQUIRED COMPONENTS system)
 
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES sm_common
-  CATKIN_DEPENDS 
-  DEPENDS
-)
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x -D__STRICT_ANSI__")
 
-add_definitions(-std=c++0x -D__STRICT_ANSI__)
 include_directories(include)
 
-##################
-## Installation ##
-##################
-
-## Mark cpp header files for installation
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.hpp"
-  PATTERN ".svn" EXCLUDE
+catkin_package(
+  INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}
+  LIBRARIES
+  CATKIN_DEPENDS 
+  DEPENDS
 )
 
 #############
