@@ -32,8 +32,7 @@
 #ifndef SMCONSOLE_SMASSERT_H
 #define SMCONSOLE_SMASSERT_H
 
-#include "sm/console.h"
-#include "/static_assert.h"
+#include "./console.hpp"
 
 /** \file */
 
