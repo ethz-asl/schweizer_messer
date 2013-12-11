@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sm_logging)
 
 find_package(catkin REQUIRED)
+include_directories(${catkin_INCLUDE_DIRS})
 find_package(Boost REQUIRED COMPONENTS system thread chrono regex)
 
 catkin_package(
@@ -31,9 +32,7 @@ add_library(${PROJECT_NAME}
   src/Tokens.cpp
 )
 
-target_link_libraries(${PROJECT_NAME}
-  ${catkin_LIBRARIES}
-)
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
 ##################
 ## Installation ##

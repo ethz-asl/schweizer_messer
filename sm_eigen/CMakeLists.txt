@@ -25,6 +25,9 @@ add_library(${PROJECT_NAME}
   src/random.cpp
 )
 
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES})
+
 ##################
 ## Installation ##
 ##################

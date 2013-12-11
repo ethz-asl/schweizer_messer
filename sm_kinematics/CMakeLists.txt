@@ -43,6 +43,26 @@ add_library(${PROJECT_NAME}
   src/EulerAnglesZXY.cpp
 )
 
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES})
+
+##################
+## Installation ##
+##################
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## Mark cpp header files for installation
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.hpp"
+  PATTERN ".svn" EXCLUDE
+)
+
 #############
 ## Testing ##
 #############
@@ -61,6 +81,8 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/three_point_methods.cpp
  )
 if(TARGET ${PROJECT_NAME}-test)
-  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+  target_link_libraries(${PROJECT_NAME}-test 
+                        ${PROJECT_NAME} 
+                        ${catkin_LIBRARIES})
 endif()
 

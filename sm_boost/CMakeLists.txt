@@ -23,6 +23,9 @@ add_library(${PROJECT_NAME}
   src/portable_binary_oarchive.cpp
 )
 
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES})
+
 ##################
 ## Installation ##
 ##################
