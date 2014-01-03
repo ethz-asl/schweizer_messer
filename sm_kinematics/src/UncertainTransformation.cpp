@@ -31,14 +31,14 @@ namespace sm {
     }
 
 
-    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a, const covariance_t & U) :
+    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a, const covariance_t & U) :
       Transformation(q_a_b, t_a_b_a), _U(U)
     {
 
     }
 
 
-    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a, double diagonalTranslationVariance, double diagonalRotationVariance) :
+    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a, double diagonalTranslationVariance, double diagonalRotationVariance) :
       Transformation(q_a_b, t_a_b_a)
     {
 
@@ -86,7 +86,7 @@ namespace sm {
     }
 
     /// \brief Initialize with zero uncertainty
-    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a) :
+    UncertainTransformation::UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a) :
       Transformation(q_a_b, t_a_b_a)
     {
       _U.setZero();

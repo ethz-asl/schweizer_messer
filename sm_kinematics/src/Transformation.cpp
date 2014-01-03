@@ -28,7 +28,7 @@ namespace sm {
 
     }
 
-    Transformation::Transformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a) :
+    Transformation::Transformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a) :
       _q_a_b(q_a_b), _t_a_b_a(t_a_b_a)
     {
         _q_a_b.normalize();
@@ -71,7 +71,7 @@ namespace sm {
       return T_a_b;
     }
 
-    Eigen::Matrix<double, 3,4> Transformation::T3x4() const
+    Eigen::Matrix<double, 3, 4> Transformation::T3x4() const
     {
       Eigen::Matrix<double, 3, 4> T3x4;
       // \todo...make this do less copying.
@@ -83,7 +83,7 @@ namespace sm {
     Transformation Transformation::inverse() const
     {      
       // \todo Make this do less copying.
-      return Transformation(quatInv(_q_a_b), quatRotate(quatInv(_q_a_b),-_t_a_b_a));
+      return Transformation(quatInv(_q_a_b), quatRotate(quatInv(_q_a_b), -_t_a_b_a));
     }
 
     void Transformation::checkTransformationIsValid( void ) const
@@ -94,7 +94,7 @@ namespace sm {
 
     Transformation Transformation::operator*(const Transformation & rhs) const
     {
-      return Transformation(qplus(_q_a_b,rhs._q_a_b), quatRotate(_q_a_b,rhs._t_a_b_a) + _t_a_b_a);
+      return Transformation(qplus(_q_a_b, rhs._q_a_b), quatRotate(_q_a_b, rhs._t_a_b_a) + _t_a_b_a);
     }
 
     Eigen::Vector3d Transformation::operator*(const Eigen::Vector3d & rhs) const
