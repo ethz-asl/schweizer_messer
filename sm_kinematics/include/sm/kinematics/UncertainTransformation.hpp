@@ -24,9 +24,9 @@ namespace sm {
 
       UncertainTransformation(const Eigen::Matrix4d & T, double diagonalTranslationVariance, double diagonalRotationVariance);
 
-      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a, const covariance_t & U);
+      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a, const covariance_t & U);
 
-      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a, double diagonalTranslationVariance, double diagonalRotationVariance);
+      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a, double diagonalTranslationVariance, double diagonalRotationVariance);
 
       UncertainTransformation(const Transformation & T, const covariance_t & U);
 
@@ -37,7 +37,7 @@ namespace sm {
       /// \brief Initialize with zero uncertainty
       UncertainTransformation(const Eigen::Matrix4d & T);
       /// \brief Initialize with zero uncertainty
-      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a);
+      UncertainTransformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a);
 
 
       virtual ~UncertainTransformation();
