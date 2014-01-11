@@ -88,8 +88,6 @@
  * Currently implemented for Windows (any platform), powerpc64, and x86
  */
 
-#include <ros/platform.h>
-
 #ifdef WIN32
 # if defined (__MINGW32__)
 #  define SM_ISSUE_BREAK() DebugBreak();
