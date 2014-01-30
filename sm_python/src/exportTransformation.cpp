@@ -47,12 +47,13 @@ void exportTransformation()
       // the list in reverse order looking for a match. If the
       // Eigen export is first, the others are disabled.
       //.def(self * Eigen::Vector4d())
-      .def(self * Eigen::Vector3d())
     .def(self * UncertainTransformation())
     .def(self * self)
     .def(self * UncertainHomogeneousPoint())
     .def(self * HomogeneousPoint())
-    .def("checkTransformationIsValid", &Transformation::checkTransformationIsValid)
+      .def(self * Eigen::Vector3d())
+      //.def(self * Eigen::Vector4d())
+      .def("checkTransformationIsValid", &Transformation::checkTransformationIsValid)
     .def("S", &Transformation::S)
       .def_pickle( sm::python::pickle_suite<Transformation>() )
       ;
