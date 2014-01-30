@@ -39,15 +39,19 @@ void exportTransformation()
     .def("setIdentity", &Transformation::setIdentity)
     .def("setRandom", setRandom1)
     .def("setRandom", setRandom2)
+      // Boost Python is not able to deal with this overloading
+      // it only invokes the one you have last
+      // For useability, I'll just add the Vector3d version.
+      // NOTE: It is important to have the Eigen::Vector3d export
+      // defined before the others. Apparently boost searches through
+      // the list in reverse order looking for a match. If the
+      // Eigen export is first, the others are disabled.
+      //.def(self * Eigen::Vector4d())
+      .def(self * Eigen::Vector3d())
     .def(self * UncertainTransformation())
     .def(self * self)
     .def(self * UncertainHomogeneousPoint())
     .def(self * HomogeneousPoint())
-      // Boost Python is not able to deal with this overloading
-      // it only invokes the one you have last
-      // For useability, I'll just add the Vector3d version.
-      //.def(self * Eigen::Vector4d())
-    .def(self * Eigen::Vector3d())
     .def("checkTransformationIsValid", &Transformation::checkTransformationIsValid)
     .def("S", &Transformation::S)
       .def_pickle( sm::python::pickle_suite<Transformation>() )
