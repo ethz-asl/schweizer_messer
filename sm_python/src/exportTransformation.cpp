@@ -43,8 +43,11 @@ void exportTransformation()
     .def(self * self)
     .def(self * UncertainHomogeneousPoint())
     .def(self * HomogeneousPoint())
-    //.def(self * Eigen::Vector3d())
-    //.def(self * Eigen::Vector4d())
+      // Boost Python is not able to deal with this overloading
+      // it only invokes the one you have last
+      // For useability, I'll just add the Vector3d version.
+      //.def(self * Eigen::Vector4d())
+    .def(self * Eigen::Vector3d())
     .def("checkTransformationIsValid", &Transformation::checkTransformationIsValid)
     .def("S", &Transformation::S)
       .def_pickle( sm::python::pickle_suite<Transformation>() )
