@@ -60,7 +60,7 @@ void exportTransformation()
 
   typedef UncertainTransformation::covariance_t covariance_t;
 
-  class_<UncertainTransformation, boost::shared_ptr<UncertainTransformation> >("UncertainTransformation", init<>())
+  class_<UncertainTransformation, boost::shared_ptr<UncertainTransformation>, bases<Transformation> >("UncertainTransformation", init<>())
     .def(init<const Eigen::Matrix4d &, const covariance_t & >())
     .def(init<const Eigen::Matrix4d &, double, double>())
     .def(init<const Eigen::Vector4d &, const Eigen::Vector3d, const covariance_t &>())
