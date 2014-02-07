@@ -99,6 +99,8 @@ namespace timing {
     static  double getHz(size_t handle);
     static  double getHz(std::string const & tag);
     static  void print(std::ostream & out);
+    static  void reset(size_t handle);
+    static  void reset(std::string const & tag);
     static  std::string print();
     static  std::string secondsToTimeString(double seconds);
     
