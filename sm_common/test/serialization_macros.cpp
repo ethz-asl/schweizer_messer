@@ -194,11 +194,13 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
   e1.setRandom();
   e2.setRandom();
 
+  SET_CHECKSAME_SILENT;
   ASSERT_FALSE(SM_CHECKSAME(e1, e2));
   ASSERT_FALSE(SM_CHECKSAME(e2, e1));
 
   e2 = e1;
 
+  SET_CHECKSAME_VERBOSE;
   ASSERT_TRUE(SM_CHECKSAME(e1, e2));
   ASSERT_TRUE(SM_CHECKSAME(e2, e1));
 
@@ -206,7 +208,6 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
 
   ASSERT_TRUE(SM_CHECKSAME(e1, e3));
   ASSERT_TRUE(SM_CHECKSAME(e3, e1));
-
 }
 
 TEST(SerializationMacros, TestClassesCopyCtorAssignWorks) {
