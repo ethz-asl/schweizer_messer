@@ -1,22 +1,22 @@
-/*
- * DatabaseConsistencyChecker.hpp
- *
- *  Created on: Jan 29, 2014
- *      Author: mbuerki
- */
-
 #ifndef PROGRESS_INFO_HPP_
 #define PROGRESS_INFO_HPP_
 
 #include <cstddef>
+#include <stdexcept>
+
+#include <sm/assert_macros.hpp>
 
 namespace sm {
 
 	void showProgress(double progress);
-	void showProgress(size_t done, double all);
-	void showProgress(size_t done, size_t all);
-	void showProgress(double done, double all);
+
+    template<typename T1, typename T2> 
+    void showProgress(T1 done, T2 all)
+    {
+        SM_ASSERT_GT(std::runtime_error, all, 0, "#DIV0");
+        showProgress(static_cast<double>(done) / static_cast<double>(all));
+    }
 
 } /* namespace sm */
 
-#endif /* PROGRESS_INFP_HPP_ */
+#endif /* PROGRESS_INFO_HPP_ */
