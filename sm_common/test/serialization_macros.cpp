@@ -4,6 +4,10 @@
 #include <sm/serialization_macros.hpp>
 #include <sm/typetraits.hpp>
 
+#ifndef TEST
+#define TEST(a, b) void TEST_##a_##b()
+#endif  // TEST
+
 class PolyBase {
  public:
   virtual ~PolyBase(){};
@@ -190,11 +194,13 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
   e1.setRandom();
   e2.setRandom();
 
+  SET_CHECKSAME_SILENT;
   ASSERT_FALSE(SM_CHECKSAME(e1, e2));
   ASSERT_FALSE(SM_CHECKSAME(e2, e1));
 
   e2 = e1;
 
+  SET_CHECKSAME_VERBOSE;
   ASSERT_TRUE(SM_CHECKSAME(e1, e2));
   ASSERT_TRUE(SM_CHECKSAME(e2, e1));
 
@@ -202,7 +208,6 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
 
   ASSERT_TRUE(SM_CHECKSAME(e1, e3));
   ASSERT_TRUE(SM_CHECKSAME(e3, e1));
-
 }
 
 TEST(SerializationMacros, TestClassesCopyCtorAssignWorks) {
@@ -301,8 +306,10 @@ TEST(SerializationMacros, TestClassSharedPtrHasMethodDeduction) {
   const T1& t1cr = t1;
   const T2& t2cr = t2;
 
-  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t1cr)>::result_t >::value, 1);
-  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<sm::common::StripConstReference<decltype(t2cr)>::result_t >::value, 0);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<
+            sm::common::StripConstReference<decltype(t1cr)>::result_t >::value, 1);
+  ASSERT_EQ(sm::serialization::internal::HasIsBinaryEqual<
+            sm::common::StripConstReference<decltype(t2cr)>::result_t >::value, 0);
 
 }
 
@@ -318,10 +325,14 @@ TEST(SerializationMacros, TestClassHasStreamOperator) {
   ComplexEntry e1;
   e1.setRandom();
 
-  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, decltype(e1)>::value, decltype(e1) >::eval(e1);
+  sm::serialization::internal::streamIf<
+  sm::serialization::internal::HasOStreamOperator<std::ostream,
+  decltype(e1)>::value, decltype(e1) >::eval(e1);
 
-  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, SimpleEntry>::value), 1);
-  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, ComplexEntry>::value), 0);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<
+      std::ostream, SimpleEntry>::value), 1);
+  ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<
+      std::ostream, ComplexEntry>::value), 0);
 }
 
 TEST(SerializationMacros, TestSharedPtrHasStreamOperator) {
@@ -331,7 +342,8 @@ TEST(SerializationMacros, TestSharedPtrHasStreamOperator) {
   T1 e1(new ComplexEntry);
   e1->setRandom();
 
-  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
+  sm::serialization::internal::streamIf<
+  sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
 
   ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T2>::value), 1);
   ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value), 0);
@@ -345,7 +357,8 @@ TEST(SerializationMacros, TestPtrHasStreamOperator) {
   T1 e1 = new ComplexEntry;
   e1->setRandom();
 
-  sm::serialization::internal::streamIf<sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
+  sm::serialization::internal::streamIf<
+  sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value, T1 >::eval(e1);
 
   ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T2>::value), 1);
   ASSERT_EQ((sm::serialization::internal::HasOStreamOperator<std::ostream, T1>::value), 0);
