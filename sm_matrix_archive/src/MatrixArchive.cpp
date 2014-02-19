@@ -63,6 +63,21 @@ namespace sm
     outMatrix = getMatrix(matrixName);
   }
 
+  Eigen::MatrixXd & MatrixArchive::createMatrix(std::string const & matrixName, int rows, int cols, bool overwriteExisting)
+  {
+    if(!overwriteExisting){
+      matrix_map_t::const_iterator it = m_values.find(matrixName);
+      if(it != m_values.end())
+      {
+        SM_THROW(MatrixArchiveException,"There is already a matrix of name \"" << matrixName << "\" in the archive");
+      }
+    }
+
+    Eigen::MatrixXd & val = m_values[matrixName];
+    m_values[matrixName].resize(rows, cols);
+    return val;
+  }
+
   const Eigen::MatrixXd & MatrixArchive::getMatrix(std::string const & matrixName) const
   {
     matrix_map_t::const_iterator it = m_values.find(matrixName);
