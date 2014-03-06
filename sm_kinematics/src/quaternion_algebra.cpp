@@ -373,7 +373,7 @@ namespace sm { namespace kinematics {
 
         Eigen::Vector4d qslerp(const Eigen::Vector4d & q0, const Eigen::Vector4d & q1, double t)
         {
-            if(t <= 0.0)
+          if(t <= 0.0)
             {
                 return q0;
             }
@@ -383,7 +383,14 @@ namespace sm { namespace kinematics {
             }
             else
             {
+              if( (q0-q1).squaredNorm() > (q0 + q1).squaredNorm() ) {
+                // The quaternions are far away from eachother on the sphere.
+                // Flip one around so that this works out.
+                return qplus(q0, qexp(t * qlog( qplus(quatInv(q0),-q1))));
+              } else {
                 return qplus(q0, qexp(t * qlog( qplus(quatInv(q0),q1))));
+              }
+                
             }
         }
         
