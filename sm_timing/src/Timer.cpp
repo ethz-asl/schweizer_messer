@@ -176,8 +176,17 @@ namespace timing {
   {
     return getHz(getHandle(tag));
   }
-  
-  
+
+  void Timing::reset(size_t handle) {
+    SM_ASSERT_LT(TimerException, handle, instance().m_timers.size(), "Handle is out of range: " << handle << ", number of timers: " << instance().m_timers.size());
+    instance().m_timers[handle] = TimerMapValue();
+  }
+
+  void Timing::reset(std::string const & tag)
+  {
+    return reset(getHandle(tag));
+  }
+
   std::string Timing::secondsToTimeString(double seconds) {
     
     double secs = fmod(seconds,60);

@@ -196,15 +196,15 @@ struct NumpyEigenConverter
     // Check for a null pointer.
     if(!obj_ptr)
       {
-	THROW_TYPE_ERROR("PyObject pointer was null");
-	
+        //THROW_TYPE_ERROR("PyObject pointer was null");
+        return 0;
       }
 
     // Make sure this is a numpy array.
     if (!PyArray_Check(obj_ptr))
       {
-	THROW_TYPE_ERROR("Conversion is only defined for numpy array and matrix types");
-	
+        //THROW_TYPE_ERROR("Conversion is only defined for numpy array and matrix types");
+        return 0;
       }
 
     // Check the type of the array.
@@ -212,8 +212,9 @@ struct NumpyEigenConverter
     
     if(!TypeToNumPy<scalar_t>::canConvert(npyType))
       {
-	THROW_TYPE_ERROR("Can not convert " << npyArrayTypeString(obj_ptr) << " to " << toString() 
-			 << ". Mismatched types.");
+        //THROW_TYPE_ERROR("Can not convert " << npyArrayTypeString(obj_ptr) << " to " << toString() 
+        //                 << ". Mismatched types.");
+        return 0;
       }
 
     

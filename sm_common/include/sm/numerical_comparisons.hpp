@@ -60,6 +60,7 @@ static inline ValueType_ maxTimesEpsilon(const ValueType_ a, const ValueType_ b,
 template<typename ValueType_>
 static bool approximatelyEqual(const ValueType_ a, const ValueType_ b, ValueType_ epsilon = std::numeric_limits<ValueType_>::epsilon())
 {
+  SM_ASSERT_GT(std::invalid_argument, epsilon, 0.0, "This method is only valid for an epsilon greater than 0.");
   return std::abs(a - b) <= internal::maxTimesEpsilon(a, b, epsilon);
 }
 
@@ -73,6 +74,7 @@ static bool approximatelyEqual(const ValueType_ a, const ValueType_ b, ValueType
 template<typename ValueType_>
 static bool definitelyGreaterThan(const ValueType_ a, const ValueType_ b, ValueType_ epsilon = std::numeric_limits<ValueType_>::epsilon())
 {
+  SM_ASSERT_GT(std::invalid_argument, epsilon, 0.0, "This method is only valid for an epsilon greater than 0.");
   return (a - b) > internal::maxTimesEpsilon(a, b, epsilon);
 }
 
@@ -86,6 +88,7 @@ static bool definitelyGreaterThan(const ValueType_ a, const ValueType_ b, ValueT
 template<typename ValueType_>
 static bool definitelyLessThan(const ValueType_ a, const ValueType_ b, ValueType_ epsilon = std::numeric_limits<ValueType_>::epsilon())
 {
+  SM_ASSERT_GT(std::invalid_argument, epsilon, 0.0, "This method is only valid for an epsilon greater than 0.");
   return (b - a) > internal::maxTimesEpsilon(a, b, epsilon);
 }
 

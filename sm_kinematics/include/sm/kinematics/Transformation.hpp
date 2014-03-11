@@ -46,7 +46,7 @@ namespace sm {
       /// @param q_a_b The quaternion that transforms vectors from b to a
       /// @param t_a_b_a the vector from the origin of frame a, to the origin of frame b, expresessed in frame a.
       ///
-      Transformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d t_a_b_a);
+      Transformation(const Eigen::Vector4d & q_a_b, const Eigen::Vector3d & t_a_b_a);
 
       virtual ~Transformation();
 
