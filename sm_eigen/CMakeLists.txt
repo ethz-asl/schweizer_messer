@@ -10,7 +10,7 @@ include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES sm_eigen
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS 
   DEPENDS
 )

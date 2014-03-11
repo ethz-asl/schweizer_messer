@@ -14,7 +14,7 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x")
 
 catkin_package(
   INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}
-  LIBRARIES sm_kinematics
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS sm_common sm_eigen sm_boost
   DEPENDS
 )

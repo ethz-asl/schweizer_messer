@@ -13,7 +13,7 @@ include_directories(${MATLAB_INCLUDE_DIR})
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
-  LIBRARIES sm_matlab
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS sm_common sm_random
   DEPENDS
 )

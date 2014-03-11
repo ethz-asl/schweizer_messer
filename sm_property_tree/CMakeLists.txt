@@ -7,7 +7,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
-  LIBRARIES sm_timing
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS sm_common
   DEPENDS
 )
