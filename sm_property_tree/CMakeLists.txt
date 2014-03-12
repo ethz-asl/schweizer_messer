@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sm_property_tree)
 
-find_package(catkin REQUIRED COMPONENTS sm_common sm_random)
+find_package(catkin REQUIRED COMPONENTS sm_common)
 include_directories(${catkin_INCLUDE_DIRS})
 find_package(Boost REQUIRED COMPONENTS system)
 

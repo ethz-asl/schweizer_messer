@@ -3,7 +3,7 @@ project(sm_logging)
 
 find_package(catkin REQUIRED)
 include_directories(${catkin_INCLUDE_DIRS})
-find_package(Boost REQUIRED COMPONENTS system thread chrono regex)
+find_package(Boost REQUIRED COMPONENTS system thread regex)
 
 catkin_package(
   INCLUDE_DIRS include
@@ -13,7 +13,6 @@ catkin_package(
 )
 
 add_definitions(-std=c++0x)
-include_directories(include)
 
 if(APPLE)
   link_directories(/usr/local/lib)
