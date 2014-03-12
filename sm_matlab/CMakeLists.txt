@@ -28,12 +28,11 @@ if(MATLAB_FOUND)
   add_library(${PROJECT_NAME}
     src/Engine.cpp
   )
+  target_link_libraries(${PROJECT_NAME} ${MATLAB_LIBRARIES} ${catkin_LIBRARIES})
 
   add_executable(sm_matlab_demo demo/demo.cpp)
   target_link_libraries(sm_matlab_demo 
-                      ${PROJECT_NAME} 
-                      ${MATLAB_LIBRARIES} 
-                      ${catkin_LIBRARIES})
+                        ${PROJECT_NAME})
 
   #############
   ## Testing ##
