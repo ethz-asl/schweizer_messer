@@ -37,3 +37,4 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/serialization_macros.cpp
   test/numerical_comparisons.cpp
 )
+target_link_libraries(${PROJECT_NAME}-test pthread)
