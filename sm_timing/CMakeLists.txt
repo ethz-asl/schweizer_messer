@@ -23,6 +23,7 @@ add_library(${PROJECT_NAME}
   src/Timer.cpp
   src/NsecTimeUtilities.cpp
 )
+target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
 
 #############
 ## Testing ##
