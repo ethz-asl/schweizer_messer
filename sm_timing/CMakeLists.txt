@@ -35,6 +35,6 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/TestNsecTimeUtilities.cpp
 )
 if(TARGET ${PROJECT_NAME}-test)
-  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} pthread)
 endif()
 
