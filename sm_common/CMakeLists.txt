@@ -14,6 +14,7 @@ catkin_package(
   LIBRARIES
   CATKIN_DEPENDS 
   DEPENDS
+  CFG_EXTRAS export_flags.cmake
 )
 
 ##################
