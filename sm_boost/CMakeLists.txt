@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sm_boost)
 
 find_package(catkin REQUIRED COMPONENTS sm_common)
-find_package(Boost REQUIRED COMPONENTS system serialization)
+find_package(Boost REQUIRED COMPONENTS system serialization thread)
 
 catkin_package(
   INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}
