@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import roslib; roslib.load_manifest('numpy_eigen'); roslib.load_manifest('rostest'); 
 import numpy_eigen
-import numpy_eigen_test as npe
+import numpy_eigen.test as npe
 import numpy
 
 import sys

@@ -68,7 +68,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   )
   
     # Cause the library to be output in the correct directory.
-  set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/${PROJECT_NAME}/)
+  set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/lib/python2.7/dist-packages/${PROJECT_NAME})
   add_custom_command(TARGET ${TARGET_NAME}
     POST_BUILD
     COMMAND cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME}
