@@ -16,7 +16,7 @@ catkin_package(
 )
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
-include_directories(include)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 ##############
 ## Building ##
@@ -25,6 +25,9 @@ include_directories(include)
 add_library(${PROJECT_NAME}
   src/MatrixArchive.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Testing ##
