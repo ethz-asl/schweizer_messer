@@ -71,7 +71,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/${PROJECT_NAME}/lib/python2.7/dist-packages)
   add_custom_command(TARGET ${TARGET_NAME}
     POST_BUILD
-    COMMAND cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME}
+    COMMAND mdir -p ${PYTHON_LIB_DIR} && cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME}
     WORKING_DIRECTORY ${CATKIN_DEVEL_PREFIX}
     COMMENT "Copying library files to python directory" )
 
