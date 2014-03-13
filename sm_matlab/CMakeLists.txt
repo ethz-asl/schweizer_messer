@@ -9,7 +9,6 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
 find_package(Matlab)  # Don't search with required, so we can continue.
-include_directories(${MATLAB_INCLUDE_DIR})
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
