@@ -7,7 +7,7 @@ find_package(Boost REQUIRED COMPONENTS system)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x -D__STRICT_ANSI__")
 
-include_directories(include)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 catkin_package(
   INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}

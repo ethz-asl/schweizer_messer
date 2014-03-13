@@ -14,7 +14,7 @@ catkin_package(
 add_definitions(-D__STRICT_ANSI__)
 remove_definitions(-std=c++0x -std-c++11)
 
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 ##############
 ## Building ##
@@ -27,6 +27,9 @@ add_library(${PROJECT_NAME}
   src/PropertyTreeImplementation.cpp
   src/BoostPropertyTreeSupport.cpp
 )
+
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Testing ##

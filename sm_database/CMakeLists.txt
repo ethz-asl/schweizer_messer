@@ -15,8 +15,7 @@ catkin_package(
   DEPENDS
 )
 
-include_directories(include)
-include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 ##############
 ## Building ##
@@ -27,7 +26,8 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} ${SQLITE3_LIBRARIES}
-                                      ${catkin_LIBRARIES})
+                                      ${catkin_LIBRARIES}
+                                      ${Boost_LIBRARIES})
 
 ##################
 ## Installation ##

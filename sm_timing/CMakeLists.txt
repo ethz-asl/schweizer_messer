@@ -13,7 +13,7 @@ catkin_package(
 )
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 ##############
 ## Building ##
@@ -23,7 +23,8 @@ add_library(${PROJECT_NAME}
   src/Timer.cpp
   src/NsecTimeUtilities.cpp
 )
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 #############
 ## Testing ##

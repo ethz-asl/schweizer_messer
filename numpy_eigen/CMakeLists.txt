@@ -20,7 +20,7 @@ catkin_package(
 )
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
-include_directories(include)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 IF(APPLE)
   link_directories( /usr/local/lib )
@@ -35,7 +35,9 @@ add_python_export_library(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/python/${PROJECT
  ${AUTOGEN_FILES}
 )
 
-target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+                      
 INCLUDE(src/autogen_test_files.cmake)
 add_python_export_library(${PROJECT_NAME}_test ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
   ${AUTOGEN_TEST_FILES}

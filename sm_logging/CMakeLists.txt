@@ -11,8 +11,7 @@ catkin_package(
   DEPENDS
 )
 
-include_directories(${catkin_INCLUDE_DIRS})
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_definitions(-std=c++0x)
 
@@ -33,7 +32,8 @@ add_library(${PROJECT_NAME}
   src/Tokens.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} ${catkin_LIBRARIES})
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
 ##################
 ## Installation ##

@@ -18,7 +18,8 @@ catkin_package(
   DEPENDS
 )
 
-include_directories(include)
+include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS}
+                     ${MATLAB_INCLUDE_DIRS})
 
 ##############
 ## Building ##
@@ -28,7 +29,8 @@ if(MATLAB_FOUND)
   add_library(${PROJECT_NAME}
     src/Engine.cpp
   )
-  target_link_libraries(${PROJECT_NAME} ${MATLAB_LIBRARIES} ${catkin_LIBRARIES})
+  target_link_libraries(${PROJECT_NAME} ${MATLAB_LIBRARIES} ${catkin_LIBRARIES}
+                                        ${Boost_LIBRARIES})
 
   add_executable(sm_matlab_demo demo/demo.cpp)
   target_link_libraries(sm_matlab_demo 
