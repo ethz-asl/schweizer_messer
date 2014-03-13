@@ -3,7 +3,7 @@ project(sm_property_tree)
 
 find_package(catkin REQUIRED COMPONENTS sm_common)
 include_directories(${catkin_INCLUDE_DIRS})
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
@@ -29,7 +29,7 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} 
-                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES} pthread)
 
 #############
 ## Testing ##
