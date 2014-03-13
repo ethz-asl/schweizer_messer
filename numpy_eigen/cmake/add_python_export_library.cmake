@@ -58,13 +58,26 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
 
   # On OSX and Linux, the python library must end in the extension .so. Build this
   # filename here.
-  #get_property(PYLIB_OUTPUT_FILE TARGET ${TARGET_NAME} PROPERTY LOCATION)
-  #get_filename_component(PYLIB_OUTPUT_NAME ${PYLIB_OUTPUT_FILE} NAME_WE)
-  #set(PYLIB_SO_NAME ${PYLIB_OUTPUT_NAME}.so)
+  get_property(PYLIB_OUTPUT_FILE TARGET ${TARGET_NAME} PROPERTY LOCATION)
+  get_filename_component(PYLIB_OUTPUT_NAME ${PYLIB_OUTPUT_FILE} NAME_WE)
+  set(PYLIB_SO_NAME ${PYLIB_OUTPUT_NAME}.so)
 
   install(TARGETS ${TARGET_NAME}
     ARCHIVE DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}/python2.7/dist-packages/${TARGET_NAME}
     LIBRARY DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}/python2.7/dist-packages/${TARGET_NAME}
   )
+  
+    # Cause the library to be output in the correct directory.
+  set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/${PROJECT_NAME}/lib/python2.7/dist-packages)
+  add_custom_command(TARGET ${TARGET_NAME}
+    POST_BUILD
+    COMMAND cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME}
+    WORKING_DIRECTORY ${CATKIN_DEVEL_PREFIX}
+    COMMENT "Copying library files to python directory" )
+
+  get_directory_property(AMCF ADDITIONAL_MAKE_CLEAN_FILES)
+  list(APPEND AMCF ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME})
+  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${AMCF}") 
+  
 ENDMACRO()
 
