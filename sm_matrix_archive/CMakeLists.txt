@@ -3,7 +3,7 @@ project(sm_matrix_archive)
 
 find_package(catkin REQUIRED COMPONENTS sm_common)
 include_directories(${catkin_INCLUDE_DIRS})
-find_package(Boost REQUIRED COMPONENTS system)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 
 find_package(Eigen REQUIRED)
 include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
@@ -27,7 +27,7 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} 
-                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES} pthread)
 
 #############
 ## Testing ##
