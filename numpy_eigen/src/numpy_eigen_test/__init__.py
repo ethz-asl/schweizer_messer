@@ -1,7 +1,2 @@
-try:
-    import roslib; roslib.load_manifest('numpy_eigen')
-except:
-    pass
-
-from numpy_eigen_test import *
+from libnumpy_eigen_test import *
 

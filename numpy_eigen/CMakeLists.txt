@@ -33,16 +33,16 @@ ENDIF(APPLE)
 ##############
 
 INCLUDE(src/autogen_files.cmake)
-add_python_export_library(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
- ${AUTOGEN_FILES}
+add_python_export_library(${PROJECT_NAME} 
+  ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_FILES}
 )
 
 target_link_libraries(${PROJECT_NAME} 
                       ${catkin_LIBRARIES} ${Boost_LIBRARIES})
                       
 INCLUDE(src/autogen_test_files.cmake)
-add_python_export_library(${PROJECT_NAME}_test ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME}
-  ${AUTOGEN_TEST_FILES}
+add_python_export_library(${PROJECT_NAME}_test 
+      ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_TEST_FILES}
   )
 
 #############
