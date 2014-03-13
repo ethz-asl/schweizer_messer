@@ -62,16 +62,6 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   get_filename_component(PYLIB_OUTPUT_NAME ${PYLIB_OUTPUT_FILE} NAME_WE)
   set(PYLIB_SO_NAME ${PYLIB_OUTPUT_NAME}.so)
 
-  # Cause the library to be output in the correct directory.
-  add_custom_command(TARGET ${TARGET_NAME}
-    POST_BUILD
-    COMMAND cp -v ${PYLIB_OUTPUT_FILE} ${PYTHON_MODULE_DIRECTORY}/${PYLIB_SO_NAME}
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
-    COMMENT "Copying library files to python directory" )
-
-  get_directory_property(AMCF ADDITIONAL_MAKE_CLEAN_FILES)
-  list(APPEND AMCF ${PYTHON_MODULE_DIRECTORY}/${PYLIB_SO_NAME})
-  set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${AMCF}") 
 
 ENDMACRO()
 
