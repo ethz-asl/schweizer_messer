@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(numpy_eigen)
 
-find_package(catkin REQUIRED COMPONENTS)
+find_package(catkin REQUIRED COMPONENTS python_module)
 include_directories(${catkin_INCLUDE_DIRS})
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen REQUIRED)
@@ -11,9 +11,6 @@ catkin_python_setup()
 add_definitions(${EIGEN_DEFINITIONS})
 include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 include_directories("${PROJECT_SOURCE_DIR}/include/numpy_eigen")
-
-# Include the custom python export library funciton
-include(cmake/add_python_export_library.cmake)
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
