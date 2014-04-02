@@ -46,6 +46,7 @@ void exportPropertyTree() {
       .def("setInt", &PropertyTree::setInt)
       .def("setBool", &PropertyTree::setBool)
       .def("setString", &PropertyTree::setString)
+      .def("setDouble", &PropertyTree::setDouble)
       .def("doesKeyExist", &PropertyTree::doesKeyExist);
 
   class_<BoostPropertyTree, bases<PropertyTree> >("BoostPropertyTree", init<>())
