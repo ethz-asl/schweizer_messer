@@ -25,13 +25,6 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
   # This grabs the parent of the leaf
   get_filename_component(PYTHON_MODULE_DIRECTORY_PREFIX "${TMP}.txt" PATH)
 
-  message("TMP: ${TMP}")
-  message("PYTHON_MODULE_DIRECTORY: ${PYTHON_MODULE_DIRECTORY}")
-  message("PYTHON_MODULE_DIRECTORY_PREFIX: ${PYTHON_MODULE_DIRECTORY_PREFIX}")
-  message("PYTHON_PACKAGE_NAME: ${PYTHON_PACKAGE_NAME}")
-  message("CATKIN_DEVEL_PREFIX: ${CATKIN_DEVEL_PREFIX}")
-
-
   set(SETUP_PY "${CMAKE_CURRENT_SOURCE_DIR}/setup.py")
   if(EXISTS ${SETUP_PY}) 
   else()
