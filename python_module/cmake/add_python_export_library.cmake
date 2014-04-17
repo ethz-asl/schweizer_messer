@@ -39,7 +39,7 @@ MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
 ## ! DO NOT MANUALLY INVOKE THIS setup.py, USE CATKIN INSTEAD
 
 from distutils.core import setup
-from catkin_pkg.python_setup import generate_distutils_setup2
+from catkin_pkg.python_setup import generate_distutils_setup
 
 # fetch values from package.xml
 setup_args = generate_distutils_setup(
