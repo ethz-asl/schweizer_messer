@@ -12,9 +12,6 @@ find_package(Eigen REQUIRED)
 
 include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
-# Set up the python exports.
-SET(PY_PROJECT_NAME sm_python)
-SET(PY_PACKAGE_DIR python/sm)
 
 catkin_package(
   INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
@@ -26,6 +23,10 @@ catkin_package(
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
 include_directories(include)
+
+# Set up the python exports.
+SET(PY_PROJECT_NAME sm_python)
+SET(PY_PACKAGE_DIR python/sm)
 
 ##############
 ## Building ##
