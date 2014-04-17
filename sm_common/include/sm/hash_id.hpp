@@ -9,6 +9,7 @@ namespace sm {
 
 /**
  * Randomly initialized 128 bit hash
+ * TODO(tcies) (de)serialization
  */
 class HashId {
  public:
@@ -16,26 +17,75 @@ class HashId {
    * Initializes to a random 128 bit string, seeding on the time in nanoseconds
    * of the first call to this function
    */
-  HashId();
+  inline HashId(){
+    static std::mt19937_64 rng(time64());
+    val_.u64[0] = rng();
+    val_.u64[1] = rng();
+  }
 
-  const std::string hexString() const;
+  /**
+   * Returns hexadecimal string for debugging
+   */
+  inline const std::string hexString() const{
+    std::ostringstream ss;
+    for (size_t i = 0; i < sizeof(val_); ++i){
+      ss << std::hex << std::setfill('0') << std::setw(2) <<
+          (unsigned int)val_.c[i];
+    }
+    return ss.str();
+  }
 
-  bool operator <(const HashId& other) const;
-  bool operator >(const HashId& other) const;
-  bool operator ==(const HashId& other) const;
+  /**
+   * Usual const operators
+   */
+  inline bool operator <(const HashId& other) const{
+    if (val_.u64[0] == other.val_.u64[0]){
+      return val_.u64[1] < other.val_.u64[1];
+    }
+    return val_.u64[0] < other.val_.u64[0];
+  }
+  inline bool operator >(const HashId& other) const{
+    if (val_.u64[0] == other.val_.u64[0]){
+      return val_.u64[1] > other.val_.u64[1];
+    }
+    return val_.u64[0] > other.val_.u64[0];
+  }
+  inline bool operator ==(const HashId& other) const{
+    return val_.u64[0] == other.val_.u64[0] && val_.u64[1] == other.val_.u64[1];
+  }
+  inline bool operator !=(const HashId& other) const{
+    return !(*this == other);
+  }
 
-  void setInvalid();
-  bool isValid();
+  /**
+   * Invalidation mechanism
+   */
+  inline void setInvalid(){
+    memset(&val_, 0, sizeof(val_));
+  }
+  inline bool isValid() const{
+    return val_.u64[0] != 0 || val_.u64[1] != 0;
+  }
 
  private:
   /**
    * Time seed from nanoseconds. Covers 584 years if we assume no two agents
    * initialize in the same nanosecond.
    */
-  static int64_t time64();
+  inline static int64_t time64(){
+    std::chrono::system_clock::duration current =
+        std::chrono::high_resolution_clock::now().time_since_epoch();
+    using std::chrono::duration_cast;
+    using std::chrono::nanoseconds;
+    // count() specified to return at least 64 bits
+    return duration_cast<nanoseconds>(current).count();
+  }
 
+  /**
+   * Internal representation
+   */
   union HashVal{
-    char c[16];
+    unsigned char c[16];
     uint_fast64_t u64[2];
   };
   HashVal val_;
