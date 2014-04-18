@@ -39,6 +39,8 @@ if(MATLAB_FOUND)
   #############
   ## Testing ##
   #############
+# Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
+add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 
   ## Add gtest based cpp test target and link libraries
   catkin_add_gtest(${PROJECT_NAME}-test
