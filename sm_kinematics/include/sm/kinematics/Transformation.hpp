@@ -148,7 +148,7 @@ namespace sm {
 
     
     template<class Archive>
-    void Transformation::save(Archive & ar, const unsigned int version) const
+    void Transformation::save(Archive & ar, const unsigned int /* version */) const
     {
       ar & BOOST_SERIALIZATION_NVP(_q_a_b);
       ar & BOOST_SERIALIZATION_NVP(_t_a_b_a);

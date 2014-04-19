@@ -112,7 +112,7 @@ namespace sm {
         BOOST_SERIALIZATION_SPLIT_MEMBER()
 
 	  template<class Archive>
-	  void save(Archive & ar, const unsigned int version) const
+        void save(Archive & ar, const unsigned int /* version */) const
 	  {
           ar << ::boost::serialization::make_nvp("_ph",_ph);
 	  }

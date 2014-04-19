@@ -96,7 +96,7 @@ namespace sm { namespace eigen {
 		{
 		  for(int c = 0; c < A.cols(); c++)
 			{
-			  ASSERT_TRUE(std::isfinite(A(r,c))) << sfp.toString() << std::endl << "Check for finite values failed at A(" << r << "," << c << "). Matrix A:" << std::endl << A << std::endl;
+			  ASSERT_TRUE(std::isfinite(A(r,c))) << sfp.toString() << std::endl << message << std::endl << "Check for finite values failed at A(" << r << "," << c << "). Matrix A:" << std::endl << A << std::endl;
 			}
 		}
     }

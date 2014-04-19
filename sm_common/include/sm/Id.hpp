@@ -115,7 +115,7 @@ namespace sm {
     }
 
     // postincrement.
-    Id operator++ (int unused)
+    Id operator++ (int /*unused*/)
     {
         Id rval(_id);
       ++_id;
@@ -179,7 +179,7 @@ namespace sm {
         explicit IdTypeName (sm::id_type id = -1) : sm::Id(id) {}       \
         IdTypeName(const sm::Id & id) : sm::Id(id){}                    \
         template<class Archive>                                         \
-            void serialize(Archive & ar, const unsigned int version)    \
+        void serialize(Archive & ar, const unsigned int /* version */)  \
         {                                                               \
             ar & BOOST_SERIALIZATION_NVP(_id);                          \
         }                                                               \

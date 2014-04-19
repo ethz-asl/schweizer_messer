@@ -45,10 +45,14 @@ public:
     typedef enum {
         incompatible_integer_size 
     } exception_code;
-    portable_binary_iarchive_exception(exception_code c = incompatible_integer_size ) :
+  portable_binary_iarchive_exception(exception_code /* c */ ) :
         boost::archive::archive_exception(boost::archive::archive_exception::other_exception)
-    {}
-    virtual const char *what( ) const throw( )
+  {}
+    portable_binary_iarchive_exception( ) :
+        boost::archive::archive_exception(boost::archive::archive_exception::other_exception)
+  {}
+
+  virtual const char *what( ) const throw( )
     {
         const char *msg = "programmer error";
         switch(code){

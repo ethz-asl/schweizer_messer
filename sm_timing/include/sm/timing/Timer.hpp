@@ -50,8 +50,10 @@ namespace timing {
   // of the functions are inline, they should just disappear.
   class DummyTimer {
   public:
-    DummyTimer(size_t handle, bool constructStopped = false){}
-    DummyTimer(std::string const & tag, bool constructStopped = false){}
+    DummyTimer(size_t /* handle */, bool /* constructStopped */ ){}
+    DummyTimer(size_t /* handle */){}
+    DummyTimer(std::string const & /* tag */){}
+    DummyTimer(std::string const & /* tag */, bool /* constructStopped */){}
     ~DummyTimer(){}
     
     void start(){}

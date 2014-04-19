@@ -18,7 +18,7 @@ namespace boost {
 void 
 portable_binary_oarchive::save_impl(
     const boost::intmax_t l,
-    const char maxsize
+    const char /* maxsize */
 ){
     char size = 0;
 

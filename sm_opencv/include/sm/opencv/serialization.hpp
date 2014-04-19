@@ -41,14 +41,14 @@ namespace boost {
   namespace serialization {
 
 template<class Archive>
-void serialize(Archive & ar, cv::Point2f & p, const unsigned int version)
+void serialize(Archive & ar, cv::Point2f & p, const unsigned int /* version */)
 {
   ar & BOOST_SERIALIZATION_NVP(p.x);
   ar & BOOST_SERIALIZATION_NVP(p.y);
 }
 
 template<class Archive>
-void serialize(Archive & ar, cv::KeyPoint & k, const unsigned int version)
+void serialize(Archive & ar, cv::KeyPoint & k, const unsigned int /* version */)
 {
   ar & BOOST_SERIALIZATION_NVP(k.pt);
   ar & BOOST_SERIALIZATION_NVP(k.size);
@@ -110,7 +110,7 @@ namespace boost
   {
  
     template<class Archive>
-    void save(Archive & ar, const cv::Mat& mat, const unsigned int version)
+    void save(Archive & ar, const cv::Mat& mat, const unsigned int /* version */)
     {
       using namespace boost::serialization;
       cv::Mat mat_;
@@ -127,7 +127,7 @@ namespace boost
     }
  
     template<class Archive>
-    void load(Archive & ar, cv::Mat& mat, const unsigned int version)
+    void load(Archive & ar, cv::Mat& mat, const unsigned int /* version */)
     {
       int rows, cols, type;
       ar & make_nvp("rows",rows);

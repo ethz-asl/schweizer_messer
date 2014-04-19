@@ -11,11 +11,7 @@
 #ifndef SM_SERIALIZATION_MACROS_HPP
 #define SM_SERIALIZATION_MACROS_HPP
 
-#ifdef __APPLE__
-#include <tr1/type_traits>
-#else
 #include <type_traits>
-#endif
 #include <sstream>
 #include <ostream>
 #include <iostream>

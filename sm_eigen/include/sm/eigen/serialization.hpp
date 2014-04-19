@@ -41,8 +41,8 @@ namespace boost { namespace serialization {
     ///  
     template<class Archive, class Scalar, int A, int B, int C, int D, int E>
     inline void save( Archive & ar, 
-		      const Eigen::Matrix<Scalar,A,B,C,D,E> & M, 
-		      const unsigned int file_version)
+                      const Eigen::Matrix<Scalar,A,B,C,D,E> & M, 
+                      const unsigned int /* file_version */)
     {
       typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
       index_t rows = M.rows();
@@ -71,8 +71,8 @@ namespace boost { namespace serialization {
     ///
     template<class Archive, class Scalar, int A, int B, int C, int D, int E>
     inline void load( Archive & ar, 
-		      Eigen::Matrix<Scalar,A,B,C,D,E> & M,
-		      const unsigned int file_version)
+                      Eigen::Matrix<Scalar,A,B,C,D,E> & M,
+                      const unsigned int /* file_version */)
     {
       typedef typename Eigen::Matrix<Scalar,A,B,C,D,E>::Index index_t;
       index_t rows, cols;
@@ -102,8 +102,8 @@ namespace boost { namespace serialization {
     ///
     template<class Archive, class Scalar, int B, int C, int D, int E>
     inline void load( Archive & ar, 
-		      Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E> & M,
-		      const unsigned int file_version)
+                      Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E> & M,
+                      const unsigned int /* file_version */)
     {
         typedef typename Eigen::Matrix<Scalar,Eigen::Dynamic,B,C,D,E>::Index index_t;
       index_t rows, cols;
@@ -132,8 +132,8 @@ namespace boost { namespace serialization {
     ///
     template<class Archive, class Scalar, int A, int C, int D, int E>
     inline void load( Archive & ar, 
-		      Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E> & M,
-		      const unsigned int file_version)
+                      Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E> & M,
+                      const unsigned int /* file_version */)
     {
       typedef typename Eigen::Matrix<Scalar,A,Eigen::Dynamic,C,D,E>::Index index_t;
       index_t rows, cols;
@@ -160,8 +160,8 @@ namespace boost { namespace serialization {
     ///
     template<class Archive, class Scalar, int C, int D, int E>
     inline void load( Archive & ar, 
-		      Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E> & M,
-		      const unsigned int file_version)
+                      Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E> & M,
+                      const unsigned int /* file_version */)
     {
       typedef typename Eigen::Matrix<Scalar,Eigen::Dynamic,Eigen::Dynamic,C,D,E>::Index index_t;
       index_t rows, cols;
@@ -187,10 +187,10 @@ namespace boost { namespace serialization {
     ///
     template<class Archive, class Scalar, int A, int B, int C, int D, int E>
     inline void serialize(
-			  Archive & ar,
-			  Eigen::Matrix<Scalar,A,B,C,D,E> & M,
-			  const unsigned int file_version
-			  ){
+        Archive & ar,
+        Eigen::Matrix<Scalar,A,B,C,D,E> & M,
+        const unsigned int file_version
+                          ){
       boost::serialization::split_free(ar, M, file_version);
     }
 
@@ -204,9 +204,9 @@ namespace boost { namespace serialization {
     /// @param file_version The archive version number. 
     ///
     template<class Archive, class Scalar, int Dim, int Mode>
-     inline void serialize( Archive & ar, 
-			    Eigen::Transform<Scalar, Dim, Mode> & M, 
-			    const unsigned int file_version )
+    inline void serialize( Archive & ar, 
+                           Eigen::Transform<Scalar, Dim, Mode> & M, 
+                           const unsigned int /* file_version */ )
      {
        
        ar & boost::serialization::make_nvp("matrix",M.matrix());

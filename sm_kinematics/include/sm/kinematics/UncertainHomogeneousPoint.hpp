@@ -87,7 +87,7 @@ namespace sm {
         BOOST_SERIALIZATION_SPLIT_MEMBER()
         
 	  template<class Archive>
-	  void save(Archive & ar, const unsigned int version) const
+        void save(Archive & ar, const unsigned int /* version */) const
 	  {
           ar << BOOST_SERIALIZATION_BASE_OBJECT_NVP(HomogeneousPoint);
           ar << BOOST_SERIALIZATION_NVP(_U);
