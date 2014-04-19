@@ -1,2 +1,3 @@
 import os
-from numpy_eigen_test import *
+print 'Importing numpy_test ', os.path.realpath(__file__)
+from ..libnumpy_eigen_test import *
