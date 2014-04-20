@@ -4,7 +4,7 @@ project(sm_database)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/)
 
 find_package(catkin REQUIRED COMPONENTS sm_common sm_boost)
-find_package(Boost REQUIRED COMPONENTS system filesystem)
+find_package(Boost REQUIRED COMPONENTS system filesystem serialization)
 find_package(Sqlite3 REQUIRED)
 include_directories(${SQLITE3_DIRECTORIES})
 
