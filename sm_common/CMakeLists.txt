@@ -1,40 +1,41 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(sm_common)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED)
+include_directories(${catkin_INCLUDE_DIRS})
+find_package(Boost REQUIRED COMPONENTS system)
 
-rosbuild_init()
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x -D__STRICT_ANSI__")
 
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
+catkin_package(
+  INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}
+  LIBRARIES
+  CATKIN_DEPENDS 
+  DEPENDS
+  CFG_EXTRAS export_flags.cmake
+)
 
-#common commands for building c++ executables and libraries
-rosbuild_add_library(${PROJECT_NAME} src/progress_info.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example ${PROJECT_NAME})
+##################
+## Installation ##
+##################
 
-add_definitions(-std=c++0x -D__STRICT_ANSI__)
+## Mark cpp header files for installation
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.hpp"
+  PATTERN ".svn" EXCLUDE
+)
 
-rosbuild_add_gtest(${PROJECT_NAME}_tests
+#############
+## Testing ##
+#############
+
+catkin_add_gtest(${PROJECT_NAME}-test
   test/test_main.cpp
   test/maths.cpp
   test/serialization_macros.cpp
   test/numerical_comparisons.cpp
 )
-target_link_libraries(${PROJECT_NAME}_tests pthread)
+target_link_libraries(${PROJECT_NAME}-test pthread)
