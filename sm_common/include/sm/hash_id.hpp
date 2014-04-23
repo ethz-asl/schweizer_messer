@@ -24,20 +24,17 @@ class HashId {
   }
 
   /**
-   * Returns hexadecimal string for debugging
+   * Returns hexadecimal string for debugging or serialization
    */
   inline const std::string hexString() const{
     std::ostringstream ss;
     for (size_t i = 0; i < sizeof(val_); ++i){
       ss << std::hex << std::setfill('0') << std::setw(2) <<
-          (unsigned int)val_.c[i];
+          static_cast<int>(val_.c[i]);
     }
     return ss.str();
   }
 
-  /**
-   * Usual const operators
-   */
   inline bool operator <(const HashId& other) const{
     if (val_.u64[0] == other.val_.u64[0]){
       return val_.u64[1] < other.val_.u64[1];
