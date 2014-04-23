@@ -35,6 +35,24 @@ class HashId {
     return ss.str();
   }
 
+  /**
+   * Deserialize from hexadecimal string. Serialization and Deserialization
+   * could be made more performant by using blobs.
+   */
+  inline bool fromHexString(const std::string& hexString){
+    // hexadecimal string takes 2 characters per byte
+    if (hexString.size() != 2*sizeof(val_)){
+      return false;
+    }
+    for (size_t i = 0; i < sizeof(val_); ++i){
+      unsigned int integerValue;
+      std::istringstream ss(std::string(hexString, 2*i, 2));
+      ss >> std::hex >> integerValue;
+      val_.c[i] = static_cast<unsigned char>(integerValue);
+    }
+    return true;
+  }
+
   inline bool operator <(const HashId& other) const{
     if (val_.u64[0] == other.val_.u64[0]){
       return val_.u64[1] < other.val_.u64[1];

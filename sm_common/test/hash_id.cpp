@@ -27,3 +27,11 @@ TEST(SmCommonTestSuite, hashId_string) {
   EXPECT_EQ(as.length(), 32);
   EXPECT_EQ(bs.length(), 32);
 }
+
+TEST(SmCommonTestSuite, hashId_deserialize) {
+  HashId a;
+  std::string as(a.hexString());
+  HashId b;
+  EXPECT_TRUE(b.fromHexString(as));
+  EXPECT_EQ(a, b);
+}
