@@ -9,7 +9,7 @@ find_package(Eigen REQUIRED)
 include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
 
 catkin_package(
-  INCLUDE_DIRS include
+  INCLUDE_DIRS include ${Eigen_INCLUDE_DIRS}
   LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS 
   DEPENDS
