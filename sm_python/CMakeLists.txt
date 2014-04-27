@@ -54,6 +54,8 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/exportEigen.cpp
   src/exportUncertainVector.cpp
   src/exportMatrixArchive.cpp
+  src/export_kinematics_property_tree.cpp
+  src/export_eigen_property_tree.cpp
   src/Logging.cpp
   src/exportNsecTime.cpp
   src/random.cpp
