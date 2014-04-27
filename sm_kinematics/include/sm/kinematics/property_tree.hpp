@@ -2,6 +2,7 @@
 #define SM_KINEMATICS_PROPERTY_TREE_HPP
 
 #include <sm/eigen/property_tree.hpp>
+#include <sm/kinematics/Transformation.hpp>
 
 namespace sm {
     namespace kinematics {
