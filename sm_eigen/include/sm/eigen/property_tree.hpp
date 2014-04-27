@@ -1,6 +1,9 @@
 #ifndef SM_EIGEN_PROPERTY_TREE_HPP
 #define SM_EIGEN_PROPERTY_TREE_HPP
 
+#include <sm/PropertyTree.hpp>
+#include <Eigen/Core>
+
 namespace sm {
     namespace eigen {
         
