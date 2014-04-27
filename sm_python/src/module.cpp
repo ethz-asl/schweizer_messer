@@ -21,6 +21,8 @@ void exportMatrixArchive();
 void exportLogging();
 void exportNsecTime();
 void exportRandom();
+void export_eigen_property_tree();
+void export_kinematics_property_tree();
 
 void printTiming()
 {
@@ -45,4 +47,6 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportLogging();
   exportNsecTime();
   exportRandom();
+  export_eigen_property_tree();
+  export_kinematics_property_tree();
 }
