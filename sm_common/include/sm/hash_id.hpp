@@ -9,7 +9,7 @@
 namespace sm {
 
 /**
- * 128 bit hash.
+ * 128 bit hash. Can be used as key to unordered containers.
  */
 class HashId {
  public:
@@ -134,5 +134,17 @@ class HashId {
 };
 
 } // namespace sm
+
+namespace std{
+  template<>
+  struct hash<sm::HashId>{
+    typedef sm::HashId argument_type;
+    typedef std::size_t value_type;
+
+    value_type operator()(const argument_type& hashId) const {
+      return std::hash<std::string>()(hashId.hexString());
+    }
+  };
+} // namespace std
 
 #endif /* HASH_ID_HPP_ */

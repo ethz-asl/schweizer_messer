@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <unordered_set>
 
 #include <gtest/gtest.h>
 
@@ -34,4 +35,14 @@ TEST(SmCommonTestSuite, hashId_deserialize) {
   HashId b;
   EXPECT_TRUE(b.fromHexString(as));
   EXPECT_EQ(a, b);
+}
+
+TEST(SmCommonTestSuite, hashId_stdHash) {
+  std::unordered_set<HashId> hashes;
+  HashId needle(HashId::random());
+  hashes.insert(needle);
+  hashes.insert(HashId::random());
+  std::unordered_set<HashId>::iterator found = hashes.find(needle);
+  EXPECT_NE(found, hashes.end());
+  EXPECT_EQ(*found, needle);
 }
