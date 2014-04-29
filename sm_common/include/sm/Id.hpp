@@ -34,18 +34,12 @@
 #ifndef SM_ID_HPP
 #define SM_ID_HPP
 
-
 #include <boost/cstdint.hpp>
 #include <boost/functional/hash.hpp>
 #include <iostream>
-// The definition of std::tr1::hash
-#if defined( _WIN32)
 #include <functional>
-#else
-#include <tr1/functional>
-#endif
-
 #include <boost/serialization/nvp.hpp>
+
 namespace sm {
     typedef boost::uint64_t id_type;
 
@@ -191,7 +185,6 @@ namespace sm {
         }                                                               \
     };									
 
-#ifdef _WIN32
 // If you need to use the ID in a tr1 hashing container,
 // use this macro outside of any namespace:
 // SM_DEFINE_ID_HASH(my_namespace::myIdType);
@@ -201,7 +194,7 @@ namespace sm {
         struct hash<FullyQualifiedIdTypeName>                       \
         {                                                           \
             hash<boost::uint64_t> _hash;                            \
-            size_t operator()(const FullyQualifiedIdTypeName & id)	\
+            size_t operator()(const FullyQualifiedIdTypeName & id) const  \
             {                                                       \
                 return _hash(id.getId());                           \
             }                                                       \
@@ -218,45 +211,5 @@ namespace sm {
             }                                                           \
         };                                                              \
         } // namespace boost
-#else
-// If you need to use the ID in a tr1 hashing container,
-// use this macro outside of any namespace:
-// SM_DEFINE_ID_HASH(my_namespace::myIdType);
-#define SM_DEFINE_ID_HASH(FullyQualifiedIdTypeName)                     \
-    namespace std {                                                     \
-        template<>                                                      \
-        struct hash<FullyQualifiedIdTypeName>                           \
-        {                                                               \
-            hash<boost::uint64_t> _hash;                                \
-            size_t operator()(const FullyQualifiedIdTypeName & id) const \
-            {                                                           \
-                return _hash(id.getId());                               \
-            }                                                           \
-        };                                                              \
-    }                                                                   \
-    namespace std { namespace tr1 {                                     \
-            template<>                                                  \
-            struct hash<FullyQualifiedIdTypeName>                       \
-            {                                                           \
-                hash<boost::uint64_t> _hash;                            \
-                size_t operator()(const FullyQualifiedIdTypeName & id) const	\
-                {                                                       \
-                    return _hash(id.getId());                           \
-                }                                                       \
-            };                                                          \
-        }}                                                              \
-    namespace boost {                                                   \
-        template<>                                                      \
-        struct hash<FullyQualifiedIdTypeName>                           \
-        {                                                               \
-            boost::hash<boost::uint64_t> _hash;                         \
-            size_t operator()(const FullyQualifiedIdTypeName & id) const \
-            {                                                           \
-                return _hash(id.getId());                               \
-            }                                                           \
-        };                                                              \
-        } // namespace boost
-
-#endif
 
 #endif /* SM_ID_HPP */
