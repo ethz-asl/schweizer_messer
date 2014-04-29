@@ -7,21 +7,21 @@
 using namespace sm;
 
 TEST(SmCommonTestSuite, hashId_different) {
-  HashId a, b;
+  HashId a(HashId::random()), b(HashId::random());
   EXPECT_NE(a, b);
 }
 
 TEST(SmCommonTestSuite, hashId_validity) {
   HashId a, b;
-  EXPECT_TRUE(a.isValid());
-  a.setInvalid();
   EXPECT_FALSE(a.isValid());
-  b.setInvalid();
-  EXPECT_EQ(a, b);
+  EXPECT_FALSE(b.isValid());
+  EXPECT_EQ(a,b);
+  a.randomize();
+  EXPECT_TRUE(a.isValid());
 }
 
 TEST(SmCommonTestSuite, hashId_string) {
-  HashId a, b;
+  HashId a(HashId::random()), b(HashId::random());
   std::string as(a.hexString()), bs(b.hexString());
   EXPECT_NE(as, bs);
   EXPECT_EQ(as.length(), 32);

@@ -9,25 +9,37 @@
 namespace sm {
 
 /**
- * Randomly initialized 128 bit hash
- * TODO(tcies) (de)serialization
+ * 128 bit hash.
  */
 class HashId {
  public:
   /**
-   * Initializes to a random 128 bit string, seeding on the time in nanoseconds
-   * of the first call to this function
+   * Initializes to an invalid Hash
    */
-  inline HashId(){
-    static std::mt19937_64 rng(time64());
-    val_.u64[0] = rng();
-    val_.u64[1] = rng();
+  inline HashId() {
+    setInvalid();
+  }
+  /**
+   * Copy constructor
+   */
+  inline HashId(const HashId& other){
+    *this = other;
+  }
+
+  /**
+   * Generates a random Hash ID seeded from the nanosecond time of the first
+   * call of this function
+   */
+  inline static HashId random() {
+    HashId generated;
+    generated.randomize();
+    return generated;
   }
 
   /**
    * Returns hexadecimal string for debugging or serialization
    */
-  inline const std::string hexString() const{
+  inline const std::string hexString() const {
     std::ostringstream ss;
     for (size_t i = 0; i < sizeof(val_); ++i){
       ss << std::hex << std::setfill('0') << std::setw(2) <<
@@ -40,7 +52,7 @@ class HashId {
    * Deserialize from hexadecimal string. Serialization and Deserialization
    * could be made more performant by using blobs.
    */
-  inline bool fromHexString(const std::string& hexString){
+  inline bool fromHexString(const std::string& hexString) {
     // hexadecimal string takes 2 characters per byte
     if (hexString.size() != 2*sizeof(val_)){
       return false;
@@ -54,19 +66,33 @@ class HashId {
     return true;
   }
 
-  inline bool operator <(const HashId& other) const{
+  /**
+   * Randomizes to ID seeded from the nanosecond time of the first
+   * call of this function
+   */
+  inline void randomize(){
+    static std::mt19937_64 rng(time64());
+    val_.u64[0] = rng();
+    val_.u64[1] = rng();
+  }
+
+  inline void operator =(const HashId& other) {
+    memcpy(&val_, &other.val_, sizeof(val_));
+  }
+
+  inline bool operator <(const HashId& other) const {
     if (val_.u64[0] == other.val_.u64[0]){
       return val_.u64[1] < other.val_.u64[1];
     }
     return val_.u64[0] < other.val_.u64[0];
   }
-  inline bool operator >(const HashId& other) const{
+  inline bool operator >(const HashId& other) const {
     if (val_.u64[0] == other.val_.u64[0]){
       return val_.u64[1] > other.val_.u64[1];
     }
     return val_.u64[0] > other.val_.u64[0];
   }
-  inline bool operator ==(const HashId& other) const{
+  inline bool operator ==(const HashId& other) const {
     return val_.u64[0] == other.val_.u64[0] && val_.u64[1] == other.val_.u64[1];
   }
   inline bool operator !=(const HashId& other) const{
@@ -76,10 +102,10 @@ class HashId {
   /**
    * Invalidation mechanism
    */
-  inline void setInvalid(){
+  inline void setInvalid() {
     memset(&val_, 0, sizeof(val_));
   }
-  inline bool isValid() const{
+  inline bool isValid() const {
     return val_.u64[0] != 0 || val_.u64[1] != 0;
   }
 
@@ -88,7 +114,7 @@ class HashId {
    * Time seed from nanoseconds. Covers 584 years if we assume no two agents
    * initialize in the same nanosecond.
    */
-  inline static int64_t time64(){
+  inline static int64_t time64() {
     std::chrono::system_clock::duration current =
         std::chrono::high_resolution_clock::now().time_since_epoch();
     using std::chrono::duration_cast;
@@ -100,7 +126,7 @@ class HashId {
   /**
    * Internal representation
    */
-  union HashVal{
+  union HashVal {
     unsigned char c[16];
     uint_fast64_t u64[2];
   };
