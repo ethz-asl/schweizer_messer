@@ -208,6 +208,8 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
 
   ASSERT_TRUE(SM_CHECKSAME(e1, e3));
   ASSERT_TRUE(SM_CHECKSAME(e3, e1));
+
+  SET_CHECKSAME_SILENT;
 }
 
 TEST(SerializationMacros, TestClassesCopyCtorAssignWorks) {
