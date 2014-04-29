@@ -200,7 +200,6 @@ TEST(SerializationMacros, TestClassesMacroWorks) {
 
   e2 = e1;
 
-  SET_CHECKSAME_VERBOSE;
   ASSERT_TRUE(SM_CHECKSAME(e1, e2));
   ASSERT_TRUE(SM_CHECKSAME(e2, e1));
 
