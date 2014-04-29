@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <cstring>
+#include <functional>
 #include <iomanip>
 #include <sstream>
 
