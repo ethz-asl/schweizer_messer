@@ -5,6 +5,7 @@
 #include <cstring>
 #include <functional>
 #include <iomanip>
+#include <random>
 #include <sstream>
 
 namespace sm {
