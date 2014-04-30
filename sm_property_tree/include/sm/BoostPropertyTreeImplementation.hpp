@@ -16,6 +16,7 @@ namespace sm {
     typedef ptree::const_iterator const_iterator;
 
     BoostPropertyTreeImplementation();
+    BoostPropertyTreeImplementation(const boost::property_tree::ptree& ptree);
     virtual ~BoostPropertyTreeImplementation();
 
     void loadXml(const boost::filesystem::path & fileName);
@@ -47,7 +48,6 @@ namespace sm {
     virtual void setInt(const std::string & key, int value);
     virtual void setBool(const std::string & key, bool value);
     virtual void setString(const std::string & key, const std::string & value);
-
 
     virtual bool doesKeyExist(const std::string & key) const;
 
@@ -132,8 +132,6 @@ namespace sm {
   {
     _ptree.put<T>(boost::property_tree::ptree::path_type(key.substr(1),'/'), value);
   }
-
-
 } // namespace sm
 
 

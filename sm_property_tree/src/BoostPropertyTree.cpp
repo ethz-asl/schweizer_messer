@@ -13,6 +13,12 @@ namespace sm {
 
   }
 
+  BoostPropertyTree::BoostPropertyTree(const boost::property_tree::ptree& ptree, const std::string & baseNamespace) :
+    PropertyTree(boost::shared_ptr<PropertyTreeImplementation>(new BoostPropertyTreeImplementation(ptree)), baseNamespace)
+  {
+
+  }
+
   BoostPropertyTree::~BoostPropertyTree()
   {
 

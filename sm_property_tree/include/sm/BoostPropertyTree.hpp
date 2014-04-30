@@ -22,6 +22,7 @@ namespace sm {
     
 
     BoostPropertyTree(const std::string & baseNamespace = "");
+    BoostPropertyTree(const boost::property_tree::ptree& ptree, const std::string & baseNamespace = "");
     virtual ~BoostPropertyTree();
 
     void loadXml(const boost::filesystem::path & fileName);

@@ -10,6 +10,11 @@ namespace sm {
 
   }
 
+  BoostPropertyTreeImplementation::BoostPropertyTreeImplementation(const boost::property_tree::ptree& ptree)
+  : _ptree(ptree)
+  {
+  }
+
   BoostPropertyTreeImplementation::~BoostPropertyTreeImplementation()
   {
 
