@@ -1,4 +1,3 @@
-import roslib; roslib.load_manifest('numpy_eigen')
 import numpy_eigen
 import inspect
 
