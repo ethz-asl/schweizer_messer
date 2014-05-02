@@ -63,7 +63,7 @@ struct pickle_suite : boost::python::pickle_suite
   //
   static
   boost::python::tuple
-  getinitargs(const T & val)
+  getinitargs(const T & /* val */)
   {
     return boost::python::tuple();
   }

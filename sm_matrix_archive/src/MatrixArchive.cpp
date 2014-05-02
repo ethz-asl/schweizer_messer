@@ -127,7 +127,7 @@ namespace sm
     return it->second;
   }
 
-  void MatrixArchive::validateName(std::string const & name, sm::source_file_pos const & sfp) const
+  void MatrixArchive::validateName(std::string const & name, sm::source_file_pos const & /* sfp */) const
   {
     if(name.size() > s_fixedNameSize || name.size() == 0)
     {
@@ -212,7 +212,7 @@ namespace sm
   }
 
 
-  void MatrixArchive::writeMatrixBlockSwapBytes(std::ostream & fout, std::string const & name, Eigen::MatrixXd const & matrix) const
+  void MatrixArchive::writeMatrixBlockSwapBytes(std::ostream & /* fout */, std::string const & /* name */, Eigen::MatrixXd const & /* matrix */) const
   {
     SM_THROW(MatrixArchiveException, "Not Implemented");
   }
@@ -298,7 +298,7 @@ namespace sm
     return blockType;
   }
 
-  void MatrixArchive::readMatrixSwapBytes(std::istream & fin, std::string & name, Eigen::MatrixXd & matrix) const
+  void MatrixArchive::readMatrixSwapBytes(std::istream & /* fin */, std::string & /* name */, Eigen::MatrixXd & /* matrix */) const
   {
     SM_THROW(MatrixArchiveException, "Not Implemented");
   }
@@ -421,7 +421,7 @@ namespace sm
 
   }
 
-  void MatrixArchive::append(boost::filesystem::path const & amaFilePath, std::set<std::string> const & validNames) const
+  void MatrixArchive::append(boost::filesystem::path const & amaFilePath, std::set<std::string> const & /* validNames */) const
   {
     std::ofstream fout(amaFilePath.string().c_str(), std::ios::binary | std::ios::app);
     SM_ASSERT_TRUE(MatrixArchiveException, fout.good(), "Unable to open file " << amaFilePath.string() << " for writing");
