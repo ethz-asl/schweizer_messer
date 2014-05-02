@@ -88,7 +88,7 @@ namespace sm {
 
 
     template<class Archive>
-    void UncertainTransformation::save(Archive & ar, const unsigned int version) const
+    void UncertainTransformation::save(Archive & ar, const unsigned int /* version */) const
     {
 
 	  using ::boost::serialization::make_nvp;
