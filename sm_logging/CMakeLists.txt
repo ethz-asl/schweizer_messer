@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(sm_logging)
 
 find_package(catkin REQUIRED)
-find_package(Boost REQUIRED COMPONENTS system thread regex)
+find_package(Boost REQUIRED COMPONENTS system thread regex chrono)
 
 catkin_package(
   INCLUDE_DIRS include
