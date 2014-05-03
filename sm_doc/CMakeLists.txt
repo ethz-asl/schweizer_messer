@@ -32,8 +32,12 @@ IF(DOXYGEN)
   SET( HAVE_DOT YES )
   
   CONFIGURE_FILE(${DOCSOURCE_DIR}/doxygen.config.in ${DOCSOURCE_DIR}/doxygen.config IMMEDIATE)
-  
-  ADD_CUSTOM_TARGET(doc ALL ${DOXYGEN} --silent ${DOCSOURCE_DIR}/doxygen.config)
+  IF(APPLE)
+    SET(DOX_FLAGS)
+  ELSE()
+    SET(DOX_FLAGS --silent)
+  ENDIF()
+  ADD_CUSTOM_TARGET(doc ALL ${DOXYGEN} ${DOX_FLAGS} ${DOCSOURCE_DIR}/doxygen.config)
 ENDIF(DOXYGEN)
 
 #-------------------------#

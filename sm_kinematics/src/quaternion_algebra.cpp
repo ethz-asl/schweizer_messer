@@ -455,7 +455,7 @@ namespace sm { namespace kinematics {
           return J;
         }
 
-        template <typename Scalar_ = double>
+        template <typename Scalar_>
         inline const typename Eigen::Matrix<Scalar_, 4, 3> & quatV(){
           static const Eigen::Matrix<Scalar_, 4, 3> V = 0.5 * Eigen::Matrix<Scalar_, 4, 3>::Identity();
           return V;
@@ -464,7 +464,7 @@ namespace sm { namespace kinematics {
         template const Eigen::Matrix<float, 4, 3> & quatV();
 
 
-        template <typename Scalar_ = double>
+        template <typename Scalar_>
         Eigen::Matrix<Scalar_, 3, 3> expDiffMat(const Eigen::Matrix<Scalar_, 3, 1> & vec){
           Scalar_ phi = vec.norm();
 
@@ -494,14 +494,14 @@ namespace sm { namespace kinematics {
         template Eigen::Matrix<double, 3, 3> expDiffMat<double>(const Eigen::Matrix<double, 3, 1>  &);
         template Eigen::Matrix<float, 3, 3> expDiffMat<float>(const Eigen::Matrix<float, 3, 1>  &);
 
-        template <typename Scalar_ = double>
+        template <typename Scalar_>
         Eigen::Matrix<Scalar_ , 4, 3> quatExpJacobian(const Eigen::Matrix<Scalar_ , 3, 1>& vec){
           return quatOPlus(axisAngle2quat(vec.template cast<double>())).template cast<Scalar_>() * quatV<Scalar_>() * expDiffMat(vec);
         }
         template Eigen::Matrix<double, 4,3> quatExpJacobian(const Eigen::Matrix<double, 3, 1>& vec);
         template Eigen::Matrix<float, 4,3> quatExpJacobian(const Eigen::Matrix<float, 3, 1>& vec);
 
-        template <typename Scalar_ = double>
+        template <typename Scalar_>
         Eigen::Matrix<Scalar_, 3, 3> logDiffMat(const Eigen::Matrix<Scalar_, 3, 1>  & vec){
           Scalar_ phi = vec.norm();
           if(phi == 0){
@@ -524,7 +524,7 @@ namespace sm { namespace kinematics {
         template Eigen::Matrix<double, 3, 3> logDiffMat<double>(const Eigen::Matrix<double, 3, 1>  &);
         template Eigen::Matrix<float, 3, 3> logDiffMat<float>(const Eigen::Matrix<float, 3, 1>  &);
 
-        template <typename Scalar_ = double>
+        template <typename Scalar_>
         Eigen::Matrix<Scalar_ , 3, 4> quatLogJacobian2(const Eigen::Matrix<Scalar_ , 4, 1>& p){
           return logDiffMat(quat2AxisAngle<>(p)) * (quatV<Scalar_>().transpose() * Scalar_(4.0)) * quatOPlus(quatInv(p.template cast<double>())).template cast<Scalar_>();
         }

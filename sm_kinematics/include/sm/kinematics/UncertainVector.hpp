@@ -189,7 +189,7 @@ namespace sm {
                 }
 
             template<class Archive>
-            void save(Archive & ar, const unsigned int version) const
+            void save(Archive & ar, const unsigned int /* version */) const
                 {
                     ar << BOOST_SERIALIZATION_NVP(_v);
                     ar << BOOST_SERIALIZATION_NVP(_sigma2);

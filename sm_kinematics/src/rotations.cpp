@@ -74,7 +74,7 @@ namespace sm { namespace kinematics {
 	
 
   //// Small angle approximation.
-  template <typename Scalar_ = double>
+  template <typename Scalar_>
   Eigen::Matrix<Scalar_, 3, 3> crossMx(Scalar_ x, Scalar_ y, Scalar_ z){
     Eigen::Matrix<Scalar_, 3, 3> C;
     C(0,0) =  0.0; C(0,1) = -z;   C(0,2) =   y;
