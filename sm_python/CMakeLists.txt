@@ -7,7 +7,6 @@ find_package(catkin REQUIRED COMPONENTS sm_common numpy_eigen sm_kinematics
                                         sm_timing sm_logging sm_matrix_archive
                                         sm_property_tree python_module)
 include_directories(${catkin_INCLUDE_DIRS})
-find_package(Boost REQUIRED COMPONENTS system)
 find_package(Eigen REQUIRED)
 
 include_directories(include ${Eigen_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS})
@@ -27,6 +26,8 @@ include_directories(include)
 # Set up the python exports.
 SET(PY_PROJECT_NAME sm_python)
 SET(PY_PACKAGE_DIR python/sm)
+
+find_package(Boost REQUIRED COMPONENTS system serialization)
 
 ##############
 ## Building ##
@@ -52,3 +53,4 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/random.cpp
 )
 
+target_link_libraries(${PY_PROJECT_NAME} ${Boost_LIBRARIES})
