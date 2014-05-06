@@ -32,7 +32,7 @@ IF(DOXYGEN)
   SET( HAVE_DOT YES )
   
   CONFIGURE_FILE(${DOCSOURCE_DIR}/doxygen.config.in ${DOCSOURCE_DIR}/doxygen.config IMMEDIATE)
-  IF(APPLE)
+  IF(DOXYGEN_VERSION VERSION_GREATER 1.8.0) # This version bound might be wrong. But I could not find the precise version transition when this option vanished - not mentioned in the doxygen changelog at all!
     SET(DOX_FLAGS)
   ELSE()
     SET(DOX_FLAGS --silent)
