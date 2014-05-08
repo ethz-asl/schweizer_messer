@@ -15,10 +15,6 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 
 add_definitions(-std=c++0x)
 
-if(APPLE)
-  link_directories(/usr/local/lib)
-endif()
-
 ##############
 ## Building ##
 ##############

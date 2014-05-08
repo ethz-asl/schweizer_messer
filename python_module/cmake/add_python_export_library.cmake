@@ -14,7 +14,7 @@
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
 
 
-MACRO(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
+FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
 
   # Cmake is a very bad scripting language. Very bad indeed.
   # Get the leaf of the python module directory. This is the python package name
@@ -66,7 +66,12 @@ ${SETUP_PY_TEXT}
   FIND_PACKAGE(PythonLibs 2.7 REQUIRED)
   INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
-  find_package(Boost REQUIRED COMPONENTS python) 
+  if(APPLE)
+    SET(BOOST_COMPONENTS python system)
+  else()
+    SET(BOOST_COMPONENTS python)
+  endif()
+  find_package(Boost REQUIRED COMPONENTS ${BOOST_COMPONENTS}) 
 
   IF(APPLE)
     # The apple framework headers don't include the numpy headers for some reason.
@@ -133,5 +138,5 @@ ${SETUP_PY_TEXT}
   list(APPEND AMCF ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME})
   set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${AMCF}") 
   
-ENDMACRO()
+ENDFUNCTION()
 
