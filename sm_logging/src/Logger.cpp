@@ -11,11 +11,7 @@ namespace sm {
         double Logger::currentTimeSecondsUtc() const
         {
             Time t = currentTimeImplementation();
-#ifdef __APPLE__
-            boost::int64_t us = boost::chrono::duration_cast<boost::chrono::microseconds>( t.time_since_epoch() ).count();
-#else
             boost::int64_t us = std::chrono::duration_cast<std::chrono::microseconds>( t.time_since_epoch() ).count();
-#endif
             return (double)us/1000000.0;
         }
 
