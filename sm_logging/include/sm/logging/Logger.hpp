@@ -2,11 +2,8 @@
 #define SM_LOGGER_HPP
 
 #include <string>
-#ifdef __APPLE__
-#include <boost/chrono.hpp>
-#else
 #include <chrono>
-#endif
+
 namespace sm {
     namespace logging {
         
@@ -15,11 +12,7 @@ namespace sm {
         class Logger
         {
         public:
-#ifdef __APPLE__
-            typedef boost::chrono::system_clock Clock;
-#else
             typedef std::chrono::system_clock Clock;
-#endif
             typedef Clock::time_point Time;
             typedef Clock::duration Duration;
 
