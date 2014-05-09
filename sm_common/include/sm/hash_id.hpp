@@ -117,7 +117,7 @@ class HashId {
    * initialize in the same nanosecond.
    */
   inline static int64_t time64() {
-    std::chrono::system_clock::duration current =
+    std::chrono::high_resolution_clock::duration current =
         std::chrono::high_resolution_clock::now().time_since_epoch();
     using std::chrono::duration_cast;
     using std::chrono::nanoseconds;
@@ -135,6 +135,11 @@ class HashId {
   HashVal val_;
 };
 
+std::ostream& operator<<( std::ostream& out, const sm::HashId& hash ) {
+  out << hash.hexString();
+  return out;
+}
+
 } // namespace sm
 
 namespace std{
@@ -148,5 +153,6 @@ namespace std{
     }
   };
 } // namespace std
+
 
 #endif /* HASH_ID_HPP_ */
