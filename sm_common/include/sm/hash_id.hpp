@@ -135,23 +135,24 @@ class HashId {
   HashVal val_;
 };
 
-std::ostream& operator<<( std::ostream& out, const sm::HashId& hash ) {
+} // namespace sm
+
+namespace std{
+
+inline ostream& operator<<(ostream& out, const sm::HashId& hash) {
   out << hash.hexString();
   return out;
 }
 
-} // namespace sm
+template<>
+struct hash<sm::HashId>{
+  typedef sm::HashId argument_type;
+  typedef std::size_t value_type;
 
-namespace std{
-  template<>
-  struct hash<sm::HashId>{
-    typedef sm::HashId argument_type;
-    typedef std::size_t value_type;
-
-    value_type operator()(const argument_type& hashId) const {
-      return std::hash<std::string>()(hashId.hexString());
-    }
-  };
+  value_type operator()(const argument_type& hashId) const {
+    return std::hash<std::string>()(hashId.hexString());
+  }
+};
 } // namespace std
 
 
