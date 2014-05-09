@@ -43,6 +43,6 @@ TEST(SmCommonTestSuite, hashId_stdHash) {
   hashes.insert(needle);
   hashes.insert(HashId::random());
   std::unordered_set<HashId>::iterator found = hashes.find(needle);
-  EXPECT_NE(found, hashes.end());
+  EXPECT_TRUE(found != hashes.end());
   EXPECT_EQ(*found, needle);
 }
