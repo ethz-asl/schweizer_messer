@@ -6,7 +6,7 @@ TEST( NsetTimeTestSuite, testChronoConversion ) {
   std::chrono::system_clock::time_point tp1 = std::chrono::system_clock::now();
   sm::timing::NsecTime ns1 = sm::timing::chronoToNsec( tp1 );
   std::chrono::system_clock::time_point tp2 = sm::timing::nsecToChrono( ns1 );
-  ASSERT_EQ(tp1,tp2);
+  ASSERT_TRUE(tp1 == tp2);
   
 }
 
