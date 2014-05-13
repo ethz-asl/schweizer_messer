@@ -11,15 +11,29 @@ include_directories(include ${Boost_INCLUDE_DIRS})
 
 catkin_package(
   INCLUDE_DIRS include ${catkin_INCLUDE_DIRS}
-  LIBRARIES
+  LIBRARIES ${PROJECT_NAME}
   CATKIN_DEPENDS 
   DEPENDS
   CFG_EXTRAS export_flags.cmake
 )
 
+add_library(${PROJECT_NAME}
+  src/progress_info.cpp
+)
+target_link_libraries(${PROJECT_NAME} 
+                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+
+
 ##################
 ## Installation ##
 ##################
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 
 ## Mark cpp header files for installation
 install(DIRECTORY include/${PROJECT_NAME}/
