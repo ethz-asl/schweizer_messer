@@ -28,8 +28,9 @@ import collections
 #      plotter.show()
 
 class PlotCollection:
-    def __init__(self, frame_name=""):
+    def __init__(self, frame_name="", window_size=(800,600)):
         self.frame_name = frame_name
+        self.window_size = window_size
         self.figureList = collections.OrderedDict()
     
     def add_figure(self, name, fig):
@@ -42,7 +43,7 @@ class PlotCollection:
         if len(self.figureList.keys()) == 0:
             return
         app = wx.PySimpleApp()
-        frame = wx.Frame(None,-1,self.frame_name)
+        frame = wx.Frame(None,-1,self.frame_name, size=self.window_size)
         plotter = self.PlotNotebook(frame)
         for name in self.figureList.keys():
             plotter.add(name, self.figureList[name])
