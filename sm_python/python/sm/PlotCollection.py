@@ -9,6 +9,8 @@ from matplotlib.backends.backend_wxagg import NavigationToolbar2Wx as Toolbar
 import collections
 
 #This class places matplot figures in tabs on a wx window
+#(make sure to use unique figure ids between different PlotCollection instances 
+# or wxwidget may segfault)
 #e.g. usage:  
 #      import sm
 #      import pylab as pl
@@ -55,9 +57,7 @@ class PlotCollection:
             wx.Panel.__init__(self, parent, id=id, **kwargs)
             fig.set_figheight(2)
             fig.set_figwidth(2)
-            self.figure = fig
-            
-            self.canvas = Canvas(self, -1, self.figure)
+            self.canvas = Canvas(self, -1, fig)
             self.toolbar = Toolbar(self.canvas)
             self.toolbar.Realize()
     
@@ -77,4 +77,3 @@ class PlotCollection:
         def add(self,name, fig):
            page = PlotCollection.Plot(self.nb, fig)
            self.nb.AddPage(page,name)
-           return page.figure
