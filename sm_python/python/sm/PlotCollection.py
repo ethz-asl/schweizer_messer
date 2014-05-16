@@ -6,6 +6,7 @@ import wx.aui
 import matplotlib as mpl
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as Canvas
 from matplotlib.backends.backend_wxagg import NavigationToolbar2Wx as Toolbar
+import collections
 
 #This class places matplot figures in tabs on a wx window
 #e.g. usage:  
@@ -29,7 +30,7 @@ from matplotlib.backends.backend_wxagg import NavigationToolbar2Wx as Toolbar
 class PlotCollection:
     def __init__(self, frame_name=""):
         self.frame_name = frame_name
-        self.figureList = dict()
+        self.figureList = collections.OrderedDict()
     
     def add_figure(self, name, fig):
         self.figureList[name] = fig
