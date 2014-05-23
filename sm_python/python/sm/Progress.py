@@ -23,15 +23,22 @@ class Progress(object):
             self.iteration = 0
             self.started = True
 
+
 class Progress2(object):
     def __init__(self, numIterations):
+        """
+        Progress tracker that calculates and prints the time until a process is finished.
+        """
         self.started = False
         self.elapsed = 0
         self.startTime = 0
         self.numIterations = numIterations
         self.iteration = 0
-    
+
     def sample(self, steps=1):
+        """
+        Call this function at each iteration. It prints the remaining steps and time.
+        """
         if self.started:
             self.iteration = self.iteration + steps
             self.elapsed = time.time() - self.startTime
@@ -52,6 +59,9 @@ class Progress2(object):
             self.started = True
         
     def reset(self, numIterations = -1):
+        """
+        Reset the progress tracker
+        """
         self.started = False
         self.elapsed = 0
         self.startTime = 0

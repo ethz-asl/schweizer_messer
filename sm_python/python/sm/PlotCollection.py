@@ -8,40 +8,50 @@ from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as Canvas
 from matplotlib.backends.backend_wxagg import NavigationToolbar2Wx as Toolbar
 import collections
 
-#This class places matplot figures in tabs on a wx window
-#(make sure to use unique figure ids between different PlotCollection instances 
-# or wxwidget may segfault)
-#e.g. usage:  
-#      import sm
-#      import pylab as pl
-#
-#      #create the plot as usual
-#      fig1=pl.figure()
-#      pl.plot([1,2],[2,3])
-#      fig2=pl.figure()
-#      pl.plot([3,1],[4,5])
-#  
-#      #add to collection
-#      plotter = sm.PlotCollection("My window name")
-#      plotter.add_figure("My plot1 name", fig1)
-#      plotter.add_figure("My plot2 name", fig2)
-#  
-#      #show collection
-#      plotter.show()
-
 class PlotCollection:
-    def __init__(self, frame_name="", window_size=(800,600)):
-        self.frame_name = frame_name
+    def __init__(self, window_name="", window_size=(800,600)):
+        """
+        #This class places matplot figures in tabs on a wx window
+        #(make sure to use unique figure ids between different PlotCollection instances 
+        # or wxwidget may segfault)
+        #e.g. usage:  
+        #      import sm
+        #      import pylab as pl
+        #
+        #      #create the plot as usual
+        #      fig1=pl.figure()
+        #      pl.plot([1,2],[2,3])
+        #      fig2=pl.figure()
+        #      pl.plot([3,1],[4,5])
+        #  
+        #      #add to collection
+        #      plotter = sm.PlotCollection("My window name")
+        #      plotter.add_figure("My plot1 name", fig1)
+        #      plotter.add_figure("My plot2 name", fig2)
+        #  
+        #      #show collection
+        #      plotter.show()
+        """
+        self.frame_name = window_name
         self.window_size = window_size
         self.figureList = collections.OrderedDict()
     
-    def add_figure(self, name, fig):
-        self.figureList[name] = fig
+    def add_figure(self, tabname, fig):
+        """
+        Add a matplotlib figure to the collection
+        """
+        self.figureList[tabname] = fig
         
     def delete_figure(self, name):
+        """
+        Delete a figure from the collection given the tab name.
+        """
         self.figureList.pop(name, None)
     
     def show(self):
+        """
+        Show the window on screen
+        """
         if len(self.figureList.keys()) == 0:
             return
         app = wx.PySimpleApp()
@@ -51,7 +61,7 @@ class PlotCollection:
             plotter.add(name, self.figureList[name])
         frame.Show()
         app.MainLoop()
-    
+        
     class Plot(wx.Panel):
         def __init__(self, parent, fig, id = -1, dpi = None, **kwargs):
             wx.Panel.__init__(self, parent, id=id, **kwargs)
