@@ -31,9 +31,9 @@ class Progress2(object):
         self.numIterations = numIterations
         self.iteration = 0
     
-    def sample(self):
+    def sample(self, steps=1):
         if self.started:
-            self.iteration = self.iteration + 1
+            self.iteration = self.iteration + steps
             self.elapsed = time.time() - self.startTime
             timePerRun = self.elapsed / self.iteration
             totalTime = self.numIterations * timePerRun
