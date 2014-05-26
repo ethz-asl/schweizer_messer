@@ -11,26 +11,26 @@ import collections
 class PlotCollection:
     def __init__(self, window_name="", window_size=(800,600)):
         """
-        #This class places matplot figures in tabs on a wx window
-        #(make sure to use unique figure ids between different PlotCollection instances 
-        # or wxwidget may segfault)
-        #e.g. usage:  
-        #      import sm
-        #      import pylab as pl
-        #
-        #      #create the plot as usual
-        #      fig1=pl.figure()
-        #      pl.plot([1,2],[2,3])
-        #      fig2=pl.figure()
-        #      pl.plot([3,1],[4,5])
-        #  
-        #      #add to collection
-        #      plotter = sm.PlotCollection("My window name")
-        #      plotter.add_figure("My plot1 name", fig1)
-        #      plotter.add_figure("My plot2 name", fig2)
-        #  
-        #      #show collection
-        #      plotter.show()
+        This class places matplot figures in tabs on a wx window
+        (make sure to use unique figure ids between different PlotCollection instances 
+         or wxwidget may segfault)
+         e.g. usage:  
+              from sm import PlotCollection
+              import pylab as pl
+        
+              #create the plot as usual
+              fig1=pl.figure()
+              pl.plot([1,2],[2,3])
+              fig2=pl.figure()
+              pl.plot([3,1],[4,5])
+          
+              #add to collection
+              plotter = PlotCollection.PlotCollection("My window name")
+              plotter.add_figure("My plot1 name", fig1)
+              plotter.add_figure("My plot2 name", fig2)
+          
+              #show collection
+              plotter.show()
         """
         self.frame_name = window_name
         self.window_size = window_size

@@ -1,5 +1,7 @@
 import time
 import datetime
+import sys
+
 class Progress(object):
     def __init__(self, numIterations):
         self.started = False
@@ -28,6 +30,16 @@ class Progress2(object):
     def __init__(self, numIterations):
         """
         Progress tracker that calculates and prints the time until a process is finished.
+        
+        example usage:
+            import sm
+            import time
+            
+            numIter = 10
+            progress = sm.Progress2(numIter)
+            for iter in range(0, numIter):
+                progress.sample()
+                time.sleep(1)
         """
         self.started = False
         self.elapsed = 0
@@ -52,7 +64,7 @@ class Progress2(object):
             if m > 0: t_remaining_str = t_remaining_str + "%dm " % m
             if s > 0: t_remaining_str = t_remaining_str + "%ds" % s
             print "\r  Progress {0} / {1} \t Time remaining: {2}                 ".format(self.iteration, self.numIterations, t_remaining_str),
-                
+            sys.stdout.flush()
         else:
             self.startTime = time.time()
             self.iteration = 0
