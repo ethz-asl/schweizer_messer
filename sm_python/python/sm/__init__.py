@@ -4,9 +4,8 @@ import inspect
 from libsm_python import *
 from plotCoordinateFrame import plotCoordinateFrame
 from Progress import Progress
+from Progress import Progress2
 from saveFigTight import saveFigTight
-
-
 
 
 def logInfo(message):
