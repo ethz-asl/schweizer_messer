@@ -2,7 +2,13 @@
 #include <sm/MatrixArchive.hpp>
 
 
-// void getMatrix(std::string const & matrixName, Eigen::MatrixXd & outMatrix) const;
+// std::string getString(std::string const & stringName) const;
+std::string getString(const sm::MatrixArchive * ma, std::string const & stringName)
+{
+  return ma->getString(stringName);
+}
+
+// void getMatrix(std::string const & matrixName) const;
 Eigen::MatrixXd getMatrix(const sm::MatrixArchive * ma, std::string const & matrixName)
 {
   Eigen::MatrixXd M;
@@ -41,6 +47,17 @@ boost::python::dict asDict(const sm::MatrixArchive * ma)
   boost::python::dict dict;
   sm::MatrixArchive::matrix_map_t::const_iterator it = ma->begin();
   for( ; it != ma->end(); it++)
+    {
+      dict[it->first] = it->second;
+    }
+  return dict;
+}
+
+boost::python::dict stringsAsDict(const sm::MatrixArchive * ma)
+{
+  boost::python::dict dict;
+  auto & strings = ma->getStrings();
+  for(auto it = strings.begin() ; it != strings.end(); it++)
     {
       dict[it->first] = it->second;
     }
@@ -89,8 +106,11 @@ void exportMatrixArchive()
     .def("getMatrix",&getMatrix)
     .def("getVector",&getVector)
     .def("getScalar",&getScalar)
+    .def("getString", getString)
+    .def("setString", &MatrixArchive::setString)
     .def("getNameList",&getNameList)
     .def("asDict",&asDict)
+    .def("stringsAsDict",&stringsAsDict)
     ;
 
 
