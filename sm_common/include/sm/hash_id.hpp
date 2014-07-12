@@ -156,4 +156,18 @@ struct hash<sm::HashId>{
 } // namespace std
 
 
+/// \brief Define the hash function for types derived from HashId
+#define SM_DEFINE_HASHID_HASH(FullyQualifiedIdTypeName)                 \
+  namespace std {                                                       \
+  template<>                                                            \
+  struct hash<FullyQualifiedIdTypeName>{                                \
+    typedef FullyQualifiedIdTypeName argument_type;                     \
+    typedef std::size_t value_type;                                     \
+    value_type operator()(const argument_type& hashId) const {          \
+      return std::hash<std::string>()(hashId.hexString());              \
+    }                                                                   \
+  };                                                                    \
+  }                                                                     \
+
+
 #endif /* HASH_ID_HPP_ */
