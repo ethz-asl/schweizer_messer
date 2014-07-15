@@ -1,35 +1,25 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sm_matlab)
 
-find_package(catkin REQUIRED COMPONENTS sm_common sm_random)
-include_directories(${catkin_INCLUDE_DIRS})
+find_package(catkin_simple REQUIRED)
+catkin_simple()
+
 find_package(Boost REQUIRED COMPONENTS system)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
 find_package(Eigen REQUIRED)
 include_directories(${EIGEN_INCLUDE_DIRS})
+
 find_package(Matlab)  # Don't search with required, so we can continue.
 
-catkin_package(
-  INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS sm_common sm_random
-  DEPENDS
-)
-
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
-
-##############
-## Building ##
-##############
-
 if(MATLAB_FOUND)
-  add_library(${PROJECT_NAME}
+  cs_add_library(${PROJECT_NAME}
     src/Engine.cpp
   )
   include_directories(${MATLAB_INCLUDE_DIR})
   
-  target_link_libraries(${PROJECT_NAME} ${MATLAB_LIBRARIES} ${catkin_LIBRARIES}
+  target_link_libraries(${PROJECT_NAME} ${MATLAB_LIBRARIES}
                                         ${Boost_LIBRARIES})
 
   add_executable(sm_matlab_demo demo/demo.cpp)
@@ -53,3 +43,6 @@ add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 else()
 message("Matlab not found, not building sm_matlab")  
 endif()
+
+cs_install()
+cs_export()

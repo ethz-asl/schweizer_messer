@@ -1,54 +1,24 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sm_database)
 
+find_package(catkin_simple REQUIRED)
+catkin_simple()
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake/)
 
-find_package(catkin REQUIRED COMPONENTS sm_common sm_boost)
 find_package(Boost REQUIRED COMPONENTS system filesystem serialization)
 find_package(Sqlite3 REQUIRED)
 include_directories(${SQLITE3_DIRECTORIES})
 
-catkin_package(
-  INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS 
-  DEPENDS
-)
+include_directories(include ${Boost_INCLUDE_DIRS})
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
-
-##############
-## Building ##
-##############
-
-add_library(${PROJECT_NAME}
+cs_add_library(${PROJECT_NAME}
   src/Database.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} ${SQLITE3_LIBRARIES}
-                                      ${catkin_LIBRARIES}
-                                      ${Boost_LIBRARIES})
+  ${Boost_LIBRARIES})
 
-##################
-## Installation ##
-##################
-
-install(TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
-
-## Mark cpp header files for installation
-install(DIRECTORY include/${PROJECT_NAME}/
-  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-  FILES_MATCHING PATTERN "*.hpp"
-  PATTERN ".svn" EXCLUDE
-)
-
-#############
-## Testing ##
-#############
 # Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
 add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 
@@ -61,3 +31,6 @@ if(TARGET ${PROJECT_NAME}-test)
                                              ${SQLITE3_LIBRARIES}
                                              ${catkin_LIBRARIES})
 endif()
+
+cs_install()
+cs_export()
