@@ -166,6 +166,6 @@ struct hash<sm::HashId>{
     }                                                                   \
   };                                                                    \
   }                                                                     \
-  extern void revEnum ## __FILE__ ## __LINE__(void)
+  extern void smDefHash ## __FILE__ ## __LINE__(void)
 
 #endif /* HASH_ID_HPP_ */
