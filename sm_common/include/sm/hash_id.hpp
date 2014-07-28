@@ -60,10 +60,8 @@ class HashId {
       return false;
     }
     for (size_t i = 0; i < sizeof(val_); ++i){
-      unsigned int integerValue;
-      std::istringstream ss(std::string(hexString, 2*i, 2));
-      ss >> std::hex >> integerValue;
-      val_.c[i] = static_cast<unsigned char>(integerValue);
+      val_.c[i] = static_cast<unsigned char>(
+          stoul(std::string(hexString, 2*i, 2), 0, 16));
     }
     return true;
   }
