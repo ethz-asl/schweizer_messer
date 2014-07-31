@@ -1,26 +1,21 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sm_property_tree)
 
-find_package(catkin REQUIRED COMPONENTS sm_common)
-include_directories(${catkin_INCLUDE_DIRS})
+find_package(catkin_simple REQUIRED)
+catkin_simple()
+
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-catkin_package(
-  INCLUDE_DIRS include  ${catkin_INCLUDE_DIRS}
-  LIBRARIES ${PROJECT_NAME}
-  CATKIN_DEPENDS sm_common
-  DEPENDS
-)
 add_definitions(-D__STRICT_ANSI__)
 remove_definitions(-std=c++0x -std-c++11)
 
-include_directories(include ${catkin_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 ##############
 ## Building ##
 ##############
 
-add_library(${PROJECT_NAME}
+cs_add_library(${PROJECT_NAME}
   src/PropertyTree.cpp
   src/BoostPropertyTreeImplementation.cpp
   src/BoostPropertyTree.cpp
@@ -29,7 +24,7 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} 
-                      ${catkin_LIBRARIES} ${Boost_LIBRARIES} pthread)
+                      ${Boost_LIBRARIES} pthread)
 
 #############
 ## Testing ##
@@ -46,3 +41,5 @@ if(TARGET ${PROJECT_NAME}-test)
   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 endif()
 
+cs_install()
+cs_export()
