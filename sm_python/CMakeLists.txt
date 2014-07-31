@@ -4,7 +4,6 @@ project(sm_python)
 find_package(catkin_simple REQUIRED)
 catkin_simple()
 
-find_package(Eigen REQUIRED)
 include_directories(${Eigen_INCLUDE_DIRS})
 
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
