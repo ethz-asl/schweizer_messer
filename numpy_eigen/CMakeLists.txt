@@ -5,7 +5,6 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 find_package(Boost REQUIRED COMPONENTS system)
-find_package(Eigen REQUIRED)
 
 add_definitions(${EIGEN_DEFINITIONS})
 include_directories(include ${Eigen_INCLUDE_DIRS})

@@ -13,3 +13,4 @@ On Ubuntu 12.04, if your ubuntu-installed ROS depends on the ubuntu-installed
 boost you can simply download a later boost and install it from source - it
 will install to "/usr/local" per default (verify this though), where the 
 Schweizer Messer build will look for it.
+

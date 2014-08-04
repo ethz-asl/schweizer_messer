@@ -6,7 +6,6 @@ catkin_simple()
 
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
-find_package(Eigen REQUIRED)
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 include_directories(include ${Boost_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS})
 
