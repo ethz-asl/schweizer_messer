@@ -165,7 +165,7 @@ struct hash<sm::HashId>{
       return std::hash<std::string>()(hashId.hexString());              \
     }                                                                   \
   };                                                                    \
-  }                                                                     \
-
+  }  /* namespace std */                                                \
+extern void DefineIDHash ## __FILE__ ## __LINE__(void)
 
 #endif /* HASH_ID_HPP_ */
