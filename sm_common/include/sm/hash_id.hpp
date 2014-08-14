@@ -7,6 +7,9 @@
 #include <iomanip>
 #include <random>
 #include <sstream>
+#include <type_traits>
+
+#include <sm/fasthash.h>
 
 namespace sm {
 struct Is64BitArch {
@@ -92,6 +95,30 @@ class HashId {
     hash ^= val_.u64[1];
     hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
     return hash;
+  }
+
+  /**
+   * Rehashes the 128 bit hash to a 32/64 bit hash that can be used in STL
+   * containers. This means that we will get collisions on the buckets, which
+   * is fine since we can disambiguate the actual hashes using operator==.
+   * So this does not increase the probability of ID collision.
+   */
+  template<bool Is64BitArch>
+  inline size_t fasthashImpl(
+      typename std::enable_if<Is64BitArch == false, int>::type* = 0)
+  const {
+    constexpr size_t seed = HashPrimeAndBase<Is64BitArch>::kOffsetBasis;
+    return fasthash32(val_.u64, sizeof(val_.u64), seed);
+  }
+
+  template<bool Is64BitArch>
+  inline size_t fasthashImpl(
+      typename std::enable_if<Is64BitArch, int>::type* = 0) const {
+    constexpr size_t seed = HashPrimeAndBase<Is64BitArch>::kOffsetBasis;
+    return fasthash64(val_.u64, sizeof(val_.u64), seed);
+  }
+  inline size_t fastHashToSizeT() const {
+    return fasthashImpl<Is64BitArch::value>();
   }
 
   /**

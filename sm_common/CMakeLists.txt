@@ -13,6 +13,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 
 cs_add_library(${PROJECT_NAME}
+  src/fasthash.cpp
   src/progress_info.cpp
 )
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
