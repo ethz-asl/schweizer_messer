@@ -9,6 +9,19 @@
 #include <sstream>
 
 namespace sm {
+struct Is64BitArch {
+   static constexpr bool value = sizeof(void*) == 8;
+};
+template<bool Is64BitArch>
+struct HashPrimeAndBase {
+  static constexpr std::size_t kPrime = 16777619u;
+  static constexpr std::size_t kOffsetBasis = 2166136261u;
+};
+template<>
+struct HashPrimeAndBase<true> {
+  static constexpr std::size_t kPrime = 1099511628211u;
+  static constexpr std::size_t kOffsetBasis = 14695981039346656037u;
+};
 
 /**
  * 128 bit hash. Can be used as key to unordered containers.
@@ -64,6 +77,21 @@ class HashId {
           stoul(std::string(hexString, 2*i, 2), 0, 16));
     }
     return true;
+  }
+
+  /**
+   * Rehashes the 128 bit hash to a 32/64 bit hash that can be used in STL
+   * containers. This means that we will get collisions on the buckets, which
+   * is fine since we can disambiguate the actual hashes using operator==.
+   * So this does not increase the probability of ID collision.
+   */
+  inline size_t hashToSizeT() const {
+    size_t hash = HashPrimeAndBase<Is64BitArch::value>::kOffsetBasis;
+    hash ^= val_.u64[0];
+    hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
+    hash ^= val_.u64[1];
+    hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
+    return hash;
   }
 
   /**
@@ -162,7 +190,7 @@ struct hash<sm::HashId>{
     typedef FullyQualifiedIdTypeName argument_type;                     \
     typedef std::size_t value_type;                                     \
     value_type operator()(const argument_type& hashId) const {          \
-      return std::hash<std::string>()(hashId.hexString());              \
+      return hash_id.hashToSizeT();                                     \
     }                                                                   \
   };                                                                    \
   }  /* namespace std */                                                \
