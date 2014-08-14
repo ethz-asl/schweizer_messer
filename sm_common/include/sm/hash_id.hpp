@@ -189,7 +189,7 @@ struct hash<sm::HashId>{
   struct hash<FullyQualifiedIdTypeName>{                                \
     typedef FullyQualifiedIdTypeName argument_type;                     \
     typedef std::size_t value_type;                                     \
-    value_type operator()(const argument_type& hashId) const {          \
+    value_type operator()(const argument_type& hash_id) const {          \
       return hash_id.hashToSizeT();                                     \
     }                                                                   \
   };                                                                    \
