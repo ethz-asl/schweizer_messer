@@ -15,6 +15,7 @@ cs_add_library(${PROJECT_NAME}
   src/LoggingGlobals.cpp
   src/Formatter.cpp
   src/Tokens.cpp
+  src/Levels.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

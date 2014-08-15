@@ -47,3 +47,90 @@ TEST(LoggingTestSuite, testBasic)
     }
 
 }
+
+TEST(LoggingTestSuite, testLevel) {
+ 
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("All");
+    EXPECT_EQ(sm::logging::Level::All, level);
+    level = sm::logging::levels::fromString("all");
+    EXPECT_EQ(sm::logging::Level::All, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Finest");
+    EXPECT_EQ(sm::logging::Level::Finest, level);
+    level = sm::logging::levels::fromString("finest");
+    EXPECT_EQ(sm::logging::Level::Finest, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Verbose");
+    EXPECT_EQ(sm::logging::Level::Verbose, level);
+    level = sm::logging::levels::fromString("verbose");
+    EXPECT_EQ(sm::logging::Level::Verbose, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Finer");
+    EXPECT_EQ(sm::logging::Level::Finer, level);
+    level = sm::logging::levels::fromString("finer");
+    EXPECT_EQ(sm::logging::Level::Finer, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Trace");
+    EXPECT_EQ(sm::logging::Level::Trace, level);
+    level = sm::logging::levels::fromString("trace");
+    EXPECT_EQ(sm::logging::Level::Trace, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Fine");
+    EXPECT_EQ(sm::logging::Level::Fine, level);
+    level = sm::logging::levels::fromString("fine");
+    EXPECT_EQ(sm::logging::Level::Fine, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Debug");
+    EXPECT_EQ(sm::logging::Level::Debug, level);
+    level = sm::logging::levels::fromString("debug");
+    EXPECT_EQ(sm::logging::Level::Debug, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Info");
+    EXPECT_EQ(sm::logging::Level::Info, level);
+    level = sm::logging::levels::fromString("info");
+    EXPECT_EQ(sm::logging::Level::Info, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Warn");
+    EXPECT_EQ(sm::logging::Level::Warn, level);
+    level = sm::logging::levels::fromString("warn");
+    EXPECT_EQ(sm::logging::Level::Warn, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Error");
+    EXPECT_EQ(sm::logging::Level::Error, level);
+    level = sm::logging::levels::fromString("error");
+    EXPECT_EQ(sm::logging::Level::Error, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("Fatal");
+    EXPECT_EQ(sm::logging::Level::Fatal, level);
+    level = sm::logging::levels::fromString("fatal");
+    EXPECT_EQ(sm::logging::Level::Fatal, level);
+  }
+  {
+    sm::logging::Level level;
+    level = sm::logging::levels::fromString("nonsense");
+    EXPECT_EQ(sm::logging::Level::Info, level);
+  }
+  
+}
