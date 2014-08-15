@@ -3,7 +3,7 @@ import numpy_eigen
 import inspect
 
 from libsm_python import *
-from plotCoordinateFrame import plotCoordinateFrame
+from plotCoordinateFrame import *
 from Progress import Progress
 from saveFigTight import saveFigTight
 
