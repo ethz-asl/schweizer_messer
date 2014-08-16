@@ -93,6 +93,20 @@ class HashId {
     hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
     return hash;
   }
+  /**
+   * Rehashes the 128 bit hash to a 32/64 bit hash that can be used in STL
+   * containers. This means that we will get collisions on the buckets, which
+   * is fine since we can disambiguate the actual hashes using operator==.
+   * So this does not increase the probability of ID collision.
+   * Version that skips prime multiplication for seeds that are already well
+   * distributed.
+   */
+  inline size_t hashToSizeTFast() const {
+    size_t hash = HashPrimeAndBase<Is64BitArch::value>::kOffsetBasis;
+    hash ^= val_.u64[0];
+    hash ^= val_.u64[1];
+    return hash;
+  }
 
   /**
    * Randomizes to ID seeded from the nanosecond time of the first
@@ -175,8 +189,8 @@ struct hash<sm::HashId>{
   typedef sm::HashId argument_type;
   typedef std::size_t value_type;
 
-  value_type operator()(const argument_type& hashId) const {
-    return std::hash<std::string>()(hashId.hexString());
+  value_type operator()(const argument_type& hash_id) const {
+    return hash_id.hashToSizeT();
   }
 };
 } // namespace std
@@ -189,7 +203,7 @@ struct hash<sm::HashId>{
   struct hash<FullyQualifiedIdTypeName>{                                \
     typedef FullyQualifiedIdTypeName argument_type;                     \
     typedef std::size_t value_type;                                     \
-    value_type operator()(const argument_type& hash_id) const {          \
+    value_type operator()(const argument_type& hash_id) const {         \
       return hash_id.hashToSizeT();                                     \
     }                                                                   \
   };                                                                    \
