@@ -5,8 +5,8 @@
 #include <cstring>
 #include <functional>
 #include <iomanip>
+#include <iostream>
 #include <random>
-#include <sstream>
 
 namespace sm {
 struct Is64BitArch {
@@ -55,12 +55,13 @@ class HashId {
    * Returns hexadecimal string for debugging or serialization
    */
   inline const std::string hexString() const {
-    std::ostringstream ss;
+    char buffer[2*sizeof(val_) + 1]; // 1 for the \0 character
+    buffer[2*sizeof(val_)] = '\0';
     for (size_t i = 0; i < sizeof(val_); ++i){
-      ss << std::hex << std::setfill('0') << std::setw(2) <<
-          static_cast<int>(val_.c[i]);
+      buffer[2 * i + 1] = kHexConversion[val_.c[i] & 0xf];
+      buffer[2 * i] = kHexConversion[val_.c[i] >> 4];
     }
-    return ss.str();
+    return std::string(buffer);
   }
 
   /**
@@ -173,6 +174,8 @@ class HashId {
     uint_fast64_t u64[2];
   };
   HashVal val_;
+
+  static const char kHexConversion[];
 };
 
 } // namespace sm
