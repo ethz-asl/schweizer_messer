@@ -1,34 +1,39 @@
 #include "sm/logging.hpp"
 
 #include <string>
-#include <boost/algorithm/string.hpp> // for case-insensitive string comparison
+#include <locale> // for case-insensitive string comparison
+#include <algorithm>
 
 /**
  * \brief Returns a Level enum from string
+ * \param level level as string
+ * \return logging level enum
  */
 sm::logging::Level sm::logging::levels::fromString(const std::string& level) {
 
-  if (boost::iequals(level, "All")) {
+  std::string levelLowercase = std::transform(level.begin(), level.end(), level.begin(), ::tolower);
+
+  if (levelLowercase == "all") {
     return Level::All;
-  } else if (boost::iequals(level, "Finest")) {
+  } else if (levelLowercase == "finest") {
     return Level::Finest;
-  } else if (boost::iequals(level, "Verbose")) {
+  } else if (levelLowercase == "verbose") {
     return Level::Verbose;
-  } else if (boost::iequals(level, "Finer")) {
+  } else if (levelLowercase == "finer") {
     return Level::Finer;
-  } else if (boost::iequals(level, "Trace")) {
+  } else if (levelLowercase == "trace") {
     return Level::Trace;
-  } else if (boost::iequals(level, "Fine")) {
+  } else if (levelLowercase == "fine") {
     return Level::Fine;
-  } else if (boost::iequals(level, "Debug")) {
+  } else if (levelLowercase == "debug") {
     return Level::Debug;
-  } else if (boost::iequals(level, "Info")) {
+  } else if (levelLowercase == "info") {
     return Level::Info;
-  } else if (boost::iequals(level, "Warn")) {
+  } else if (levelLowercase == "warn") {
     return Level::Warn;
-  } else if (boost::iequals(level, "Error")) {
+  } else if (levelLowercase == "error") {
     return Level::Error;
-  } else if (boost::iequals(level, "Fatal")) {
+  } else if (levelLowercase == "fatal") {
     return Level::Fatal;
   } else {
     SM_ERROR_STREAM("Invalid logging level " << level << ", setting to Level::Info");
