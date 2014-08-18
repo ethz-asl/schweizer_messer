@@ -13,6 +13,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 
 cs_add_library(${PROJECT_NAME}
+  src/hash_id.cpp
   src/progress_info.cpp
 )
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
@@ -30,7 +31,7 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/numerical_comparisons.cpp
   test/hash_id.cpp
 )
-target_link_libraries(${PROJECT_NAME}-test pthread)
+target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} pthread)
 
 cs_install()
 cs_export(CFG_EXTRAS export_flags.cmake)
