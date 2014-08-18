@@ -9,31 +9,31 @@
  * \param level level as string
  * \return logging level enum
  */
-sm::logging::Level sm::logging::levels::fromString(const std::string& level) {
+sm::logging::Level sm::logging::levels::fromString(std::string level) {
 
-  std::string levelLowercase = std::transform(level.begin(), level.end(), level.begin(), ::tolower);
+  std::transform(level.begin(), level.end(), level.begin(), ::tolower);
 
-  if (levelLowercase == "all") {
+  if (level == "all") {
     return Level::All;
-  } else if (levelLowercase == "finest") {
+  } else if (level == "finest") {
     return Level::Finest;
-  } else if (levelLowercase == "verbose") {
+  } else if (level == "verbose") {
     return Level::Verbose;
-  } else if (levelLowercase == "finer") {
+  } else if (level == "finer") {
     return Level::Finer;
-  } else if (levelLowercase == "trace") {
+  } else if (level == "trace") {
     return Level::Trace;
-  } else if (levelLowercase == "fine") {
+  } else if (level == "fine") {
     return Level::Fine;
-  } else if (levelLowercase == "debug") {
+  } else if (level == "debug") {
     return Level::Debug;
-  } else if (levelLowercase == "info") {
+  } else if (level == "info") {
     return Level::Info;
-  } else if (levelLowercase == "warn") {
+  } else if (level == "warn") {
     return Level::Warn;
-  } else if (levelLowercase == "error") {
+  } else if (level == "error") {
     return Level::Error;
-  } else if (levelLowercase == "fatal") {
+  } else if (level == "fatal") {
     return Level::Fatal;
   } else {
     SM_ERROR_STREAM("Invalid logging level " << level << ", setting to Level::Info");
