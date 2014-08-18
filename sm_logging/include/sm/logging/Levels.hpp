@@ -39,7 +39,7 @@ namespace sm {
                 Count
             };
             
-            Level fromString(const std::string& level);
+            Level fromString(std::string level);
 
         }
 
