@@ -6,49 +6,32 @@
 /**
  * \brief Returns a Level enum from string
  */
-sm::logging::Level sm::logging::levels::fromString(const std::string& l) {
-  
-//   enum Level
-//   {
-//       All,
-//       Finest,
-//       Verbose,
-//       Finer,
-//       Trace,
-//       Fine,
-//       Debug,
-//       Info,
-//       Warn,
-//       Error,
-//       Fatal,
-// 
-//       Count
-//   };
+sm::logging::Level sm::logging::levels::fromString(const std::string& level) {
 
-  if (boost::iequals(l, "All")) {
+  if (boost::iequals(level, "All")) {
     return Level::All;
-  } else if (boost::iequals(l, "Finest")) {
+  } else if (boost::iequals(level, "Finest")) {
     return Level::Finest;
-  } else if (boost::iequals(l, "Verbose")) {
+  } else if (boost::iequals(level, "Verbose")) {
     return Level::Verbose;
-  } else if (boost::iequals(l, "Finer")) {
+  } else if (boost::iequals(level, "Finer")) {
     return Level::Finer;
-  } else if (boost::iequals(l, "Trace")) {
+  } else if (boost::iequals(level, "Trace")) {
     return Level::Trace;
-  } else if (boost::iequals(l, "Fine")) {
+  } else if (boost::iequals(level, "Fine")) {
     return Level::Fine;
-  } else if (boost::iequals(l, "Debug")) {
+  } else if (boost::iequals(level, "Debug")) {
     return Level::Debug;
-  } else if (boost::iequals(l, "Info")) {
+  } else if (boost::iequals(level, "Info")) {
     return Level::Info;
-  } else if (boost::iequals(l, "Warn")) {
+  } else if (boost::iequals(level, "Warn")) {
     return Level::Warn;
-  } else if (boost::iequals(l, "Error")) {
+  } else if (boost::iequals(level, "Error")) {
     return Level::Error;
-  } else if (boost::iequals(l, "Fatal")) {
+  } else if (boost::iequals(level, "Fatal")) {
     return Level::Fatal;
   } else {
-    SM_ERROR_STREAM("Invalid logging level " << l << ", setting to Level::Info");
+    SM_ERROR_STREAM("Invalid logging level " << level << ", setting to Level::Info");
     return Level::Info;
   }
 
