@@ -80,4 +80,5 @@ lib
 .project
 .cproject
 .pydevproject
+.settings
 log_test
