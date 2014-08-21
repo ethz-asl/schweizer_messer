@@ -45,11 +45,10 @@ TEST(LoggingTestSuite, testBasic)
     {
         FAIL() << e.what();
     }
-
 }
 
-TEST(LoggingTestSuite, testLevel) {
- 
+TEST(LoggingTestSuite, testLevel) 
+{
   {
     sm::logging::Level level;
     level = sm::logging::levels::fromString("All");
@@ -132,5 +131,4 @@ TEST(LoggingTestSuite, testLevel) {
     level = sm::logging::levels::fromString("nonsense");
     EXPECT_EQ(sm::logging::Level::Info, level);
   }
-  
 }
