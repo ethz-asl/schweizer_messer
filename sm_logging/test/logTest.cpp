@@ -5,8 +5,7 @@
 
 void print(int a, const char* fmt, ... ) SMCONSOLE_PRINTF_ATTRIBUTE(2, 3);
 
-TEST(LoggingTestSuite, testBasic)
-{
+TEST(LoggingTestSuite, testBasic) {
     try {
 
         sm::logging::setLevel(sm::logging::Level::All);
@@ -47,8 +46,7 @@ TEST(LoggingTestSuite, testBasic)
     }
 }
 
-TEST(LoggingTestSuite, testLevel) 
-{
+TEST(LoggingTestSuite, testLevel) {
   {
     sm::logging::Level level;
     level = sm::logging::levels::fromString("All");
