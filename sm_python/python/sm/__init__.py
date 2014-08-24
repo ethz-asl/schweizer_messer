@@ -4,7 +4,7 @@ import inspect
 
 from libsm_python import *
 from plotCoordinateFrame import *
-from Progress import Progress
+from Progress import Progress, Progress2
 from saveFigTight import saveFigTight
 
 
