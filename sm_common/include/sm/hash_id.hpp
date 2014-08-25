@@ -9,18 +9,14 @@
 #include <random>
 
 namespace sm {
-struct Is64BitArch {
-   static constexpr bool value = sizeof(void*) == 8;
-};
-template<bool Is64BitArch>
+
+constexpr bool kIs64BitArch = (sizeof(void*) == 8);
+
 struct HashPrimeAndBase {
-  static constexpr std::size_t kPrime = 16777619u;
-  static constexpr std::size_t kOffsetBasis = 2166136261u;
-};
-template<>
-struct HashPrimeAndBase<true> {
-  static constexpr std::size_t kPrime = 1099511628211u;
-  static constexpr std::size_t kOffsetBasis = 14695981039346656037u;
+  static constexpr std::size_t kPrime =
+      kIs64BitArch ? 1099511628211ull : 16777619u;
+  static constexpr std::size_t kOffsetBasis =
+      kIs64BitArch ? 14695981039346656037ull : 2166136261u;
 };
 
 /**
@@ -87,11 +83,11 @@ class HashId {
    * So this does not increase the probability of ID collision.
    */
   inline size_t hashToSizeT() const {
-    size_t hash = HashPrimeAndBase<Is64BitArch::value>::kOffsetBasis;
+    size_t hash = HashPrimeAndBase::kOffsetBasis;
     hash ^= val_.u64[0];
-    hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
+    hash *= HashPrimeAndBase::kPrime;
     hash ^= val_.u64[1];
-    hash *= HashPrimeAndBase<Is64BitArch::value>::kPrime;
+    hash *= HashPrimeAndBase::kPrime;
     return hash;
   }
   /**
@@ -103,7 +99,7 @@ class HashId {
    * distributed.
    */
   inline size_t hashToSizeTFast() const {
-    size_t hash = HashPrimeAndBase<Is64BitArch::value>::kOffsetBasis;
+    size_t hash = HashPrimeAndBase::kOffsetBasis;
     hash ^= val_.u64[0];
     hash ^= val_.u64[1];
     return hash;
