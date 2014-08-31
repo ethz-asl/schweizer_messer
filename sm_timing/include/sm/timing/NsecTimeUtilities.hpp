@@ -32,7 +32,7 @@ double nsecToSec( const NsecTime & time );
 NsecTime secToNsec( const double & time );
 
 /// \brief return a magic number representing an invalid timestamp
-NsecTime getInvalidTime();
+constexpr NsecTime getInvalidTime();
 
 /// \brief Is the time valid? This uses a magic number
 ///        std::numeric_limits<NsecTime>::min() to represent an invalid time

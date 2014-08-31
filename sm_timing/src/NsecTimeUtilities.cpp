@@ -35,7 +35,7 @@ NsecTime secToNsec( const double & time ) {
   return boost::int64_t( time * 1e9 );
 }
 
-NsecTime getInvalidTime() {
+constexpr NsecTime getInvalidTime() {
   return std::numeric_limits<NsecTime>::min();
 }
 
