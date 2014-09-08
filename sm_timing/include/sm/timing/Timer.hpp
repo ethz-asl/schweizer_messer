@@ -12,7 +12,7 @@
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics.hpp>
 #include <boost/accumulators/statistics/rolling_mean.hpp>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 #include <sm/assert_macros.hpp>
@@ -115,7 +115,7 @@ namespace timing {
     Timing();
     ~Timing();
     
-    typedef std::map<std::string,size_t> map_t;
+    typedef std::unordered_map<std::string,size_t> map_t;
     typedef std::vector<TimerMapValue> list_t;
     
     // Static members
