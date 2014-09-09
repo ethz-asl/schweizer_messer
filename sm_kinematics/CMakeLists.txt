@@ -5,6 +5,7 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 find_package(Boost REQUIRED COMPONENTS system serialization filesystem)
+find_package(Threads REQUIRED)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake)
 find_package(Eigen REQUIRED)
@@ -62,7 +63,9 @@ catkin_add_gtest(${PROJECT_NAME}-test
 if(TARGET ${PROJECT_NAME}-test)
   target_link_libraries(${PROJECT_NAME}-test 
                         ${PROJECT_NAME} 
-                        ${catkin_LIBRARIES})
+                        ${catkin_LIBRARIES}
+                        ${CMAKE_THREAD_LIBS_INIT}
+)
 endif()
 
 cs_install()
