@@ -35,6 +35,12 @@ void exportLogging()
     using namespace sm::logging;
     
     enum_<Level>("LoggingLevel")
+        .value("All",levels::All)
+        .value("Finest",levels::Finest)
+        .value("Verbose",levels::Verbose)
+        .value("Finer",levels::Finer)
+        .value("Trace",levels::Trace)
+        .value("Fine",levels::Fine)
         .value("Debug",levels::Debug)
         .value("Info",levels::Info)
         .value("Warn",levels::Warn)
