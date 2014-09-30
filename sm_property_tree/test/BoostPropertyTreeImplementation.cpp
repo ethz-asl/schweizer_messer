@@ -70,6 +70,28 @@ TEST(PTreeTestSuite, testBoostPTree)
     }
 }
 
+TEST(PTreeTestSuite, testBoostPTreeUpdate)
+{
+  sm::BoostPropertyTree pt;
+  pt.setDouble("d",0.1);
+  pt.setDouble("d2",0.1);
+  pt.setString("/s","hello");
+
+  sm::BoostPropertyTree pt2;
+  pt2.setDouble("d",0.2);
+  pt2.setString("/s","hello2");
+
+  ASSERT_EQ(pt.getDouble("d"), 0.1);
+  ASSERT_EQ(pt.getDouble("d2"), 0.1);
+  ASSERT_EQ(pt.getString("s"), std::string("hello"));
+  ASSERT_NEAR(pt2.getDouble("d"), 0.2, 1e-16);
+  ASSERT_EQ(pt2.getString("s"), std::string("hello2"));
+  pt.update(pt2);
+  ASSERT_EQ(pt.getDouble("d"), 0.2);
+  ASSERT_EQ(pt.getDouble("d2"), 0.1);
+  ASSERT_EQ(pt.getString("s"), std::string("hello2"));
+}
+
 TEST(PTreeTestSuite, testFindFile)
 {
   // Not finding should throw

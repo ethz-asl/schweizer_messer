@@ -43,6 +43,11 @@ namespace sm {
     void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
     void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
 
+    /**
+     * Update this ptree with another, allowing merging of ptrees
+     * @param with
+     */
+    void update(const BoostPropertyTree & with);
 
     iterator begin() ;
     const_iterator begin() const;
