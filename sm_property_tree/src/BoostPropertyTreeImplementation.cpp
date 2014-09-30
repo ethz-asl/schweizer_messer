@@ -144,24 +144,23 @@ namespace sm {
   }
 
   BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::begin()
-    {
-      return _ptree.begin();
-    }
+  {
+    return _ptree.begin();
+  }
 
-    BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::begin() const
-    {
-      return _ptree.begin();
-    }
+  BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::begin() const
+  {
+    return _ptree.begin();
+  }
 
-    BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::end()
-    {
-      return _ptree.end();
-    }
+  BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::end()
+  {
+    return _ptree.end();
+  }
 
-    BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::end() const
-    {
-      return _ptree.end();
-    }
-
+  BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::end() const
+  {
+    return _ptree.end();
+  }
 
 } // namespace sm

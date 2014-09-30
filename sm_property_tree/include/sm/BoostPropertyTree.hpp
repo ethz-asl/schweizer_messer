@@ -34,14 +34,14 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
-      void loadXmlStr(const std::string & fileName){loadXml(fileName);}
-      void saveXmlStr(const std::string & fileName) const{saveXml(fileName);}
- 
-      void loadIniStr(const std::string & fileName){loadIni(fileName);}
-      void saveIniStr(const std::string & fileName) const{saveIni(fileName);}
+    void loadXmlStr(const std::string & fileName){loadXml(fileName);}
+    void saveXmlStr(const std::string & fileName) const{saveXml(fileName);}
 
-      void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
-      void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
+    void loadIniStr(const std::string & fileName){loadIni(fileName);}
+    void saveIniStr(const std::string & fileName) const{saveIni(fileName);}
+
+    void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
+    void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
 
 
     iterator begin() ;
