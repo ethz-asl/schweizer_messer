@@ -33,5 +33,16 @@ catkin_add_gtest(${PROJECT_NAME}-test
 )
 target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} pthread)
 
-cs_install()
+# We have a non-default include folder (default would be include/sm_common), so cs_install() will not work properly
+install(TARGETS ${${PROJECT_NAME}_TARGETS} ${ARGN}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(DIRECTORY include/sm
+  DESTINATION ${CATKIN_GLOBAL_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
+  PATTERN ".svn" EXCLUDE
+)
+
 cs_export(CFG_EXTRAS export_flags.cmake)
