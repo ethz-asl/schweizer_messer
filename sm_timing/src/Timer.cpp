@@ -186,6 +186,14 @@ namespace timing {
   {
     return reset(getHandle(tag));
   }
+  
+  //! reset all timers previously registered
+  void Timing::reset()
+  {
+    for (map_t::iterator it = instance().m_tagMap.begin(); it != instance().m_tagMap.end(); ++it) {
+      reset(it->second);
+    }
+  }
 
   std::string Timing::secondsToTimeString(double seconds) {
     
