@@ -24,17 +24,24 @@ struct HashPrimeAndBase {
  */
 class HashId {
  public:
-  /**
-   * Initializes to an invalid Hash
-   */
   inline HashId() {
     setInvalid();
   }
-  /**
-   * Copy constructor
-   */
   inline HashId(const HashId& other){
     *this = other;
+  }
+  inline HashId(const uint64_t source[2]) {
+    fromUint64(source);
+  }
+
+  inline void fromUint64(const uint64_t source[2]) {
+    memcpy(reinterpret_cast<void*>(&val_.u64),
+           reinterpret_cast<const void*>(source), sizeof(val_.u64));
+  }
+
+  inline void toUint64(uint64_t destination[2]) const {
+    memcpy(reinterpret_cast<void*>(destination),
+           reinterpret_cast<const void*>(&val_.u64), sizeof(val_.u64));
   }
 
   /**
@@ -167,7 +174,7 @@ class HashId {
    */
   union HashVal {
     unsigned char c[16];
-    uint_fast64_t u64[2];
+    uint64_t u64[2];
   };
   HashVal val_;
 
@@ -197,16 +204,16 @@ struct hash<sm::HashId>{
 
 /// \brief Define the hash function for types derived from HashId
 #define SM_DEFINE_HASHID_HASH(FullyQualifiedIdTypeName)                 \
-  namespace std {                                                       \
+    namespace std {                                                       \
   template<>                                                            \
   struct hash<FullyQualifiedIdTypeName>{                                \
-    typedef FullyQualifiedIdTypeName argument_type;                     \
-    typedef std::size_t value_type;                                     \
-    value_type operator()(const argument_type& hash_id) const {         \
-      return hash_id.hashToSizeT();                                     \
-    }                                                                   \
-  };                                                                    \
-  }  /* namespace std */                                                \
-extern void DefineIDHash ## __FILE__ ## __LINE__(void)
+      typedef FullyQualifiedIdTypeName argument_type;                     \
+      typedef std::size_t value_type;                                     \
+      value_type operator()(const argument_type& hash_id) const {         \
+        return hash_id.hashToSizeT();                                     \
+      }                                                                   \
+    };                                                                    \
+}  /* namespace std */                                                \
+    extern void DefineIDHash ## __FILE__ ## __LINE__(void)
 
 #endif /* HASH_ID_HPP_ */
