@@ -31,6 +31,10 @@ class HashId {
     *this = other;
   }
   inline HashId(const uint64_t source[2]) {
+    fromUint64(source);
+  }
+
+  inline void fromUint64(const uint64_t source[2]) {
     memcpy(reinterpret_cast<void*>(&val_.u64),
            reinterpret_cast<const void*>(source), sizeof(val_.u64));
   }
@@ -200,16 +204,16 @@ struct hash<sm::HashId>{
 
 /// \brief Define the hash function for types derived from HashId
 #define SM_DEFINE_HASHID_HASH(FullyQualifiedIdTypeName)                 \
-  namespace std {                                                       \
+    namespace std {                                                       \
   template<>                                                            \
   struct hash<FullyQualifiedIdTypeName>{                                \
-    typedef FullyQualifiedIdTypeName argument_type;                     \
-    typedef std::size_t value_type;                                     \
-    value_type operator()(const argument_type& hash_id) const {         \
-      return hash_id.hashToSizeT();                                     \
-    }                                                                   \
-  };                                                                    \
-  }  /* namespace std */                                                \
-extern void DefineIDHash ## __FILE__ ## __LINE__(void)
+      typedef FullyQualifiedIdTypeName argument_type;                     \
+      typedef std::size_t value_type;                                     \
+      value_type operator()(const argument_type& hash_id) const {         \
+        return hash_id.hashToSizeT();                                     \
+      }                                                                   \
+    };                                                                    \
+}  /* namespace std */                                                \
+    extern void DefineIDHash ## __FILE__ ## __LINE__(void)
 
 #endif /* HASH_ID_HPP_ */
