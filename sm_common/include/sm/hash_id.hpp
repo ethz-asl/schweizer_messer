@@ -24,17 +24,20 @@ struct HashPrimeAndBase {
  */
 class HashId {
  public:
-  /**
-   * Initializes to an invalid Hash
-   */
   inline HashId() {
     setInvalid();
   }
-  /**
-   * Copy constructor
-   */
   inline HashId(const HashId& other){
     *this = other;
+  }
+  inline HashId(const uint64_t source[2]) {
+    memcpy(reinterpret_cast<void*>(&val_.u64),
+           reinterpret_cast<const void*>(source), sizeof(val_.u64));
+  }
+
+  inline void toUint64(uint64_t destination[2]) const {
+    memcpy(reinterpret_cast<void*>(destination),
+           reinterpret_cast<const void*>(&val_.u64), sizeof(val_.u64));
   }
 
   /**
@@ -167,7 +170,7 @@ class HashId {
    */
   union HashVal {
     unsigned char c[16];
-    uint_fast64_t u64[2];
+    uint64_t u64[2];
   };
   HashVal val_;
 
