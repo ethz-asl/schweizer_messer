@@ -9,6 +9,7 @@
     throw boost::python::error_already_set();				\
   }
 
+#include <boost/cstdint.hpp>
 
 ////////////////////////////////////////////////
 // TypeToNumPy

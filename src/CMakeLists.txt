@@ -4,15 +4,7 @@ remake_find_package(
   Boost REQUIRED COMPONENTS python
   RESULT_VAR Boost_FOUND
 )
-remake_find_package(eigen3 CONFIG OPTIONAL)
-if(EIGEN3_FOUND)
-  remake_project_set(EIGEN_VERSION 3 CACHE INTERNAL
-    "Major version of Eigen linear algebra library.")
-else(EIGEN3_FOUND)
-  remake_find_package(eigen2 CONFIG)
-  remake_project_set(EIGEN_VERSION 2 CACHE INTERNAL
-    "Major version of Eigen linear algebra library.")
-endif(EIGEN3_FOUND)
+remake_find_package(eigen3 CONFIG)
 
 remake_set(NUMPY_EIGEN_MODULE_PATH
   ${CMAKE_CURRENT_BINARY_DIR}/autogen_module)
@@ -49,14 +41,13 @@ remake_generate_custom(
 )
 
 remake_python()
-remake_project_get(EIGEN_VERSION)
 remake_project_get(PYTHON_MODULE_DESTINATION)
 remake_include(
   include
   include/numpy_eigen
   ${PYTHON_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
-  ${EIGEN${EIGEN_VERSION}_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
 remake_add_library(
@@ -67,7 +58,7 @@ remake_add_library(
 )
 remake_add_headers(RECURSE FROM include/numpy_eigen)
 remake_add_scripts(bin/*.py)
-remake_pkg_config_generate(REQUIRES eigen${EIGEN_VERSION})
+remake_pkg_config_generate(REQUIRES eigen3)
 
 remake_add_library(
   test
