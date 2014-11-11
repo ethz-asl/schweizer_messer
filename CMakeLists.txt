@@ -49,7 +49,7 @@ remake_distribute_deb(
   DISTRIBUTION precise
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev
+  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev python-numpy
     python-nose remake pkg-config doxygen
   PASS CMAKE_BUILD_TYPE NUMPY_EIGEN_GIT_REVISION
 )
@@ -57,7 +57,7 @@ remake_distribute_deb(
   DISTRIBUTION trusty
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev
+  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev python-numpy
     python-nose remake pkg-config doxygen
   PASS CMAKE_BUILD_TYPE NUMPY_EIGEN_GIT_REVISION
 )
