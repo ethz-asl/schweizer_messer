@@ -1,0 +1,2953 @@
+numpy-eigen (0.0.1-469) unstable; urgency=low
+
+  * ReMake build system port of numpy-eigen
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 11 Nov 2014 14:44:00 +0200
+
+numpy-eigen (0.0.1-468) unstable; urgency=low
+
+  * Merge pull request #110 from ethz-asl/fix/logging_level_export
+  * Added new logging levels to python export
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Fri, 12 Sep 2014 17:01:11 +0200
+
+numpy-eigen (0.0.1-467) unstable; urgency=low
+
+  * Added new logging levels to python export
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Fri, 12 Sep 2014 16:42:13 +0200
+
+numpy-eigen (0.0.1-466) unstable; urgency=low
+
+  * Merge pull request #109 from ethz-asl/fix/sm_kinematics_pthread
+  * Fix/sm kinematics pthread
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Wed, 10 Sep 2014 10:14:35 +0200
+
+numpy-eigen (0.0.1-465) unstable; urgency=low
+
+  * Corrected bracket position
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Tue, 09 Sep 2014 10:31:54 +0200
+
+numpy-eigen (0.0.1-464) unstable; urgency=low
+
+  * On Ubuntu 12.04, gtest test targets seem to need to link against
+    pthread
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Tue, 09 Sep 2014 10:30:42 +0200
+
+numpy-eigen (0.0.1-463) unstable; urgency=low
+
+  * Use unordered_map for sm_timing tag map
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 08 Sep 2014 09:06:28 +0200
+
+numpy-eigen (0.0.1-462) unstable; urgency=low
+
+  * Merge pull request #106 from ethz-asl/feature/invalid-time
+  * Added an invalidTime concept
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 31 Aug 2014 21:50:07 +0200
+
+numpy-eigen (0.0.1-461) unstable; urgency=low
+
+  * made the nsec time constexpr
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 31 Aug 2014 21:46:26 +0200
+
+numpy-eigen (0.0.1-460) unstable; urgency=low
+
+  * Added an invalidTime concept
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 29 Aug 2014 17:48:05 +0200
+
+numpy-eigen (0.0.1-459) unstable; urgency=low
+
+  * Hash id hash for 32 bits and simplified.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Mon, 25 Aug 2014 23:43:56 +0200
+
+numpy-eigen (0.0.1-458) unstable; urgency=low
+
+  * Merge pull request #100 from ethz-asl/feature/sm_logging_level_from_string
+  * Added function to get a log level from a case-insensitive string
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 24 Aug 2014 07:10:31 +0200
+
+numpy-eigen (0.0.1-457) unstable; urgency=low
+
+  * Merge pull request #102 from ethz-asl/fix/export-progress2
+  * Exporting Progress2
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 24 Aug 2014 07:10:04 +0200
+
+numpy-eigen (0.0.1-456) unstable; urgency=low
+
+  * bracket after TEST declaration
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Fri, 22 Aug 2014 09:40:10 +0200
+
+numpy-eigen (0.0.1-455) unstable; urgency=low
+
+  * removed vertical whitespaces in unit test
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Thu, 21 Aug 2014 12:11:49 +0200
+
+numpy-eigen (0.0.1-454) unstable; urgency=low
+
+  * Updated .gitignore to ignore eclipse .settings folder
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Tue, 19 Aug 2014 08:43:19 +0200
+
+numpy-eigen (0.0.1-453) unstable; urgency=low
+
+  * Update Levels.hpp
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Mon, 18 Aug 2014 21:47:37 +0200
+
+numpy-eigen (0.0.1-452) unstable; urgency=low
+
+  * Update Levels.cpp
+  * used std::transform wrongly
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Mon, 18 Aug 2014 21:47:15 +0200
+
+numpy-eigen (0.0.1-451) unstable; urgency=low
+
+  * Changed to std::lower
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Mon, 18 Aug 2014 21:37:22 +0200
+
+numpy-eigen (0.0.1-450) unstable; urgency=low
+
+  * Update Levels.cpp
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Mon, 18 Aug 2014 21:31:49 +0200
+
+numpy-eigen (0.0.1-449) unstable; urgency=low
+
+  * Update Levels.hpp
+
+ -- uschwes <ulrich.schwesinger@gmx.de>  Mon, 18 Aug 2014 21:30:16 +0200
+
+numpy-eigen (0.0.1-448) unstable; urgency=low
+
+  * sm::HashId speedup.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Mon, 18 Aug 2014 15:02:51 +0200
+
+numpy-eigen (0.0.1-447) unstable; urgency=low
+
+  * Merge pull request #99 from ethz-asl/2D_coordinate_frame
+  * the 2D coordinate frame plotting
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 17 Aug 2014 11:35:59 +0200
+
+numpy-eigen (0.0.1-446) unstable; urgency=low
+
+  * Merge pull request #97 from ethz-asl/fix/sm_logging_pthread
+  * At least on gcc 4.6 the test target needs to link against pthread
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 17 Aug 2014 11:34:01 +0200
+
+numpy-eigen (0.0.1-445) unstable; urgency=low
+
+  * fix
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sat, 16 Aug 2014 17:06:38 +0200
+
+numpy-eigen (0.0.1-444) unstable; urgency=low
+
+  * Adr Titus' comments
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sat, 16 Aug 2014 16:50:22 +0200
+
+numpy-eigen (0.0.1-443) unstable; urgency=low
+
+  * Added function to get a log level from a case-insensitive string
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Fri, 15 Aug 2014 14:19:48 +0200
+
+numpy-eigen (0.0.1-442) unstable; urgency=low
+
+  * the 2D coordinate frame plotting
+
+ -- Mathias Buerki <mbuerki@V-Charge-ubuntu.(none)>  Fri, 15 Aug 2014 12:08:55 +0200
+
+numpy-eigen (0.0.1-441) unstable; urgency=low
+
+  * Faster hashing
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 15 Aug 2014 00:19:39 +0200
+
+numpy-eigen (0.0.1-440) unstable; urgency=low
+
+  * same for sm_eigen and sm_boost
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Fri, 08 Aug 2014 18:54:21 +0200
+
+numpy-eigen (0.0.1-439) unstable; urgency=low
+
+  * At least on gcc 4.6 the test target needs to link against pthread
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Fri, 08 Aug 2014 18:18:07 +0200
+
+numpy-eigen (0.0.1-438) unstable; urgency=low
+
+  * sm_logging has to export c++0x flag
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Thu, 07 Aug 2014 16:39:27 +0200
+
+numpy-eigen (0.0.1-437) unstable; urgency=low
+
+  * swallow_semicolon_after_id_define
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 05 Aug 2014 14:16:34 +0200
+
+numpy-eigen (0.0.1-436) unstable; urgency=low
+
+  * export c11 flags
+
+ -- Gabriel <gabriel@ceibo.(none)>  Tue, 05 Aug 2014 08:57:05 +0200
+
+numpy-eigen (0.0.1-435) unstable; urgency=low
+
+  * touch
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 04 Aug 2014 13:03:24 +0200
+
+numpy-eigen (0.0.1-434) unstable; urgency=low
+
+  * Eigen_catkin
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 31 Jul 2014 22:50:25 +0200
+
+numpy-eigen (0.0.1-433) unstable; urgency=low
+
+  * Merge pull request #89 from ethz-asl/feature/catkin_simple
+  * Migrate to catkin simple
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 31 Jul 2014 20:32:00 +0200
+
+numpy-eigen (0.0.1-432) unstable; urgency=low
+
+  * HashId::fromHexString() optimized.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Mon, 28 Jul 2014 10:15:45 +0200
+
+numpy-eigen (0.0.1-431) unstable; urgency=low
+
+  * Migrate to catkin simple
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 15 Jul 2014 21:27:06 +0200
+
+numpy-eigen (0.0.1-430) unstable; urgency=low
+
+  * Merge pull request #87 from ethz-asl/feature/HashId-hash
+  * Added a hash macro to hash derived types
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sat, 12 Jul 2014 20:24:18 +0200
+
+numpy-eigen (0.0.1-429) unstable; urgency=low
+
+  * Added a hash macro to has derived types
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 12 Jul 2014 19:23:46 +0200
+
+numpy-eigen (0.0.1-428) unstable; urgency=low
+
+  * exported the matrix archive strings interface to python
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 09 Apr 2014 12:23:54 +0200
+
+numpy-eigen (0.0.1-427) unstable; urgency=low
+
+  * Added MatrixArchive.createMatrix
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 19 Feb 2014 10:47:38 +0100
+
+numpy-eigen (0.0.1-426) unstable; urgency=low
+
+  * address comments
+
+ -- Thomas Schneider <schneith@ethz.ch>  Mon, 26 May 2014 17:36:07 +0200
+
+numpy-eigen (0.0.1-425) unstable; urgency=low
+
+  * address comments
+
+ -- Thomas Schneider <schneith@ethz.ch>  Fri, 23 May 2014 17:38:25 +0200
+
+numpy-eigen (0.0.1-424) unstable; urgency=low
+
+  * add general steps for progress2.sample
+
+ -- Thomas Schneider <schneith@ethz.ch>  Fri, 23 May 2014 16:16:00 +0200
+
+numpy-eigen (0.0.1-423) unstable; urgency=low
+
+  * add comment
+
+ -- Thomas Schneider <thomas.schneider@skybotix.com>  Fri, 16 May 2014 14:08:35 +0200
+
+numpy-eigen (0.0.1-422) unstable; urgency=low
+
+  * add window size option
+
+ -- Thomas Schneider <thomas.schneider@skybotix.com>  Fri, 16 May 2014 13:16:32 +0200
+
+numpy-eigen (0.0.1-421) unstable; urgency=low
+
+  * keep the add and tab order
+
+ -- Thomas Schneider <thomas.schneider@skybotix.com>  Fri, 16 May 2014 12:59:41 +0200
+
+numpy-eigen (0.0.1-420) unstable; urgency=low
+
+  * Add PlotCollection class that shows figures in tabs in one window.
+
+ -- Thomas Schneider <thomas.schneider@skybotix.com>  Fri, 16 May 2014 11:09:07 +0200
+
+numpy-eigen (0.0.1-419) unstable; urgency=low
+
+  * Compile the progress info
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 13 May 2014 12:31:56 +0200
+
+numpy-eigen (0.0.1-418) unstable; urgency=low
+
+  * Merge pull request #82 from ethz-asl/fix/unit-tests
+  * Fixing unit tests
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Sun, 11 May 2014 14:29:06 +0200
+
+numpy-eigen (0.0.1-417) unstable; urgency=low
+
+  * Fixing unit tests
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 11 May 2014 09:21:14 +0200
+
+numpy-eigen (0.0.1-416) unstable; urgency=low
+
+  * Fixed non-inline definition in header which caused multiple definition
+    when linking.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Fri, 09 May 2014 12:59:52 +0200
+
+numpy-eigen (0.0.1-415) unstable; urgency=low
+
+  * Fixing unit tests for hash id
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 09 May 2014 07:47:04 +0200
+
+numpy-eigen (0.0.1-414) unstable; urgency=low
+
+  * Merge pull request #76 from ethz-asl/feature/compile-osx
+  * Changes for compilation on osx. Crucially, I changed add_python_export()...
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Thu, 08 May 2014 12:39:25 +0200
+
+numpy-eigen (0.0.1-413) unstable; urgency=low
+
+  * Removing bad apple specific stuff
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 07 May 2014 12:42:38 +0200
+
+numpy-eigen (0.0.1-412) unstable; urgency=low
+
+  * removed one roslib.load_manifest
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 30 Apr 2014 17:50:54 +0200
+
+numpy-eigen (0.0.1-411) unstable; urgency=low
+
+  * used version bound for the doxygen "--silent" option instead of APPLE
+    or not because it seems to be a version thing (doxygen 1.8.6 current in
+    Ubuntu 14.04 does not not --silent either)
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 06 May 2014 15:30:23 +0200
+
+numpy-eigen (0.0.1-410) unstable; urgency=low
+
+  * Changes for compilation on osx. Crucially, I changed add_python_export() to
+    a function to keep local variable scope
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 04 May 2014 13:24:02 +0200
+
+numpy-eigen (0.0.1-409) unstable; urgency=low
+
+  * Small changes to get things compiling on osx
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 03 May 2014 11:01:14 +0200
+
+numpy-eigen (0.0.1-408) unstable; urgency=low
+
+  * Merge pull request #72 from ethz-asl/feature/boost-gcc-note
+  * Clarified boost-gcc issues in Readme.md
+
+ -- tcies <dev@titus-c.ch>  Fri, 02 May 2014 21:58:03 +0200
+
+numpy-eigen (0.0.1-407) unstable; urgency=low
+
+  * Updated Readme.md to my current stand of knowledge.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Fri, 02 May 2014 19:43:12 +0200
+
+numpy-eigen (0.0.1-406) unstable; urgency=low
+
+  * commented unused parameters' names out
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Fri, 02 May 2014 16:38:30 +0200
+
+numpy-eigen (0.0.1-405) unstable; urgency=low
+
+  * Fixed accidental characters.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Thu, 01 May 2014 10:45:54 +0200
+
+numpy-eigen (0.0.1-404) unstable; urgency=low
+
+  * Clarified boost-gcc issues in Readme.md. Fixes #71
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Thu, 01 May 2014 10:43:17 +0200
+
+numpy-eigen (0.0.1-403) unstable; urgency=low
+
+  * Another include that was missing but didn't surface in tests.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Wed, 30 Apr 2014 10:54:57 +0200
+
+numpy-eigen (0.0.1-402) unstable; urgency=low
+
+  * Merge pull request #69 from ethz-asl/feature/new_boost_property_tree_constr
+  * added new boost property tree constructor to set the ptree directly
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Wed, 30 Apr 2014 08:39:07 +0200
+
+numpy-eigen (0.0.1-401) unstable; urgency=low
+
+  * added new boost property tree constructor to set the ptree directly
+
+ -- Mathias Bürki <mbuerki@mbuerki-W530.(none)>  Tue, 29 Apr 2014 20:03:41 +0200
+
+numpy-eigen (0.0.1-400) unstable; urgency=low
+
+  * Exporting Progress2
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 23 Apr 2014 09:45:41 +0200
+
+numpy-eigen (0.0.1-399) unstable; urgency=low
+
+  * Fixing unit tests on ubuntu 12.04
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 20 Apr 2014 16:15:02 +0200
+
+numpy-eigen (0.0.1-398) unstable; urgency=low
+
+  * Merge pull request #79 from ethz-asl/fix/unit-tests
+  * Fixing unit tests for hash id
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Fri, 09 May 2014 08:20:32 +0200
+
+numpy-eigen (0.0.1-397) unstable; urgency=low
+
+  * Merge pull request #78 from ethz-asl/feature/compile-osx
+  * Removing apple-specific compilation
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Thu, 08 May 2014 21:51:11 +0200
+
+numpy-eigen (0.0.1-396) unstable; urgency=low
+
+  * Removing apple-specific compilation
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 08 May 2014 21:48:33 +0200
+
+numpy-eigen (0.0.1-395) unstable; urgency=low
+
+  * Reverting...
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 19 Apr 2014 08:33:21 +0200
+
+numpy-eigen (0.0.1-394) unstable; urgency=low
+
+  * Trying to fix the numpy eigen tests
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 19 Apr 2014 08:17:21 +0200
+
+numpy-eigen (0.0.1-393) unstable; urgency=low
+
+  * Dealing with tr1 and unused args
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 19 Apr 2014 06:28:19 +0200
+
+numpy-eigen (0.0.1-392) unstable; urgency=low
+
+  * Over here the hash function is const
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 18 Apr 2014 22:41:17 +0200
+
+numpy-eigen (0.0.1-391) unstable; urgency=low
+
+  * no tr1 id
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 18 Apr 2014 22:34:17 +0200
+
+numpy-eigen (0.0.1-390) unstable; urgency=low
+
+  * Adding tr1 tuple flags
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 18 Apr 2014 22:06:22 +0200
+
+numpy-eigen (0.0.1-389) unstable; urgency=low
+
+  * Setting CHECKSAME back to silent after completion of SerializationMacros.TestClassesMacroWorks in
+    sm_common tests.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Tue, 29 Apr 2014 14:12:38 +0200
+
+numpy-eigen (0.0.1-388) unstable; urgency=low
+
+  * Include for std::hash.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Tue, 29 Apr 2014 11:13:56 +0200
+
+numpy-eigen (0.0.1-387) unstable; urgency=low
+
+  * Resolves #64
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Tue, 29 Apr 2014 11:07:47 +0200
+
+numpy-eigen (0.0.1-386) unstable; urgency=low
+
+  * Changed behavior of default constructor of sm::HashId to generate invalid
+    Id, added random generator, convenience functions.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Tue, 29 Apr 2014 10:51:14 +0200
+
+numpy-eigen (0.0.1-385) unstable; urgency=low
+
+  * IO manipulation  include was missing, obfuscated by the fact that test
+    includes iostream.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Mon, 28 Apr 2014 17:44:43 +0200
+
+numpy-eigen (0.0.1-384) unstable; urgency=low
+
+  * Added python exports for the eigen & kinematics 'fromPropertyTree' functions.
+
+ -- Peter Muehlfellner <pmuehlfellner@gmail.com>  Sun, 27 Apr 2014 13:18:06 +0200
+
+numpy-eigen (0.0.1-383) unstable; urgency=low
+
+  * Fixed includes.
+
+ -- Peter Muehlfellner <pmuehlfellner@gmail.com>  Sun, 27 Apr 2014 13:17:26 +0200
+
+numpy-eigen (0.0.1-382) unstable; urgency=low
+
+  * Merge branch 'feature/catkinization'
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 25 Apr 2014 00:26:09 +0200
+
+numpy-eigen (0.0.1-381) unstable; urgency=low
+
+  * Merge pull request #57 from ethz-asl/feature/hash-id
+  * Hash id deserialization from hexString.
+
+ -- tcies <dev@titus-c.ch>  Wed, 23 Apr 2014 21:36:09 +0200
+
+numpy-eigen (0.0.1-380) unstable; urgency=low
+
+  * Hash id deserialization from hexString.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Wed, 23 Apr 2014 17:10:40 +0200
+
+numpy-eigen (0.0.1-379) unstable; urgency=low
+
+  * Merge pull request #56 from ethz-asl/feature/hash-id
+  * 128 bit hash ids
+
+ -- tcies <dev@titus-c.ch>  Wed, 23 Apr 2014 16:40:38 +0200
+
+numpy-eigen (0.0.1-378) unstable; urgency=low
+
+  * Resolved comments of #56
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Wed, 23 Apr 2014 16:37:19 +0200
+
+numpy-eigen (0.0.1-377) unstable; urgency=low
+
+  * Merge branch 'feature/catkinization' of github.com:ethz-asl/Schweizer-Messer into
+    feature/catkinization
+  * ated upstream into a topic branch.
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 17 Apr 2014 17:56:41 +0200
+
+numpy-eigen (0.0.1-376) unstable; urgency=low
+
+  * added symlink to python module
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 17 Apr 2014 17:56:16 +0200
+
+numpy-eigen (0.0.1-375) unstable; urgency=low
+
+  * Inline implementation and tests for Hash ID.
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Thu, 17 Apr 2014 15:15:24 +0200
+
+numpy-eigen (0.0.1-374) unstable; urgency=low
+
+  * Proposed header for hash id, taken from ethz-asl/aslam_posegraph#10
+
+ -- Titus Cieslewski <dev@titus-c.ch>  Thu, 17 Apr 2014 14:24:58 +0200
+
+numpy-eigen (0.0.1-373) unstable; urgency=low
+
+  * Removing a debug print
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:28:27 +0200
+
+numpy-eigen (0.0.1-372) unstable; urgency=low
+
+  * removing debug print
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:23:21 +0200
+
+numpy-eigen (0.0.1-371) unstable; urgency=low
+
+  * Fixing a typo in the setup.py
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:23:05 +0200
+
+numpy-eigen (0.0.1-370) unstable; urgency=low
+
+  * Fixed another typo in the last commit
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:17:33 +0200
+
+numpy-eigen (0.0.1-369) unstable; urgency=low
+
+  * Fixed another typo in the last commit
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:16:49 +0200
+
+numpy-eigen (0.0.1-368) unstable; urgency=low
+
+  * Fixed a typo in the cmake script
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:15:21 +0200
+
+numpy-eigen (0.0.1-367) unstable; urgency=low
+
+  * Fixed a linker error in the python exports. Added correct installation
+    of python exports
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 17 Apr 2014 06:11:24 +0200
+
+numpy-eigen (0.0.1-366) unstable; urgency=low
+
+  * Export eigen includes
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 24 Apr 2014 11:01:35 +0200
+
+numpy-eigen (0.0.1-365) unstable; urgency=low
+
+  * Merge pull request #51 from ethz-asl/feature/catkinization
+  * Feature/catkinization
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 23 Apr 2014 10:30:53 +0200
+
+numpy-eigen (0.0.1-364) unstable; urgency=low
+
+  * rm temp file
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 10 Apr 2014 09:14:11 +0200
+
+numpy-eigen (0.0.1-363) unstable; urgency=low
+
+  * Added Eigen aligned allocation type traits
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 10 Apr 2014 08:26:25 +0200
+
+numpy-eigen (0.0.1-362) unstable; urgency=low
+
+  * Merge pull request #54 from ethz-asl/feature/export_proptree_set_double
+  * Exporting the setDouble function.
+
+ -- PeterMuehlfellner <pmuehlfellner@gmail.com>  Wed, 02 Apr 2014 09:49:27 +0200
+
+numpy-eigen (0.0.1-361) unstable; urgency=low
+
+  * Update Readme.md
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 30 Mar 2014 18:57:04 +0200
+
+numpy-eigen (0.0.1-360) unstable; urgency=low
+
+  * Update and rename README to Readme.md
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 30 Mar 2014 18:56:43 +0200
+
+numpy-eigen (0.0.1-359) unstable; urgency=low
+
+  * Exporting the setDouble function.
+
+ -- Peter Muehlfellner <pmuehlfellner@gmail.com>  Sun, 30 Mar 2014 18:44:46 +0200
+
+numpy-eigen (0.0.1-358) unstable; urgency=low
+
+  * Moved python module export helper to separate package
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 08:31:55 +0100
+
+numpy-eigen (0.0.1-357) unstable; urgency=low
+
+  * Another try to fix numpy_eigen
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:58:50 +0100
+
+numpy-eigen (0.0.1-356) unstable; urgency=low
+
+  * copy numpy_eigen libs to correct folder
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:25:52 +0100
+
+numpy-eigen (0.0.1-355) unstable; urgency=low
+
+  * touch
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:20:55 +0100
+
+numpy-eigen (0.0.1-354) unstable; urgency=low
+
+  * added copy command so that libs can be loaded by numpy
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:15:12 +0100
+
+numpy-eigen (0.0.1-353) unstable; urgency=low
+
+  * added copy command so that libs can be loaded by numpy
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:13:14 +0100
+
+numpy-eigen (0.0.1-352) unstable; urgency=low
+
+  * added copy command so that libs can be loaded by numpy
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 14 Mar 2014 00:11:22 +0100
+
+numpy-eigen (0.0.1-351) unstable; urgency=low
+
+  * Some changes to numpy eigen, still the loader scripts cannot find the
+    lib unless it is copied to the directory
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 23:43:37 +0100
+
+numpy-eigen (0.0.1-350) unstable; urgency=low
+
+  * different lib export and loading for numpy eigen
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 22:04:17 +0100
+
+numpy-eigen (0.0.1-349) unstable; urgency=low
+
+  * Numpy eigen tests
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 21:28:00 +0100
+
+numpy-eigen (0.0.1-348) unstable; urgency=low
+
+  * include matlab only if matlab was found
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 18:28:17 +0100
+
+numpy-eigen (0.0.1-347) unstable; urgency=low
+
+  * include matlab only if matlab was found
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 18:22:45 +0100
+
+numpy-eigen (0.0.1-346) unstable; urgency=low
+
+  * fix type matlab headers
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 18:18:43 +0100
+
+numpy-eigen (0.0.1-345) unstable; urgency=low
+
+  * numpy eigen python catkin export
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 16:32:35 +0100
+
+numpy-eigen (0.0.1-344) unstable; urgency=low
+
+  * kinematics to filesystem
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 11:23:11 +0100
+
+numpy-eigen (0.0.1-343) unstable; urgency=low
+
+  * property-tree to pthread and filesystem
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 11:21:31 +0100
+
+numpy-eigen (0.0.1-342) unstable; urgency=low
+
+  * boost includes and libs for all packages
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 11:17:07 +0100
+
+numpy-eigen (0.0.1-341) unstable; urgency=low
+
+  * matrix archive to pthread and boost filesystem
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 11:03:30 +0100
+
+numpy-eigen (0.0.1-340) unstable; urgency=low
+
+  * link sm matrix archive to boost
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 10:55:50 +0100
+
+numpy-eigen (0.0.1-339) unstable; urgency=low
+
+  * link sm boost to boost
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 10:53:32 +0100
+
+numpy-eigen (0.0.1-338) unstable; urgency=low
+
+  * boost serialization for sm_kinematics
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 10:10:01 +0100
+
+numpy-eigen (0.0.1-337) unstable; urgency=low
+
+  * boost serialization for sm eigen
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 13 Mar 2014 08:34:29 +0100
+
+numpy-eigen (0.0.1-336) unstable; urgency=low
+
+  * sm_boost boost thread dep
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 15:26:25 +0100
+
+numpy-eigen (0.0.1-335) unstable; urgency=low
+
+  * export c11 flags
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 15:21:07 +0100
+
+numpy-eigen (0.0.1-334) unstable; urgency=low
+
+  * no lib sm_opencv
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:42:39 +0100
+
+numpy-eigen (0.0.1-333) unstable; urgency=low
+
+  * touch
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:41:38 +0100
+
+numpy-eigen (0.0.1-332) unstable; urgency=low
+
+  * link sm_common to pthread
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:08:04 +0100
+
+numpy-eigen (0.0.1-331) unstable; urgency=low
+
+  * link sm_matlab to matlab
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:05:29 +0100
+
+numpy-eigen (0.0.1-330) unstable; urgency=low
+
+  * link sm timing to random
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:02:26 +0100
+
+numpy-eigen (0.0.1-329) unstable; urgency=low
+
+  * pthread
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 09:00:28 +0100
+
+numpy-eigen (0.0.1-328) unstable; urgency=low
+
+  * Include dirs
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 08:58:03 +0100
+
+numpy-eigen (0.0.1-327) unstable; urgency=low
+
+  * cleanup and rm of wrong deps in logging
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 08:17:41 +0100
+
+numpy-eigen (0.0.1-326) unstable; urgency=low
+
+  * rm leftover ros package.xml and stack.xml
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 12 Mar 2014 08:04:28 +0100
+
+numpy-eigen (0.0.1-325) unstable; urgency=low
+
+  * catkinized rest, not build-tested and link tested, just catkin deps
+    checker passes
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 23:50:37 +0100
+
+numpy-eigen (0.0.1-324) unstable; urgency=low
+
+  * Merge remote-tracking branch 'origin/master' into feature/catkinization
+  * Conflicts:
+  	sm_common/CMakeLists.txt
+  	sm_common/manifest.xml
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 23:38:04 +0100
+
+numpy-eigen (0.0.1-323) unstable; urgency=low
+
+  * sm_property_tree catkin
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 22:58:26 +0100
+
+numpy-eigen (0.0.1-322) unstable; urgency=low
+
+  * sm_opencv catkin
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 22:55:08 +0100
+
+numpy-eigen (0.0.1-321) unstable; urgency=low
+
+  * sm matlab catkin
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 22:54:43 +0100
+
+numpy-eigen (0.0.1-320) unstable; urgency=low
+
+  * missing package.xml
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Tue, 11 Mar 2014 22:54:24 +0100
+
+numpy-eigen (0.0.1-319) unstable; urgency=low
+
+  * Fixed the slerp routine
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 08 Feb 2014 05:38:32 +0100
+
+numpy-eigen (0.0.1-318) unstable; urgency=low
+
+  * Merge pull request #48 from furgalep/fix/numerical_unittests
+  * Fixed numerical comparison unit-tests
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Tue, 11 Feb 2014 13:52:40 +0100
+
+numpy-eigen (0.0.1-317) unstable; urgency=low
+
+  * Merge pull request #47 from furgalep/progress_info
+  * added showProgress function
+
+ -- mbuerki <mbuerki@student.ethz.ch>  Mon, 10 Feb 2014 21:54:47 +0100
+
+numpy-eigen (0.0.1-316) unstable; urgency=low
+
+  * implemented code review#1
+
+ -- Mathias Bürki <mbuerki@mbuerki-W530.(none)>  Mon, 10 Feb 2014 21:52:14 +0100
+
+numpy-eigen (0.0.1-315) unstable; urgency=low
+
+  * Added verbosity control to sm_common equal macros. Fixes #45
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 10 Feb 2014 14:14:54 +0100
+
+numpy-eigen (0.0.1-314) unstable; urgency=low
+
+  * Fixed numerical comparison unit-tests
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 10 Feb 2014 13:37:10 +0100
+
+numpy-eigen (0.0.1-313) unstable; urgency=low
+
+  * Cleanup linewrap
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 10 Feb 2014 13:34:46 +0100
+
+numpy-eigen (0.0.1-312) unstable; urgency=low
+
+  * added showProgress function
+
+ -- Mathias Bürki <mbuerki@mbuerki-W530.(none)>  Mon, 10 Feb 2014 09:34:42 +0100
+
+numpy-eigen (0.0.1-311) unstable; urgency=low
+
+  * Added reset function
+
+ -- Peter Fankhauser <pfankhauser@ethz.ch>  Fri, 07 Feb 2014 14:31:48 +0100
+
+numpy-eigen (0.0.1-310) unstable; urgency=low
+
+  * Fixed a missing base class in the python interface
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 31 Jan 2014 10:43:13 +0100
+
+numpy-eigen (0.0.1-309) unstable; urgency=low
+
+  * Fixed a bug in the numpy_eigen export that caused the converter to catch
+    all types in the convertible function, not just numpy arrays
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 31 Jan 2014 00:41:56 +0100
+
+numpy-eigen (0.0.1-308) unstable; urgency=low
+
+  * Fixed a regression in the python interface caused by the ordering of
+    python funcetion exports
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 31 Jan 2014 00:26:03 +0100
+
+numpy-eigen (0.0.1-307) unstable; urgency=low
+
+  * Reenabled transformations multiplying points
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 30 Jan 2014 01:09:07 +0100
+
+numpy-eigen (0.0.1-306) unstable; urgency=low
+
+  * Merge pull request #44 from furgalep/fix/rm_ros_platform_from_sm_logging
+  * rm ros platform from sm_logging
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sat, 11 Jan 2014 13:49:19 +0100
+
+numpy-eigen (0.0.1-305) unstable; urgency=low
+
+  * rm ros platform from sm_logging
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sat, 11 Jan 2014 13:42:18 +0100
+
+numpy-eigen (0.0.1-304) unstable; urgency=low
+
+  * added missing references to parameters
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Fri, 03 Jan 2014 15:43:17 +0100
+
+numpy-eigen (0.0.1-303) unstable; urgency=low
+
+  * makefile changes for catkinization
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 11 Dec 2013 18:45:11 +0100
+
+numpy-eigen (0.0.1-302) unstable; urgency=low
+
+  * Merge remote-tracking branch 'origin/master' into feature/catkinization
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 09 Dec 2013 00:00:35 +0100
+
+numpy-eigen (0.0.1-301) unstable; urgency=low
+
+  * Catkinize sm_kinematics
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:19:47 +0100
+
+numpy-eigen (0.0.1-300) unstable; urgency=low
+
+  * Catkinize sm_random
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:19:26 +0100
+
+numpy-eigen (0.0.1-299) unstable; urgency=low
+
+  * changed sm_logging
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:19:02 +0100
+
+numpy-eigen (0.0.1-298) unstable; urgency=low
+
+  * Catkinize sm_eigen
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:18:45 +0100
+
+numpy-eigen (0.0.1-297) unstable; urgency=low
+
+  * Catkinize sm_boost
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:18:16 +0100
+
+numpy-eigen (0.0.1-296) unstable; urgency=low
+
+  * changed common
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 21:18:02 +0100
+
+numpy-eigen (0.0.1-295) unstable; urgency=low
+
+  * Catkinized sm_doc
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 18:49:08 +0100
+
+numpy-eigen (0.0.1-294) unstable; urgency=low
+
+  * Catkinize sm_boost
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 18:39:15 +0100
+
+numpy-eigen (0.0.1-293) unstable; urgency=low
+
+  * Catkinize sm_logging
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 18:38:09 +0100
+
+numpy-eigen (0.0.1-292) unstable; urgency=low
+
+  * Catkinize sm_common
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Sun, 08 Dec 2013 18:30:53 +0100
+
+numpy-eigen (0.0.1-291) unstable; urgency=low
+
+  * Merge pull request #41 from uschwes/master
+  * Added more verbosity levels below debug
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Thu, 05 Dec 2013 21:18:32 +0100
+
+numpy-eigen (0.0.1-290) unstable; urgency=low
+
+  * Merge pull request #40 from simonlynen/fix/license
+  * added new BSD license for files that don't have an explicit license
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 05 Dec 2013 13:34:55 +0100
+
+numpy-eigen (0.0.1-289) unstable; urgency=low
+
+  * Added more verbosity levels below debug, namely FINE, TRACE, FINER,
+    VERBOSE, FINEST and ALL. These are the same levels as used in the log4net
+    logging service.
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Thu, 05 Dec 2013 09:56:42 +0100
+
+numpy-eigen (0.0.1-288) unstable; urgency=low
+
+  * added new BSD license for files that don't have an explicit license
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Thu, 05 Dec 2013 09:22:23 +0100
+
+numpy-eigen (0.0.1-287) unstable; urgency=low
+
+  * fix header includes in sm_logging/assert.h
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Mon, 02 Dec 2013 18:43:36 +0100
+
+numpy-eigen (0.0.1-286) unstable; urgency=low
+
+  *support integral value types in NumericalDiff
+  *some cleanup in NumericalDiff
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Fri, 11 Oct 2013 21:22:44 +0200
+
+numpy-eigen (0.0.1-285) unstable; urgency=low
+
+  * Adding files to ignore
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 02 Oct 2013 11:54:45 +0200
+
+numpy-eigen (0.0.1-284) unstable; urgency=low
+
+  * Upgraded the sm_logging package to support defined package names. Note:
+    if you define a package name, you will have to use the macro SM_INIT_LOGGING()
+    or nothing will be logged anymore
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 02 Oct 2013 11:53:24 +0200
+
+numpy-eigen (0.0.1-283) unstable; urgency=low
+
+  * small cleanups for the new sm::findFile in BoostPropertyTreeSupport
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Fri, 13 Sep 2013 12:26:32 +0200
+
+numpy-eigen (0.0.1-282) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/uschwes/Schweizer-Messer
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Thu, 12 Sep 2013 18:01:05 +0200
+
+numpy-eigen (0.0.1-281) unstable; urgency=low
+
+  * Added a function to find a file in a directory specified by an environment
+    variable. Unit test implemented
+
+ -- Ulrich Schwesinger <ulrich.schwesinger@mavt.ethz.ch>  Thu, 12 Sep 2013 18:00:44 +0200
+
+numpy-eigen (0.0.1-280) unstable; urgency=low
+
+  * Merge pull request #35 from pfankhauser/master
+  * Added functions for numerical comparison.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Thu, 12 Sep 2013 10:51:23 +0200
+
+numpy-eigen (0.0.1-279) unstable; urgency=low
+
+  * Cleaned up includes
+
+ -- Peter Fankhauser <pfankhauser@ethz.ch>  Wed, 11 Sep 2013 17:53:35 +0200
+
+numpy-eigen (0.0.1-278) unstable; urgency=low
+
+  * Reworked based on Hannes' comments, added unit tests
+
+ -- Peter Fankhauser <pfankhauser@ethz.ch>  Tue, 10 Sep 2013 14:17:41 +0200
+
+numpy-eigen (0.0.1-277) unstable; urgency=low
+
+  * Hopefully fixing the memory leak in the id wrappers
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 09 Sep 2013 12:58:06 +0200
+
+numpy-eigen (0.0.1-276) unstable; urgency=low
+
+  * Added functions for numerical comparison.
+
+ -- Peter Fankhauser <pfankhauser@ethz.ch>  Mon, 09 Sep 2013 11:32:18 +0200
+
+numpy-eigen (0.0.1-275) unstable; urgency=low
+
+  * removed JSON support from BoostPropertyTree because it is not used and
+    making trouble with -std=c++11 as this is incompatible with some JSON boost
+    code.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 27 Aug 2013 12:19:07 +0200
+
+numpy-eigen (0.0.1-274) unstable; urgency=low
+
+  * got rid of the order 4 power series calculations in quaternion_algebra and
+    replaced with order two versions. thats enough and here the forth root seems
+    to be good as threshold.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 07 Aug 2013 15:06:50 +0200
+
+numpy-eigen (0.0.1-273) unstable; urgency=low
+
+  * adapted sm_python to changes in quaternion_algebra
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 06 Aug 2013 18:35:33 +0200
+
+numpy-eigen (0.0.1-272) unstable; urgency=low
+
+  * started quatLog and quatExp jacobian tests
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Mon, 05 Aug 2013 12:14:54 +0200
+
+numpy-eigen (0.0.1-271) unstable; urgency=low
+
+  * added templated nuermicDiff function to NumericalDiff.hpp. For some
+    more comfort.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Mon, 05 Aug 2013 12:14:44 +0200
+
+numpy-eigen (0.0.1-270) unstable; urgency=low
+
+  * support non double scalar type in quat2AxisAngle
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Mon, 05 Aug 2013 12:12:44 +0200
+
+numpy-eigen (0.0.1-269) unstable; urgency=low
+
+  * moved some quaternion calculation code from UnitQuaternionManifold to
+    quaternion_algebra
+  * extended the support for different scalar types
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Mon, 05 Aug 2013 11:23:38 +0200
+
+numpy-eigen (0.0.1-268) unstable; urgency=low
+
+  * Added slope and offset to the timestamp corrector
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 05 Aug 2013 08:20:34 +0200
+
+numpy-eigen (0.0.1-267) unstable; urgency=low
+
+  * Fixed a compilation error in sm_python
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 03 Aug 2013 13:57:15 +0200
+
+numpy-eigen (0.0.1-266) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 03 Aug 2013 11:58:10 +0200
+
+numpy-eigen (0.0.1-265) unstable; urgency=low
+
+  * Improved the numerical behavior of axisAngle2quat. See issue #32.
+  * and added some tests.
+
+ -- HannesSommer <hannes@sommer-atelier.de>  Fri, 02 Aug 2013 12:34:17 +0200
+
+numpy-eigen (0.0.1-264) unstable; urgency=low
+
+  * some white space cleanup in quaternion_algebra.*
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 31 Jul 2013 17:54:57 +0200
+
+numpy-eigen (0.0.1-263) unstable; urgency=low
+
+  * sm::kinematics::crossMx does now also work with non double scalars.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 31 Jul 2013 17:51:24 +0200
+
+numpy-eigen (0.0.1-262) unstable; urgency=low
+
+  * made NumericalDiff.hpp really work with non double scalar.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 31 Jul 2013 17:49:57 +0200
+
+numpy-eigen (0.0.1-261) unstable; urgency=low
+
+  * added missing include guard in rotations.hpp
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 31 Jul 2013 17:49:11 +0200
+
+numpy-eigen (0.0.1-260) unstable; urgency=low
+
+  * Added an experiments python submodule
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 29 Jul 2013 21:56:46 +0200
+
+numpy-eigen (0.0.1-259) unstable; urgency=low
+
+  * Ignoring files
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 27 Jul 2013 14:27:08 +0200
+
+numpy-eigen (0.0.1-258) unstable; urgency=low
+
+  * removed unnecessary test
+
+ -- sleutenegger <lestefan@ethz.ch>  Wed, 24 Jul 2013 18:45:23 +0200
+
+numpy-eigen (0.0.1-257) unstable; urgency=low
+
+  * UOplus set/get
+
+ -- sleutenegger <lestefan@ethz.ch>  Wed, 24 Jul 2013 18:41:01 +0200
+
+numpy-eigen (0.0.1-256) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- sleutenegger <lestefan@ethz.ch>  Wed, 24 Jul 2013 18:39:47 +0200
+
+numpy-eigen (0.0.1-255) unstable; urgency=low
+
+  * Added pickle support based on boost::serialization
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 23 Jul 2013 21:31:19 +0200
+
+numpy-eigen (0.0.1-254) unstable; urgency=low
+
+  * include/sm/python/boost_serialization_pickle.hpp
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 23 Jul 2013 21:29:39 +0200
+
+numpy-eigen (0.0.1-253) unstable; urgency=low
+
+  * Adding missing file
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 22 Jul 2013 14:29:03 +0200
+
+numpy-eigen (0.0.1-252) unstable; urgency=low
+
+  * Made the random seed actually work and pushed those functions to
+    Python
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 22 Jul 2013 14:28:30 +0200
+
+numpy-eigen (0.0.1-251) unstable; urgency=low
+
+  * Reformat
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 21 Jul 2013 13:30:42 +0200
+
+numpy-eigen (0.0.1-250) unstable; urgency=low
+
+  * Added time util exports
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 21 Jul 2013 13:11:36 +0200
+
+numpy-eigen (0.0.1-249) unstable; urgency=low
+
+  * Added the long type to numpy_eigen. Happy compiling
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 21 Jul 2013 09:39:02 +0200
+
+numpy-eigen (0.0.1-248) unstable; urgency=low
+
+  * Some extra random support
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 20 Jul 2013 21:19:15 +0200
+
+numpy-eigen (0.0.1-247) unstable; urgency=low
+
+  * Ignoring local files
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 20 Jul 2013 13:29:21 +0200
+
+numpy-eigen (0.0.1-246) unstable; urgency=low
+
+  * Added utilities for integer nanosecond time
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 20 Jul 2013 13:28:48 +0200
+
+numpy-eigen (0.0.1-245) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 18 Jul 2013 18:36:34 +0200
+
+numpy-eigen (0.0.1-244) unstable; urgency=low
+
+  * Added a missing hash function
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 18 Jul 2013 18:36:27 +0200
+
+numpy-eigen (0.0.1-243) unstable; urgency=low
+
+  * removed space / tab indentation mixing
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Thu, 18 Jul 2013 10:48:08 +0200
+
+numpy-eigen (0.0.1-242) unstable; urgency=low
+
+  * fixed fopen error handling in matrix archives matlab files
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Mon, 15 Jul 2013 14:37:53 +0200
+
+numpy-eigen (0.0.1-241) unstable; urgency=low
+
+  * some cleanups in the numpy eigen generated code
+  * adapted the test to the new single digit names
+  * removed old generated files
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Sun, 14 Jul 2013 10:31:20 +0200
+
+numpy-eigen (0.0.1-240) unstable; urgency=low
+
+  * added a non const ref matrix getter.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Sat, 13 Jul 2013 12:30:59 +0200
+
+numpy-eigen (0.0.1-239) unstable; urgency=low
+
+  * implemented getter for Oplus-type uncertainty on UncertainTransformation
+
+ -- sleutenegger <lestefan@ethz.ch>  Fri, 05 Jul 2013 09:41:53 +0200
+
+numpy-eigen (0.0.1-238) unstable; urgency=low
+
+  * implemented getter for Oplus-type uncertainty on UncertainTransformation
+
+ -- sleutenegger <lestefan@ethz.ch>  Fri, 05 Jul 2013 09:29:02 +0200
+
+numpy-eigen (0.0.1-237) unstable; urgency=low
+
+  * implemented getter for Oplus-type uncertainty on UncertainTransformation
+
+ -- sleutenegger <lestefan@ethz.ch>  Fri, 05 Jul 2013 09:24:00 +0200
+
+numpy-eigen (0.0.1-236) unstable; urgency=low
+
+  * Added some comments to the yaw/pitch/roll file
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 02 Jul 2013 13:24:32 +0200
+
+numpy-eigen (0.0.1-235) unstable; urgency=low
+
+  * Fixed a typo in the linux version of SM_LOGGING
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 20 Jun 2013 17:23:03 +0200
+
+numpy-eigen (0.0.1-234) unstable; urgency=low
+
+  * Updated to compile on osx
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 18 Jun 2013 16:12:39 +0200
+
+numpy-eigen (0.0.1-233) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 18 Jun 2013 10:39:14 +0200
+
+numpy-eigen (0.0.1-232) unstable; urgency=low
+
+  * Changing requirement of pylib to 2.7 that numpy_eigen compiles in Ubuntu
+    12.04 too..
+
+ -- omaris <omari.sammy@gmail.com>  Tue, 18 Jun 2013 08:52:50 +0200
+
+numpy-eigen (0.0.1-231) unstable; urgency=low
+
+  * Merging in the master
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 16 Jun 2013 16:13:05 +0200
+
+numpy-eigen (0.0.1-230) unstable; urgency=low
+
+  * making things compile on osx
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 16 Jun 2013 16:08:12 +0200
+
+numpy-eigen (0.0.1-229) unstable; urgency=low
+
+  * Adapt CMake script to make it compile under Ubuntu 13.04
+
+ -- omaris <omari.sammy@gmail.com>  Fri, 14 Jun 2013 13:10:25 +0200
+
+numpy-eigen (0.0.1-228) unstable; urgency=low
+
+  * Updated the serialization macros to print a bit prettier
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 08 Jun 2013 22:51:20 +0200
+
+numpy-eigen (0.0.1-227) unstable; urgency=low
+
+  * Switched the logger to use std::chrono as the standard time type
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 07 Jun 2013 12:21:55 +0200
+
+numpy-eigen (0.0.1-226) unstable; urgency=low
+
+  * hiding of internal types otherwise sm_assert macros somehow uses them
+    if they are also in sm::
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 22:37:34 +0200
+
+numpy-eigen (0.0.1-225) unstable; urgency=low
+
+  * removed impl of check(no) to avoid multiple definitions
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 22:20:53 +0200
+
+numpy-eigen (0.0.1-224) unstable; urgency=low
+
+  * sm::serialization instead of sm_serialization
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 22:16:44 +0200
+
+numpy-eigen (0.0.1-223) unstable; urgency=low
+
+  * hiding the internal namespace inside sm_serialization
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 22:14:41 +0200
+
+numpy-eigen (0.0.1-222) unstable; urgency=low
+
+  * renamed the ambiguous namespace for gcc
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 16:07:41 +0200
+
+numpy-eigen (0.0.1-221) unstable; urgency=low
+
+  * Merge pull request #23 from simonlynen/namespace_changes
+  * namespace changes
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Thu, 06 Jun 2013 15:51:45 +0200
+
+numpy-eigen (0.0.1-220) unstable; urgency=low
+
+  * removing c++11 flags from other packages to compile c98 for property
+    tree
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 06 Jun 2013 10:41:32 +0200
+
+numpy-eigen (0.0.1-219) unstable; urgency=low
+
+  * Merge pull request #22 from mbuerki/master
+  * Quat log jacobian.
+  * TODO: Handle degenerate cases.
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Thu, 06 Jun 2013 09:19:50 +0200
+
+numpy-eigen (0.0.1-218) unstable; urgency=low
+
+  * Fixed the python logging to respect levels
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 04 Jun 2013 23:43:19 +0200
+
+numpy-eigen (0.0.1-217) unstable; urgency=low
+
+  * namespace changes
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Mon, 03 Jun 2013 10:40:00 +0200
+
+numpy-eigen (0.0.1-216) unstable; urgency=low
+
+  * Switching c++11 to c++0x. Will this break anything else?
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 02 Jun 2013 12:59:24 +0200
+
+numpy-eigen (0.0.1-215) unstable; urgency=low
+
+  * fixed pow() usage
+
+ -- Mathias Buerki <mbuerki@V-Charge-ubuntu.(none)>  Tue, 28 May 2013 14:41:49 +0200
+
+numpy-eigen (0.0.1-214) unstable; urgency=low
+
+  * changed to the right quaternion convention of the log jacobian
+
+ -- Mathias Buerki <mbuerki@V-Charge-ubuntu.(none)>  Mon, 27 May 2013 19:45:32 +0200
+
+numpy-eigen (0.0.1-213) unstable; urgency=low
+
+  * fixed silly computation bug
+
+ -- Mathias Buerki <mbuerki@V-Charge-ubuntu.(none)>  Mon, 27 May 2013 17:48:52 +0200
+
+numpy-eigen (0.0.1-212) unstable; urgency=low
+
+  * added quat log jacobian
+
+ -- Mathias Buerki <mbuerki@V-Charge-ubuntu.(none)>  Mon, 27 May 2013 14:05:06 +0200
+
+numpy-eigen (0.0.1-211) unstable; urgency=low
+
+  * added version of is_binary_equal.hpp with deprecated warning
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Sun, 26 May 2013 20:19:29 +0200
+
+numpy-eigen (0.0.1-210) unstable; urgency=low
+
+  * more changes to the serialization macros to catch all cases from
+    aslam_cv
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Sun, 26 May 2013 20:13:55 +0200
+
+numpy-eigen (0.0.1-209) unstable; urgency=low
+
+  * added typetraits from msf
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Sun, 26 May 2013 17:44:25 +0200
+
+numpy-eigen (0.0.1-208) unstable; urgency=low
+
+  * replaced sm::isBinaryEqual with macro
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 16:42:30 +0200
+
+numpy-eigen (0.0.1-207) unstable; urgency=low
+
+  * Allow checks for reference types
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 16:41:47 +0200
+
+numpy-eigen (0.0.1-206) unstable; urgency=low
+
+  * deleted sm::isBinaryEqual. The NULL cases are automatically handled
+  * by SM_CHECKSAME
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 16:33:20 +0200
+
+numpy-eigen (0.0.1-205) unstable; urgency=low
+
+  * more pointer tests
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 12:25:34 +0200
+
+numpy-eigen (0.0.1-204) unstable; urgency=low
+
+  * added pointer tests
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 12:22:05 +0200
+
+numpy-eigen (0.0.1-203) unstable; urgency=low
+
+  * added macros for serialization checks with tests
+
+ -- simonlynen <simon.lynen@mavt.ethz.ch>  Thu, 23 May 2013 12:20:04 +0200
+
+numpy-eigen (0.0.1-202) unstable; urgency=low
+
+  * Added some helper functions to help in-place optimization of
+    transformations.
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 23 May 2013 08:00:14 +0200
+
+numpy-eigen (0.0.1-201) unstable; urgency=low
+
+  * forgot to remove the temporary file in the test.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 21 May 2013 13:23:36 +0200
+
+numpy-eigen (0.0.1-200) unstable; urgency=low
+
+  * ignored the /bin folder.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 21 May 2013 13:15:03 +0200
+
+numpy-eigen (0.0.1-199) unstable; urgency=low
+
+  * Started a simple unit test for the c++ part.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 21 May 2013 13:14:44 +0200
+
+numpy-eigen (0.0.1-198) unstable; urgency=low
+
+  * Fixed the incomplete renaming of the ama input / output parameters in
+    the Matlab
+  * Enabled the MatrixArchive to also store strings.
+  * corrected some indentation issues.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Tue, 21 May 2013 13:14:26 +0200
+
+numpy-eigen (0.0.1-197) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Laurent Kneip <kneipl@ethz.ch>  Fri, 17 May 2013 11:42:16 +0200
+
+numpy-eigen (0.0.1-196) unstable; urgency=low
+
+  * added "const" specifier in Id.hpp
+
+ -- Laurent Kneip <kneipl@ethz.ch>  Fri, 17 May 2013 11:41:42 +0200
+
+numpy-eigen (0.0.1-195) unstable; urgency=low
+
+  * Fixed the broken python interface. closes #19
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 12 May 2013 09:42:01 +0200
+
+numpy-eigen (0.0.1-194) unstable; urgency=low
+
+  * Fixed a subtle bug in the ID conversion
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 04 May 2013 17:12:35 +0200
+
+numpy-eigen (0.0.1-193) unstable; urgency=low
+
+  * Enabled the long-->ID conversion
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 04 May 2013 16:45:31 +0200
+
+numpy-eigen (0.0.1-192) unstable; urgency=low
+
+  * Added some interpolation functions to the kinematics package
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 03 May 2013 13:17:24 +0200
+
+numpy-eigen (0.0.1-191) unstable; urgency=low
+
+  * Removed lingering ROS macros from the SM logging stuff
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 01 May 2013 18:31:25 +0200
+
+numpy-eigen (0.0.1-190) unstable; urgency=low
+
+  * Patch for windows compatibility
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 29 Apr 2013 17:53:45 +0200
+
+numpy-eigen (0.0.1-189) unstable; urgency=low
+
+  * Removing a warning and a LOG4CXX macro
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 29 Apr 2013 17:45:16 +0200
+
+numpy-eigen (0.0.1-188) unstable; urgency=low
+
+  * Added some EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+ -- Laurent Kneip <kneipl@ethz.ch>  Sat, 27 Apr 2013 22:18:32 +0200
+
+numpy-eigen (0.0.1-187) unstable; urgency=low
+
+  * Fixinig issue 18
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 25 Apr 2013 09:58:01 +0200
+
+numpy-eigen (0.0.1-186) unstable; urgency=low
+
+  * Updated the python ID exporter to avoid a multiple export warning
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 23 Apr 2013 16:07:12 +0200
+
+numpy-eigen (0.0.1-185) unstable; urgency=low
+
+  * Hopefully got rid of the extra characters in the logging when using
+    streams
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 19 Apr 2013 08:44:23 +0200
+
+numpy-eigen (0.0.1-184) unstable; urgency=low
+
+  * better error messages in the property tree
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 17 Apr 2013 23:53:34 +0200
+
+numpy-eigen (0.0.1-183) unstable; urgency=low
+
+  * Moved some files around and fixed compilation errors.
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 16 Apr 2013 09:59:19 +0200
+
+numpy-eigen (0.0.1-182) unstable; urgency=low
+
+  * Moved the boost portable binary archive stuff
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 16 Apr 2013 09:38:44 +0200
+
+numpy-eigen (0.0.1-181) unstable; urgency=low
+
+  * Added missing files
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 14 Apr 2013 20:11:01 +0200
+
+numpy-eigen (0.0.1-180) unstable; urgency=low
+
+  * Added uchar to the numpy-eigen module. Exported the logging functions
+    to python
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sun, 14 Apr 2013 08:12:34 +0200
+
+numpy-eigen (0.0.1-179) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 12 Apr 2013 11:51:57 +0200
+
+numpy-eigen (0.0.1-178) unstable; urgency=low
+
+  * Fix for the property tree
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 12 Apr 2013 11:51:47 +0200
+
+numpy-eigen (0.0.1-177) unstable; urgency=low
+
+  * Missing implementation
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 11 Apr 2013 18:11:37 +0200
+
+numpy-eigen (0.0.1-176) unstable; urgency=low
+
+  * Added a set method to the transformation
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 11 Apr 2013 13:52:41 +0200
+
+numpy-eigen (0.0.1-175) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 02 Apr 2013 12:19:51 +0200
+
+numpy-eigen (0.0.1-174) unstable; urgency=low
+
+  * Better error handling in a few places'
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 02 Apr 2013 12:19:46 +0200
+
+numpy-eigen (0.0.1-173) unstable; urgency=low
+
+  * corrected S matrix, note that the minus sign is a bit weird
+  * Jacobian computation
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Mon, 25 Mar 2013 18:01:56 +0100
+
+numpy-eigen (0.0.1-172) unstable; urgency=low
+
+  * added S matrix to ZXY
+  * unit test for ZXY, still failing due to minus sign
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Mon, 25 Mar 2013 17:05:08 +0100
+
+numpy-eigen (0.0.1-171) unstable; urgency=low
+
+  * adding sm_logging/lib to gitignore
+  * corrected sm_common/include/sm/maths.hpp to include cmath, tests don't
+    compile otherwise
+  * corrected linkage of the tests (pthread), otherwise don't link
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 22 Mar 2013 11:35:17 +0100
+
+numpy-eigen (0.0.1-170) unstable; urgency=low
+
+  * Forgot the equal case in the last commit..
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 20 Mar 2013 17:02:40 +0100
+
+numpy-eigen (0.0.1-169) unstable; urgency=low
+
+  * Improved handling of NaN in the SM_ASSERT_NEAR* macros.
+
+ -- HannesSommer <hannes.sommer@mavt.ethz.ch>  Wed, 20 Mar 2013 16:10:04 +0100
+
+numpy-eigen (0.0.1-168) unstable; urgency=low
+
+  * Removed pose graph and console
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 19 Mar 2013 13:45:19 +0100
+
+numpy-eigen (0.0.1-167) unstable; urgency=low
+
+  * corrected atan to atan2 in ZXY convention
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 15 Mar 2013 17:42:02 +0100
+
+numpy-eigen (0.0.1-166) unstable; urgency=low
+
+  * forgot to commit CMakeLists.txt
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 15 Mar 2013 11:30:25 +0100
+
+numpy-eigen (0.0.1-165) unstable; urgency=low
+
+  * adding a rotational kinematics based on Euler angles with ZXY
+    convention
+
+ -- Jerome Maye <jerome.maye@mavt.ethz.ch>  Fri, 15 Mar 2013 11:29:35 +0100
+
+numpy-eigen (0.0.1-164) unstable; urgency=low
+
+  * Added a little function to convert ptime to timeval.
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 04 Mar 2013 12:19:34 +0100
+
+numpy-eigen (0.0.1-163) unstable; urgency=low
+
+  * Making the logger compile with clang
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 15 Feb 2013 11:30:01 +0100
+
+numpy-eigen (0.0.1-162) unstable; urgency=low
+
+  * added boost array header include to fix compilation error on ros groovy/ubuntu
+    12.10-64/gcc4.7
+
+ -- Simon Lynen <simon.lynen@mavt.ethz.ch>  Wed, 13 Feb 2013 21:45:29 +0100
+
+numpy-eigen (0.0.1-161) unstable; urgency=low
+
+  * Added a default implementation for the clock functions
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 31 Jan 2013 21:52:36 +0100
+
+numpy-eigen (0.0.1-160) unstable; urgency=low
+
+  * Added the missing export tag to the manifest
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 28 Jan 2013 16:56:47 +0100
+
+numpy-eigen (0.0.1-159) unstable; urgency=low
+
+  * Added a missing header for linux
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 28 Jan 2013 16:52:37 +0100
+
+numpy-eigen (0.0.1-158) unstable; urgency=low
+
+  * changed the cross-platform timestamp in the stdout logger. Still need
+    to test on Windows
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 26 Jan 2013 10:55:53 +0100
+
+numpy-eigen (0.0.1-157) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 26 Jan 2013 10:43:59 +0100
+
+numpy-eigen (0.0.1-156) unstable; urgency=low
+
+  * First draft of logging macros. Now to write a ROS plugin
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 26 Jan 2013 00:03:58 +0100
+
+numpy-eigen (0.0.1-155) unstable; urgency=low
+
+  * Fixed SM_ASSER_THROW in Engine.cpp
+
+ -- gehrinch <gehrinch@ethz.ch>  Tue, 22 Jan 2013 12:14:31 +0100
+
+numpy-eigen (0.0.1-154) unstable; urgency=low
+
+  * Added the matrix archive
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 28 Dec 2012 02:47:28 +0100
+
+numpy-eigen (0.0.1-153) unstable; urgency=low
+
+  * Added a portable, lightweight matrix archive
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 22 Dec 2012 19:27:44 +0100
+
+numpy-eigen (0.0.1-152) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 20 Dec 2012 22:28:23 +0100
+
+numpy-eigen (0.0.1-151) unstable; urgency=low
+
+  * Added a traits class for getting eigen aligned allocator containers
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 20 Dec 2012 22:27:54 +0100
+
+numpy-eigen (0.0.1-150) unstable; urgency=low
+
+  * Added a job queue for processing boost::futures
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 16 Dec 2012 18:07:53 +0100
+
+numpy-eigen (0.0.1-149) unstable; urgency=low
+
+  * Added more macros to the serialization versioning
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 06 Dec 2012 17:58:20 +0100
+
+numpy-eigen (0.0.1-148) unstable; urgency=low
+
+  * Added missing console files
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 06 Dec 2012 12:09:24 +0100
+
+numpy-eigen (0.0.1-147) unstable; urgency=low
+
+  * Added some basic rounding functions
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 06 Dec 2012 09:28:14 +0100
+
+numpy-eigen (0.0.1-146) unstable; urgency=low
+
+  * updating the gitignore
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 05 Dec 2012 16:38:45 +0100
+
+numpy-eigen (0.0.1-145) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 05 Dec 2012 16:38:02 +0100
+
+numpy-eigen (0.0.1-144) unstable; urgency=low
+
+  * Added some flags to the build script
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 05 Dec 2012 16:37:58 +0100
+
+numpy-eigen (0.0.1-143) unstable; urgency=low
+
+  * fixes a bug of the new VehicleFrame.cpp of aslam_cv (line 174 and 198)
+    which requires it to be const
+
+ -- bbuecheler <bbuecheler@me.com>  Wed, 05 Dec 2012 15:18:42 +0100
+
+numpy-eigen (0.0.1-142) unstable; urgency=low
+
+  * added Edge::Type Support in Python
+
+ -- bbuecheler <bbuecheler@me.com>  Wed, 05 Dec 2012 14:38:50 +0100
+
+numpy-eigen (0.0.1-141) unstable; urgency=low
+
+  * updated python export
+
+ -- bbuecheler <bbuecheler@me.com>  Wed, 05 Dec 2012 12:37:59 +0100
+
+numpy-eigen (0.0.1-140) unstable; urgency=low
+
+  * added python export
+
+ -- bbuecheler <bbuecheler@me.com>  Wed, 05 Dec 2012 11:00:03 +0100
+
+numpy-eigen (0.0.1-139) unstable; urgency=low
+
+  * Added some funcitonality to the transformation (rotating points)
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 04 Dec 2012 17:34:30 +0100
+
+numpy-eigen (0.0.1-138) unstable; urgency=low
+
+  * Updates to the pose graph to prepare for CVG integration
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 04 Dec 2012 16:47:00 +0100
+
+numpy-eigen (0.0.1-137) unstable; urgency=low
+
+  * The return of the pose graph
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 03 Dec 2012 20:55:46 +0100
+
+numpy-eigen (0.0.1-136) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 30 Nov 2012 11:56:28 +0100
+
+numpy-eigen (0.0.1-135) unstable; urgency=low
+
+  * Updated some little things
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 30 Nov 2012 11:56:18 +0100
+
+numpy-eigen (0.0.1-134) unstable; urgency=low
+
+  * Merge pull request #11 from neunertm/master
+  * Matlab-Engine wrapper
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Fri, 30 Nov 2012 10:36:19 +0100
+
+numpy-eigen (0.0.1-133) unstable; urgency=low
+
+  * added include of feature2d.hpp
+
+ -- bbuecheler <bbuecheler@me.com>  Fri, 30 Nov 2012 10:00:32 +0100
+
+numpy-eigen (0.0.1-132) unstable; urgency=low
+
+  * Fixed a compilation error in the python interface
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 27 Nov 2012 11:29:25 +0100
+
+numpy-eigen (0.0.1-131) unstable; urgency=low
+
+  * Removed the error checking from the matrix squareroot
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 27 Nov 2012 11:17:07 +0100
+
+numpy-eigen (0.0.1-130) unstable; urgency=low
+
+  * Added a templated uncertain vector and upgraded some simple stuff
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 26 Nov 2012 11:45:55 +0100
+
+numpy-eigen (0.0.1-129) unstable; urgency=low
+
+  * Added a missing linker flag
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 21 Nov 2012 06:49:02 +0100
+
+numpy-eigen (0.0.1-128) unstable; urgency=low
+
+  * updated CMakeLists
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 19 Nov 2012 20:53:19 +0100
+
+numpy-eigen (0.0.1-127) unstable; urgency=low
+
+  * mend
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 19 Nov 2012 20:28:23 +0100
+
+numpy-eigen (0.0.1-126) unstable; urgency=low
+
+  * Changed findMatlab script
+  * Make it correctly compile under Linux
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 19 Nov 2012 20:20:19 +0100
+
+numpy-eigen (0.0.1-125) unstable; urgency=low
+
+  * Updated the serialized map to support multiple tables in one
+    file
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 17 Nov 2012 13:49:40 +0100
+
+numpy-eigen (0.0.1-124) unstable; urgency=low
+
+  * Added some sanity checks in the property tree and compiled with debug
+    symbols
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 13 Nov 2012 18:00:02 +0100
+
+numpy-eigen (0.0.1-123) unstable; urgency=low
+
+  * Merge pull request #3 from furgalep/master
+  * Pulling in latest version
+
+ -- neunertm <neunertm@gmail.com>  Tue, 13 Nov 2012 17:05:15 +0100
+
+numpy-eigen (0.0.1-122) unstable; urgency=low
+
+  * Added some python files
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 10 Nov 2012 19:18:44 +0100
+
+numpy-eigen (0.0.1-121) unstable; urgency=low
+
+  * Added some extra python stuff
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 10 Nov 2012 19:17:42 +0100
+
+numpy-eigen (0.0.1-120) unstable; urgency=low
+
+  * Added some three-point methods
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 10 Nov 2012 19:16:44 +0100
+
+numpy-eigen (0.0.1-119) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 06 Nov 2012 20:41:18 +0100
+
+numpy-eigen (0.0.1-118) unstable; urgency=low
+
+  * Added a script to save a figure with no axis
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 06 Nov 2012 20:40:31 +0100
+
+numpy-eigen (0.0.1-117) unstable; urgency=low
+
+  * Merging .gitignore
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 06 Nov 2012 11:55:25 +0100
+
+numpy-eigen (0.0.1-116) unstable; urgency=low
+
+  * Added some other comparison operators to the ID class
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 06 Nov 2012 11:51:00 +0100
+
+numpy-eigen (0.0.1-115) unstable; urgency=low
+
+  * ignore stuff
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 05 Nov 2012 13:51:00 +0100
+
+numpy-eigen (0.0.1-114) unstable; urgency=low
+
+  * Updated the gitignore
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 05 Nov 2012 11:11:14 +0100
+
+numpy-eigen (0.0.1-113) unstable; urgency=low
+
+  * Added versioning to the boost::serialization routines and fixed a but
+    in the quat2axisAngle function
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 03 Nov 2012 22:47:30 +0100
+
+numpy-eigen (0.0.1-112) unstable; urgency=low
+
+  * Fixed a bug in the id postincrement'
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 02 Nov 2012 21:59:58 +0100
+
+numpy-eigen (0.0.1-111) unstable; urgency=low
+
+  * Compilation problems for some reason
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 30 Oct 2012 08:51:18 +0100
+
+numpy-eigen (0.0.1-110) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 29 Oct 2012 23:00:32 +0100
+
+numpy-eigen (0.0.1-109) unstable; urgency=low
+
+  * Pushing changes
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 29 Oct 2012 23:00:14 +0100
+
+numpy-eigen (0.0.1-108) unstable; urgency=low
+
+  * Added the first draft of a pose graph
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 26 Oct 2012 15:38:43 +0200
+
+numpy-eigen (0.0.1-107) unstable; urgency=low
+
+  * better rounding error workaround in R2AxisAngle
+  * rounding error workaround is now identical to the one used elsewhere
+    in Schweizer-Messer
+
+ -- diemf <diemf@student.ethz.ch>  Tue, 16 Oct 2012 12:22:18 +0200
+
+numpy-eigen (0.0.1-106) unstable; urgency=low
+
+  * Added some tools to make it easier to build a python interface
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 12 Oct 2012 13:20:36 +0200
+
+numpy-eigen (0.0.1-105) unstable; urgency=low
+
+  * Fixed a breaking change in the Homogeneous Point
+
+ -- Paul Furgale <ptf@V-Charge-ubuntu.(none)>  Mon, 08 Oct 2012 17:55:52 +0200
+
+numpy-eigen (0.0.1-104) unstable; urgency=low
+
+  * Reverting a breaking change
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 07 Oct 2012 20:23:47 +0200
+
+numpy-eigen (0.0.1-103) unstable; urgency=low
+
+  * Removed meaningless const specifiers
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 06 Oct 2012 17:12:26 +0200
+
+numpy-eigen (0.0.1-102) unstable; urgency=low
+
+  * Fixed a bug in the eigen serialization that would cause a segfault on
+    an empty dynamic matrix
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 06 Oct 2012 17:10:39 +0200
+
+numpy-eigen (0.0.1-101) unstable; urgency=low
+
+  * Added a portable binary archive from Boost::1.48
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 24 Sep 2012 14:10:33 +0200
+
+numpy-eigen (0.0.1-100) unstable; urgency=low
+
+  * More Linux compatible, Bugfix good-function
+
+ -- Péter Fankhauser <peterfa@ethz.ch>  Tue, 11 Sep 2012 00:32:53 +0200
+
+numpy-eigen (0.0.1-99) unstable; urgency=low
+
+  * Added SM_MATLAB
+  * SM_Matlab is a wrapper for the matlab C interface and let's you
+    execute
+  * matlab commands from C++. Additionally, you can send data to
+    Matlab,
+  * process it and read it out again.
+  * The wrapper supports simple C++ standard data types (no containers yet)
+  * as well as Eigen Vectors and Matrices.
+
+ -- Michael Neunert <neunertm@gmail.com>  Fri, 07 Sep 2012 19:58:15 +0200
+
+numpy-eigen (0.0.1-98) unstable; urgency=low
+
+  * Very simple updates
+  * Removed the copy constructor from the exception class
+  * Added functions to save and load boost::serialization text formats.
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 05 Sep 2012 09:03:09 +0200
+
+numpy-eigen (0.0.1-97) unstable; urgency=low
+
+  * Added a non-templated randomCovariance function
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 20 Aug 2012 07:11:34 +0200
+
+numpy-eigen (0.0.1-96) unstable; urgency=low
+
+  * Fixed a bug in the Eigen serialization, added a matrix square root,
+    and added some xml save/load convenience functions
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 15 Aug 2012 11:38:21 +0200
+
+numpy-eigen (0.0.1-95) unstable; urgency=low
+
+  * Fixed a bug in the Eigen serialization, added a matrix square root,
+    and added some xml save/load convenience functions
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 15 Aug 2012 11:37:55 +0200
+
+numpy-eigen (0.0.1-94) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 15 Aug 2012 11:31:18 +0200
+
+numpy-eigen (0.0.1-93) unstable; urgency=low
+
+  * Added a matrix square root and some convenience serialization functions
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 15 Aug 2012 11:31:07 +0200
+
+numpy-eigen (0.0.1-92) unstable; urgency=low
+
+  * Merge pull request #8 from neunertm/master
+  * Corrected type casts in serialization. This will break any existing
+    serialized stuff but I don't think there is any.
+
+ -- Paul Furgale <paul.furgale@mavt.ethz.ch>  Wed, 08 Aug 2012 17:54:56 +0200
+
+numpy-eigen (0.0.1-91) unstable; urgency=low
+
+  * Correctly fixed types in eigen/serialization
+
+ -- Michael Neunert <neunertm@gmail.com>  Wed, 08 Aug 2012 17:37:52 +0200
+
+numpy-eigen (0.0.1-90) unstable; urgency=low
+
+  * Fixed implicit type casts to avoid compiler warnings
+  * Note: I hope that these changes do not break anything.
+
+ -- Michael Neunert <neunertm@gmail.com>  Wed, 08 Aug 2012 15:33:08 +0200
+
+numpy-eigen (0.0.1-89) unstable; urgency=low
+
+  * Missing cmake file.
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 07 Aug 2012 07:46:22 +0200
+
+numpy-eigen (0.0.1-88) unstable; urgency=low
+
+  * Updated the cmake scripts to use findEigen
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 06 Aug 2012 18:34:04 +0200
+
+numpy-eigen (0.0.1-87) unstable; urgency=low
+
+  * Formatting changes?
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 06 Aug 2012 14:07:54 +0200
+
+numpy-eigen (0.0.1-86) unstable; urgency=low
+
+  * Added a missing bracket
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 06 Aug 2012 10:53:26 +0200
+
+numpy-eigen (0.0.1-85) unstable; urgency=low
+
+  * Merge remote-tracking branch 'original/master'
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 06 Aug 2012 10:50:42 +0200
+
+numpy-eigen (0.0.1-84) unstable; urgency=low
+
+  * Fixes for ROS Fuerte
+
+ -- Michael Neunert <neunertm@gmail.com>  Mon, 06 Aug 2012 10:41:54 +0200
+
+numpy-eigen (0.0.1-83) unstable; urgency=low
+
+  * Untabified a file.
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 31 Jul 2012 22:19:37 +0200
+
+numpy-eigen (0.0.1-82) unstable; urgency=low
+
+  * Fixed a bug in the rotation vector that could cause hans on a call to
+    aces.
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 31 Jul 2012 22:19:10 +0200
+
+numpy-eigen (0.0.1-81) unstable; urgency=low
+
+  * Various bug fixes
+  * The toupper macro makes the boost property tree fail…undef.
+  * Export the property tree to python
+  * Fixed incorrect python exports for the Transformation
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 31 Jul 2012 21:26:11 +0200
+
+numpy-eigen (0.0.1-80) unstable; urgency=low
+
+  * Merge branch 'master' of https://github.com/furgalep/Schweizer-Messer
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 31 Jul 2012 17:51:00 +0200
+
+numpy-eigen (0.0.1-79) unstable; urgency=low
+
+  * added parametersToInverseSMatrix
+
+ -- Fabio Diem <diemf@student.ethz.ch>  Fri, 27 Jul 2012 15:49:11 +0200
+
+numpy-eigen (0.0.1-78) unstable; urgency=low
+
+  * got rid of a compilation warning
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 23 Jul 2012 15:37:42 +0200
+
+numpy-eigen (0.0.1-77) unstable; urgency=low
+
+  * Fixing errors after removing the sm::boost namespace
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 23 Jul 2012 11:51:57 +0200
+
+numpy-eigen (0.0.1-76) unstable; urgency=low
+
+  * Removing the sm::boost namespace because of problems with boost::serialization
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 23 Jul 2012 11:47:02 +0200
+
+numpy-eigen (0.0.1-75) unstable; urgency=low
+
+  * Added changes to serialization
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 23 Jul 2012 11:19:33 +0200
+
+numpy-eigen (0.0.1-74) unstable; urgency=low
+
+  * Updated the serialization functions for the sm::kinematics stuff and
+    made matirx serialization as xml work
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 21 Jul 2012 22:20:33 +0200
+
+numpy-eigen (0.0.1-73) unstable; urgency=low
+
+  * Added some documentation for the timestamp corrector
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 20 Jul 2012 16:44:07 +0200
+
+numpy-eigen (0.0.1-72) unstable; urgency=low
+
+  * Added a signup function to the maths.hpp file.
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 20 Jul 2012 09:09:20 +0200
+
+numpy-eigen (0.0.1-71) unstable; urgency=low
+
+  * Updated ignore
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 18 Jul 2012 11:08:00 +0200
+
+numpy-eigen (0.0.1-70) unstable; urgency=low
+
+  * ignoring some files
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 17 Jul 2012 19:12:20 +0200
+
+numpy-eigen (0.0.1-69) unstable; urgency=low
+
+  * Making a working manifest for the property tree
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 13 Jul 2012 11:02:56 +0200
+
+numpy-eigen (0.0.1-68) unstable; urgency=low
+
+  * Merge pull request #4 from neunertm/master
+  * Added vector functionality to HomogeneousPoint, added fixed size precision
+    float to string conversion
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 12 Jul 2012 21:28:50 +0200
+
+numpy-eigen (0.0.1-67) unstable; urgency=low
+
+  * Added fixed precision float string to string_routines
+
+ -- Michael Neunert <neunertm@gmail.com>  Thu, 12 Jul 2012 21:15:45 +0200
+
+numpy-eigen (0.0.1-66) unstable; urgency=low
+
+  * Added vector functions to HomogeneousPoint
+
+ -- Michael Neunert <neunertm@gmail.com>  Thu, 12 Jul 2012 21:15:11 +0200
+
+numpy-eigen (0.0.1-65) unstable; urgency=low
+
+  * Merge pull request #3 from neunertm/master
+  * Added scale() and setHomogeneousCoordinate() to HomogeneousPoint, fixed
+    typo in Timer.cpp
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 12 Jul 2012 16:57:08 +0200
+
+numpy-eigen (0.0.1-64) unstable; urgency=low
+
+  * Updated some indentation. Increased the error message for the relative
+    error threshold.
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 12 Jul 2012 16:45:42 +0200
+
+numpy-eigen (0.0.1-63) unstable; urgency=low
+
+  * added functions to class namespace
+
+ -- Michael Neunert <neunertm@gmail.com>  Thu, 12 Jul 2012 09:49:29 +0200
+
+numpy-eigen (0.0.1-62) unstable; urgency=low
+
+  * Added scale() and convertToVector() to HomogeneousPoint
+
+ -- Michael Neunert <neunertm@gmail.com>  Tue, 10 Jul 2012 13:55:07 +0200
+
+numpy-eigen (0.0.1-61) unstable; urgency=low
+
+  * Fixed bug in Timer.cpp
+
+ -- Michael Neunert <neunertm@gmail.com>  Tue, 10 Jul 2012 13:50:18 +0200
+
+numpy-eigen (0.0.1-60) unstable; urgency=low
+
+  * Updated the gitignore file
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 08 Jul 2012 17:17:31 +0200
+
+numpy-eigen (0.0.1-59) unstable; urgency=low
+
+  * Added a target to produce Doxygen documentation. Added a script to plot
+    coordinate frames in Python.
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 08 Jul 2012 17:16:40 +0200
+
+numpy-eigen (0.0.1-58) unstable; urgency=low
+
+  * Two changes to the assert macros: Expanded the template parameter E
+    to cope with (insane) code that has a #define E for Euler's constant. and
+    added a lot of brackets to avoid order-of-operations problems when expressions
+    are put in the assert
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 05 Jul 2012 22:50:55 +0200
+
+numpy-eigen (0.0.1-57) unstable; urgency=low
+
+  * updated the .gitignore to ignore ROS cruff
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 01 Jul 2012 13:34:25 +0200
+
+numpy-eigen (0.0.1-56) unstable; urgency=low
+
+  * running a branching tutorial
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 01 Jul 2012 13:07:51 +0200
+
+numpy-eigen (0.0.1-55) unstable; urgency=low
+
+  * Fixed a namespace issue in sm_random
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 22 May 2012 22:20:08 +0200
+
+numpy-eigen (0.0.1-54) unstable; urgency=low
+
+  * Exported the timestamp filter
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 20 May 2012 04:14:15 +0200
+
+numpy-eigen (0.0.1-53) unstable; urgency=low
+
+  * Added an implementation of one-way timestamp correction
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 20 May 2012 03:46:15 +0200
+
+numpy-eigen (0.0.1-52) unstable; urgency=low
+
+  * Added a relative matrix comparison
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 14 May 2012 01:56:20 +0200
+
+numpy-eigen (0.0.1-51) unstable; urgency=low
+
+  * Updated the uncertain variables to upgrade on an operation
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 05 May 2012 16:09:12 +0200
+
+numpy-eigen (0.0.1-50) unstable; urgency=low
+
+  * Exported transformation and point to python
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 05 May 2012 07:08:09 +0200
+
+numpy-eigen (0.0.1-49) unstable; urgency=low
+
+  * Some minor readjustment of numpy_eigen, a new random lib, and some python
+    tweaks
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 04 May 2012 22:41:00 +0200
+
+numpy-eigen (0.0.1-48) unstable; urgency=low
+
+  * Added missing return statements from the Boost property tree
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 20 Apr 2012 16:00:32 +0200
+
+numpy-eigen (0.0.1-47) unstable; urgency=low
+
+  * Updated the property tree to expose iterators
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 19 Apr 2012 19:24:28 +0200
+
+numpy-eigen (0.0.1-46) unstable; urgency=low
+
+  * Fixed a bug in the transformation of uncertain points
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 13 Apr 2012 23:47:41 +0200
+
+numpy-eigen (0.0.1-45) unstable; urgency=low
+
+  * Updated the design of the property tree to include set functions
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 13 Apr 2012 15:26:51 +0200
+
+numpy-eigen (0.0.1-44) unstable; urgency=low
+
+  * Added some interface elements to the homogeneous points and transform
+    and fixed an incorrect S matrix
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 11 Apr 2012 12:20:53 +0200
+
+numpy-eigen (0.0.1-43) unstable; urgency=low
+
+  * Added a missing virtual destructor
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 10 Apr 2012 15:56:36 +0200
+
+numpy-eigen (0.0.1-42) unstable; urgency=low
+
+  * Added a missing virtual destructor
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 10 Apr 2012 15:54:42 +0200
+
+numpy-eigen (0.0.1-41) unstable; urgency=low
+
+  * Some fixes to make it compile on Windows
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 10 Apr 2012 15:43:01 +0200
+
+numpy-eigen (0.0.1-40) unstable; urgency=low
+
+  * Some fixes to make it compile on Windows
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 10 Apr 2012 15:37:27 +0200
+
+numpy-eigen (0.0.1-39) unstable; urgency=low
+
+  * Made the id class hashable
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 09 Apr 2012 14:38:17 +0200
+
+numpy-eigen (0.0.1-38) unstable; urgency=low
+
+  * Added uncertain points and transformations
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 08 Apr 2012 10:47:54 +0200
+
+numpy-eigen (0.0.1-37) unstable; urgency=low
+
+  * Exports for homogeneous coordinates
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 06 Apr 2012 16:17:34 +0200
+
+numpy-eigen (0.0.1-36) unstable; urgency=low
+
+  * Added some comments and design rationalle to the property tree
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 03 Apr 2012 13:24:42 +0200
+
+numpy-eigen (0.0.1-35) unstable; urgency=low
+
+  * Added a quick and dirty property tree with the hope of abstracting ROS/ADTF/Pure
+    C++ configuration of classes.
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 02 Apr 2012 18:49:23 +0200
+
+numpy-eigen (0.0.1-34) unstable; urgency=low
+
+  * Added a file with some string manipulation utilities and added a isBinaryEqual()
+    function to the transformation class
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 01 Apr 2012 11:48:05 +0200
+
+numpy-eigen (0.0.1-33) unstable; urgency=low
+
+  * Made some small changes to help compile on Windows. Added a numerically-stable
+    solution for quadratic equations
+
+ -- furgalep <paul.furgale@gmail.com>  Sat, 31 Mar 2012 12:59:18 +0200
+
+numpy-eigen (0.0.1-32) unstable; urgency=low
+
+  * Decorated some functions in sm_kinematics with const (thanks SL)
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 28 Mar 2012 07:59:35 +0200
+
+numpy-eigen (0.0.1-31) unstable; urgency=low
+
+  * Added some non-shared-ptr functions to the serialized map
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 27 Mar 2012 16:31:20 +0200
+
+numpy-eigen (0.0.1-30) unstable; urgency=low
+
+  * Added the id-->boost::serialization database
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 27 Mar 2012 14:13:50 +0200
+
+numpy-eigen (0.0.1-29) unstable; urgency=low
+
+  * Added the functions for homogeneous coordinates
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 26 Mar 2012 22:23:47 +0200
+
+numpy-eigen (0.0.1-28) unstable; urgency=low
+
+  * Adding missing header files
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 23 Mar 2012 21:20:58 +0100
+
+numpy-eigen (0.0.1-27) unstable; urgency=low
+
+  * Missing include for boost::nvp
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 23 Mar 2012 12:19:48 +0100
+
+numpy-eigen (0.0.1-26) unstable; urgency=low
+
+  * added a root file
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 23 Mar 2012 10:56:17 +0100
+
+numpy-eigen (0.0.1-25) unstable; urgency=low
+
+  * Added some helper functions to serialize OpenCV objects
+
+ -- furgalep <paul.furgale@gmail.com>  Fri, 23 Mar 2012 09:59:31 +0100
+
+numpy-eigen (0.0.1-24) unstable; urgency=low
+
+  * Upgraded the quaternion stuff a bit and added a class that represents
+    a 6dof transformation
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 08 Mar 2012 16:50:44 +0100
+
+numpy-eigen (0.0.1-23) unstable; urgency=low
+
+  * Exporting the compile/link flags in sm_timing
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 01 Mar 2012 17:04:52 +0100
+
+numpy-eigen (0.0.1-22) unstable; urgency=low
+
+  * Added my good old timing class
+
+ -- furgalep <paul.furgale@gmail.com>  Thu, 01 Mar 2012 13:58:38 +0100
+
+numpy-eigen (0.0.1-21) unstable; urgency=low
+
+  * Forgot to add the quaternion algebra to the export module
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 29 Feb 2012 18:07:09 +0100
+
+numpy-eigen (0.0.1-20) unstable; urgency=low
+
+  * Added the missing quaternion algebra file
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 29 Feb 2012 18:02:09 +0100
+
+numpy-eigen (0.0.1-19) unstable; urgency=low
+
+  * Added the missing quaternion algebra file
+
+ -- furgalep <paul.furgale@gmail.com>  Wed, 29 Feb 2012 18:01:15 +0100
+
+numpy-eigen (0.0.1-18) unstable; urgency=low
+
+  * Cleaned up the NumericalDiff code a bit. It still needs work but it
+    is getting there
+
+ -- furgalep <paul.furgale@gmail.com>  Tue, 28 Feb 2012 21:43:06 +0100
+
+numpy-eigen (0.0.1-17) unstable; urgency=low
+
+  * Renamed a file to have more consistent naming.
+
+ -- furgalep <paul.furgale@gmail.com>  Mon, 20 Feb 2012 09:06:41 +0100
+
+numpy-eigen (0.0.1-16) unstable; urgency=low
+
+  * Lots of additions from old files. These additions are okay, but they
+    need to be reviewed for style. Specifically, I added hot-swappable rotational
+    kinematics, the sm::eigen::NumericalDiff class used for unit testing, and
+    a library to hold all the python exports. It's not clear that sm is a good
+    name for a python module.
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 19 Feb 2012 20:43:56 +0100
+
+numpy-eigen (0.0.1-15) unstable; urgency=low
+
+  * Lots of additions from old files. These additions are okay, but they
+    need to be reviewed for style. Specifically, I added hot-swappable rotational
+    kinematics, the sm::eigen::NumericalDiff class used for unit testing, and
+    a library to hold all the python exports. It's not clear that sm is a good
+    name for a python module.
+
+ -- furgalep <paul.furgale@gmail.com>  Sun, 19 Feb 2012 20:42:32 +0100
+
+numpy-eigen (0.0.1-14) unstable; urgency=low
+
+  * Added some quaternion algebra files
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 08 Feb 2012 08:56:16 +0100
+
+numpy-eigen (0.0.1-13) unstable; urgency=low
+
+  * Reworked the numpy_eigen build to not use so much memory at build time.
+    It was using > 1G.
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Fri, 03 Feb 2012 08:25:35 +0100
+
+numpy-eigen (0.0.1-12) unstable; urgency=low
+
+  * Adding the start of some test files and the Mei projection model
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Wed, 01 Feb 2012 21:20:33 +0100
+
+numpy-eigen (0.0.1-11) unstable; urgency=low
+
+  * Added an sm_boost package to hold small extensions to boost functionality.
+    More work on the omnicam skeleton
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 31 Jan 2012 09:12:36 +0100
+
+numpy-eigen (0.0.1-10) unstable; urgency=low
+
+  * Working on the omnicam class.
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Tue, 31 Jan 2012 09:10:42 +0100
+
+numpy-eigen (0.0.1-9) unstable; urgency=low
+
+  * Typed in the basic skeleton for omni camera geometry
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 23 Jan 2012 18:41:31 +0100
+
+numpy-eigen (0.0.1-8) unstable; urgency=low
+
+  * Export include files from sm_eigen and added some comments about gtest
+    support
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Thu, 12 Jan 2012 17:55:12 +0100
+
+numpy-eigen (0.0.1-7) unstable; urgency=low
+
+  * Removing the build id source
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 07 Jan 2012 11:34:12 +0100
+
+numpy-eigen (0.0.1-6) unstable; urgency=low
+
+  * Migrating namespaces
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Sat, 07 Jan 2012 11:31:08 +0100
+
+numpy-eigen (0.0.1-5) unstable; urgency=low
+
+  * Updated some documentation
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 12 Dec 2011 12:28:28 +0100
+
+numpy-eigen (0.0.1-4) unstable; urgency=low
+
+  * Merged in some useful utilities for working with Eigen
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 12 Dec 2011 12:13:17 +0100
+
+numpy-eigen (0.0.1-3) unstable; urgency=low
+
+  * Adding in the numpy_eigen library and a placeholder package for common
+    code
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 12 Dec 2011 11:05:51 +0100
+
+numpy-eigen (0.0.1-2) unstable; urgency=low
+
+  * Adding the ROS stack decoration
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 12 Dec 2011 10:14:35 +0100
+
+numpy-eigen (0.0.1-1) unstable; urgency=low
+
+  * first commit
+
+ -- Paul Furgale <paul.furgale@gmail.com>  Mon, 12 Dec 2011 09:20:15 +0100
