@@ -1,3 +1,10 @@
+numpy-eigen (0.0.1-472) unstable; urgency=low
+
+  * Added nose test dependencies on libraries to prevent tests from
+    failing
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Tue, 11 Nov 2014 17:00:00 +0200
+
 numpy-eigen (0.0.1-471) unstable; urgency=low
 
   * Added python-numpy to build dependencies

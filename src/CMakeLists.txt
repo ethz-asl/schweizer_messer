@@ -61,7 +61,7 @@ remake_add_scripts(bin/*.py)
 remake_pkg_config_generate(REQUIRES eigen3)
 
 remake_add_library(
-  test
+  numpy_eigen_test PREFIX OFF
   GENERATED ${numpy_eigen_test_sources}
   LINK ${PYTHON_LIBRARY} ${Boost_LIBRARIES}
   COMPONENT test
@@ -74,4 +74,5 @@ remake_add_scripts(
 remake_add_test(
   PYTHON_NOSE test/tests.py
   MODULE_PATH ../python
+  DEPENDS numpy_eigen numpy_eigen_test
 )
