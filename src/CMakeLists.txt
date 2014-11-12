@@ -58,7 +58,7 @@ remake_add_library(
 )
 remake_add_headers(RECURSE FROM include/numpy_eigen)
 remake_add_scripts(bin/*.py)
-remake_pkg_config_generate(REQUIRES eigen3)
+remake_pkg_config_generate(REQUIRES python eigen3)
 
 remake_add_library(
   numpy_eigen_test PREFIX OFF

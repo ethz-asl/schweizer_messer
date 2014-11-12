@@ -1,3 +1,10 @@
+numpy-eigen (0.0.1-474) unstable; urgency=low
+
+  * Added python to pkg-config dependencies (for inclusion of the Python
+    library development headers)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Wed, 12 Nov 2014 10:36:00 +0200
+
 numpy-eigen (0.0.1-473) unstable; urgency=low
 
   * Fixed package dependencies for numpy-eigen-dev
