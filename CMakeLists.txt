@@ -36,7 +36,7 @@ remake_pack_deb(
 )
 remake_pack_deb(
   COMPONENT dev
-  DEPENDS numpy-eigen-python libboost-python-dev libeigen3-dev
+  DEPENDS numpy-eigen libboost-python-dev libeigen3-dev
   DESCRIPTION "development headers"
 )
 remake_pack_deb(
