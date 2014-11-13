@@ -67,12 +67,8 @@ remake_add_library(
   COMPONENT test
   INSTALL ${PYTHON_MODULE_DESTINATION}/numpy_eigen/test
 )
-remake_add_scripts(
-  test/*.py
-  COMPONENT test
-)
 remake_add_test(
-  PYTHON_NOSE test/tests.py
+  PYTHON_NOSE numpy_eigen_nose test/tests.py
   MODULE_PATH ../python
-  DEPENDS numpy_eigen numpy_eigen_test
+  TEST_DEPENDS numpy_eigen numpy_eigen_test
 )

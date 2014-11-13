@@ -1,3 +1,9 @@
+numpy-eigen (0.0.1-475) unstable; urgency=low
+
+  * Adapted build system configuration to latest changes of ReMakeTest
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 13 Nov 2014 13:06:00 +0200
+
 numpy-eigen (0.0.1-474) unstable; urgency=low
 
   * Added python to pkg-config dependencies (for inclusion of the Python
