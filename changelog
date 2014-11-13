@@ -1,3 +1,9 @@
+numpy-eigen (0.0.1-477) unstable; urgency=low
+
+  * Reverted Python library dependencies as builds failed for precise
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 13 Nov 2014 16:04:00 +0200
+
 numpy-eigen (0.0.1-476) unstable; urgency=low
 
   * Fixed dependencies on Python library and development headers (removed

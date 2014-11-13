@@ -26,7 +26,7 @@ remake_doc(
 
 remake_pack_deb(
   EXTRA_COMPONENTS python
-  DEPENDS python-numpy libpython-dev libboost-python[0-9.]*
+  DEPENDS python-numpy libpython2.7 libboost-python[0-9.]*
 )
 remake_pack_deb(
   COMPONENT test
