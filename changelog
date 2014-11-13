@@ -1,3 +1,10 @@
+numpy-eigen (0.0.1-476) unstable; urgency=low
+
+  * Fixed dependencies on Python library and development headers (removed
+    versions)
+
+ -- Ralf Kaestner <ralf.kaestner@gmail.com>  Thu, 13 Nov 2014 15:34:00 +0200
+
 numpy-eigen (0.0.1-475) unstable; urgency=low
 
   * Adapted build system configuration to latest changes of ReMakeTest

@@ -26,7 +26,7 @@ remake_doc(
 
 remake_pack_deb(
   EXTRA_COMPONENTS python
-  DEPENDS python-numpy python2.7-dev libboost-python[0-9.]*
+  DEPENDS python-numpy libpython-dev libboost-python[0-9.]*
 )
 remake_pack_deb(
   COMPONENT test
@@ -36,7 +36,7 @@ remake_pack_deb(
 )
 remake_pack_deb(
   COMPONENT dev
-  DEPENDS numpy-eigen libboost-python-dev libeigen3-dev
+  DEPENDS numpy-eigen python-dev libboost-python-dev libeigen3-dev
   DESCRIPTION "development headers"
 )
 remake_pack_deb(
@@ -49,7 +49,7 @@ remake_distribute_deb(
   DISTRIBUTION precise
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev python-numpy
+  DEPENDS python-dev libboost-python-dev libeigen3-dev python-numpy
     python-nose remake pkg-config doxygen
   PASS CMAKE_BUILD_TYPE NUMPY_EIGEN_GIT_REVISION
 )
@@ -57,7 +57,7 @@ remake_distribute_deb(
   DISTRIBUTION trusty
   SECTION python
   UPLOAD ppa:kralf/asl
-  DEPENDS python2.7-dev libboost-python-dev libeigen3-dev python-numpy
+  DEPENDS python-dev libboost-python-dev libeigen3-dev python-numpy
     python-nose remake pkg-config doxygen
   PASS CMAKE_BUILD_TYPE NUMPY_EIGEN_GIT_REVISION
 )
