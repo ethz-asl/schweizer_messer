@@ -56,26 +56,29 @@ namespace sm {
   }
 
 
-    BoostPropertyTree::iterator BoostPropertyTree::begin()
-    {
-      return dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->begin();
-    }
+  BoostPropertyTree::iterator BoostPropertyTree::begin()
+  {
+    return dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->begin();
+  }
 
-    BoostPropertyTree::const_iterator BoostPropertyTree::begin() const
-    {
-      return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->begin();
-    }
+  BoostPropertyTree::const_iterator BoostPropertyTree::begin() const
+  {
+    return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->begin();
+  }
 
-    BoostPropertyTree::iterator BoostPropertyTree::end()
-    {
-      return dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->end();
-    }
+  BoostPropertyTree::iterator BoostPropertyTree::end()
+  {
+    return dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->end();
+  }
 
-    BoostPropertyTree::const_iterator BoostPropertyTree::end() const
-    {
-      return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->end();
-    }
+  BoostPropertyTree::const_iterator BoostPropertyTree::end() const
+  {
+    return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->end();
+  }
 
-
+  void BoostPropertyTree::update(const BoostPropertyTree & with)
+  {
+    return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(*dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()));
+  }
 
 } // namespace sm

@@ -54,11 +54,11 @@ sm_boost/build/
 sm_opencv/build/
 numpy_eigen2/
 sm_doc/build
-*.project
-*.cproject
-*.pydevproject
+.project
+.cproject
+.pydevproject
+*/.settings/language.settings.xml
 */cmake_install.cmake
-
 *.orig
 sm_pose_graph/build/
 sm_pose_graph/lib/
@@ -77,8 +77,4 @@ lib
 *.o
 *.so
 *.pyc
-.project
-.cproject
-.pydevproject
-.settings
 log_test

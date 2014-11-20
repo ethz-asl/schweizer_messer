@@ -56,5 +56,7 @@ void exportPropertyTree() {
       .def("loadIni", &BoostPropertyTree::loadIniStr)
       .def("saveIni", &BoostPropertyTree::saveIniStr)
       .def("loadInfo", &BoostPropertyTree::loadInfoStr)
-      .def("saveInfo", &BoostPropertyTree::saveInfoStr);
+      .def("saveInfo", &BoostPropertyTree::saveInfoStr)
+      .def("update", &BoostPropertyTree::update, "update the property tree with another one")
+      ;
 }

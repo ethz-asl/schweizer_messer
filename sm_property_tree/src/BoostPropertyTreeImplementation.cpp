@@ -144,24 +144,54 @@ namespace sm {
   }
 
   BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::begin()
-    {
-      return _ptree.begin();
+  {
+    return _ptree.begin();
+  }
+
+  BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::begin() const
+  {
+    return _ptree.begin();
+  }
+
+  BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::end()
+  {
+    return _ptree.end();
+  }
+
+  BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::end() const
+  {
+    return _ptree.end();
+  }
+
+
+  /*
+   * copied from http://stackoverflow.com/questions/8154107/how-do-i-merge-update-a-boostproperty-treeptree :
+   */
+
+  template<typename T>
+  void traverse_recursive(const boost::property_tree::ptree::path_type &childPath, const boost::property_tree::ptree &child, T method)
+  {
+    using boost::property_tree::ptree;
+
+    method(childPath, child);
+    for(ptree::const_iterator it=child.begin();it!=child.end();++it) {
+      ptree::path_type curPath = childPath / ptree::path_type(it->first);
+      traverse_recursive(curPath, it->second, method);
     }
+  }
 
-    BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::begin() const
-    {
-      return _ptree.begin();
-    }
+  void merge(boost::property_tree::ptree &dest, const boost::property_tree::ptree::path_type &childPath, const boost::property_tree::ptree &child) {
+    dest.put(childPath, child.data());
+  }
 
-    BoostPropertyTreeImplementation::iterator BoostPropertyTreeImplementation::end()
-    {
-      return _ptree.end();
-    }
+  template<typename T>
+  void traverse(const boost::property_tree::ptree &parent, T method)
+  {
+    traverse_recursive("", parent, method);
+  }
 
-    BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::end() const
-    {
-      return _ptree.end();
-    }
-
-
+  void BoostPropertyTreeImplementation::update(const BoostPropertyTreeImplementation & with){
+    using namespace boost;
+    traverse(with._ptree, bind(merge, boost::ref(_ptree), _1, _2));
+  }
 } // namespace sm
