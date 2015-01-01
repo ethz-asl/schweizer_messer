@@ -146,6 +146,21 @@ TEST(PTreeTestSuite, testBoostPTreeUpdateOnlyException)
   ASSERT_THROW(pt.update(pt2, false), sm::PropertyTree::KeyNotFoundException);
 }
 
+TEST(PTreeTestSuite, testBoostPTreeLoadString)
+{
+  sm::BoostPropertyTree pt;
+  pt.loadString("d=0.1,s=hello,a/d=0.1,b{u=3,v=4},c/b{u=3,v=4}");
+
+  ASSERT_EQ(pt.getDouble("d"), 0.1);
+  ASSERT_EQ(pt.getString("s"), std::string("hello"));
+  ASSERT_EQ(pt.getDouble("a/d"), 0.1);
+  ASSERT_EQ(pt.getInt("b/u"), 3);
+  ASSERT_EQ(pt.getInt("b/v"), 4);
+  ASSERT_EQ(pt.getInt("c/b/u"), 3);
+  ASSERT_EQ(pt.getInt("c/b/v"), 4);
+}
+
+
 TEST(PTreeTestSuite, testFindFile)
 {
   // Not finding should throw
