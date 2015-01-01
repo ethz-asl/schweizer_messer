@@ -76,8 +76,9 @@ namespace sm {
     return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->end();
   }
 
-  void BoostPropertyTree::update(const BoostPropertyTree & with)
+  void BoostPropertyTree::update(const BoostPropertyTree & with, bool createIfNecessary)
   {
-    return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(*dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()));
+    return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(
+        *dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()), createIfNecessary);
   }
 } // namespace sm

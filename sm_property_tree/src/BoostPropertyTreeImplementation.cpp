@@ -180,6 +180,13 @@ namespace sm {
     }
   }
 
+  void updateOnly(boost::property_tree::ptree &dest, const boost::property_tree::ptree::path_type &childPath, const boost::property_tree::ptree &child) {
+    if(child.data().empty() || child.data().find_first_not_of(" \n\t\r") == std::string::npos) return;
+    if(!dest.get_optional<std::string>(childPath)) {
+      throw PropertyTree::KeyNotFoundException(std::string("Could not find the destination '") + childPath.dump() + "' to update with '" + child.data() + "'.");
+    }
+    dest.put(childPath, child.data());
+  }
   void merge(boost::property_tree::ptree &dest, const boost::property_tree::ptree::path_type &childPath, const boost::property_tree::ptree &child) {
     dest.put(childPath, child.data());
   }
@@ -190,8 +197,8 @@ namespace sm {
     traverse_recursive("", parent, method);
   }
 
-  void BoostPropertyTreeImplementation::update(const BoostPropertyTreeImplementation & with){
+  void BoostPropertyTreeImplementation::update(const BoostPropertyTreeImplementation & with, bool createIfNecessary){
     using namespace boost;
-    traverse(with._ptree, bind(merge, boost::ref(_ptree), _1, _2));
+    traverse(with._ptree, createIfNecessary ? bind(merge, boost::ref(_ptree), _1, _2) : bind(updateOnly, boost::ref(_ptree), _1, _2));
   }
 } // namespace sm

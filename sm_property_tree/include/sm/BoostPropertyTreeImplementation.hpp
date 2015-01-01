@@ -50,7 +50,7 @@ namespace sm {
     virtual void setString(const std::string & key, const std::string & value);
 
     virtual bool doesKeyExist(const std::string & key) const;
-    void update(const BoostPropertyTreeImplementation & with);
+    void update(const BoostPropertyTreeImplementation & with, bool createIfNecessary);
 
     iterator begin() ;
     const_iterator begin() const;
