@@ -43,6 +43,8 @@ namespace sm {
     void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
     void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
 
+    std::string asInfoString() const;
+    
     /**
      * Update this ptree with another, allowing merging of ptrees
      * @param with the other ptree

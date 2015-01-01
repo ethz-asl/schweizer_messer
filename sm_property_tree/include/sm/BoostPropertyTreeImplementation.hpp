@@ -28,6 +28,8 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+    std::string asInfoString() const;
+
     virtual double getDouble(const std::string & key) const;
     virtual double getDouble(const std::string & key, double defaultValue) const;
     virtual double getDouble(const std::string & key, double defaultValue);

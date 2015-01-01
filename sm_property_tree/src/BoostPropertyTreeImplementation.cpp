@@ -124,6 +124,12 @@ namespace sm {
     boost::property_tree::write_info(fileName.string(), _ptree);
   }
 
+  std::string BoostPropertyTreeImplementation::asInfoString() const {
+    std::ostringstream iss;
+    boost::property_tree::write_info(iss, _ptree);
+    return iss.str();
+  }
+
   void BoostPropertyTreeImplementation::setDouble(const std::string & key, double value)
   {
     set<double>(key,value);
