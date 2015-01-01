@@ -60,6 +60,24 @@ namespace sm {
     return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->asInfoString();
   }
 
+  void BoostPropertyTree::loadString(const std::string & string)
+  {
+    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadString(string);
+  }
+
+  void BoostPropertyTree::loadStrings(const std::vector<std::string> & strings)
+  {
+    loadString(boost::algorithm::join(strings, ","));
+  }
+
+  void BoostPropertyTree::loadStrings(int argc, const char ** argv)
+  {
+    std::vector<std::string> v;
+    for(int i = 0; i < argc; i++){
+      v.push_back(argv[i]);
+    }
+    loadStrings(v);
+  }
 
   BoostPropertyTree::iterator BoostPropertyTree::begin()
   {
