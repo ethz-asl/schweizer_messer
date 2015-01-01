@@ -80,5 +80,4 @@ namespace sm {
   {
     return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(*dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()));
   }
-
 } // namespace sm

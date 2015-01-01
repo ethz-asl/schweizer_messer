@@ -74,7 +74,7 @@ namespace sm
     }
 
     Eigen::MatrixXd & val = m_values[matrixName];
-    m_values[matrixName].resize(rows, cols);
+    val.resize(rows, cols);
     return val;
   }
 

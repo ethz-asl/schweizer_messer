@@ -55,7 +55,7 @@ namespace sm {
     const_iterator end() const;    
 
   private:
-    // It is important that this implemenation have no members.
+    // It is important that this implementation have no members.
 
   };
 
