@@ -175,7 +175,7 @@ namespace sm
   }
   size_t MatrixArchive::sizeMatrices() const
   {
-    return m_strings.size();
+    return m_values.size();
   }
 
   MatrixArchive::matrix_map_t::const_iterator MatrixArchive::begin() const
