@@ -43,12 +43,12 @@ template<> struct TypeToNumPy<boost::uint64_t>
 {
   enum { NpyType = NPY_UINT64 };
   static const char * npyString() { return "NPY_UINT64"; }
-  static const char * typeString() { return "ulong"; }
+  static const char * typeString() { return "uint64"; }
   static bool canConvert(int type)
   {
     return type == NPY_UINT8 || type == NPY_USHORT ||
            type == NPY_UINT16 || type == NPY_UINT32 || 
-           type == NPY_LONG || type == NPY_ULONGLONG || 
+           type == NPY_ULONG || type == NPY_ULONGLONG || 
            type == NPY_UINT64;
   }
 };
