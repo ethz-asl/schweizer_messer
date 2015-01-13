@@ -45,9 +45,13 @@ namespace sm {
 
     /**
      * Update this ptree with another, allowing merging of ptrees
-     * @param with
+     * @param with the other ptree
+     * @param createIfNecessary if true all necessary entries will be created automatically
+     * to store the values of with.
+     * If not it will throw an KeyNotFoundException if there is no such key already.
      */
-    void update(const BoostPropertyTree & with);
+    void update(const BoostPropertyTree & with, bool createIfNecessary);
+    void update(const BoostPropertyTree & with){ update(with, true); }
 
     iterator begin() ;
     const_iterator begin() const;
@@ -55,7 +59,7 @@ namespace sm {
     const_iterator end() const;    
 
   private:
-    // It is important that this implemenation have no members.
+    // It is important that this implementation have no members.
 
   };
 

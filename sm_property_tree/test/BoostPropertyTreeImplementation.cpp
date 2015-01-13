@@ -92,6 +92,16 @@ TEST(PTreeTestSuite, testBoostPTreeUpdate)
   ASSERT_EQ(pt.getString("s"), std::string("hello2"));
 }
 
+TEST(PTreeTestSuite, testBoostPTreeUpdateOnlyException)
+{
+  sm::BoostPropertyTree pt;
+
+  sm::BoostPropertyTree pt2;
+  pt2.setDouble("d",0.2);
+
+  ASSERT_THROW(pt.update(pt2, false), sm::PropertyTree::KeyNotFoundException);
+}
+
 TEST(PTreeTestSuite, testFindFile)
 {
   // Not finding should throw

@@ -57,6 +57,15 @@ void exportPropertyTree() {
       .def("saveIni", &BoostPropertyTree::saveIniStr)
       .def("loadInfo", &BoostPropertyTree::loadInfoStr)
       .def("saveInfo", &BoostPropertyTree::saveInfoStr)
-      .def("update", &BoostPropertyTree::update, "update the property tree with another one")
-      ;
+      .def("update",
+           static_cast<void(BoostPropertyTree::*)(const BoostPropertyTree&, bool)>(
+             &BoostPropertyTree::update
+           ),
+          "update(BoostPropertyTree & with, bool createIfNecessary), update the property tree with another one")
+      .def("updateOrCreate",
+           static_cast<void(BoostPropertyTree::*)(const BoostPropertyTree&)>(
+             &BoostPropertyTree::update
+           ),
+           "update(BoostPropertyTree & with), update the property tree with another one, creating nodes if necessary")
+     ;
 }
