@@ -52,6 +52,7 @@ void exportLogging()
     def("getLoggingLevel",&getLevel);
     // void setLevel( sm::logging::levels::Level level );        
     def("setLoggingLevel", &setLevel);
+    def("loggingLevelFromString", &levels::fromString);
     // void setLogger( boost::shared_ptr<Logger> logger );
     def("setLogger", &setLogger);
     // boost::shared_ptr<Logger> getLogger();z
