@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <iostream>
 #include <random>
+#include <mutex>
 
 namespace sm {
 
@@ -118,8 +119,12 @@ class HashId {
    */
   inline void randomize(){
     static std::mt19937_64 rng(time64());
-    val_.u64[0] = rng();
-    val_.u64[1] = rng();
+    static std::mutex m_rng;
+    {
+      std::unique_lock<std::mutex> lock(m_rng);
+      val_.u64[0] = rng();
+      val_.u64[1] = rng();
+    }
   }
 
   inline void operator =(const HashId& other) {
