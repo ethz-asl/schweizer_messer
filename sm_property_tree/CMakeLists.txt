@@ -24,7 +24,7 @@ cs_add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME} 
-                      ${Boost_LIBRARIES} pthread)
+                      ${Boost_LIBRARIES})
 
 #############
 ## Testing ##
@@ -42,4 +42,4 @@ if(TARGET ${PROJECT_NAME}-test)
 endif()
 
 cs_install()
-cs_export()
+cs_export(LIBRARIES ${Boost_LIBRARIES})
