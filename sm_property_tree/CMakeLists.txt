@@ -32,10 +32,6 @@ target_link_libraries(${PROJECT_NAME}
 # Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
 add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 
-#TODO(Hannes) remove this as soon as catkin includes tools/threads.cmake again (this would make exactly the following implicitly)
-find_package(Threads REQUIRED)
-SET(THREADS_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
-
 ## Add gtest based cpp test target and link libraries
 catkin_add_gtest(${PROJECT_NAME}-test 
   test/test_main.cpp
