@@ -57,7 +57,8 @@ namespace sm {
     iterator end() ;
     const_iterator end() const;    
 
-
+    const std::vector<KeyPropertyTreePair> getChildren() const;
+    std::vector<KeyPropertyTreePair> getChildren();
   private:
 
     template<typename T>

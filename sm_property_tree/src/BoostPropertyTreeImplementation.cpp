@@ -1,4 +1,5 @@
 #include <sm/BoostPropertyTreeImplementation.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
@@ -161,6 +162,19 @@ namespace sm {
   BoostPropertyTreeImplementation::const_iterator BoostPropertyTreeImplementation::end() const
   {
     return _ptree.end();
+  }
+
+
+  const std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren() const {
+    return const_cast<BoostPropertyTreeImplementation*>(this)->getChildren();
+  }
+
+  std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren() {
+    std::vector<KeyPropertyTreePair> ret;
+    for(auto& p : _ptree){
+      ret.push_back({p.first, PropertyTree(boost::make_shared<BoostPropertyTreeImplementation>(p.second), "")});
+    }
+    return ret;
   }
 
 

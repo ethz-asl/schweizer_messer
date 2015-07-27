@@ -18,6 +18,8 @@
 namespace sm {
   // Forward declaration.
   class PropertyTreeImplementation;
+  class KeyPropertyTreePair;
+
   
   
   /**
@@ -123,10 +125,18 @@ namespace sm {
 
 
     bool doesKeyExist(const std::string & key) const;
+
+    const std::vector<KeyPropertyTreePair> getChildren() const;
+    std::vector<KeyPropertyTreePair> getChildren();
   protected:
     std::string _namespace;
     std::string buildQualifiedKeyName(const std::string & key) const;
     boost::shared_ptr<PropertyTreeImplementation> _imp;
+  };
+
+  struct KeyPropertyTreePair {
+    std::string key;
+    PropertyTree pt;
   };
 
 } // namespace sm
