@@ -154,5 +154,12 @@ namespace sm {
     return _imp->setString(buildQualifiedKeyName(key), value);
   }
 
+  const std::vector<KeyPropertyTreePair> PropertyTree::getChildren() const {
+    return _imp->getChildren();
+  }
+
+  std::vector<KeyPropertyTreePair> PropertyTree::getChildren() {
+    return _imp->getChildren();
+  }
   
 } // namespace sm

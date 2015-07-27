@@ -63,6 +63,17 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
       ASSERT_EQ(spt.getString("/s/s"), std::string("goodbye"));
+
+
+
+      const char * expectedKeys[] = {"d", "i", "b", "s"};
+      int i = 0;
+      for (auto & c : pt.getChildren()){
+        EXPECT_EQ(expectedKeys[i++], c.key);
+        if(c.key == "d"){
+          ASSERT_NEAR(c.pt.getDouble("d"), 0.2, 1e-16);
+        }
+      }
     }
   catch(const std::exception & e)
     {
