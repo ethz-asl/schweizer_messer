@@ -203,40 +203,100 @@ namespace timing {
     return buffer;
   }
   
-  void Timing::print(std::ostream & out) {
-    map_t & tagMap = instance().m_tagMap;
-    //list_t & timers = instance().m_timers;
-    
+  template <typename TMap, typename Accessor>
+  void Timing::print(const TMap & tagMap, const Accessor & accessor, std::ostream & out) {
     out << "SM Timing\n";
     out << "-----------\n";
-    map_t::iterator t = tagMap.begin();
-    for( ; t != tagMap.end(); t++) {
-      size_t i = t->second;
+    for(typename TMap::const_iterator t = tagMap.begin(); t != tagMap.end(); t++) {
+      size_t i = accessor.getIndex(t);
       out.width((std::streamsize)instance().m_maxTagLength);
       out.setf(std::ios::left,std::ios::adjustfield);
-      out << t->first << "\t";
+      out << accessor.getTag(t) << "\t";
       out.width(7);
       
       out.setf(std::ios::right,std::ios::adjustfield);
       out << getNumSamples(i) << "\t";
       if(getNumSamples(i) > 0) 
-	{
-	  out << secondsToTimeString(getTotalSeconds(i)) << "\t";
-	  double meansec = getMeanSeconds(i);
-	  double stddev = sqrt(getVarianceSeconds(i));
-	  out << "(" << secondsToTimeString(meansec) << " +- ";
-	  out << secondsToTimeString(stddev) << ")\t";
-	  
-	  double minsec = getMinSeconds(i);
-	  double maxsec = getMaxSeconds(i);
-	  
-	  // The min or max are out of bounds.
-	  out << "[" << secondsToTimeString(minsec) << "," << secondsToTimeString(maxsec) << "]";
-	  
-	}
+      {
+        out << secondsToTimeString(getTotalSeconds(i)) << "\t";
+        double meansec = getMeanSeconds(i);
+        double stddev = sqrt(getVarianceSeconds(i));
+        out << "(" << secondsToTimeString(meansec) << " +- ";
+        out << secondsToTimeString(stddev) << ")\t";
+
+        double minsec = getMinSeconds(i);
+        double maxsec = getMaxSeconds(i);
+
+        // The min or max are out of bounds.
+        out << "[" << secondsToTimeString(minsec) << "," << secondsToTimeString(maxsec) << "]";
+
+      }
       out << std::endl;
     }
   }
+
+  void Timing::print(std::ostream & out) {
+    struct Accessor {
+      size_t getIndex(map_t::const_iterator t) const {
+        return t->second;
+      }
+      const std::string &  getTag(map_t::const_iterator t) const {
+        return t->first;
+      }
+    };
+
+    print(instance().m_tagMap, Accessor(), out);
+  }
+
+  void Timing::print(std::ostream & out, const SortType sort) {
+    map_t & tagMap = instance().m_tagMap;
+
+    typedef std::multimap<double, std::string, std::greater<double> > SortMap_t;
+    SortMap_t sorted;
+    for(map_t::const_iterator t = tagMap.begin(); t != tagMap.end(); t++) {
+      size_t i = t->second;
+      double sv;
+      if(getNumSamples(i) > 0)
+        switch (sort) {
+          case SORT_BY_TOTAL:
+            sv = getTotalSeconds(i);
+            break;
+          case SORT_BY_MEAN:
+            sv = getMeanSeconds(i);
+            break;
+          case SORT_BY_STD:
+            sv = sqrt(getVarianceSeconds(i));
+            break;
+          case SORT_BY_MAX:
+            sv = getMaxSeconds(i);
+            break;
+          case SORT_BY_MIN:
+            sv = getMinSeconds(i);
+            break;
+          case SORT_BY_NUM_SAMPLES:
+            sv = getNumSamples(i);
+            break;
+        }
+      else
+        sv = std::numeric_limits<double>::max();
+      sorted.insert(SortMap_t::value_type(sv, t->first));
+    }
+
+    struct Accessor {
+      map_t & tagMap;
+      Accessor(map_t & tagMap) : tagMap(tagMap) {}
+      
+      size_t getIndex(SortMap_t::const_iterator t) const {
+        return tagMap[t->second];
+      }
+      const std::string & getTag(SortMap_t::const_iterator t) const {
+        return t->second;
+      }
+    };
+
+    print(sorted, Accessor(tagMap), out);
+  }
+
   std::string Timing::print()
   {
     std::stringstream ss;
@@ -244,5 +304,12 @@ namespace timing {
     return ss.str();
   }
   
+  std::string Timing::print(const SortType sort)
+  {
+    std::stringstream ss;
+    print(ss, sort);
+    return ss.str();
+  }
+
 } // namespace timing
 } // end namespace sm
