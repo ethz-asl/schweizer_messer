@@ -251,9 +251,6 @@ namespace timing {
   void Timing::print(std::ostream & out, const SortType sort) {
     map_t & tagMap = instance().m_tagMap;
 
-    out << "SM Timing\n";
-    out << "-----------\n";
-
     typedef std::multimap<double, std::string, std::greater<double> > SortMap_t;
     SortMap_t sorted;
     for(map_t::const_iterator t = tagMap.begin(); t != tagMap.end(); t++) {
