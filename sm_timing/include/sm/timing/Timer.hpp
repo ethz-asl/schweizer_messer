@@ -80,6 +80,8 @@ namespace timing {
     size_t m_handle;
   };
   
+  enum SortType{SORT_BY_TOTAL, SORT_BY_MEAN, SORT_BY_STD, SORT_BY_MIN, SORT_BY_MAX, SORT_BY_NUM_SAMPLES};
+
   class Timing{
   public:
     friend class Timer;
@@ -101,9 +103,11 @@ namespace timing {
     static  double getHz(size_t handle);
     static  double getHz(std::string const & tag);
     static  void print(std::ostream & out);
+    static  void print(std::ostream & out, const SortType sort);
     static  void reset(size_t handle);
     static  void reset(std::string const & tag);
     static  std::string print();
+    static  std::string print(const SortType sort);
     static  std::string secondsToTimeString(double seconds);
     
   private:
