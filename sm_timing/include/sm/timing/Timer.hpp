@@ -112,6 +112,9 @@ namespace timing {
     
   private:
     void addTime(size_t handle, double seconds);
+
+    template <typename TMap, typename Accessor>
+    static void print(const TMap & map, const Accessor & accessor, std::ostream & out);
     
     static Timing & instance();
     

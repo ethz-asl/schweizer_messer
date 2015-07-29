@@ -203,39 +203,49 @@ namespace timing {
     return buffer;
   }
   
-  void Timing::print(std::ostream & out) {
-    map_t & tagMap = instance().m_tagMap;
-    //list_t & timers = instance().m_timers;
-    
+  template <typename TMap, typename Accessor>
+  void Timing::print(const TMap & tagMap, const Accessor & accessor, std::ostream & out) {
     out << "SM Timing\n";
     out << "-----------\n";
-    map_t::iterator t = tagMap.begin();
-    for( ; t != tagMap.end(); t++) {
-      size_t i = t->second;
+    for(typename TMap::const_iterator t = tagMap.begin(); t != tagMap.end(); t++) {
+      size_t i = accessor.getIndex(t);
       out.width((std::streamsize)instance().m_maxTagLength);
       out.setf(std::ios::left,std::ios::adjustfield);
-      out << t->first << "\t";
+      out << accessor.getTag(t) << "\t";
       out.width(7);
       
       out.setf(std::ios::right,std::ios::adjustfield);
       out << getNumSamples(i) << "\t";
       if(getNumSamples(i) > 0) 
-	{
-	  out << secondsToTimeString(getTotalSeconds(i)) << "\t";
-	  double meansec = getMeanSeconds(i);
-	  double stddev = sqrt(getVarianceSeconds(i));
-	  out << "(" << secondsToTimeString(meansec) << " +- ";
-	  out << secondsToTimeString(stddev) << ")\t";
-	  
-	  double minsec = getMinSeconds(i);
-	  double maxsec = getMaxSeconds(i);
-	  
-	  // The min or max are out of bounds.
-	  out << "[" << secondsToTimeString(minsec) << "," << secondsToTimeString(maxsec) << "]";
-	  
-	}
+      {
+        out << secondsToTimeString(getTotalSeconds(i)) << "\t";
+        double meansec = getMeanSeconds(i);
+        double stddev = sqrt(getVarianceSeconds(i));
+        out << "(" << secondsToTimeString(meansec) << " +- ";
+        out << secondsToTimeString(stddev) << ")\t";
+
+        double minsec = getMinSeconds(i);
+        double maxsec = getMaxSeconds(i);
+
+        // The min or max are out of bounds.
+        out << "[" << secondsToTimeString(minsec) << "," << secondsToTimeString(maxsec) << "]";
+
+      }
       out << std::endl;
     }
+  }
+
+  void Timing::print(std::ostream & out) {
+    struct Accessor {
+      size_t getIndex(map_t::const_iterator t) const {
+        return t->second;
+      }
+      const std::string &  getTag(map_t::const_iterator t) const {
+        return t->first;
+      }
+    };
+
+    print(instance().m_tagMap, Accessor(), out);
   }
 
   void Timing::print(std::ostream & out, const SortType sort) {
@@ -244,7 +254,7 @@ namespace timing {
     out << "SM Timing\n";
     out << "-----------\n";
 
-    typedef std::multimap<double, std::string> SortMap_t;
+    typedef std::multimap<double, std::string, std::greater<double> > SortMap_t;
     SortMap_t sorted;
     for(map_t::const_iterator t = tagMap.begin(); t != tagMap.end(); t++) {
       size_t i = t->second;
@@ -275,32 +285,19 @@ namespace timing {
       sorted.insert(SortMap_t::value_type(sv, t->first));
     }
 
-    for(SortMap_t::const_reverse_iterator ts = sorted.rbegin(); ts != sorted.rend(); ts++) {
-      size_t i = tagMap[ts->second];
-      out.width((std::streamsize)instance().m_maxTagLength);
-      out.setf(std::ios::left,std::ios::adjustfield);
-      out << ts->second << "\t";
-      out.width(7);
-
-      out.setf(std::ios::right,std::ios::adjustfield);
-      out << getNumSamples(i) << "\t";
-      if(getNumSamples(i) > 0)
-      {
-        out << secondsToTimeString(getTotalSeconds(i)) << "\t";
-        double meansec = getMeanSeconds(i);
-        double stddev = sqrt(getVarianceSeconds(i));
-        out << "(" << secondsToTimeString(meansec) << " +- ";
-        out << secondsToTimeString(stddev) << ")\t";
-
-        double minsec = getMinSeconds(i);
-        double maxsec = getMaxSeconds(i);
-
-        // The min or max are out of bounds.
-        out << "[" << secondsToTimeString(minsec) << "," << secondsToTimeString(maxsec) << "]";
-
+    struct Accessor {
+      map_t & tagMap;
+      Accessor(map_t & tagMap) : tagMap(tagMap) {}
+      
+      size_t getIndex(SortMap_t::const_iterator t) const {
+        return tagMap[t->second];
       }
-      out << std::endl;
-    }
+      const std::string & getTag(SortMap_t::const_iterator t) const {
+        return t->second;
+      }
+    };
+
+    print(sorted, Accessor(tagMap), out);
   }
 
   std::string Timing::print()
