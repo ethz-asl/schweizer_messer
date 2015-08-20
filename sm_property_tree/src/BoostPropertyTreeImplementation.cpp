@@ -1,3 +1,4 @@
+#include <sm/BoostPropertyTree.hpp>
 #include <sm/BoostPropertyTreeImplementation.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/property_tree/xml_parser.hpp>
@@ -95,12 +96,18 @@ namespace sm {
 
   void BoostPropertyTreeImplementation::loadXml(const boost::filesystem::path & fileName)
   {
-    boost::property_tree::read_xml(fileName.string(), _ptree);
+    boost::property_tree::read_xml(fileName.string(), _ptree, BoostPropertyTree::isHumanReadableInputOutput() ? boost::property_tree::xml_parser::trim_whitespace : 0);
   }
 
   void BoostPropertyTreeImplementation::saveXml(const boost::filesystem::path & fileName) const
   {
-    boost::property_tree::write_xml(fileName.string(), _ptree);
+    if(BoostPropertyTree::isHumanReadableInputOutput()){
+      boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
+      boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(), settings);
+    }
+    else {
+      boost::property_tree::write_xml(fileName.string(), _ptree);
+    }
   }
  
   void BoostPropertyTreeImplementation::loadIni(const boost::filesystem::path & fileName)

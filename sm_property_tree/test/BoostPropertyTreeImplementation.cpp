@@ -122,3 +122,51 @@ TEST(PTreeTestSuite, testFindFile)
   // Let's test whether we can find a file
   EXPECT_NO_THROW(sm::findFile(".", "PWD"));
 }
+
+TEST(PTreeTestSuite, testHumanReadable)
+{
+  sm::BoostPropertyTree::setHumanReadableInputOutput(true);
+  sm::BoostPropertyTree wbpt;
+
+
+  wbpt.setDouble("a",0.1);
+  wbpt.setDouble("a/d",0.1);
+  wbpt.setDouble("a/b",0.2);
+  wbpt.setString("b","hello   "); // These spaces will get lost in a human readable XML context (see the expected value below)!
+  wbpt.setString("b/h","hello");
+  wbpt.setString("b/g","goodbye");
+  const std::string xmlFile = "testHumanReadable.xml";
+  wbpt.saveXml(xmlFile);
+
+  std::string expectedXml[] ={
+      "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
+      "<a>",
+      "\t0.1",
+      "\t<d>0.1</d>",
+      "\t<b>0.2</b>",
+      "</a>",
+      "<b>",
+      "\thello   ",
+      "\t<h>hello</h>",
+      "\t<g>goodbye</g>",
+      "</b>"
+  };
+
+  try
+  {
+    std::ifstream xmlFileStream(xmlFile);
+    int lineIndex = 0;
+    for(std::string line; std::getline(xmlFileStream, line); lineIndex++){
+      EXPECT_EQ(expectedXml[lineIndex], line);
+    }
+    xmlFileStream.close();
+
+    sm::BoostPropertyTree pt;
+    pt.loadXml(xmlFile);
+    EXPECT_EQ(pt.getString("b"), std::string("hello"));
+  }
+  catch(const std::exception & e)
+  {
+    FAIL() << "Unhandled exception: " << e.what();
+  }
+}

@@ -6,6 +6,7 @@
 #include <sm/BoostPropertyTreeImplementation.hpp>
 
 namespace sm {
+  bool BoostPropertyTree::humanReadableInputOutput = false;
   
   BoostPropertyTree::BoostPropertyTree(const std::string & baseNamespace) :
     PropertyTree(boost::shared_ptr<PropertyTreeImplementation>(new BoostPropertyTreeImplementation), baseNamespace)

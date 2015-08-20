@@ -58,9 +58,17 @@ namespace sm {
     iterator end() ;
     const_iterator end() const;    
 
+    static bool isHumanReadableInputOutput() {
+      return humanReadableInputOutput;
+    }
+
+    static void setHumanReadableInputOutput(bool humanReadableInputOutput) {
+      BoostPropertyTree::humanReadableInputOutput = humanReadableInputOutput;
+    }
   private:
     // It is important that this implementation have no members.
 
+    static bool humanReadableInputOutput;
   };
 
 
