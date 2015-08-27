@@ -35,4 +35,7 @@ if(TARGET ${PROJECT_NAME}-test)
 endif()
 
 cs_install()
-cs_export(CFG_EXTRAS ${PROJECT_NAME}-extras.cmake)
+cs_export(
+  LIBRARIES ${Boost_LIBRARIES}
+  CFG_EXTRAS ${PROJECT_NAME}-extras.cmake
+)
