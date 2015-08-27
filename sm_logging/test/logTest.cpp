@@ -74,6 +74,10 @@ TEST(LoggingTestSuite, testBasic) {
         SM_WARN_STREAM_NAMED("test", "Hey there: " << x);
         EXPECT_EQ("", logger->string());
 
+        // test deprecation solution
+        sm::logging::enableNamedStream("sm.test");
+        SM_WARN_STREAM_NAMED("test", "Hey there: " << x);
+        EXPECT_EQ("[ WARN]" + expected, logger->string());
 
         SM_INFO("This with printf: %d, %f, %s", 1, 1.0, "one");
 
