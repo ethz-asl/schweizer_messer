@@ -1,34 +1,79 @@
 
 #include <gtest/gtest.h>
 #include <sm/logging.hpp>
+#include <sm/logging/StdOutLogger.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 
-void print(int a, const char* fmt, ... ) SMCONSOLE_PRINTF_ATTRIBUTE(2, 3);
+/// \brief Helper logger to catch console output
+class TestLogger : public sm::logging::StdOutLogger {
+ public:
+  TestLogger() : sm::logging::StdOutLogger() {
+    formatter.doColor_ = false;
+  }
+  virtual ~TestLogger() { }
+  std::string string() { std::string str = _str; _str.clear(); return str; }
+ protected:
+  virtual void logImplementation(const sm::logging::LoggingEvent & event) override {
+    std::ostringstream os;
+    os << std::setprecision(6);
+    formatter.print(event, os);
+    _str = os.str();
+  }
+  virtual Time currentTimeImplementation() const {
+    return Time();
+  }
+ private:
+  std::string _str;
+};
+
 
 TEST(LoggingTestSuite, testBasic) {
     try {
 
         sm::logging::setLevel(sm::logging::Level::All);
+        boost::shared_ptr<TestLogger> logger(new TestLogger());
+        sm::logging::setLogger(logger);
 
         int x = 1;
+        std::ostringstream os;
+        os << " [0.000000]: Hey there: " << x << std::endl;
+        const std::string expected = os.str();
+
         SM_ALL_STREAM("Hey there: " << x );
+        EXPECT_EQ("[  ALL]" + expected, logger->string());
         SM_FINEST_STREAM("Hey there: " << x );
+        EXPECT_EQ("[FINES]" + expected, logger->string());
         SM_VERBOSE_STREAM("Hey there: " << x );
+        EXPECT_EQ("[VERBO]" + expected, logger->string());
         SM_FINER_STREAM("Hey there: " << x );
+        EXPECT_EQ("[FINER]" + expected, logger->string());
         SM_TRACE_STREAM("Hey there: " << x );
+        EXPECT_EQ("[TRACE]" + expected, logger->string());
         SM_FINE_STREAM("Hey there: " << x );
+        EXPECT_EQ("[ FINE]" + expected, logger->string());
         SM_DEBUG_STREAM("Hey there: " << x );
+        EXPECT_EQ("[DEBUG]" + expected, logger->string());
         SM_INFO_STREAM("Hey there: " << x );
+        EXPECT_EQ("[ INFO]" + expected, logger->string());
         SM_WARN_STREAM("Hey there: " << x );
+        EXPECT_EQ("[ WARN]" + expected, logger->string());
         SM_ERROR_STREAM("Hey there: " << x );
+        EXPECT_EQ("[ERROR]" + expected, logger->string());
         SM_FATAL_STREAM("Hey there: " << x );
+        EXPECT_EQ("[FATAL]" + expected, logger->string());
+
+        // test named streams
         SM_INFO_STREAM_NAMED("test", "Hey there: " << x);
+        EXPECT_EQ("", logger->string()); // not enabled yet
         sm::logging::enableNamedStream("test");
         SM_WARN_STREAM_NAMED("test", "Hey there: " << x);
+        EXPECT_EQ("[ WARN]" + expected, logger->string());
         SM_WARN_NAMED("test", "Hey there: %d",x);
-        
+        EXPECT_EQ("[ WARN]" + expected, logger->string());
         sm::logging::disableNamedStream("test");
         SM_WARN_STREAM_NAMED("test", "Hey there: " << x);
+        EXPECT_EQ("", logger->string());
+
 
         SM_INFO("This with printf: %d, %f, %s", 1, 1.0, "one");
 
