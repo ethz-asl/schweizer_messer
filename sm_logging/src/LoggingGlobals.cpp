@@ -276,12 +276,13 @@ namespace sm {
         }
         
         std::string addDefaultPrefixIfMissing(const std::string & name) {
-            if(name.substr(0, 3) == SMCONSOLE_DEFAULT_NAME "."){
+            if(name.substr(0, 3) == SMCONSOLE_DEFAULT_NAME ".") { // starts with "sm."
               return name;
             }
-            else {
+            else if (name != "sm") { // if name does not start with "sm." and != "sm"
               return std::string(SMCONSOLE_DEFAULT_NAME ".") + name;
             }
+            return name; // if name == "sm"
         }
         bool isNamedStreamEnabled( const std::string & name )
         {
