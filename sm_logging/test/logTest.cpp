@@ -63,6 +63,11 @@ TEST(LoggingTestSuite, testBasic) {
         EXPECT_EQ("[FATAL]" + expected, logger->string());
 
         // test named streams
+        sm::logging::disableNamedStream("sm");
+        SM_INFO_STREAM("Hey there: " << x);
+        EXPECT_EQ("", logger->string()); // all non-named streams disabled
+        sm::logging::enableNamedStream("sm");
+
         SM_INFO_STREAM_NAMED("test", "Hey there: " << x);
         EXPECT_EQ("", logger->string()); // not enabled yet
         sm::logging::enableNamedStream("test");
