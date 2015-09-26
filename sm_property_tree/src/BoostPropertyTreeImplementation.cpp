@@ -6,7 +6,7 @@
 #include <boost/property_tree/info_parser.hpp>
 
 namespace sm {
-  
+
   BoostPropertyTreeImplementation::BoostPropertyTreeImplementation()
   {
 
@@ -48,7 +48,7 @@ namespace sm {
     return get<int>(key, defaultValue);
   }
 
-  int BoostPropertyTreeImplementation::getInt(const std::string & key, int defaultValue) 
+  int BoostPropertyTreeImplementation::getInt(const std::string & key, int defaultValue)
   {
     return get<int>(key, defaultValue);
   }
@@ -64,7 +64,7 @@ namespace sm {
     return get<bool>(key, defaultValue);
   }
 
- bool BoostPropertyTreeImplementation::getBool(const std::string & key, bool defaultValue) 
+ bool BoostPropertyTreeImplementation::getBool(const std::string & key, bool defaultValue)
   {
     return get<bool>(key, defaultValue);
   }
@@ -80,7 +80,7 @@ namespace sm {
     return get<std::string>(key, defaultValue);
   }
 
-  std::string BoostPropertyTreeImplementation::getString(const std::string & key, const std::string & defaultValue) 
+  std::string BoostPropertyTreeImplementation::getString(const std::string & key, const std::string & defaultValue)
   {
     return get<std::string>(key, defaultValue);
   }
@@ -89,7 +89,7 @@ namespace sm {
   bool BoostPropertyTreeImplementation::doesKeyExist(const std::string & key) const
   {
     boost::optional<std::string> val = _ptree.get<std::string>(boost::property_tree::ptree::path_type(key.c_str(),'/'));
-    
+
     return (bool)val;
   }
 
@@ -102,14 +102,14 @@ namespace sm {
   void BoostPropertyTreeImplementation::saveXml(const boost::filesystem::path & fileName) const
   {
     if(BoostPropertyTree::isHumanReadableInputOutput()){
-      boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
+      boost::property_tree::xml_writer_settings<std::string> settings('\t', 1);
       boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(), settings);
     }
     else {
       boost::property_tree::write_xml(fileName.string(), _ptree);
     }
   }
- 
+
   void BoostPropertyTreeImplementation::loadIni(const boost::filesystem::path & fileName)
   {
     boost::property_tree::read_ini(fileName.string(), _ptree);
