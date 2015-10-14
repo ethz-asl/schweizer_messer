@@ -8,6 +8,8 @@ void smLogNamed(const std::string & name, sm::logging::Level level,
               const std::string & message)
 {
 
+    if (!sm::logging::isNamedStreamEnabled(name)) return;
+    
     boost::shared_ptr<sm::logging::Logger> logger = sm::logging::getLogger();
     sm::logging::LoggingEvent event(name.c_str(),
                                     level,
