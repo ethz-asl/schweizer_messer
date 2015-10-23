@@ -50,10 +50,11 @@ namespace sm {
      * Update this ptree with another, allowing merging of ptrees
      * @param with the other ptree
      * @param createIfNecessary if true all necessary entries will be created automatically
-     * to store the values of with.
-     * If not it will throw an KeyNotFoundException if there is no such key already.
+     *                          otherwise a KeyNotFoundException if there is no such key already
+     * @param ignoreEmptyUpdates all values in \p with that are empty or whitespace only will be ignored
      */
-    void update(const BoostPropertyTree & with, bool createIfNecessary);
+    void update(const BoostPropertyTree & with, bool createIfNecessary, bool ignoreEmptyUpdates);
+    void update(const BoostPropertyTree & with, bool createIfNecessary){ update(with, createIfNecessary, false); }
     void update(const BoostPropertyTree & with){ update(with, true); }
 
     iterator begin() ;
