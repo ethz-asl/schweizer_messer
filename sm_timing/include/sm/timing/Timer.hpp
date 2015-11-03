@@ -12,6 +12,7 @@
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics.hpp>
 #include <boost/accumulators/statistics/rolling_mean.hpp>
+#include <boost/thread/mutex.hpp>
 #include <unordered_map>
 #include <vector>
 
@@ -78,6 +79,7 @@ namespace timing {
 #endif
     bool m_timing;
     size_t m_handle;
+    boost::mutex m_mutex;
   };
   
   enum SortType{SORT_BY_TOTAL, SORT_BY_MEAN, SORT_BY_STD, SORT_BY_MIN, SORT_BY_MAX, SORT_BY_NUM_SAMPLES};
@@ -133,6 +135,8 @@ namespace timing {
 #endif
     size_t m_maxTagLength;
     
+    static boost::mutex m_mutex;
+
   }; // end class timer
   
 #ifdef NDEBUG

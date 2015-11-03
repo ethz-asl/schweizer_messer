@@ -4,6 +4,8 @@
 
 namespace sm{
 namespace timing {
+
+  boost::mutex Timing::m_mutex;
   
   Timing & Timing::instance() {
     static Timing t;
@@ -32,6 +34,7 @@ namespace timing {
     if(i == instance().m_tagMap.end()) {
       // If it is not there, create a tag.
       size_t handle =  instance().m_timers.size();
+      boost::mutex::scoped_lock lock(m_mutex);
       instance().m_tagMap[tag] = handle;
       instance().m_timers.push_back(TimerMapValue());
       // Track the maximum tag length to help printing a table of timing values later.
@@ -88,6 +91,7 @@ namespace timing {
   
   void Timer::start(){
     SM_ASSERT_TRUE(TimerException,!m_timing,"The timer " + Timing::getTag(m_handle) + " is already running");
+    boost::mutex::scoped_lock lock(m_mutex);
     m_timing = true;
 #ifdef SM_USE_HIGH_PERF_TIMER
     QueryPerformanceCounter(&m_time);
@@ -110,6 +114,7 @@ namespace timing {
     dt = ((double)t.total_nanoseconds() * 1e-9);
 #endif
     Timing::instance().addTime(m_handle,dt);
+    boost::mutex::scoped_lock lock(m_mutex);
     m_timing = false;
   }
   
@@ -120,6 +125,7 @@ namespace timing {
   
   
   void Timing::addTime(size_t handle, double seconds){
+    boost::mutex::scoped_lock lock(m_mutex);
     m_timers[handle].m_acc(seconds);
   }
   
@@ -179,6 +185,7 @@ namespace timing {
 
   void Timing::reset(size_t handle) {
     SM_ASSERT_LT(TimerException, handle, instance().m_timers.size(), "Handle is out of range: " << handle << ", number of timers: " << instance().m_timers.size());
+    boost::mutex::scoped_lock lock(m_mutex);
     instance().m_timers[handle] = TimerMapValue();
   }
 
