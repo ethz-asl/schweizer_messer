@@ -24,9 +24,6 @@ def logNamed(name, level, message, stackdepth=1):
     info = inspect.getframeinfo(frame)
     rawLogNamed(name,level, info.filename, info.lineno, info.function, message)
 
-def logAll(message):
-    log(LoggingLevel.All, message, stackdepth=2)
-    
 def logFinest(message):
     log(LoggingLevel.Finest, message, stackdepth=2)
     
@@ -58,9 +55,6 @@ def logError(message):
     log(LoggingLevel.Error, message, stackdepth=2)
 
 
-def logAllNamed(name, message):
-    logNamed(name, LoggingLevel.All, message, stackdepth=2)
-    
 def logFinestNamed(name, message):
     logNamed(name, LoggingLevel.Finest, message, stackdepth=2)
     
