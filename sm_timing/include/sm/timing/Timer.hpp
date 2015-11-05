@@ -79,7 +79,6 @@ namespace timing {
 #endif
     bool m_timing;
     size_t m_handle;
-    boost::mutex m_mutex;
   };
   
   enum SortType{SORT_BY_TOTAL, SORT_BY_MEAN, SORT_BY_STD, SORT_BY_MIN, SORT_BY_MAX, SORT_BY_NUM_SAMPLES};
