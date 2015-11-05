@@ -4,6 +4,8 @@
 
 namespace sm{
 namespace timing {
+
+  boost::mutex Timing::m_mutex;
   
   Timing & Timing::instance() {
     static Timing t;
@@ -28,6 +30,7 @@ namespace timing {
   // Static funcitons to query the timers:
   size_t Timing::getHandle(std::string const & tag){
     // Search for an existing tag.
+    boost::mutex::scoped_lock lock(m_mutex);
     map_t::iterator i = instance().m_tagMap.find(tag);
     if(i == instance().m_tagMap.end()) {
       // If it is not there, create a tag.
@@ -120,6 +123,7 @@ namespace timing {
   
   
   void Timing::addTime(size_t handle, double seconds){
+    boost::mutex::scoped_lock lock(m_mutex);
     m_timers[handle].m_acc(seconds);
   }
   
@@ -178,6 +182,7 @@ namespace timing {
   }
 
   void Timing::reset(size_t handle) {
+    boost::mutex::scoped_lock lock(m_mutex);
     SM_ASSERT_LT(TimerException, handle, instance().m_timers.size(), "Handle is out of range: " << handle << ", number of timers: " << instance().m_timers.size());
     instance().m_timers[handle] = TimerMapValue();
   }

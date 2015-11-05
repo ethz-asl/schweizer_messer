@@ -12,6 +12,7 @@
 #include <boost/accumulators/accumulators.hpp>
 #include <boost/accumulators/statistics.hpp>
 #include <boost/accumulators/statistics/rolling_mean.hpp>
+#include <boost/thread/mutex.hpp>
 #include <unordered_map>
 #include <vector>
 
@@ -133,6 +134,8 @@ namespace timing {
 #endif
     size_t m_maxTagLength;
     
+    static boost::mutex m_mutex;
+
   }; // end class timer
   
 #ifdef NDEBUG
