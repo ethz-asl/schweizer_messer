@@ -37,4 +37,4 @@ if(TARGET ${PROJECT_NAME}-test)
 endif()
 
 cs_install()
-cs_export()
+cs_export(LIBRARIES ${Boost_LIBRARIES})
