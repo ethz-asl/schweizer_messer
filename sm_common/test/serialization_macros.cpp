@@ -67,7 +67,6 @@ class ctPoly2{
     same = same && SM_CHECKMEMBERSSAME(other, value_);
     return same;
   }
-  friend std::ostream& operator<<(std::ostream &os, const ctPoly2& lhs);
 };
 
 
