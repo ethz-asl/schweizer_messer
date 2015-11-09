@@ -1,18 +1,8 @@
 #ifndef SM_TIMER_HPP
 #define SM_TIMER_HPP
 
-#ifndef BOOST_DATE_TIME_NO_LOCALE
-#define BOOST_DATE_TIME_NO_LOCALE
-#include <boost/date_time/posix_time/posix_time.hpp>
-#undef BOOST_DATE_TIME_NO_LOCALE
-#else
-#include <boost/date_time/posix_time/posix_time.hpp>
-#endif
+#include <boost/date_time/posix_time/ptime.hpp>
 
-#include <boost/accumulators/accumulators.hpp>
-#include <boost/accumulators/statistics.hpp>
-#include <boost/accumulators/statistics/rolling_mean.hpp>
-#include <boost/thread/mutex.hpp>
 #include <unordered_map>
 #include <vector>
 
@@ -23,27 +13,16 @@
 #include <windows.h>
 #endif
 
+namespace boost {
+ class mutex;
+}
 
 namespace sm {
 namespace timing {
   
   SM_DEFINE_EXCEPTION(TimerException, std::runtime_error);
+  struct TimerMapValue;
   
-  struct TimerMapValue {
-    // Initialize the window size for the rolling mean.
-    TimerMapValue() : m_acc(boost::accumulators::tag::rolling_window::window_size = 50){}
-    boost::accumulators::accumulator_set<
-      double, 
-      boost::accumulators::features<
-	boost::accumulators::tag::lazy_variance,
-	boost::accumulators::tag::sum,
-	boost::accumulators::tag::min,
-	boost::accumulators::tag::max,
-	boost::accumulators::tag::rolling_mean,
-	boost::accumulators::tag::mean
-	>
-      > m_acc;
-  };
   
   // A class that has the timer interface but does nothing.
   // Swapping this in in place of the Timer class (say with a 
