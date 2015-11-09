@@ -2,8 +2,34 @@
 #include <sm/assert_macros.hpp>
 #include <stdio.h>
 
+#include <boost/thread/mutex.hpp>
+
+#include <boost/accumulators/accumulators.hpp>
+#include <boost/accumulators/statistics.hpp>
+#include <boost/accumulators/statistics/rolling_mean.hpp>
+
+#define BOOST_DATE_TIME_NO_LOCALE
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 namespace sm{
 namespace timing {
+  struct TimerMapValue {
+    // Initialize the window size for the rolling mean.
+    TimerMapValue() : m_acc(boost::accumulators::tag::rolling_window::window_size = 50){}
+    boost::accumulators::accumulator_set<
+        double,
+        boost::accumulators::features<
+          boost::accumulators::tag::lazy_variance,
+          boost::accumulators::tag::sum,
+          boost::accumulators::tag::min,
+          boost::accumulators::tag::max,
+          boost::accumulators::tag::rolling_mean,
+          boost::accumulators::tag::mean
+        >
+        > m_acc;
+  };
+
+
 
   boost::mutex Timing::m_mutex;
   
