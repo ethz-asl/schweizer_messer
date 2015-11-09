@@ -19,7 +19,7 @@
 namespace sm {
   // Forward declaration.
   class PropertyTreeImplementation;
-  class KeyPropertyTreePair;
+  struct KeyPropertyTreePair;
 
 
 
