@@ -27,7 +27,12 @@
 #include <boost/archive/archive_exception.hpp>
 #include <boost/archive/basic_binary_iprimitive.hpp>
 #include <boost/archive/detail/common_iarchive.hpp>
+#include <boost/version.hpp>
+#if BOOST_VERSION >= 105600 // see changes in https://github.com/boostorg/serialization/commit/75f09afc895ab09c4eb55d36fcf6f91ef4a0107a
+#include <boost/serialization/shared_ptr.hpp>
+#else
 #include <boost/archive/shared_ptr_helper.hpp>
+#endif
 #include <boost/archive/detail/register_archive.hpp>
 
 #include "portable_binary_archive.hpp"
