@@ -102,8 +102,8 @@ namespace sm {
   void BoostPropertyTreeImplementation::saveXml(const boost::filesystem::path & fileName) const
   {
     if(BoostPropertyTree::isHumanReadableInputOutput()){
-      boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
-      boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(), settings);
+      boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(),
+                                      boost::property_tree::xml_writer_make_settings<ptree::key_type>('\t', 1));
     }
     else {
       boost::property_tree::write_xml(fileName.string(), _ptree);
