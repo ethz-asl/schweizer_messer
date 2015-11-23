@@ -85,9 +85,12 @@ class portable_binary_iarchive :
     >,
     public boost::archive::detail::common_iarchive<
         portable_binary_iarchive
-    >
-    ,
+    >,
+#if BOOST_VERSION >= 105600 // see changes in https://github.com/boostorg/serialization/commit/75f09afc895ab09c4eb55d36fcf6f91ef4a0107a
+    public boost::serialization::shared_ptr_helper<boost::shared_ptr>
+#else
     public boost::archive::detail::shared_ptr_helper
+#endif
     {
     typedef boost::archive::basic_binary_iprimitive<
         portable_binary_iarchive,
