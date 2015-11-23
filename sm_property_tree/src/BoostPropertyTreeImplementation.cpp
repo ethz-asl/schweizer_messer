@@ -4,6 +4,7 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
+#include <boost/version.hpp>
 
 namespace sm {
   
@@ -102,8 +103,13 @@ namespace sm {
   void BoostPropertyTreeImplementation::saveXml(const boost::filesystem::path & fileName) const
   {
     if(BoostPropertyTree::isHumanReadableInputOutput()){
+#if BOOST_VERSION >= 105600
+      boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(),
+                                      boost::property_tree::xml_writer_make_settings<ptree::key_type>('\t', 1));
+#else
       boost::property_tree::xml_writer_settings<ptree::key_type::value_type> settings('\t', 1);
       boost::property_tree::write_xml(fileName.string(), _ptree, std::locale(), settings);
+#endif
     }
     else {
       boost::property_tree::write_xml(fileName.string(), _ptree);
