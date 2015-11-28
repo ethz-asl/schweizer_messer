@@ -30,6 +30,10 @@ namespace sm {
   {
     dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadXml(fileName);
   }
+  void BoostPropertyTree::loadXmlFromString(const std::string & xml)
+  {
+    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadXmlFromString(xml);
+  }
 
   void BoostPropertyTree::saveXml(const boost::filesystem::path & fileName) const
   {
