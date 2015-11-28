@@ -178,13 +178,25 @@ namespace sm {
   }
 
 
-  const std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren() const {
-    return const_cast<BoostPropertyTreeImplementation*>(this)->getChildren();
+  const std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren(const std::string & key) const {
+    return const_cast<BoostPropertyTreeImplementation*>(this)->getChildren(key);
   }
 
-  std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren() {
+  std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren(const std::string & key) {
     std::vector<KeyPropertyTreePair> ret;
-    for(auto& p : _ptree){
+    auto * pt = &_ptree;
+    std::string k;
+    if(!key.empty()){
+      k = key[0] == '/' ? key.substr(1) : key;
+      if (k.back() == '/'){
+        k.resize(k.size() - 1);
+      }
+    }
+    if (!k.empty()){
+      std::replace(k.begin(), k.end(), '/', '.');
+      pt = & _ptree.get_child(k);
+    }
+    for(auto& p : *pt){
       ret.push_back({p.first, PropertyTree(boost::make_shared<BoostPropertyTreeImplementation>(p.second), "")});
     }
     return ret;

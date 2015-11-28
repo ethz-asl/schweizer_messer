@@ -38,8 +38,8 @@ namespace sm {
 
     virtual bool doesKeyExist(const std::string & key) const = 0;
 
-    virtual const std::vector<KeyPropertyTreePair> getChildren() const = 0;
-    virtual std::vector<KeyPropertyTreePair> getChildren() = 0;
+    virtual const std::vector<KeyPropertyTreePair> getChildren(const std::string & key) const = 0;
+    virtual std::vector<KeyPropertyTreePair> getChildren(const std::string & key) = 0;
   };
 
 } // namespace sm
