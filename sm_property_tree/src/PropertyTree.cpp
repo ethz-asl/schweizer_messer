@@ -155,11 +155,11 @@ namespace sm {
   }
 
   const std::vector<KeyPropertyTreePair> PropertyTree::getChildren() const {
-    return _imp->getChildren();
+    return _imp->getChildren(_namespace);
   }
 
   std::vector<KeyPropertyTreePair> PropertyTree::getChildren() {
-    return _imp->getChildren();
+    return _imp->getChildren(_namespace);
   }
   
 } // namespace sm

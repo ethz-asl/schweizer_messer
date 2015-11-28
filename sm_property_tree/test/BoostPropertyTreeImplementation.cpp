@@ -65,14 +65,35 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(spt.getString("/s/s"), std::string("goodbye"));
 
 
-
-      const char * expectedKeys[] = {"d", "i", "b", "s"};
-      int i = 0;
-      for (auto & c : pt.getChildren()){
-        EXPECT_EQ(expectedKeys[i++], c.key);
-        if(c.key == "d"){
-          ASSERT_NEAR(c.pt.getDouble("d"), 0.2, 1e-16);
+      {
+        std::vector<const char *> expectedKeys{"d", "i", "b", "s"};
+        int i = 0;
+        for (auto & c : pt.getChildren()){
+          EXPECT_EQ(expectedKeys[i++], c.key);
+          if(c.key == "d"){
+            ASSERT_LT(i, expectedKeys.size());
+            EXPECT_NEAR(0.2, c.pt.getDouble("d"), 1e-16);
+          }
+          if(c.key == "s"){
+            std::vector<const char *> expectedKeys{"s"};
+            int i = 0;
+            for (auto & c2 : c.pt.getChildren()){
+              ASSERT_LT(i, expectedKeys.size());
+              EXPECT_EQ(expectedKeys[i++], c2.key);
+            }
+            EXPECT_EQ(expectedKeys.size(), i);
+          }
         }
+        EXPECT_EQ(expectedKeys.size(), i);
+      }
+      {
+        std::vector<const char *> expectedKeys{"s"};
+        int i = 0;
+        for (auto & c2 : sm::PropertyTree(pt, "s").getChildren()){
+          ASSERT_LT(i, expectedKeys.size());
+          EXPECT_EQ(expectedKeys[i++], c2.key);
+        }
+        EXPECT_EQ(expectedKeys.size(), i);
       }
     }
   catch(const std::exception & e)
