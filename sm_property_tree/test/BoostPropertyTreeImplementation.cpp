@@ -39,6 +39,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getInt("/i/i"), 2);
       // Push a namespace on to the stack.
       sm::PropertyTree ipt(pt,"i");
+      ASSERT_EQ(ipt.getInt(""), 1);
       ASSERT_EQ(ipt.getInt("i"), 2);
       ASSERT_EQ(ipt.getInt("/i"), 1);
       ASSERT_EQ(ipt.getInt("/i/i"), 2);
@@ -49,6 +50,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getBool("/b/b"), false);
       // Push a namespace on to the stack.
       sm::PropertyTree bpt(pt,"b");
+      ASSERT_EQ(bpt.getBool(""), true);
       ASSERT_EQ(bpt.getBool("b"), false);
       ASSERT_EQ(bpt.getBool("/b"), true);
       ASSERT_EQ(bpt.getBool("/b/b"), false); 
@@ -60,6 +62,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getString("/s/s"), std::string("goodbye"));
       // Push a namespace on to the stack.
       sm::PropertyTree spt(pt,"s");
+      ASSERT_EQ(spt.getString(""), std::string("hello"));
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
       ASSERT_EQ(spt.getString("/s/s"), std::string("goodbye"));
