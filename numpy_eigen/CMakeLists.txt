@@ -26,14 +26,19 @@ add_python_export_library(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME} 
                       ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-                      
+
+IF(NOT APPLE)
+
 INCLUDE(src/autogen_test_files.cmake)
 add_python_export_library(${PROJECT_NAME}_test 
       ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_TEST_FILES}
   )
 
+
 ## Add nosetest based cpp test target.
 catkin_add_nosetests(test/numpy_eigen_tests.py)
+
+ENDIF()
 
 cs_install()
 cs_export()
