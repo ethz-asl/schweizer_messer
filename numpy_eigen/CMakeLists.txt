@@ -15,10 +15,6 @@ add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
 include_directories(include ${Boost_INCLUDE_DIRS})
 
-IF(APPLE)
-  link_directories( /usr/local/lib )
-ENDIF(APPLE)
-
 INCLUDE(src/autogen_files.cmake)
 add_python_export_library(${PROJECT_NAME} 
   ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_FILES}
