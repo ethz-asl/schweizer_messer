@@ -27,6 +27,8 @@ add_python_export_library(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
                       ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 
+
+#TODO remove this condition again as soon as issue #137 is fixed
 IF(NOT APPLE)
 
 INCLUDE(src/autogen_test_files.cmake)
