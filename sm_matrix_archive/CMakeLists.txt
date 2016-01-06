@@ -16,6 +16,18 @@ cs_add_library(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
                       ${catkin_LIBRARIES} ${Boost_LIBRARIES} pthread)
 
+cs_add_executable(lsma 
+  src/lsma.cpp
+)
+target_link_libraries(lsma ${PROJECT_NAME} ${Boost_LIBRARIES} pthread)
+
+message (STATUS CMAKE_RUNTIME_OUTPUT_DIRECTORY=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+
+set_target_properties(lsma
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CATKIN_DEVEL_PREFIX}/bin"
+)
+
 # Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
 add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 
