@@ -73,6 +73,7 @@ namespace sm {
     std::stringstream sm_assert_stringstream;							\
     sm_assert_stringstream << message;									\
     sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__, sm_assert_stringstream.str()); \
+    throw 0; /* to disable some compiler warnings */ \
   }
 
 
@@ -80,6 +81,7 @@ namespace sm {
     std::stringstream sm_assert_stringstream;							\
     sm_assert_stringstream << message;									\
     sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", SourceFilePos, sm_assert_stringstream.str()); \
+    throw 0; /* to disable some compiler warnings */ \
   }
 
 #define SM_ASSERT_TRUE(exceptionType, condition, message)				\
