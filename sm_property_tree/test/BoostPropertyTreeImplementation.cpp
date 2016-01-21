@@ -105,6 +105,15 @@ TEST(PTreeTestSuite, testBoostPTree)
     }
 }
 
+TEST(PTreeTestSuite, testRootNodeValues){
+  sm::BoostPropertyTree pt;
+
+  pt.setDouble("",0.01);
+
+  EXPECT_EQ(pt.getDouble(""), 0.01);
+}
+
+
 TEST(PTreeTestSuite, testBoostPTreeUpdate)
 {
   sm::BoostPropertyTree pt;
