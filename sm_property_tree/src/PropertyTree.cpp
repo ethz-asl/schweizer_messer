@@ -36,7 +36,7 @@ namespace sm {
   std::string PropertyTree::buildQualifiedKeyName(const std::string & key) const
   {
     std::string qualifiedKeyName = !key.empty() && key[0] == '/' ? key : _namespace + key;
-    if(qualifiedKeyName.size() >= 1 && qualifiedKeyName.back() == '/'){
+    if(qualifiedKeyName.size() > 1 && qualifiedKeyName.back() == '/'){
       qualifiedKeyName.resize(qualifiedKeyName.size() - 1);
     }
     return qualifiedKeyName;
