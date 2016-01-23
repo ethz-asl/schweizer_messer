@@ -3,6 +3,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
+#include <boost/algorithm/string.hpp>
 #include <sm/BoostPropertyTreeImplementation.hpp>
 
 namespace sm {
@@ -56,6 +57,28 @@ namespace sm {
     dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->saveInfo(fileName);
   }
 
+  std::string BoostPropertyTree::asInfoString() const {
+    return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->asInfoString();
+  }
+
+  void BoostPropertyTree::loadString(const std::string & string)
+  {
+    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadString(string);
+  }
+
+  void BoostPropertyTree::loadStrings(const std::vector<std::string> & strings)
+  {
+    loadString(boost::algorithm::join(strings, ","));
+  }
+
+  void BoostPropertyTree::loadStrings(int argc, const char ** argv)
+  {
+    std::vector<std::string> v;
+    for(int i = 0; i < argc; i++){
+      v.push_back(argv[i]);
+    }
+    loadStrings(v);
+  }
 
   BoostPropertyTree::iterator BoostPropertyTree::begin()
   {
