@@ -152,6 +152,58 @@ namespace sm {
     return iss.str();
   }
 
+  void BoostPropertyTreeImplementation::loadString(const std::string & string){
+    if(string.find('"') != string.npos) {
+      throw boost::property_tree::file_parser_error("No escaped strings supported with loadString, yet.", string, 0);
+    }
+    std::stringstream s;
+    std::vector<int> countBraceOpen(int(0));
+    countBraceOpen.resize(1);
+
+    const char * specilaChars = ",/={}";
+    for(size_t oldPos = 0, pos = string.find_first_of(specilaChars); oldPos <= string.size(); (oldPos = pos, pos = string.find_first_of(specilaChars, pos))){
+      char c;
+      if(pos == string.npos){
+        pos = string.size();
+        c = ',';
+      }else{
+        c = string[pos];
+      }
+      s << string.substr(oldPos, pos - oldPos);
+      switch(c){
+        case '=':
+          s << ' ';
+          break;
+        case '/':
+        case '{':
+          if(c == '/'){
+            countBraceOpen.back()++;
+          }
+          else{
+            countBraceOpen.push_back(0);
+          }
+          s << "\n{\n";
+          break;
+        case '}':
+          if(countBraceOpen.size() <= 1){
+            throw boost::property_tree::file_parser_error("Unmatched closing bracket '}' at ", string, pos);
+          }
+        case ',':
+          for(; countBraceOpen.back(); countBraceOpen.back() --){
+            s << "\n}";
+          }
+          s << '\n';
+          if(c == '}'){
+            countBraceOpen.pop_back();
+            s << '}';
+          }
+          break;
+      }
+      pos ++;
+    }
+    boost::property_tree::read_info(s, _ptree);
+  }
+
   void BoostPropertyTreeImplementation::setDouble(const std::string & key, double value)
   {
     set<double>(key,value);
