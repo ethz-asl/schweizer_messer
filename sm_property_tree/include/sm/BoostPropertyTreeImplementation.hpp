@@ -20,6 +20,7 @@ namespace sm {
     virtual ~BoostPropertyTreeImplementation();
 
     void loadXml(const boost::filesystem::path & fileName);
+    void loadXmlFromString(const std::string & xml);
     void saveXml(const boost::filesystem::path & fileName) const;
  
     void loadIni(const boost::filesystem::path & fileName);
@@ -27,6 +28,8 @@ namespace sm {
 
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
+
+    std::string asInfoString() const;
 
     virtual double getDouble(const std::string & key) const;
     virtual double getDouble(const std::string & key, double defaultValue) const;

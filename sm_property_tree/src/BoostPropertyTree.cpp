@@ -3,6 +3,7 @@
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
+#include <boost/algorithm/string.hpp>
 #include <sm/BoostPropertyTreeImplementation.hpp>
 
 namespace sm {
@@ -29,6 +30,10 @@ namespace sm {
   {
     dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadXml(fileName);
   }
+  void BoostPropertyTree::loadXmlFromString(const std::string & xml)
+  {
+    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadXmlFromString(xml);
+  }
 
   void BoostPropertyTree::saveXml(const boost::filesystem::path & fileName) const
   {
@@ -54,6 +59,10 @@ namespace sm {
   void BoostPropertyTree::saveInfo(const boost::filesystem::path & fileName) const
   {
     dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->saveInfo(fileName);
+  }
+
+  std::string BoostPropertyTree::asInfoString() const {
+    return dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->asInfoString();
   }
 
 

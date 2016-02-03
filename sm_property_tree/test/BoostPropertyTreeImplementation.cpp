@@ -203,3 +203,19 @@ TEST(PTreeTestSuite, testHumanReadable)
     FAIL() << "Unhandled exception: " << e.what();
   }
 }
+
+
+TEST(PTreeTestSuite, testLoadXmlFromString)
+{
+  try{
+      sm::BoostPropertyTree pt;
+
+      pt.loadXmlFromString("<d>0.1</d>");
+
+      EXPECT_NEAR(pt.getDouble("d"), 0.1, 1e-16);
+  }
+  catch(const std::exception & e)
+  {
+    FAIL() << "Unhandled exception: " << e.what();
+  }
+}
