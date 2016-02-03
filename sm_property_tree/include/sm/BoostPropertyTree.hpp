@@ -46,8 +46,26 @@ namespace sm {
 
     std::string asInfoString() const;
 
-    void loadString(const std::string & strings);
+    /**
+     * Load property tree from a string.
+     * The string need to be in an simple info like language not requiring line breaks (e.g. for command line arguments):
+     * E.g.
+     *
+     * "d=0.1,s=hello,a/d=0.1,b{u=3,v=4},c/b{u=3,v=4}" would yield the obvious property tree containing among others '/c/b/u' with value 3.
+     * See also the corresponding unit test.
+     *
+     * NOTE: String value containing spaces, commas or {} are not supported, yet!
+     *
+     * @param strings the comma separated list of phrases as
+     */
+    void loadString(const std::string & string);
+    /**
+     * Load strings. This is identical to calling loadString with the strings joint together with commas.
+     */
     void loadStrings(const std::vector<std::string> & strings);
+    /**
+     * Load strings. This is identical to calling loadStrings with the strings joint together with commas.
+     */
     void loadStrings(int argc, const char ** argv);
 
     /**
