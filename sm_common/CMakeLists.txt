@@ -27,6 +27,7 @@ add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
 catkin_add_gtest(${PROJECT_NAME}-test
   test/test_main.cpp
   test/assert_macros.cpp
+  test/assert_macros_dbg.cpp
   test/maths.cpp
   test/serialization_macros.cpp
   test/numerical_comparisons.cpp
