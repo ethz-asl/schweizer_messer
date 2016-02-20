@@ -118,6 +118,14 @@ namespace sm {
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
+#define SM_ASSERT_GE_LE(exceptionType, value, lowerBound, upperBound, message) \
+  if((value) < (lowerBound) || (value) > (upperBound))             \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "assert(" << #lowerBound << " <= " << #value << " <= " << #upperBound << ") failed [" << (lowerBound) << " <= " << (value) << " <= " << (upperBound) << "]: " << message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
 #define SM_ASSERT_LT(exceptionType, value, upperBound, message)			\
   if((value) >= (upperBound))												\
     {																	\
@@ -271,6 +279,14 @@ namespace sm {
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
+#define SM_ASSERT_GE_LE_DBG(exceptionType, value, lowerBound, upperBound, message) \
+  if((value) < (lowerBound) || (value) > (upperBound))             \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "debug assert(" << #lowerBound << " <= " << #value << " <= " << #upperBound << ") failed [" << (lowerBound) << " <= " << (value) << " <= " << (upperBound) << "]: " << message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
 #define SM_ASSERT_POSITIVE_DBG(exceptionType, value, message)     \
   if((value) <= 0.0)                       \
     {                                 \
@@ -395,6 +411,7 @@ namespace sm {
 #define SM_ASSERT_FALSE_DBG(exceptionType, condition, message)
 #define SM_ASSERT_GE_LT_DBG(exceptionType, value, lowerBound, upperBound, message)
 #define SM_ASSERT_GT_LE_DBG(exceptionType, value, lowerBound, upperBound, message)
+#define SM_ASSERT_GE_LE_DBG(exceptionType, value, lowerBound, upperBound, message)
 #define SM_ASSERT_LT_DBG(exceptionType, value, upperBound, message)
 #define SM_ASSERT_GT_DBG(exceptionType, value, lowerBound, message)
 #define SM_ASSERT_POSITIVE_DBG(exceptionType, value, message)
