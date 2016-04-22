@@ -204,7 +204,7 @@ namespace sm {
   if(value == nullptr)                       \
     {                                 \
       std::stringstream sm_assert_stringstream;             \
-      sm_assert_stringstream << "assert(" << #value << " != NULL) failed [" << (value) << " != NULL]: " <<  message; \
+      sm_assert_stringstream << "assert(" << #value << " != NULL) failed: " <<  message; \
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
@@ -331,7 +331,7 @@ namespace sm {
   if((value) == nullptr)                       \
     {                                 \
       std::stringstream sm_assert_stringstream;             \
-      sm_assert_stringstream << "debug assert(" << #value << " != NULL) failed [" << (value) << " != NULL]: " <<  message; \
+      sm_assert_stringstream << "debug assert(" << #value << " != NULL) failed: " <<  message; \
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
