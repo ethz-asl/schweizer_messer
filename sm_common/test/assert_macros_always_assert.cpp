@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
+#ifndef NDEBUG
 #define NDEBUG
+#endif
 #define SM_ALWAYS_ASSERT
 #include <sm/assert_macros.hpp>
 
