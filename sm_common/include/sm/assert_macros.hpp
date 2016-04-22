@@ -234,7 +234,7 @@ namespace sm {
 
 
 
-#ifndef NDEBUG
+#if !defined(NDEBUG) || defined(SM_ALWAYS_ASSERT)
 
 #define SM_THROW_DBG(exceptionType, message){							\
     std::stringstream sm_assert_stringstream;							\
