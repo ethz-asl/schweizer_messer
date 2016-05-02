@@ -28,6 +28,7 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/test_main.cpp
   test/assert_macros.cpp
   test/assert_macros_dbg.cpp
+  test/assert_macros_always_assert.cpp
   test/maths.cpp
   test/serialization_macros.cpp
   test/numerical_comparisons.cpp
