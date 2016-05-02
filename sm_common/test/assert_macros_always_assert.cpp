@@ -3,7 +3,9 @@
 #ifndef NDEBUG
 #define NDEBUG
 #endif
+#ifndef SM_ALWAYS_ASSERT
 #define SM_ALWAYS_ASSERT
+#endif
 #include <sm/assert_macros.hpp>
 
 TEST(SmCommonTestSuite,testAssertMacrosAlwaysAssert)
