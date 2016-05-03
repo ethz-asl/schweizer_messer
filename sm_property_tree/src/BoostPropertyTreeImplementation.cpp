@@ -91,7 +91,7 @@ namespace sm {
 
   bool BoostPropertyTreeImplementation::doesKeyExist(const std::string & key) const
   {
-    std::string keyNoLeadingSlash = key[0] == '/' ? key.substr(1) : key; // Note: _ptree.get_optional does not seem to like leading slashes
+    std::string keyNoLeadingSlash = (key.empty() || key[0] != '/') ? key : key.substr(1); // Note: _ptree.get_optional does not seem to like leading slashes
     boost::optional<std::string> val = _ptree.get_optional<std::string>(boost::property_tree::ptree::path_type(keyNoLeadingSlash.c_str(),'/'));
 
     return (bool)val;
