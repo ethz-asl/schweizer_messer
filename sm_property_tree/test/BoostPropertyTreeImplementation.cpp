@@ -17,6 +17,7 @@ TEST(PTreeTestSuite, testBoostPTree)
   wbpt.setString("s/s","goodbye");
   wbpt.saveXml("test.xml");
 
+  EXPECT_TRUE(wbpt.doesKeyExist(""));
   EXPECT_TRUE(wbpt.doesKeyExist("d"));
   EXPECT_TRUE(wbpt.doesKeyExist("d/d"));
   EXPECT_TRUE(wbpt.doesKeyExist("i"));
