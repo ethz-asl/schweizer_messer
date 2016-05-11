@@ -17,6 +17,17 @@ TEST(PTreeTestSuite, testBoostPTree)
   wbpt.setString("s/s","goodbye");
   wbpt.saveXml("test.xml");
 
+  EXPECT_TRUE(wbpt.doesKeyExist(""));
+  EXPECT_TRUE(wbpt.doesKeyExist("d"));
+  EXPECT_TRUE(wbpt.doesKeyExist("d/d"));
+  EXPECT_TRUE(wbpt.doesKeyExist("i"));
+  EXPECT_TRUE(wbpt.doesKeyExist("i/i"));
+  EXPECT_TRUE(wbpt.doesKeyExist("b"));
+  EXPECT_TRUE(wbpt.doesKeyExist("b/b"));
+  EXPECT_TRUE(wbpt.doesKeyExist("s"));
+  EXPECT_TRUE(wbpt.doesKeyExist("s/s"));
+  EXPECT_FALSE(wbpt.doesKeyExist("xyz"));
+
   try 
     {
       sm::BoostPropertyTree pt;
