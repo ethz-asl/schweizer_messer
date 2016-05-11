@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <limits>
 #include <sm/assert_macros.hpp>
 
 TEST(SmCommonTestSuite,testAssertMacros) 
@@ -27,6 +28,8 @@ TEST(SmCommonTestSuite,testAssertMacros)
     EXPECT_NO_THROW( SM_ASSERT_NE(Exception, 0.0, 1.0, "") );
     EXPECT_NO_THROW( SM_ASSERT_EQ(Exception, 0.0, 0.0, "") );
     EXPECT_NO_THROW( SM_ASSERT_NEAR(Exception, 0.0, 1.0, 2.0, "") );
+    EXPECT_NO_THROW( SM_ASSERT_FINITE(Exception, 0.0, "") );
+    EXPECT_NO_THROW( SM_ASSERT_NOTNAN(Exception, 0.0, "") );
     delete val;
   }
     
@@ -51,5 +54,7 @@ TEST(SmCommonTestSuite,testAssertMacros)
     EXPECT_THROW( SM_ASSERT_NE(Exception, 0.0, 0.0, ""), Exception );
     EXPECT_THROW( SM_ASSERT_EQ(Exception, 1.0, 0.0, ""), Exception );
     EXPECT_THROW( SM_ASSERT_NEAR(Exception, 0.0, 1.0, 0.5, ""), Exception );
+    EXPECT_THROW( SM_ASSERT_FINITE(Exception, std::numeric_limits<float>::infinity(), ""), Exception );
+    EXPECT_THROW( SM_ASSERT_NOTNAN(Exception, std::numeric_limits<float>::signaling_NaN(), ""), Exception );
   }
 }
