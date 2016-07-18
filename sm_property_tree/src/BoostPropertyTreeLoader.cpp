@@ -42,7 +42,6 @@ struct UpdateablePropertyTree {
     }
 
     std::string configFileFullPath = ptl.resolveFullFilePath(configFile, relativeToFile);
-//    VLOG(1)<< "Loading file " << configFileFullPath << ".";
 
     sm::BoostPropertyTree pt;
     pt.loadXml(configFileFullPath);
@@ -56,7 +55,6 @@ struct UpdateablePropertyTree {
     }
 
     if (!parents.empty()) {
-//      VLOG(1)<< "File " << configFile << " has parent configuration files " << parents << ".";
       readFile(splitCommaSeparatedList(parents), ignore, configFile);
     }
     updateOrSet(pt, configFileFullPath, updateOnly);
