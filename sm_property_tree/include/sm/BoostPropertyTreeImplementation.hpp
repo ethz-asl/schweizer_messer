@@ -65,6 +65,8 @@ namespace sm {
     std::vector<KeyPropertyTreePair> getChildren(const std::string & key);
   private:
 
+    static int getXmlReadOptions();
+
     template<typename T>
     T get(const std::string & key) const;
 
