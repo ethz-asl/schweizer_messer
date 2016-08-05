@@ -100,13 +100,13 @@ namespace sm {
 
   void BoostPropertyTreeImplementation::loadXml(const boost::filesystem::path & fileName)
   {
-    boost::property_tree::read_xml(fileName.string(), _ptree, BoostPropertyTree::isHumanReadableInputOutput() ? boost::property_tree::xml_parser::trim_whitespace : 0);
+    boost::property_tree::read_xml(fileName.string(), _ptree, getXmlReadOptions());
   }
 
   void BoostPropertyTreeImplementation::loadXmlFromString(const std::string & xml)
   {
     std::istringstream in(xml);
-    boost::property_tree::read_xml(in, _ptree, BoostPropertyTree::isHumanReadableInputOutput() ? boost::property_tree::xml_parser::trim_whitespace : 0);
+    boost::property_tree::read_xml(in, _ptree, getXmlReadOptions());
   }
 
 
@@ -308,5 +308,12 @@ namespace sm {
   void BoostPropertyTreeImplementation::update(const BoostPropertyTreeImplementation & with, bool createIfNecessary, bool ignoreEmptyUpdates){
     using namespace boost;
     traverse(with._ptree, createIfNecessary ? bind(merge, boost::ref(_ptree), ignoreEmptyUpdates, _1, _2) : bind(updateOnly, boost::ref(_ptree), ignoreEmptyUpdates, _1, _2));
+  }
+
+  int BoostPropertyTreeImplementation::getXmlReadOptions() {
+    int options = 0;
+    if (BoostPropertyTree::isHumanReadableInputOutput()) { options |= boost::property_tree::xml_parser::trim_whitespace; }
+    if (BoostPropertyTree::isIgnoreComments()) { options |= boost::property_tree::xml_parser::no_comments; }
+    return options;
   }
 } // namespace sm

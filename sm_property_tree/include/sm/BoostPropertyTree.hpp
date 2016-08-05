@@ -87,14 +87,22 @@ namespace sm {
     static bool isHumanReadableInputOutput() {
       return humanReadableInputOutput;
     }
+    static bool isIgnoreComments() {
+      return ignoreComments;
+    }
 
     static void setHumanReadableInputOutput(bool humanReadableInputOutput) {
       BoostPropertyTree::humanReadableInputOutput = humanReadableInputOutput;
     }
+    static void setIgnoreComments(bool ignoreComments) {
+      BoostPropertyTree::ignoreComments = ignoreComments;
+    }
+
   private:
     // It is important that this implementation have no members.
 
     static bool humanReadableInputOutput;
+    static bool ignoreComments;
   };
 
 
