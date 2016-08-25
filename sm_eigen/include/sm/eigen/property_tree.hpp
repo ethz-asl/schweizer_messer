@@ -7,7 +7,7 @@
 namespace sm {
     namespace eigen {
         
-        inline Eigen::Vector3d vector3FromPropertyTree(const sm::PropertyTree & config)
+        inline Eigen::Vector3d vector3FromPropertyTree(const sm::ConstPropertyTree & config)
         {
             Eigen::Vector3d rval;
             rval[0] = config.getDouble("x");
@@ -18,7 +18,7 @@ namespace sm {
         }
 
 
-        inline Eigen::Vector4d quaternionFromPropertyTree(const sm::PropertyTree & config)
+        inline Eigen::Vector4d quaternionFromPropertyTree(const sm::ConstPropertyTree & config)
         {
             Eigen::Vector4d rval;
             rval[0] = config.getDouble("x");

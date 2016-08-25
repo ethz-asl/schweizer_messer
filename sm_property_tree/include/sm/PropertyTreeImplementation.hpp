@@ -14,6 +14,7 @@ namespace sm {
 
     virtual double getDouble(const std::string & key) const = 0;
     virtual double getDouble(const std::string & key, double defaultValue) const = 0;
+    // The non-const version will call "set" if the value is not already set.
     virtual double getDouble(const std::string & key, double defaultValue) = 0;
 
     virtual int getInt(const std::string & key) const = 0;
@@ -38,8 +39,7 @@ namespace sm {
 
     virtual bool doesKeyExist(const std::string & key) const = 0;
 
-    virtual const std::vector<KeyPropertyTreePair> getChildren(const std::string & key) const = 0;
-    virtual std::vector<KeyPropertyTreePair> getChildren(const std::string & key) = 0;
+    virtual std::vector<KeyPropertyTreePair> getChildren(const std::string & key) const = 0;
   };
 
 } // namespace sm

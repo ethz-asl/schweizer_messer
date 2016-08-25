@@ -39,7 +39,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_NEAR(pt.getDouble("d/d"), 0.2, 1e-16);
       ASSERT_NEAR(pt.getDouble("/d/d"), 0.2, 1e-16);
       // Push a namespace on to the stack.
-      sm::PropertyTree dpt(pt,"d");
+      sm::ConstPropertyTree dpt(pt,"d");
       ASSERT_NEAR(dpt.getDouble("d"), 0.2, 1e-16);
       ASSERT_NEAR(dpt.getDouble("/d"), 0.1, 1e-16);
       ASSERT_NEAR(dpt.getDouble("/d/d"), 0.2, 1e-16);
@@ -49,7 +49,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getInt("i/i"), 2);
       ASSERT_EQ(pt.getInt("/i/i"), 2);
       // Push a namespace on to the stack.
-      sm::PropertyTree ipt(pt,"i");
+      sm::ConstPropertyTree ipt(pt,"i");
       ASSERT_EQ(ipt.getInt(""), 1);
       ASSERT_EQ(ipt.getInt("i"), 2);
       ASSERT_EQ(ipt.getInt("/i"), 1);
@@ -60,7 +60,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getBool("b/b"), false);
       ASSERT_EQ(pt.getBool("/b/b"), false);
       // Push a namespace on to the stack.
-      sm::PropertyTree bpt(pt,"b");
+      sm::ConstPropertyTree bpt(pt,"b");
       ASSERT_EQ(bpt.getBool(""), true);
       ASSERT_EQ(bpt.getBool("b"), false);
       ASSERT_EQ(bpt.getBool("/b"), true);
@@ -72,7 +72,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getString("s/s"), std::string("goodbye"));
       ASSERT_EQ(pt.getString("/s/s"), std::string("goodbye"));
       // Push a namespace on to the stack.
-      sm::PropertyTree spt(pt,"s");
+      sm::ConstPropertyTree spt(pt,"s");
       ASSERT_EQ(spt.getString(""), std::string("hello"));
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
@@ -103,7 +103,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       {
         std::vector<const char *> expectedKeys{"s"};
         int i = 0;
-        for (auto & c2 : sm::PropertyTree(pt, "s").getChildren()){
+        for (auto & c2 : sm::ConstPropertyTree(pt, "s").getChildren()){
           ASSERT_LT(i, expectedKeys.size());
           EXPECT_EQ(expectedKeys[i++], c2.key);
         }

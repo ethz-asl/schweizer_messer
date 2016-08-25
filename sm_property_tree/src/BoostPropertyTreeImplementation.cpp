@@ -245,12 +245,7 @@ namespace sm {
     return _ptree.end();
   }
 
-
-  const std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren(const std::string & key) const {
-    return const_cast<BoostPropertyTreeImplementation*>(this)->getChildren(key);
-  }
-
-  std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren(const std::string & key) {
+  std::vector<KeyPropertyTreePair> sm::BoostPropertyTreeImplementation::getChildren(const std::string & key) const {
     std::vector<KeyPropertyTreePair> ret;
     auto * pt = &_ptree;
     std::string k;
