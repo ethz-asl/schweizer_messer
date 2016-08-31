@@ -58,7 +58,7 @@ def logFinestNamed(name, message):
     logNamed(name, LoggingLevel.Finest, message, stackdepth=2)
     
 def logVerboseNamed(name, message):
-    logNamed(name, LoggingLevel.FineVerbose, message, stackdepth=2)
+    logNamed(name, LoggingLevel.Verbose, message, stackdepth=2)
     
 def logFinerNamed(name, message):
     logNamed(name, LoggingLevel.Finer, message, stackdepth=2)
