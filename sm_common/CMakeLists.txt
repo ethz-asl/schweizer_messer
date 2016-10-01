@@ -1,16 +1,13 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(sm_common)
 
-
 find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 find_package(Boost REQUIRED COMPONENTS system)
-
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++0x -D__STRICT_ANSI__")
-
 include_directories(${Boost_INCLUDE_DIRS})
 
+add_definitions(-Wall -std=c++0x -D__STRICT_ANSI__)
 
 cs_add_library(${PROJECT_NAME}
   src/hash_id.cpp
@@ -34,7 +31,7 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/numerical_comparisons.cpp
   test/hash_id.cpp
 )
-target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME} pthread)
+target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 
 cs_install()
 cs_export(CFG_EXTRAS export_flags.cmake)
