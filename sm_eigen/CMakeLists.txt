@@ -12,7 +12,7 @@ include_directories(${Eigen_INCLUDE_DIRS} ${Boost_INCLUDE_DIRS})
 ## Building ##
 ##############
 
-cs_add_library(${PROJECT_NAME}  
+cs_add_library(${PROJECT_NAME}
   src/random.cpp
 )
 
@@ -34,7 +34,6 @@ catkin_add_gtest(${PROJECT_NAME}-test
 if(TARGET ${PROJECT_NAME}-test)
   target_link_libraries(${PROJECT_NAME}-test 
     ${PROJECT_NAME}
-    pthread
   )
 endif()
 
