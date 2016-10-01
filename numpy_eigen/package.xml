@@ -9,10 +9,8 @@
   <buildtool_depend>catkin</buildtool_depend>
   <buildtool_depend>catkin_simple</buildtool_depend>
 
-  <build_depend>cmake_modules</build_depend>
   <build_depend>eigen_catkin</build_depend>
   <build_depend>python_module</build_depend>
   
-  <run_depend>eigen_catkin</run_depend>
   <run_depend>python_module</run_depend>
 </package>
