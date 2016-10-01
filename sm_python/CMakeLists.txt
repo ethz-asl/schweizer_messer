@@ -40,3 +40,8 @@ target_link_libraries(${PY_PROJECT_NAME} ${Boost_LIBRARIES})
 
 cs_install()
 cs_export()
+
+catkin_add_nosetests( 
+  test/Test.py
+  DEPENDENCIES ${PROJECT_NAME}
+)
