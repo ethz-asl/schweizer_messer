@@ -100,6 +100,8 @@ class TestEigen(unittest.TestCase):
         # um...
         
     def test_eigen(self):
+        if numpy_eigen.IsBroken : self.skipTest("numpy_eigen is broken (see #137)");
+
         T = generator_config.typeTags
         N = generator_config.dimTags
         for t in T:
