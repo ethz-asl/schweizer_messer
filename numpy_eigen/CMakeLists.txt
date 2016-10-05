@@ -5,24 +5,16 @@ find_package(catkin_simple REQUIRED)
 catkin_simple()
 
 find_package(Boost REQUIRED COMPONENTS system)
-
-add_definitions(${EIGEN_DEFINITIONS})
-include_directories(include ${Eigen_INCLUDE_DIRS})
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 include_directories("${PROJECT_SOURCE_DIR}/include/numpy_eigen")
-
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
-
-include_directories(include ${Boost_INCLUDE_DIRS})
 
 INCLUDE(src/autogen_files.cmake)
 add_python_export_library(${PROJECT_NAME} 
   ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_FILES}
 )
-
-target_link_libraries(${PROJECT_NAME} 
-                      ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 INCLUDE(src/autogen_test_files.cmake)
 add_python_export_library(${PROJECT_NAME}_test 

@@ -2,7 +2,7 @@
 #include <sm/MatrixArchive.hpp>
 
 void usage(const char * cmd) {
-  std::cerr << "USAGE :" << cmd << "<PATH_TO_MATRIX_ARCHIVE>" << std::endl;
+  std::cerr << "USAGE: " << cmd << " <PATH_TO_MATRIX_ARCHIVE>" << std::endl;
 }
 
 int main(int argc, char **argv) {
