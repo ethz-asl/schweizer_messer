@@ -188,9 +188,9 @@ TEST(PTreeTestSuite, testHumanReadable)
   sm::BoostPropertyTree wbpt;
 
 
-  wbpt.setDouble("a",0.1);
-  wbpt.setDouble("a/d",0.1);
-  wbpt.setDouble("a/b",0.2);
+  wbpt.setDouble("a",0.5);
+  wbpt.setDouble("a/d",1.5);
+  wbpt.setDouble("a/b",2.5);
   wbpt.setString("b","hello   "); // These spaces will get lost in a human readable XML context (see the expected value below)!
   wbpt.setString("b/h","hello");
   wbpt.setString("b/g","goodbye");
@@ -200,9 +200,9 @@ TEST(PTreeTestSuite, testHumanReadable)
   std::string expectedXml[] ={
       "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
       "<a>",
-      "\t0.1",
-      "\t<d>0.1</d>",
-      "\t<b>0.2</b>",
+      "\t0.5",
+      "\t<d>1.5</d>",
+      "\t<b>2.5</b>",
       "</a>",
       "<b>",
       "\thello   ",
