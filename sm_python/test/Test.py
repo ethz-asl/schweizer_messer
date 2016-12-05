@@ -33,7 +33,11 @@ class TestNsecTime(unittest.TestCase):
   def test_secToNsec(self):
     self.assertEqual(sm.secToNsec(1), 1.0e9)
 
+class TestPropertyTree(unittest.TestCase):
+  def test_boostpropertyTree(self):
+    bpt = sm.BoostPropertyTree()
+    bpt.setDouble("bla", 0.3)
+    self.assertEqual(bpt.getDouble("bla"), 0.3)
+
 if __name__ == '__main__':
-    import rostest
-    rostest.rosrun('sm_python', 'TestMatrixArchive', TestMatrixArchive)
-    rostest.rosrun('sm_python', 'TestNsecTime', TestNsecTime)
+    unittest.main()
