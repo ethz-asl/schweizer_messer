@@ -3,7 +3,7 @@ in robotics research requiring rapid prototyping.
 
 That's it.
 
-[![Build Status](http://129.132.38.183:8080/job/suitesparse/badge/icon)](http://129.132.38.183:8080/job/suitesparse/)
+[![Build Status](http://129.132.38.183:8080/buildStatus/icon?job=SchweizerMesser)](http://129.132.38.183:8080/job/SchweizerMesser/)
 
 If you have trouble compiling, make sure to:
 * Use gcc 4.7 ([How to install on Ubuntu 12.04](http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/))
