@@ -4,27 +4,43 @@
 
 namespace sm {
   
-  PropertyTree::PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace) : 
-    _namespace(ensureTrailingBackslash(baseNamespace)), _imp(imp)
+  ConstPropertyTree::ConstPropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace) :
+          _namespace(ensureTrailingBackslash(baseNamespace)), _imp(imp)
   {
     if(_namespace.size() > 0 && _namespace[0] != '/')
       _namespace = "/" + _namespace;
   }
-  
-  PropertyTree::PropertyTree(const PropertyTree & parent, const std::string & childNamespace) :
-     _imp(parent._imp)
+
+  ConstPropertyTree::ConstPropertyTree(const ConstPropertyTree & parent, const std::string & childNamespace) :
+         _imp(parent._imp)
   {
-      if(childNamespace.size() > 0 && childNamespace[0] == '/')
-      {
-          _namespace = ensureTrailingBackslash(childNamespace);
-      }
-      else 
-      {
-          _namespace = ensureTrailingBackslash(parent._namespace + childNamespace);
-      }
+    if(childNamespace.size() > 0 && childNamespace[0] == '/')
+    {
+      _namespace = ensureTrailingBackslash(childNamespace);
+    }
+    else
+    {
+      _namespace = ensureTrailingBackslash(parent._namespace + childNamespace);
+    }
 
     if(_namespace.size() > 0 && _namespace[0] != '/')
-      _namespace = "/" + _namespace;    
+      _namespace = "/" + _namespace;
+  }
+
+  ConstPropertyTree::~ConstPropertyTree()
+  {
+  }
+
+
+  PropertyTree::PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace) :
+    ConstPropertyTree(imp, baseNamespace)
+  {
+  }
+
+
+  PropertyTree::PropertyTree(const PropertyTree & parent, const std::string & childNamespace) :
+    ConstPropertyTree(parent, childNamespace)
+  {
   }
 
 
@@ -33,7 +49,7 @@ namespace sm {
   }
 
   // \todo This function could do more name checking.
-  std::string PropertyTree::buildQualifiedKeyName(const std::string & key) const
+  std::string ConstPropertyTree::buildQualifiedKeyName(const std::string & key) const
   {
     std::string qualifiedKeyName = !key.empty() && key[0] == '/' ? key : _namespace + key;
     if(qualifiedKeyName.size() > 1 && qualifiedKeyName.back() == '/'){
@@ -42,16 +58,16 @@ namespace sm {
     return qualifiedKeyName;
   }
 
-  double PropertyTree::getDouble(const std::string & key) const
+  double ConstPropertyTree::getDouble(const std::string & key) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
     return _imp->getDouble(buildQualifiedKeyName(key));
   }
 
-  double PropertyTree::getDouble(const std::string & key, double defaultValue) const
+  double ConstPropertyTree::getDouble(const std::string & key, double defaultValue) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
-      return _imp->getDouble(buildQualifiedKeyName(key), defaultValue);
+      return boost::const_pointer_cast<const PropertyTreeImplementation>(_imp)->getDouble(buildQualifiedKeyName(key), defaultValue);
   }
 
   double PropertyTree::getDouble(const std::string & key, double defaultValue)
@@ -60,16 +76,16 @@ namespace sm {
     return _imp->getDouble(buildQualifiedKeyName(key), defaultValue);
   }
   
-  int PropertyTree::getInt(const std::string & key) const
+  int ConstPropertyTree::getInt(const std::string & key) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
     return _imp->getInt(buildQualifiedKeyName(key));
   }
 
-  int PropertyTree::getInt(const std::string & key, int defaultValue) const
+  int ConstPropertyTree::getInt(const std::string & key, int defaultValue) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
-    return _imp->getInt(buildQualifiedKeyName(key),defaultValue);
+    return boost::const_pointer_cast<const PropertyTreeImplementation>(_imp)->getInt(buildQualifiedKeyName(key),defaultValue);
   }
 
   int PropertyTree::getInt(const std::string & key, int defaultValue)
@@ -78,16 +94,16 @@ namespace sm {
     return _imp->getInt(buildQualifiedKeyName(key),defaultValue);
   }
 
-  bool PropertyTree::getBool(const std::string & key) const
+  bool ConstPropertyTree::getBool(const std::string & key) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
     return _imp->getBool(buildQualifiedKeyName(key));
   }
 
-  bool PropertyTree::getBool(const std::string & key, bool defaultValue) const
+  bool ConstPropertyTree::getBool(const std::string & key, bool defaultValue) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
-    return _imp->getBool(buildQualifiedKeyName(key), defaultValue);
+    return boost::const_pointer_cast<const PropertyTreeImplementation>(_imp)->getBool(buildQualifiedKeyName(key), defaultValue);
   }
 
   bool PropertyTree::getBool(const std::string & key, bool defaultValue) 
@@ -96,17 +112,16 @@ namespace sm {
     return _imp->getBool(buildQualifiedKeyName(key), defaultValue);
   }
 
-  
-  std::string PropertyTree::getString(const std::string & key) const
+  std::string ConstPropertyTree::getString(const std::string & key) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
     return _imp->getString(buildQualifiedKeyName(key));
   }
 
-  std::string PropertyTree::getString(const std::string & key, const std::string & defaultValue) const
+  std::string ConstPropertyTree::getString(const std::string & key, const std::string & defaultValue) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
-    return _imp->getString(buildQualifiedKeyName(key), defaultValue);
+    return boost::const_pointer_cast<const PropertyTreeImplementation>(_imp)->getString(buildQualifiedKeyName(key), defaultValue);
   }
 
   std::string PropertyTree::getString(const std::string & key, const std::string & defaultValue) 
@@ -115,7 +130,7 @@ namespace sm {
     return _imp->getString(buildQualifiedKeyName(key), defaultValue);
   }
   
-  bool PropertyTree::doesKeyExist(const std::string & key) const
+  bool ConstPropertyTree::doesKeyExist(const std::string & key) const
   {
       SM_ASSERT_TRUE(Exception, _imp, "The implementation is NULL");
     return _imp->doesKeyExist(buildQualifiedKeyName(key));
@@ -146,11 +161,17 @@ namespace sm {
     return _imp->setString(buildQualifiedKeyName(key), value);
   }
 
-  const std::vector<KeyPropertyTreePair> PropertyTree::getChildren() const {
-    return _imp->getChildren(_namespace);
+  std::vector<ConstKeyPropertyTreePair> ConstPropertyTree::getChildren() const {
+    std::vector<ConstKeyPropertyTreePair> cchildren;
+    auto children = _imp->getChildren(_namespace);
+    cchildren.reserve(children.size());
+    for (auto & kptp : children) {
+      cchildren.push_back(ConstKeyPropertyTreePair{kptp.key, kptp.pt});
+    }
+    return cchildren;
   }
 
-  std::vector<KeyPropertyTreePair> PropertyTree::getChildren() {
+  std::vector<KeyPropertyTreePair> PropertyTree::getChildren() const {
     return _imp->getChildren(_namespace);
   }
   

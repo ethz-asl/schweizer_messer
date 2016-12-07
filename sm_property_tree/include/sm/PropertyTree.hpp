@@ -1,5 +1,5 @@
 /**
- * @file   PropertyTree.hpp
+ * @file   .hpp
  * @author Paul Furgale <paul.furgale@gmail.com>
  * @date   Tue Apr  3 09:39:01 2012
  *
@@ -19,6 +19,7 @@
 namespace sm {
   // Forward declaration.
   class PropertyTreeImplementation;
+  struct ConstKeyPropertyTreePair;
   struct KeyPropertyTreePair;
 
 
@@ -87,57 +88,88 @@ namespace sm {
    *   The classes BoostPropertyTreeImplementation and BoostPropertyTree are good examples of how to do this.
    *
    */
-  class PropertyTree
-  {
-  public:
+
+  class ConstPropertyTree {
+   public:
     SM_DEFINE_EXCEPTION(Exception, std::runtime_error);
     SM_DEFINE_EXCEPTION(InvalidKeyException, Exception);
     SM_DEFINE_EXCEPTION(InvalidValueException, Exception);
     SM_DEFINE_EXCEPTION(KeyNotFoundException, Exception);
 
-    PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace = "");
-    PropertyTree(const PropertyTree & parent, const std::string & childNamespace);
+    ConstPropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace = "");
+    ConstPropertyTree(const ConstPropertyTree & parent, const std::string & childNamespace);
+    virtual ~ConstPropertyTree();
 
-    virtual ~PropertyTree();
+    const ConstPropertyTree getChild(const std::string & childNamespace) const {
+      return ConstPropertyTree(*this, childNamespace);
+    }
 
     double getDouble(const std::string & key) const;
     double getDouble(const std::string & key, double defaultValue) const;
-    double getDouble(const std::string & key, double defaultValue);
 
     int getInt(const std::string & key) const;
     int getInt(const std::string & key, int defaultValue) const;
-    // The non-const version will call "set" if the value is not already set.
-    int getInt(const std::string & key, int defaultValue);
 
     bool getBool(const std::string & key) const;
     bool getBool(const std::string & key, bool defaultValue) const;
-    // The non-const version will call setBool if the value is not already set.
-    bool getBool(const std::string & key, bool defaultValue);
 
     std::string getString(const std::string & key) const;
     std::string getString(const std::string & key, const std::string & defaultValue) const;
+
+
+    bool doesKeyExist(const std::string & key) const;
+
+    std::vector<ConstKeyPropertyTreePair> getChildren() const;
+   protected:
+     std::string _namespace;
+     std::string buildQualifiedKeyName(const std::string & key) const;
+     boost::shared_ptr<PropertyTreeImplementation> _imp;
+  };
+
+  class PropertyTree : public ConstPropertyTree
+  {
+   public:
+    PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace = "");
+    PropertyTree(const PropertyTree & parent, const std::string & childNamespace);
+    virtual ~PropertyTree();
+
+    PropertyTree getChild(const std::string & childNamespace) const {
+      return PropertyTree(*this, childNamespace);
+    }
+
+    using ConstPropertyTree::getDouble;
+    // The non-const version will call "set" if the value is not already set.
+    double getDouble(const std::string & key, double defaultValue);
+
+    using ConstPropertyTree::getInt;
+    // The non-const version will call "set" if the value is not already set.
+    int getInt(const std::string & key, int defaultValue);
+
+    using ConstPropertyTree::getBool;
     // The non-const version will call setBool if the value is not already set.
-    std::string getString(const std::string & key, const std::string & defaultValue) ;
+    bool getBool(const std::string & key, bool defaultValue);
+
+    using ConstPropertyTree::getString;
+    // The non-const version will call setBool if the value is not already set.
+    std::string getString(const std::string & key, const std::string & defaultValue);
 
     void setDouble(const std::string & key, double value);
     void setInt(const std::string & key, int value);
     void setBool(const std::string & key, bool value) ;
     void setString(const std::string & key, const std::string & value);
 
-
-    bool doesKeyExist(const std::string & key) const;
-
-    const std::vector<KeyPropertyTreePair> getChildren() const;
-    std::vector<KeyPropertyTreePair> getChildren();
-  protected:
-    std::string _namespace;
-    std::string buildQualifiedKeyName(const std::string & key) const;
-    boost::shared_ptr<PropertyTreeImplementation> _imp;
+    using ConstPropertyTree::getChildren;
+    std::vector<KeyPropertyTreePair> getChildren() const;
   };
 
   struct KeyPropertyTreePair {
     std::string key;
     PropertyTree pt;
+  };
+
+  struct ConstKeyPropertyTreePair {
+    std::string key;
+    ConstPropertyTree pt;
   };
 
 } // namespace sm
