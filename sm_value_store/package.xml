@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>sm_value_store</name>
+  <version>0.0.0</version>
+  <description>The sm_value_store is an experimental package to experiment with the idea of an abstract source of parameters / values organized as tree. This is very similar to the PropertyTree, on which the only so far existing implementation is also based on, but a bit more abstract and with a different mutation concept : values come with a handle through which one can update the value (if supported by the backend).
+Adding new values is not supported yet.</description>
+
+  <author email="hannes.sommer@mavt.ethz.ch">Hannes Sommer</author>
+  <maintainer email="hannes.sommer@mavt.ethz.ch">Hannes Sommer</maintainer>
+  <license>New BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <depend>sm_common</depend>
+  <depend>sm_property_tree</depend>
+  <test_depend>gtest</test_depend>
+  
+</package>
