@@ -117,19 +117,15 @@ std::string BoostPropertyTreeLoader::resolveFullFilePath(const std::string& path
     }
   }
 
+  if(getFileNameInfixes().empty()) {
+    getFileNameInfixes().push_back("");
+  }
   std::string candidate;
-  for (auto& bp : getSearchPaths()) {
-    if (getFileNameInfixes().empty()) {
-      candidate = bp + "/" + path;
-      if (fileExists(candidate)) {
+  for( auto & bp : getSearchPaths()){
+    for(auto & infix : getFileNameInfixes()){
+      candidate = bp + "/" + (infix.empty() ? "" : infix + "/") + path;
+      if(boost::filesystem::exists(candidate)){
         return candidate;
-      }
-    } else {
-      for (auto& infix : getFileNameInfixes()) {
-        candidate = bp + "/" + (infix.empty() ? "" : infix + "/") + path;
-        if (fileExists(candidate)) {
-          return candidate;
-        }
       }
     }
   }
