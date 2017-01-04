@@ -208,6 +208,14 @@ namespace sm {
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
+#define SM_ASSERT_NULL(exceptionType, value, message)     \
+  if(value != nullptr)                       \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "assert(" << #value << " == NULL) failed: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
 #define SM_ASSERT_EQ(exceptionType, value, testValue, message)			\
   if((value) != (testValue))												\
     {																	\
