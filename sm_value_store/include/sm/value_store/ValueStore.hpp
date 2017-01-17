@@ -142,6 +142,9 @@ class ValueStoreRef {
   operator std::shared_ptr<ValueStore> () { return getValueStoreSharedPtr(); }
   operator ValueStore & () { return *getValueStoreSharedPtr(); }
   operator bool () const { return bool(_vs); }
+
+  /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from string using @see sm::BoostPropertyTree::loadString .
+  static ValueStoreRef fromString(const std::string & contentString);
  private:
   std::shared_ptr<ValueStore> _vs;
   friend class ExtendibleValueStoreRef;
