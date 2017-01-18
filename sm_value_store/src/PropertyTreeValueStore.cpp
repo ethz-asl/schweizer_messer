@@ -6,8 +6,7 @@
 #include <sm/assert_macros.hpp>
 #include <sm/value_store/PropertyTreeValueStore.hpp>
 #include <sm/PropertyTreeImplementation.hpp>
-
-using std::make_shared;
+#include <sm/BoostPropertyTree.hpp>
 
 namespace sm {
 namespace value_store {
@@ -212,6 +211,14 @@ class ValueStorePropertyTreeImpl : public sm::PropertyTreeImplementation {
 sm::ConstPropertyTree ValueStoreRef::asPropertyTree() const {
   return ConstPropertyTree(boost::make_shared<ValueStorePropertyTreeImpl>(*this));
 }
+
+sm::ValueStoreRef ValueStoreRef::fromString(const std::string & content){
+  sm::BoostPropertyTree pt;
+  pt.loadString(content);
+  return pt;
+}
+
+
 
 }
 }
