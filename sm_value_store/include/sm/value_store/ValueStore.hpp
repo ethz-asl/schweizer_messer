@@ -102,6 +102,8 @@ struct AccessorMap<Class, std::string> {
 
 class ValueStoreRef {
  public:
+  /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
+  ValueStoreRef();
   ValueStoreRef(ValueStore::SharedPtr spVs);
   explicit ValueStoreRef(ValueStore & vs) : _vs(ValueStore::SharedPtr(&vs, [](ValueStore*){})) {}
   ValueStoreRef(sm::PropertyTree bpt);
