@@ -6,6 +6,7 @@
 #include <unordered_map>
 
 #include <sm/assert_macros.hpp>
+#include <sm/BoostPropertyTree.hpp>
 
 namespace sm {
 namespace value_store {
@@ -142,6 +143,9 @@ std::vector<KeyValueStorePair> LayeredValueStore::getChildren() const {
 }
 
 ValueStoreRef::ValueStoreRef(sm::PropertyTree bpt) : _vs(std::make_shared<PropertyTreeValueStore>(bpt)) {
+}
+
+ValueStoreRef::ValueStoreRef() : ValueStoreRef(sm::BoostPropertyTree()){
 }
 
 ValueStoreRef::ValueStoreRef(ValueStore::SharedPtr spVs) : _vs(spVs) {
