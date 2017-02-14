@@ -258,7 +258,7 @@ struct NumpyEigenConverter
     void* storage = matData->storage.bytes;
     
     // Make sure storage is 16byte aligned. With help from code from Memory.h
-    void * aligned = reinterpret_cast<void*>((reinterpret_cast<size_t>(storage) & ~(size_t(15))) + 16);
+    void * aligned = reinterpret_cast<void*>((reinterpret_cast<size_t>(storage) & ~(size_t(15))));
     
     matrix_t * Mp = new (aligned) matrix_t();
     // Stash the memory chunk pointer for later use by boost.python
