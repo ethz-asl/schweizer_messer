@@ -77,19 +77,18 @@ namespace sm {
       }
     private:
       
-      class Point
-      {
-      public:
-	Point(const time_t & x, const time_t & y) : x(x), y(y) {}
-	// remote time
-	time_t x;
-	// local time
-	time_t y;
+      class Point {
+        public:
+          Point(const time_t & x, const time_t & y) : x(x), y(y) {}
+          // remote time
+          time_t x;
+          // local time
+          time_t y;
 
-	Point operator-(const Point & p) const { return Point(x - p.x, y - p.y); }
-	Point operator+(const Point & p) const { return Point(x + p.x, y + p.y); }
-	bool operator<(const Point & p) const { return x < p.x; }
-	bool operator<(const time_t & t) const { return x < t; }
+        Point operator-(const Point& p) const { return Point(x - p.x, y - p.y); }
+        Point operator+(const Point& p) const { return Point(x + p.x, y + p.y); }
+        bool operator<(const Point& p) const { return x < p.x; }
+        bool operator<(const time_t& t) const { return x < t; }
       };
 
       /** 
@@ -100,7 +99,7 @@ namespace sm {
        * 
        * @return true if the point is above the line.
        */
-      bool isAboveTopLine( const Point & p ) const;
+      bool isAboveTopLine(const Point& p) const;
 
       /** 
        * Is the point, p, above the line defined by the points l1 and l2?
@@ -111,7 +110,7 @@ namespace sm {
        * 
        * @return 
        */
-      bool isAboveLine( const Point & l1, const Point & l2, const Point & p ) const;
+      bool isAboveLine(const Point& l1, const Point& l2, const Point& p) const;
 
       typedef std::vector< Point > convex_hull_t;
       convex_hull_t _convexHull;
