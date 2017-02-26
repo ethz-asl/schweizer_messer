@@ -7,6 +7,9 @@
  * 
  */
 
+#ifndef SM_NSEC_TIME_UTILITIES
+#define SM_NSEC_TIME_UTILITIES
+
 #include <chrono>
 #include <boost/cstdint.hpp>
 
@@ -40,3 +43,5 @@ bool isValid(const NsecTime & time);
 
 } // namespace timing
 } // namespace sm
+
+#endif /* SM_NSEC_TIME_UTILITIES */
