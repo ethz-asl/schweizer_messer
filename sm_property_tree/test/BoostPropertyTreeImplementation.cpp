@@ -17,6 +17,17 @@ TEST(PTreeTestSuite, testBoostPTree)
   wbpt.setString("s/s","goodbye");
   wbpt.saveXml("test.xml");
 
+  EXPECT_TRUE(wbpt.doesKeyExist(""));
+  EXPECT_TRUE(wbpt.doesKeyExist("d"));
+  EXPECT_TRUE(wbpt.doesKeyExist("d/d"));
+  EXPECT_TRUE(wbpt.doesKeyExist("i"));
+  EXPECT_TRUE(wbpt.doesKeyExist("i/i"));
+  EXPECT_TRUE(wbpt.doesKeyExist("b"));
+  EXPECT_TRUE(wbpt.doesKeyExist("b/b"));
+  EXPECT_TRUE(wbpt.doesKeyExist("s"));
+  EXPECT_TRUE(wbpt.doesKeyExist("s/s"));
+  EXPECT_FALSE(wbpt.doesKeyExist("xyz"));
+
   try 
     {
       sm::BoostPropertyTree pt;
@@ -28,7 +39,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_NEAR(pt.getDouble("d/d"), 0.2, 1e-16);
       ASSERT_NEAR(pt.getDouble("/d/d"), 0.2, 1e-16);
       // Push a namespace on to the stack.
-      sm::PropertyTree dpt(pt,"d");
+      sm::ConstPropertyTree dpt(pt,"d");
       ASSERT_NEAR(dpt.getDouble("d"), 0.2, 1e-16);
       ASSERT_NEAR(dpt.getDouble("/d"), 0.1, 1e-16);
       ASSERT_NEAR(dpt.getDouble("/d/d"), 0.2, 1e-16);
@@ -38,7 +49,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getInt("i/i"), 2);
       ASSERT_EQ(pt.getInt("/i/i"), 2);
       // Push a namespace on to the stack.
-      sm::PropertyTree ipt(pt,"i");
+      sm::ConstPropertyTree ipt(pt,"i");
       ASSERT_EQ(ipt.getInt(""), 1);
       ASSERT_EQ(ipt.getInt("i"), 2);
       ASSERT_EQ(ipt.getInt("/i"), 1);
@@ -49,7 +60,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getBool("b/b"), false);
       ASSERT_EQ(pt.getBool("/b/b"), false);
       // Push a namespace on to the stack.
-      sm::PropertyTree bpt(pt,"b");
+      sm::ConstPropertyTree bpt(pt,"b");
       ASSERT_EQ(bpt.getBool(""), true);
       ASSERT_EQ(bpt.getBool("b"), false);
       ASSERT_EQ(bpt.getBool("/b"), true);
@@ -61,7 +72,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       ASSERT_EQ(pt.getString("s/s"), std::string("goodbye"));
       ASSERT_EQ(pt.getString("/s/s"), std::string("goodbye"));
       // Push a namespace on to the stack.
-      sm::PropertyTree spt(pt,"s");
+      sm::ConstPropertyTree spt(pt,"s");
       ASSERT_EQ(spt.getString(""), std::string("hello"));
       ASSERT_EQ(spt.getString("s"), std::string("goodbye"));
       ASSERT_EQ(spt.getString("/s"), std::string("hello"));
@@ -92,7 +103,7 @@ TEST(PTreeTestSuite, testBoostPTree)
       {
         std::vector<const char *> expectedKeys{"s"};
         int i = 0;
-        for (auto & c2 : sm::PropertyTree(pt, "s").getChildren()){
+        for (auto & c2 : sm::ConstPropertyTree(pt, "s").getChildren()){
           ASSERT_LT(i, expectedKeys.size());
           EXPECT_EQ(expectedKeys[i++], c2.key);
         }
@@ -177,9 +188,9 @@ TEST(PTreeTestSuite, testHumanReadable)
   sm::BoostPropertyTree wbpt;
 
 
-  wbpt.setDouble("a",0.1);
-  wbpt.setDouble("a/d",0.1);
-  wbpt.setDouble("a/b",0.2);
+  wbpt.setDouble("a",0.5);
+  wbpt.setDouble("a/d",1.5);
+  wbpt.setDouble("a/b",2.5);
   wbpt.setString("b","hello   "); // These spaces will get lost in a human readable XML context (see the expected value below)!
   wbpt.setString("b/h","hello");
   wbpt.setString("b/g","goodbye");
@@ -189,9 +200,9 @@ TEST(PTreeTestSuite, testHumanReadable)
   std::string expectedXml[] ={
       "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
       "<a>",
-      "\t0.1",
-      "\t<d>0.1</d>",
-      "\t<b>0.2</b>",
+      "\t0.5",
+      "\t<d>1.5</d>",
+      "\t<b>2.5</b>",
       "</a>",
       "<b>",
       "\thello   ",

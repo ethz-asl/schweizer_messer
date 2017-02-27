@@ -84,9 +84,9 @@ namespace sm
 #define SMCONSOLE_PRINT_STREAM_AT_LOCATION(args)                        \
     do                                                                  \
     {                                                                   \
-        ::sm::logging::vectorstream ss;                                 \
-        ss << args;                                                     \
-        ::sm::logging::g_logging_globals.print(loc._streamName.c_str(), loc._level, ss, __FILE__, __LINE__, __SMCONSOLE_FUNCTION__); \
+        ::sm::logging::vectorstream ss___;                              \
+         ss___ << args;                                                 \
+        ::sm::logging::g_logging_globals.print(loc._streamName.c_str(), loc._level, ss___, __FILE__, __LINE__, __SMCONSOLE_FUNCTION__); \
     } while (0)
 
 

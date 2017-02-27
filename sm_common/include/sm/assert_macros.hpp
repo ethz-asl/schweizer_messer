@@ -204,7 +204,15 @@ namespace sm {
   if(value == nullptr)                       \
     {                                 \
       std::stringstream sm_assert_stringstream;             \
-      sm_assert_stringstream << "assert(" << #value << " != NULL) failed [" << (value) << " != NULL]: " <<  message; \
+      sm_assert_stringstream << "assert(" << #value << " != NULL) failed: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
+#define SM_ASSERT_NULL(exceptionType, value, message)     \
+  if(value != nullptr)                       \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "assert(" << #value << " == NULL) failed: " <<  message; \
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
@@ -232,9 +240,27 @@ namespace sm {
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
+#define SM_ASSERT_FINITE(exceptionType, value, message) \
+  if(!(isfinite((value))))           \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "assert(isfinite(" << #value << ")) failed [isfinite(" << (value) << ") = false]: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
 
+#define SM_ASSERT_NOTNAN(exceptionType, value, message) \
+  if(isnan(value))           \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "assert(!isnan(" << #value << ")) failed: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
 
-#ifndef NDEBUG
+#if defined(ALWAYS_ASSERT) && !defined(SM_ALWAYS_ASSERT)
+#define SM_ALWAYS_ASSERT
+#endif
+
+#if !defined(NDEBUG) || defined(SM_ALWAYS_ASSERT)
 
 #define SM_THROW_DBG(exceptionType, message){							\
     std::stringstream sm_assert_stringstream;							\
@@ -331,7 +357,7 @@ namespace sm {
   if((value) == nullptr)                       \
     {                                 \
       std::stringstream sm_assert_stringstream;             \
-      sm_assert_stringstream << "debug assert(" << #value << " != NULL) failed [" << (value) << " != NULL]: " <<  message; \
+      sm_assert_stringstream << "debug assert(" << #value << " != NULL) failed: " <<  message; \
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
@@ -400,6 +426,22 @@ namespace sm {
       sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
     }
 
+#define SM_ASSERT_FINITE_DBG(exceptionType, value, message) \
+  if(!isfinite(value))           \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "debug assert(isfinite(" << #value << ")) failed [isfinite(" << (value) << ") = false]: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
+#define SM_ASSERT_NOTNAN_DBG(exceptionType, value, message) \
+  if(isnan(value))           \
+    {                                 \
+      std::stringstream sm_assert_stringstream;             \
+      sm_assert_stringstream << "debug assert(!isnan(" << #value << ")) failed: " <<  message; \
+      sm::detail::sm_throw_exception<exceptionType>("[" #exceptionType "] ", __FUNCTION__,__FILE__,__LINE__,sm_assert_stringstream.str()); \
+    }
+
 
 #define SM_OUT(X) std::cout << #X << ": " << (X) << std::endl
 
@@ -424,7 +466,9 @@ namespace sm {
 #define SM_ASSERT_GE_DBG(exceptionType, value, lowerBound, message)
 #define SM_ASSERT_NE_DBG(exceptionType, value, testValue, message)
 #define SM_ASSERT_EQ_DBG(exceptionType, value, testValue, message)
-#define SM_ASSERT_NEAR_DBG(exceptionType, value, testValue, abs_error, message)	
+#define SM_ASSERT_NEAR_DBG(exceptionType, value, testValue, abs_error, message)
+#define SM_ASSERT_FINITE_DBG(exceptionType, value, message)
+#define SM_ASSERT_NOTNAN_DBG(exceptionType, value, message)
 #endif
 
 

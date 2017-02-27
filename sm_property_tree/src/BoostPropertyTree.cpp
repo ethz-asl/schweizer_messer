@@ -8,6 +8,7 @@
 
 namespace sm {
   bool BoostPropertyTree::humanReadableInputOutput = false;
+  bool BoostPropertyTree::ignoreComments = true;
   
   BoostPropertyTree::BoostPropertyTree(const std::string & baseNamespace) :
     PropertyTree(boost::shared_ptr<PropertyTreeImplementation>(new BoostPropertyTreeImplementation), baseNamespace)
@@ -109,4 +110,5 @@ namespace sm {
     return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(
         *dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()), createIfNecessary, ignoreEmptyUpdates);
   }
+
 } // namespace sm

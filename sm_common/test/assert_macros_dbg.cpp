@@ -29,6 +29,8 @@ TEST(SmCommonTestSuite,testAssertMacrosDbg)
     EXPECT_NO_THROW( SM_ASSERT_NE_DBG(Exception, 0.0, 1.0, "") );
     EXPECT_NO_THROW( SM_ASSERT_EQ_DBG(Exception, 0.0, 0.0, "") );
     EXPECT_NO_THROW( SM_ASSERT_NEAR_DBG(Exception, 0.0, 1.0, 2.0, "") );
+    EXPECT_NO_THROW( SM_ASSERT_FINITE_DBG(Exception, 0.0, "") );
+    EXPECT_NO_THROW( SM_ASSERT_NOTNAN_DBG(Exception, 0.0, "") );
     delete val;
   }
   
@@ -53,5 +55,8 @@ TEST(SmCommonTestSuite,testAssertMacrosDbg)
     EXPECT_THROW( SM_ASSERT_NE_DBG(Exception, 0.0, 0.0, ""), Exception );
     EXPECT_THROW( SM_ASSERT_EQ_DBG(Exception, 1.0, 0.0, ""), Exception );
     EXPECT_THROW( SM_ASSERT_NEAR_DBG(Exception, 0.0, 1.0, 0.5, ""), Exception );
+    EXPECT_THROW( SM_ASSERT_FINITE_DBG(Exception, std::numeric_limits<float>::infinity(), ""), Exception  );
+    EXPECT_THROW( SM_ASSERT_NOTNAN_DBG(Exception, std::numeric_limits<float>::signaling_NaN(), ""), Exception  );
+
   }
 }

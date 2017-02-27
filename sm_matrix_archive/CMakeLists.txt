@@ -7,21 +7,19 @@ catkin_simple()
 find_package(Boost REQUIRED COMPONENTS system filesystem)
 
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
-include_directories(include ${Boost_INCLUDE_DIRS} ${Eigen_INCLUDE_DIRS})
+
+include_directories(include ${Boost_INCLUDE_DIRS})
 
 cs_add_library(${PROJECT_NAME}
   src/MatrixArchive.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} 
-                      ${catkin_LIBRARIES} ${Boost_LIBRARIES} pthread)
+target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 cs_add_executable(lsma 
   src/lsma.cpp
 )
-target_link_libraries(lsma ${PROJECT_NAME} ${Boost_LIBRARIES} pthread)
-
-message (STATUS CMAKE_RUNTIME_OUTPUT_DIRECTORY=${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+target_link_libraries(lsma ${PROJECT_NAME})
 
 set_target_properties(lsma
     PROPERTIES

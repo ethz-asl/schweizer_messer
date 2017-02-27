@@ -21,6 +21,7 @@ cs_add_library(${PROJECT_NAME}
   src/BoostPropertyTree.cpp
   src/PropertyTreeImplementation.cpp
   src/BoostPropertyTreeSupport.cpp
+  src/BoostPropertyTreeLoader.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

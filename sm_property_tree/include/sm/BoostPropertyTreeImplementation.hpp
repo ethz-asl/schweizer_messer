@@ -61,9 +61,10 @@ namespace sm {
     iterator end() ;
     const_iterator end() const;    
 
-    const std::vector<KeyPropertyTreePair> getChildren(const std::string & key) const;
-    std::vector<KeyPropertyTreePair> getChildren(const std::string & key);
+    std::vector<KeyPropertyTreePair> getChildren(const std::string & key) const;
   private:
+
+    static int getXmlReadOptions();
 
     template<typename T>
     T get(const std::string & key) const;

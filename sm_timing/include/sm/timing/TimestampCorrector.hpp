@@ -1,3 +1,6 @@
+#ifndef SM_TIMESTAMP_CORRECTOR
+#define SM_TIMESTAMP_CORRECTOR
+
 #include <vector>
 #include <sm/assert_macros.hpp>
 
@@ -123,3 +126,5 @@ namespace sm {
 } // namespace sm
 
 #include "implementation/TimestampCorrector.hpp"
+
+#endif /* SM_TIMESTAMP_CORRECTOR */
