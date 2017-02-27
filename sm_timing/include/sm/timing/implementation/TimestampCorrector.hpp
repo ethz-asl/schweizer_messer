@@ -18,7 +18,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(
                  "increasing remote timestamps");
   }
 
-  Point p(remoteTime, localTime);
+  const Point p(remoteTime, localTime);
 
   // If the point is not above the top line in the stack      
   if(!isAboveTopLine(p)) {
@@ -69,8 +69,8 @@ double TimestampCorrector<T>::getSlope() const {
   const Point& l1 = _convexHull[_midpointSegmentIndex];
   const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
 
-  // look up the local timestamp
-  return  double(l2.y - l1.y) / double(l2.x - l1.x); 
+  // Look up the local timestamp.
+  return  double(l2.y - l1.y) / double(l2.x - l1.x);
 }
 
 template<typename T>
@@ -79,11 +79,11 @@ double TimestampCorrector<T>::getOffset() const {
                "The timestamp correction requires at least two data points "
                "before this function can be called");
   // Get the line at the time midpoint.
-  const Point & l1 = _convexHull[_midpointSegmentIndex];
-  const Point & l2 = _convexHull[_midpointSegmentIndex + 1];
+  const Point& l1 = _convexHull[_midpointSegmentIndex];
+  const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
   
-  // look up the local timestamp
-  return  double(l1.y) + (double(-l1.x) * double(l2.y - l1.y) / double(l2.x - l1.x) ); 
+  // Look up the local timestamp.
+  return  double(l1.y) + (double(-l1.x) * double(l2.y - l1.y) / double(l2.x - l1.x) );
 }
 
   
@@ -92,26 +92,20 @@ template<typename T>
 typename TimestampCorrector<T>::time_t TimestampCorrector<T>::getLocalTime(
     const time_t& remoteTime) const {
   SM_ASSERT_GE(NotInitializedException, _convexHull.size(), 2,
-               "The timestamp correction requires at least two data"
-               " points before this funciton can be called");
+               "The timestamp correction requires at least two data "
+               "points before this funciton can be called");
 
   // Get the line at the time midpoint.
-  const Point & l1 = _convexHull[_midpointSegmentIndex];
-  const Point & l2 = _convexHull[_midpointSegmentIndex + 1];
+  const Point& l1 = _convexHull[_midpointSegmentIndex];
+  const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
 
-  // look up the local timestamp
-  const double factor_x =
-      static_cast<double>(remoteTime - l1.x) / static_cast<double>(l2.x - l1.x);
-  //std::cout << "Factor_x = " << factor_x << std::endl;
+  // Look up the local timestamp.
+  SM_ASSERT_GT(NotInitializedException, l2.x - l1.x, 0, "Division by zero not allowed.");
+  const double helper = static_cast<double>(l2.y - l1.y) / static_cast<double>(l2.x - l1.x);
   const typename TimestampCorrector<T>::time_t local_time =
       static_cast<typename TimestampCorrector<T>::time_t>(
-          static_cast<double>(l1.y + (factor_x * static_cast<double>(l2.y - l1.y))));
-  //std::cout << "Calculated " << local_time << " = " << l1.y
-  //    << " + ((" <<  remoteTime << " - " << l1.x << ") * ("
-  //    << l2.y << " - " << l1.y << ") / (" << l2.x
-  //    << " - " << l1.x << "))" << std::endl;
-  return local_time;
-}
+          static_cast<double>(l1.y) + helper * static_cast<double>(remoteTime - l1.x));
+  return local_time;}
 
 template<typename T>
 bool TimestampCorrector<T>::isAboveTopLine(const Point& p) const {
@@ -126,13 +120,12 @@ bool TimestampCorrector<T>::isAboveTopLine(const Point& p) const {
 
 template<typename T>
 bool TimestampCorrector<T>::isAboveLine(const Point & l1, const Point & l2, const Point & p) const {
-  Point v1 = l2 - l1;
-  Point v2 = p - l1;
+  const Point v1 = l2 - l1;
+  const Point v2 = p - l1;
       
-  T determinant = v1.x * v2.y - v1.y * v2.x;
-  //std::cout << "Calculated " << determinant << " = " << v1.x << "*" << v2.y << " - " << v1.y << "*" << v2.x << std::endl;
+  const T determinant = v1.x * v2.y - v1.y * v2.x;
 
-  return determinant >= 0.0;
+  return determinant >= static_cast<T>(0.0);
 }
 
 } // namespace timing
