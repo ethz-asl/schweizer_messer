@@ -65,6 +65,43 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(c
       
 }
 
+// Returns the local time
+template<typename T>
+typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(const time_t & remoteTime, const time_t & localTime, const time_t & switchingPeriod)
+{
+  if (_pendingCorrector == nullptr)
+  {
+    _pendingCorrector.reset(new TimestampCorrector<T>());
+  }
+
+  SM_ASSERT_NOTNULL(Exception, _pendingCorrector, "Pending corrector not defined yet.");
+
+  auto correctedTime = this->correctTimestamp(remoteTime, localTime);
+  _pendingCorrector->correctTimestamp(remoteTime, localTime);
+
+  if (this->span() > switchingPeriod)
+  {
+    std::swap(*_pendingCorrector, *this);
+    _pendingCorrector.reset();
+  }
+
+  return correctedTime;
+}
+
+
+template<typename T>
+typename TimestampCorrector<T>::time_t TimestampCorrector<T>::span() const
+{
+  if (this->convexHullSize() > 2)
+  {
+    return (_convexHull.back() - _convexHull.front()).x;
+  }
+  else
+  {
+    return static_cast<time_t>(0);
+  }
+}
+
 template<typename T>
 double TimestampCorrector<T>::getSlope() const {
   SM_ASSERT_GE(NotInitializedException, _convexHull.size(), 2, "The timestamp correction requires at least two data points before this funciton can be called");
