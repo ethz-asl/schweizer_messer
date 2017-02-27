@@ -67,7 +67,7 @@ namespace sm {
       
       void printHullPoints()
       {
-	for(unsigned i = 0; i < _convexHull.size(); ++i)
+	for(unsigned i = 0u; i < _convexHull.size(); ++i)
 	  {
 	    std::cout << i << "\t" << _convexHull[i].x << "\t" << _convexHull[i].y;
 	    if(i == _midpointSegmentIndex)

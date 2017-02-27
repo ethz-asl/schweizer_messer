@@ -2,7 +2,7 @@ namespace sm {
 namespace timing {
     
 template<typename T>
-TimestampCorrector<T>::TimestampCorrector() : _midpointSegmentIndex(0) {}
+TimestampCorrector<T>::TimestampCorrector() : _midpointSegmentIndex(0u) {}
 
 template<typename T>
 TimestampCorrector<T>::~TimestampCorrector() {}
@@ -23,7 +23,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(
   // If the point is not above the top line in the stack      
   if(!isAboveTopLine(p)) {
     // While on the top of the stack points are above a line between two back and the new point... 
-    while(_convexHull.size() >= 2 &&
+    while(_convexHull.size() >= 2u &&
         isAboveLine(_convexHull[_convexHull.size() - 2u], p, _convexHull[_convexHull.size() - 1u]) ) {
       _convexHull.pop_back();
     }
@@ -34,20 +34,20 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(
 
   // Update the midpoint pointer...
   if(_convexHull.size() >= 3u) {
-    T midpoint = (_convexHull[0u].x + remoteTime) / 2.0;
+    T midpoint = static_cast<T>((_convexHull[0u].x + remoteTime) / 2.0);
 	  
     typename convex_hull_t::iterator lbit = std::lower_bound(_convexHull.begin(),
                                                              _convexHull.end(), midpoint);
-    _midpointSegmentIndex = lbit - _convexHull.begin() - 1;
-    SM_ASSERT_LT_DBG(Exception, _midpointSegmentIndex, _convexHull.size() - 1,
+    _midpointSegmentIndex = lbit - _convexHull.begin() - 1u;
+    SM_ASSERT_LT_DBG(Exception, _midpointSegmentIndex, _convexHull.size() - 1u,
                      "The computed midpoint segment is out of bounds. Elements in hull: "
-                     << _convexHull.size() << ", Start time: " << _convexHull[0].x
-                     << ", End time: " << _convexHull[_convexHull.size() - 1].x
+                     << _convexHull.size() << ", Start time: " << _convexHull[0u].x
+                     << ", End time: " << _convexHull[_convexHull.size() - 1u].x
                      << ", midpoint: " << midpoint);
 
     SM_ASSERT_GE_DBG(Exception, midpoint, _convexHull[_midpointSegmentIndex].x,
                      "The computed midpoint is not within the midpoint segment");
-    SM_ASSERT_LE_DBG(Exception, midpoint, _convexHull[_midpointSegmentIndex + 1].x,
+    SM_ASSERT_LE_DBG(Exception, midpoint, _convexHull[_midpointSegmentIndex + 1u].x,
                      "The computed midpoint is not within the midpoint segment");
   }
   else {
@@ -67,7 +67,7 @@ double TimestampCorrector<T>::getSlope() const {
 
   // Get the line at the time midpoint.
   const Point& l1 = _convexHull[_midpointSegmentIndex];
-  const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
+  const Point& l2 = _convexHull[_midpointSegmentIndex + 1u];
 
   // Look up the local timestamp.
   return  double(l2.y - l1.y) / double(l2.x - l1.x);
@@ -80,7 +80,7 @@ double TimestampCorrector<T>::getOffset() const {
                "before this function can be called");
   // Get the line at the time midpoint.
   const Point& l1 = _convexHull[_midpointSegmentIndex];
-  const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
+  const Point& l2 = _convexHull[_midpointSegmentIndex + 1u];
   
   // Look up the local timestamp.
   return  double(l1.y) + (double(-l1.x) * double(l2.y - l1.y) / double(l2.x - l1.x) );
@@ -91,7 +91,7 @@ double TimestampCorrector<T>::getOffset() const {
 template<typename T>
 typename TimestampCorrector<T>::time_t TimestampCorrector<T>::getLocalTime(
     const time_t& remoteTime) const {
-  SM_ASSERT_GE(NotInitializedException, _convexHull.size(), 2,
+  SM_ASSERT_GE(NotInitializedException, _convexHull.size(), 2u,
                "The timestamp correction requires at least two data "
                "points before this funciton can be called");
 
@@ -100,7 +100,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::getLocalTime(
   const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
 
   // Look up the local timestamp.
-  SM_ASSERT_GT(NotInitializedException, l2.x - l1.x, 0, "Division by zero not allowed.");
+  SM_ASSERT_GT(NotInitializedException, l2.x - l1.x, 0u, "Division by zero not allowed.");
   const double helper = static_cast<double>(l2.y - l1.y) / static_cast<double>(l2.x - l1.x);
   const typename TimestampCorrector<T>::time_t local_time =
       static_cast<typename TimestampCorrector<T>::time_t>(
@@ -109,7 +109,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::getLocalTime(
 
 template<typename T>
 bool TimestampCorrector<T>::isAboveTopLine(const Point& p) const {
-  if(_convexHull.size() < 2) {
+  if(_convexHull.size() < 2u) {
     return true;
   }
             
