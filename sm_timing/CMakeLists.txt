@@ -20,6 +20,9 @@ cs_add_library(${PROJECT_NAME}
 )
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
+FILE(GLOB_RECURSE LibFiles "include/*")
+add_custom_target(headers SOURCES ${LibFiles})
+
 #############
 ## Testing ##
 #############

@@ -97,15 +97,14 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::getLocalTime(
 
   // Get the line at the time midpoint.
   const Point& l1 = _convexHull[_midpointSegmentIndex];
-  const Point& l2 = _convexHull[_midpointSegmentIndex + 1];
+  const Point& l2 = _convexHull[_midpointSegmentIndex + 1u];
 
   // Look up the local timestamp.
-  SM_ASSERT_GT(NotInitializedException, l2.x - l1.x, 0u, "Division by zero not allowed.");
   const double helper = static_cast<double>(l2.y - l1.y) / static_cast<double>(l2.x - l1.x);
-  const typename TimestampCorrector<T>::time_t local_time =
-      static_cast<typename TimestampCorrector<T>::time_t>(
+  const time_t local_time = static_cast<time_t>(
           static_cast<double>(l1.y) + helper * static_cast<double>(remoteTime - l1.x));
-  return local_time;}
+  return local_time;
+}
 
 template<typename T>
 bool TimestampCorrector<T>::isAboveTopLine(const Point& p) const {
