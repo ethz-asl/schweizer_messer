@@ -69,20 +69,21 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(c
 template<typename T>
 typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(const time_t & remoteTime, const time_t & localTime, const time_t & switchingPeriod)
 {
-  if (_pendingCorrector == nullptr)
-  {
+
+  auto correctedTime = correctTimestamp(remoteTime, localTime);
+  if(!_pendingCorrector && this->span() > switchingPeriod / 2){
     _pendingCorrector.reset(new TimestampCorrector<T>());
   }
-
-  SM_ASSERT_NOTNULL(Exception, _pendingCorrector, "Pending corrector not defined yet.");
-
-  auto correctedTime = this->correctTimestamp(remoteTime, localTime);
-  _pendingCorrector->correctTimestamp(remoteTime, localTime);
+  if(_pendingCorrector){
+    _pendingCorrector->correctTimestamp(remoteTime, localTime);
+  }
 
   if (this->span() > switchingPeriod)
   {
+    reset();
+    _pendingCorrector->_pendingCorrector = _pendingCorrector;
     std::swap(*_pendingCorrector, *this);
-    _pendingCorrector.reset();
+    _pendingCorrector->_pendingCorrector.reset();
   }
 
   return correctedTime;
@@ -94,7 +95,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::span() const
 {
   if (this->convexHullSize() > 2)
   {
-    return (_convexHull.back() - _convexHull.front()).x;
+    return _convexHull.back().y - _convexHull.front().y;
   }
   else
   {

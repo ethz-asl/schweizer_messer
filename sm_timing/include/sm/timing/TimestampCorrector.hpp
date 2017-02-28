@@ -94,7 +94,7 @@ namespace sm {
       /**
        * Clear the points of the convex hull
        */
-      void reset() const { _convexHull.clear(); }
+      void reset() { _convexHull.clear(); _midpointSegmentIndex = 0; }
 
       double getSlope() const;
       double getOffset() const;
