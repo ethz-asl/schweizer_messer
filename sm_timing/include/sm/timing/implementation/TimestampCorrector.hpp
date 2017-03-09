@@ -35,7 +35,7 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(
   // Update the midpoint pointer...
   if(_convexHull.size() >= 3u) {
     T midpoint = static_cast<T>((_convexHull[0u].x + remoteTime) / 2.0);
-	  
+
     typename convex_hull_t::iterator lbit = std::lower_bound(_convexHull.begin(),
                                                              _convexHull.end(), midpoint);
     _midpointSegmentIndex = lbit - _convexHull.begin() - 1u;
@@ -56,7 +56,45 @@ typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(
   }
 
   return getLocalTime(remoteTime);
-      
+
+}
+
+// Returns the local time
+template<typename T>
+typename TimestampCorrector<T>::time_t TimestampCorrector<T>::correctTimestamp(const time_t & remoteTime, const time_t & localTime, const time_t & switchingPeriod)
+{
+
+  auto correctedTime = correctTimestamp(remoteTime, localTime);
+  if(!_pendingCorrector && this->span() > switchingPeriod / 2){
+    _pendingCorrector.reset(new TimestampCorrector<T>());
+  }
+  if(_pendingCorrector){
+    _pendingCorrector->correctTimestamp(remoteTime, localTime);
+  }
+
+  if (this->span() > switchingPeriod)
+  {
+    reset();
+    _pendingCorrector->_pendingCorrector = _pendingCorrector;
+    std::swap(*_pendingCorrector, *this);
+    _pendingCorrector->_pendingCorrector.reset();
+  }
+
+  return correctedTime;
+}
+
+
+template<typename T>
+typename TimestampCorrector<T>::time_t TimestampCorrector<T>::span() const
+{
+  if (this->convexHullSize() > 2)
+  {
+    return _convexHull.back().y - _convexHull.front().y;
+  }
+  else
+  {
+    return static_cast<time_t>(0);
+  }
 }
 
 template<typename T>
@@ -111,7 +149,7 @@ bool TimestampCorrector<T>::isAboveTopLine(const Point& p) const {
   if(_convexHull.size() < 2u) {
     return true;
   }
-            
+
   return isAboveLine(_convexHull[ _convexHull.size() - 2u],
                      _convexHull[ _convexHull.size() - 1u],
                      p);
@@ -121,7 +159,7 @@ template<typename T>
 bool TimestampCorrector<T>::isAboveLine(const Point & l1, const Point & l2, const Point & p) const {
   const Point v1 = l2 - l1;
   const Point v2 = p - l1;
-      
+
   const T determinant = v1.x * v2.y - v1.y * v2.x;
 
   return determinant >= static_cast<T>(0.0);

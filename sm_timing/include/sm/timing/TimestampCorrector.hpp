@@ -2,6 +2,7 @@
 #define SM_TIMESTAMP_CORRECTOR
 
 #include <vector>
+#include <memory>
 #include <sm/assert_macros.hpp>
 
 namespace sm {
@@ -51,6 +52,26 @@ namespace sm {
       time_t correctTimestamp(const time_t & remoteTime, const time_t & localTime);
       
       /** 
+       * Get an estimate of the local time of a given measurement
+       * from the remote timestamp, the local timestamp, and the
+       * previous history of timings.
+       * In the background, this method uses two alternating timestamp correctors
+       * between which it switches to be reactive enough to local changes.
+       *
+       * NOTE: this function must be called with monotonically increasing
+       *       remote timestamps. If this is not followed, an exception will
+       *       be thrown.
+       *
+       * @param remoteTime      The time of an event on the remote clock
+       * @param localTime       The timestamp that the event was received locally
+       * @param switchingPeriod The timespan, when the algorithm switches between
+       *                        the two internal correctors
+       *
+       * @return The estimated actual local time of the event
+       */
+      time_t correctTimestamp(const time_t & remoteTime, const time_t & localTime, const time_t & switchingPeriod);
+
+      /**
        * Using the current best estimate of the relationship between
        * remote and local clocks, get the local time of a remote timestamp.
        * 
@@ -64,6 +85,16 @@ namespace sm {
        * @return The number of points in the convex hull
        */
       size_t convexHullSize() const { return _convexHull.size(); }
+
+      /**
+       * @return The timespan of the convex hull
+       */
+      time_t span() const;
+
+      /**
+       * Clear the points of the convex hull
+       */
+      void reset() { _convexHull.clear(); _midpointSegmentIndex = 0; }
 
       double getSlope() const;
       double getOffset() const;
@@ -117,6 +148,7 @@ namespace sm {
 
       typedef std::vector< Point > convex_hull_t;
       convex_hull_t _convexHull;
+      std::shared_ptr<TimestampCorrector<time_t>> _pendingCorrector;
 
       size_t _midpointSegmentIndex;
       
