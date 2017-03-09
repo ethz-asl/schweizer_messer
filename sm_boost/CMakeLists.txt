@@ -14,8 +14,6 @@ include_directories(include ${Boost_INCLUDE_DIRS})
 
 cs_add_library(${PROJECT_NAME}
   src/JobQueue.cpp
-  src/portable_binary_iarchive.cpp
-  src/portable_binary_oarchive.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

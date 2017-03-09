@@ -77,12 +77,14 @@ ${SETUP_PY_TEXT}
     # The apple framework headers don't include the numpy headers for some reason.
     GET_FILENAME_COMPONENT(REAL_PYTHON_INCLUDE ${PYTHON_INCLUDE_DIRS} REALPATH)
     IF( ${REAL_PYTHON_INCLUDE} MATCHES Python.framework)
-      message("Trying to find extra headers for numpy from ${REAL_PYTHON_INCLUDE}.")
-      message("Looking in ${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy")
-      FIND_PATH(NUMPY_INCLUDE_DIR arrayobject.h
-	${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy
-	${REAL_PYTHON_INCLUDE}/numpy
-	)
+      message("Trying to find extra headers for numpy.")
+      set(NUMPY_INCLUDE_HINTS 
+        ${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy
+        ${REAL_PYTHON_INCLUDE}/numpy
+        /usr/local/lib/python2.7/site-packages/numpy/core/include/numpy
+      )
+      message("Looking in ${NUMPY_INCLUDE_HINTS}")
+      FIND_PATH(NUMPY_INCLUDE_DIR arrayobject.h ${NUMPY_INCLUDE_HINTS})
       IF(${NUMPY_INCLUDE_DIR} MATCHES NOTFOUND)
 	message("Unable to find numpy include directories: ${NUMPY_INCLUDE_DIR}")
       ELSE()
