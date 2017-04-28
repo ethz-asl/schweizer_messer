@@ -29,6 +29,9 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+    void loadJson(const boost::filesystem::path & fileName);
+    void saveJson(const boost::filesystem::path & fileName) const;
+
     void loadString(const std::string & strings);
     std::string asInfoString() const;
 

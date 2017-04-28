@@ -92,6 +92,7 @@ namespace sm {
   class ConstPropertyTree {
    public:
     SM_DEFINE_EXCEPTION(Exception, std::runtime_error);
+    SM_DEFINE_EXCEPTION(InvalidFormatException, Exception);
     SM_DEFINE_EXCEPTION(InvalidKeyException, Exception);
     SM_DEFINE_EXCEPTION(InvalidValueException, Exception);
     SM_DEFINE_EXCEPTION(KeyNotFoundException, Exception);
