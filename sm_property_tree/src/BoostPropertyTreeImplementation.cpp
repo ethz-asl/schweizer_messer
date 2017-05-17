@@ -6,7 +6,10 @@
 #include <boost/property_tree/xml_parser.hpp>
 #include <boost/property_tree/ini_parser.hpp>
 #include <boost/property_tree/info_parser.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include <boost/version.hpp>
+
+using boost::property_tree::json_parser::read_json;
 
 namespace sm {
 
@@ -95,6 +98,14 @@ namespace sm {
     boost::optional<std::string> val = _ptree.get_optional<std::string>(boost::property_tree::ptree::path_type(keyNoLeadingSlash.c_str(),'/'));
 
     return (bool)val;
+  }
+
+  void BoostPropertyTreeImplementation::loadJson(const boost::filesystem::path& fileName) {
+    boost::property_tree::read_json(fileName.string(), _ptree);
+  }
+
+  void BoostPropertyTreeImplementation::saveJson(const boost::filesystem::path& fileName) const {
+    boost::property_tree::write_json(fileName.string(), _ptree);
   }
 
 
@@ -311,4 +322,4 @@ namespace sm {
     if (BoostPropertyTree::isIgnoreComments()) { options |= boost::property_tree::xml_parser::no_comments; }
     return options;
   }
-} // namespace sm
+}  // namespace sm

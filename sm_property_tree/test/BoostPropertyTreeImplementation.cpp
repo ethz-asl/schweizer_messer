@@ -4,7 +4,6 @@
 
 TEST(PTreeTestSuite, testBoostPTree)
 {
-
   sm::BoostPropertyTree wbpt;
   
   wbpt.setDouble("d",0.1);
@@ -114,6 +113,28 @@ TEST(PTreeTestSuite, testBoostPTree)
     {
       FAIL() << "Unhandled exception: " << e.what();
     }
+}
+
+
+TEST(PTreeTestSuite, testSaveLoad)
+{
+  sm::BoostPropertyTree wbpt;
+
+  wbpt.setDouble("d/d",0.2);
+  wbpt.setInt("d/i",1);
+  wbpt.setBool("b/b", false);
+  wbpt.setString("b/s","hello");
+
+  for(const char* extension : {"xml", "json", "ini", "info"}){
+    const std::string file = std::string("test.") + extension;
+    wbpt.save(file);
+    sm::BoostPropertyTree pt;
+    pt.load(file);
+    EXPECT_NEAR(0.2, pt.getDouble("/d/d"), 1e-16);
+    EXPECT_EQ(1, pt.getInt("d/i"));
+    EXPECT_FALSE(pt.getBool("b/b"));
+    EXPECT_EQ("hello", pt.getString("b/s"));
+  }
 }
 
 TEST(PTreeTestSuite, testRootNodeValues){

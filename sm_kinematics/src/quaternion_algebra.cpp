@@ -236,7 +236,7 @@ namespace sm { namespace kinematics {
         template <typename Scalar_>
         Eigen::Matrix<Scalar_, 3, 1> quat2AxisAngle(Eigen::Matrix<Scalar_, 4, 1> const & q)
         {
-          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<Scalar_>::epsilon(), "This function is inteded for unit quternions only.");
+          SM_ASSERT_LT_DBG(std::runtime_error, fabs(q.norm() - 1), 8 * std::numeric_limits<Scalar_>::epsilon(), "This function is intended for unit quaternions only.");
           const Eigen::Matrix<Scalar_, 3, 1> a = qeps(q);
           const Scalar_ na = a.norm(), eta = qeta(q);
           Scalar_ scale;

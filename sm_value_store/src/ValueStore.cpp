@@ -16,43 +16,7 @@ ValueStoreRef ValueStoreRef::getChild(const std::string & key) const {
     return _vs->getChild(key);
   }
   else {
-    return ValueStoreRef(std::make_shared<PrefixedValueStore>(_vs, key));
-  }
-}
-
-ValueHandle<bool> PrefixedValueStore::getBool(const std::string & path, boost::optional<bool> def = boost::optional<bool>()) const {
-  return _vs->getBool(_prefix + path, def);
-}
-ValueHandle<int> PrefixedValueStore::getInt(const std::string & path, boost::optional<int> def = boost::optional<int>()) const {
-  return _vs->getInt(_prefix + path, def);
-}
-ValueHandle<double> PrefixedValueStore::getDouble(const std::string & path, boost::optional<double> def = boost::optional<double>()) const {
-  return _vs->getDouble(_prefix + path, def);
-}
-ValueHandle<std::string> PrefixedValueStore::getString(const std::string & path, boost::optional<std::string> def = boost::optional<std::string>()) const {
-  return _vs->getString(_prefix + path, def);
-}
-bool PrefixedValueStore::hasKey(const std::string& path) const {
-  return _vs->hasKey(_prefix + path);
-}
-
-KeyValueStorePair PrefixedValueStore::getChild(const std::string & key) const {
-  return KeyValueStorePair(key, std::make_shared<PrefixedValueStore>(_vs, _prefix + key));
-}
-std::vector<KeyValueStorePair> PrefixedValueStore::getChildren() const {
-  SM_THROW(std::runtime_error, "Not implemented, yet");
-}
-
-LayeredValueStore::LayeredValueStore(std::initializer_list<ValueStore *> valuestores) {
-  for(auto vs : valuestores){
-    if(vs)
-      this->add(std::shared_ptr<ValueStore>(vs, [](ValueStore*){}));
-  }
-}
-LayeredValueStore::LayeredValueStore(std::initializer_list<std::shared_ptr<ValueStore>> valuestores) {
-  for(auto vs : valuestores){
-    if(vs)
-      this->add(vs);
+    return ValueStoreRef(std::make_shared<PrefixedValueStore>(_vs, PrefixedValueStore::PrefixMode::ADD, key));
   }
 }
 

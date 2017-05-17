@@ -35,6 +35,12 @@ namespace sm {
     void loadInfo(const boost::filesystem::path & fileName);
     void saveInfo(const boost::filesystem::path & fileName) const;
 
+    void loadJson(const boost::filesystem::path & fileName);
+    void saveJson(const boost::filesystem::path & fileName) const;
+
+    void load(const boost::filesystem::path & fileName);
+    void save(const boost::filesystem::path & fileName) const;
+
     void loadXmlStr(const std::string & fileName){loadXml(fileName);}
     void saveXmlStr(const std::string & fileName) const{saveXml(fileName);}
 
@@ -43,6 +49,12 @@ namespace sm {
 
     void loadInfoStr(const std::string & fileName){loadInfo(fileName);}
     void saveInfoStr(const std::string & fileName) const{saveInfo(fileName);}
+
+    void loadJsonStr(const std::string & fileName){loadJson(fileName);}
+    void saveJsonStr(const std::string & fileName) const{saveJson(fileName);}
+
+    void loadStr(const std::string & fileName){load(fileName);}
+    void saveStr(const std::string & fileName) const{save(fileName);}
 
     std::string asInfoString() const;
 

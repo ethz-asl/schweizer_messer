@@ -13,18 +13,81 @@ namespace sm {
   BoostPropertyTree::BoostPropertyTree(const std::string & baseNamespace) :
     PropertyTree(boost::shared_ptr<PropertyTreeImplementation>(new BoostPropertyTreeImplementation), baseNamespace)
   {
-
   }
 
   BoostPropertyTree::BoostPropertyTree(const boost::property_tree::ptree& ptree, const std::string & baseNamespace) :
     PropertyTree(boost::shared_ptr<PropertyTreeImplementation>(new BoostPropertyTreeImplementation(ptree)), baseNamespace)
   {
-
   }
 
   BoostPropertyTree::~BoostPropertyTree()
   {
+  }
 
+  enum FileFormat {
+    XML,
+    INI,
+    JSON,
+    INFO,
+  };
+
+  FileFormat getFileFormatAndThrowIfUnknown(const boost::filesystem::path& fileName) {
+    auto extension = fileName.extension().string();
+    if(!extension.empty()){
+      extension = extension.substr(1);
+    }
+    if(extension == "xml"){
+      return XML;
+    } else if(extension == "ini") {
+      return INI;
+    } else if(extension == "json") {
+      return JSON;
+    } else if(extension == "info") {
+      return INFO;
+    }
+    throw PropertyTree::InvalidFormatException("File " + fileName.string() + " has unknown format (extension=" + extension + " not in {ini,json,xml})!");
+  }
+  
+  void sm::BoostPropertyTree::load(const boost::filesystem::path& fileName) {
+    switch(getFileFormatAndThrowIfUnknown(fileName)){
+      case XML:
+        loadXml(fileName);
+        break;
+      case INI:
+        loadIni(fileName);
+        break;
+      case JSON:
+        loadJson(fileName);
+        break;
+      case INFO:
+        loadInfo(fileName);
+        break;
+    }
+  }
+
+  void sm::BoostPropertyTree::save(const boost::filesystem::path& fileName) const {
+    switch(getFileFormatAndThrowIfUnknown(fileName)){
+      case XML:
+        saveXml(fileName);
+        break;
+      case INI:
+        saveIni(fileName);
+        break;
+      case JSON:
+        saveJson(fileName);
+        break;
+      case INFO:
+        saveInfo(fileName);
+        break;
+    }
+  }
+
+  void sm::BoostPropertyTree::loadJson(const boost::filesystem::path& fileName) {
+    dynamic_cast<BoostPropertyTreeImplementation*>(_imp.get())->loadJson(fileName);
+  }
+
+  void sm::BoostPropertyTree::saveJson(const boost::filesystem::path& fileName) const {
+    dynamic_cast<const BoostPropertyTreeImplementation*>(_imp.get())->saveJson(fileName);
   }
 
   void BoostPropertyTree::loadXml(const boost::filesystem::path & fileName)
@@ -110,5 +173,4 @@ namespace sm {
     return dynamic_cast< BoostPropertyTreeImplementation*>(_imp.get())->update(
         *dynamic_cast<const BoostPropertyTreeImplementation*>(with._imp.get()), createIfNecessary, ignoreEmptyUpdates);
   }
-
-} // namespace sm
+}  // namespace sm
