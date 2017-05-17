@@ -9,8 +9,11 @@ namespace value_store {
 
 class PrefixedValueStore : public ValueStore {
  public:
-  PrefixedValueStore(ValueStore::SharedPtr vs, const std::string & prefix) : _vs(vs), _prefix(prefix + "/") {}
-  PrefixedValueStore(ValueStore & vs, const std::string & prefix) : _vs(std::shared_ptr<ValueStore>(&vs, [](ValueStore *){})), _prefix(prefix + "/") {}
+  enum class PrefixMode {
+    ADD, REMOVE
+  };
+  PrefixedValueStore(ValueStore::SharedPtr vs, PrefixMode mode, const std::string & prefix) : vs_(vs), prefix_(prefix + "/"), mode_(mode) {}
+  PrefixedValueStore(const ValueStoreRef & vs, PrefixMode mode, const std::string & prefix) : PrefixedValueStore(vs.getValueStoreSharedPtr(), mode, prefix){}
 
   virtual ValueHandle<bool> getBool(const std::string & path, boost::optional<bool> def) const override;
   virtual ValueHandle<int> getInt(const std::string & path, boost::optional<int> def) const override;
@@ -21,9 +24,12 @@ class PrefixedValueStore : public ValueStore {
 
   virtual KeyValueStorePair getChild(const std::string & key) const override;
   virtual std::vector<KeyValueStorePair> getChildren() const override;
+  virtual bool isChildSupported() const override;
  private:
-  ValueStore::SharedPtr _vs;
-  std::string _prefix;
+  std::string applyPrefix(const std::string & path, bool* isPossiblePtr = nullptr) const;
+  ValueStore::SharedPtr vs_;
+  std::string prefix_;
+  const PrefixMode mode_;
 };
 
 }

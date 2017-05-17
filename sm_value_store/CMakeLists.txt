@@ -7,6 +7,8 @@ catkin_simple()
 
 cs_add_library(${PROJECT_NAME}
   src/ValueStore.cpp
+  src/VerboseValueStore.cpp
+  src/PrefixedValueStore.cpp
   src/PropertyTreeValueStore.cpp
 )
 
