@@ -105,6 +105,7 @@ class ValueStoreRef {
   /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
   ValueStoreRef();
   ValueStoreRef(ValueStore::SharedPtr spVs);
+  explicit ValueStoreRef(ValueStore * vsPtr) : _vs(ValueStore::SharedPtr(vsPtr)) {}
   explicit ValueStoreRef(ValueStore & vs) : _vs(ValueStore::SharedPtr(&vs, [](ValueStore*){})) {}
   ValueStoreRef(sm::PropertyTree bpt);
 
@@ -138,8 +139,7 @@ class ValueStoreRef {
 
   std::vector<KeyValueStorePair> getChildren() const { return _vs->getChildren(); }
 
-  std::shared_ptr<ValueStore> getValueStoreSharedPtr() { return _vs; }
-  std::shared_ptr<const ValueStore> getValueStoreSharedPtr() const { return std::const_pointer_cast<const ValueStore>(_vs); }
+  std::shared_ptr<ValueStore> getValueStoreSharedPtr() const { return _vs; }
 
   operator std::shared_ptr<ValueStore> () { return getValueStoreSharedPtr(); }
   operator ValueStore & () { return *getValueStoreSharedPtr(); }
