@@ -13,7 +13,8 @@ std::vector<std::string> splitCommaSeparatedList(const std::string& commaSeparat
   return strs;
 }
 
-struct UpdateablePropertyTree {
+class UpdateablePropertyTree {
+ public:
   sm::BoostPropertyTree pt;
   bool confIsSet = false;
   BoostPropertyTreeLoader & ptl;
