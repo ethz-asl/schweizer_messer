@@ -43,19 +43,6 @@ std::vector<KeyValueStorePair> PrefixedValueStore::getChildren() const {
   SM_THROW(std::runtime_error, "Not implemented, yet");
 }
 
-LayeredValueStore::LayeredValueStore(std::initializer_list<ValueStore *> valuestores) {
-  for(auto vs : valuestores){
-    if(vs)
-      this->add(std::shared_ptr<ValueStore>(vs, [](ValueStore*){}));
-  }
-}
-LayeredValueStore::LayeredValueStore(std::initializer_list<std::shared_ptr<ValueStore>> valuestores) {
-  for(auto vs : valuestores){
-    if(vs)
-      this->add(vs);
-  }
-}
-
 ValueHandle<bool> LayeredValueStore::getBool(const std::string & path, boost::optional<bool> def) const {
  return getFromLayers<bool, &ValueStore::getBool>(path, def);
 }
