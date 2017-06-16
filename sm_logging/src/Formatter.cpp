@@ -1,5 +1,12 @@
 #include <sm/logging/Formatter.hpp>
 
+#if ! defined __GLIBCXX__  || __GLIBCXX__ > 20150426
+#include <regex>
+#else
+#include <boost/regex.hpp>
+#define USE_BOOST_REGEX
+#endif
+
 namespace sm {
     namespace logging {
         
@@ -48,15 +55,25 @@ namespace sm {
                 {
                     format_ = fmt;
 
-                    boost::regex e("\\$\\{([a-z|A-Z]+)\\}");
-                    boost::match_results<std::string::const_iterator> results;
+#ifndef USE_BOOST_REGEX
+                    std::regex FormatterFormatGroupPattern("\\$\\{([a-zA-Z]+)\\}", std::regex::egrep);
+                    using std::match_results;
+                    using std::regex_search;
+#else
+                    boost::regex FormatterFormatGroupPattern("\\$\\{([a-z|A-Z]+)\\}");
+                    using boost::match_results;
+                    using boost::regex_search;
+#endif
+
+
+                    match_results<std::string::const_iterator> results;
                     std::string::const_iterator start, end;
                     start = format_.begin();
                     end = format_.end();
                     bool matched_once = false;
                     std::string last_suffix;
                     tokens_.clear();
-                    while (boost::regex_search(start, end, results, e))
+                    while (regex_search(start, end, results, FormatterFormatGroupPattern))
                     {
 #if 0
                         for (size_t i = 0; i < results.size(); ++i)
