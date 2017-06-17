@@ -3,7 +3,6 @@
 
 #include "Tokens.hpp"
 #include "LoggingEvent.hpp"
-#include <boost/regex.hpp>
 
 namespace sm {
     namespace logging {
