@@ -56,7 +56,7 @@ namespace sm {
                     format_ = fmt;
 
 #ifndef USE_BOOST_REGEX
-                    std::regex FormatterFormatGroupPattern("\\$\\{([a-zA-Z]+)\\}", std::regex::egrep);
+                    std::regex FormatterFormatGroupPattern("\\$\\{([a-zA-Z]+)[}]", std::regex::egrep); // The [}] is a workaround for a bug in at least libstdc++ 5.4 that throws on "\\}" (BUT not on "\\{").
                     using std::match_results;
                     using std::regex_search;
 #else
