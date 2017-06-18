@@ -13,13 +13,13 @@ class TestLogger : public sm::logging::StdOutLogger {
   virtual ~TestLogger() { }
   std::string string() { std::string str = _str; _str.clear(); return str; }
  protected:
-  virtual void logImplementation(const sm::logging::LoggingEvent & event) override {
+  void logImplementation(const sm::logging::LoggingEvent & event) override {
     std::ostringstream os;
     os << std::setprecision(6);
     formatter.print(event, os);
     _str = os.str();
   }
-  virtual Time currentTimeImplementation() const {
+  Time currentTimeImplementation() const override {
     return Time();
   }
  private:

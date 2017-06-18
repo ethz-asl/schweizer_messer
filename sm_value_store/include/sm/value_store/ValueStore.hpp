@@ -184,7 +184,7 @@ class ExtendibleValueStore : public ValueStore {
   virtual ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const = 0;
   virtual std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const = 0;
 
-  virtual ~ExtendibleValueStore(){}
+  ~ExtendibleValueStore() override{}
 };
 
 
