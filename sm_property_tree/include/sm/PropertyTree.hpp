@@ -132,7 +132,7 @@ namespace sm {
    public:
     PropertyTree(boost::shared_ptr<PropertyTreeImplementation> imp, const std::string & baseNamespace = "");
     PropertyTree(const PropertyTree & parent, const std::string & childNamespace);
-    virtual ~PropertyTree();
+    ~PropertyTree() override;
 
     PropertyTree getChild(const std::string & childNamespace) const {
       return PropertyTree(*this, childNamespace);
