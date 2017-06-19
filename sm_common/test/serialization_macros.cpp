@@ -18,7 +18,7 @@ class PolyDerived : public PolyBase {
   int key_;
   double value_;
  public:
-  virtual ~PolyDerived(){};
+  ~PolyDerived() override{};
  void setRandom() {
    key_ = rand();
    value_ = static_cast<double>(rand()) / RAND_MAX;

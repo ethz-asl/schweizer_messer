@@ -40,10 +40,10 @@ namespace sm {
             FixedToken(const std::string& str)
                 : str_(str)
                 {}
-            virtual ~FixedToken() {
+            ~FixedToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent&)
+            std::string getString(const ::sm::logging::LoggingEvent&) override
                 {
                     return str_.c_str();
                 }
@@ -56,10 +56,10 @@ namespace sm {
             FixedMapToken(const std::string& str, std::map<std::string, std::string> & smap)
                 : str_(str), smap_(smap)
                 {}
-            virtual ~FixedMapToken() {
+            ~FixedMapToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent&)
+            std::string getString(const ::sm::logging::LoggingEvent&) override
                 {
                     std::map<std::string, std::string>::iterator it = smap_.find(str_);
                     if (it == smap_.end())
@@ -77,10 +77,10 @@ namespace sm {
 
         struct PlaceHolderToken : public Token
         {
-            virtual ~PlaceHolderToken() {
+            ~PlaceHolderToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent&)
+            std::string getString(const ::sm::logging::LoggingEvent&) override
                 {
                     return "PLACEHOLDER";
                 }
@@ -88,10 +88,10 @@ namespace sm {
 
         struct SeverityToken : public Token
         {
-            virtual ~SeverityToken() {
+            ~SeverityToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     if (event.level == SMCONSOLE_SEVERITY_FATAL)
                     {
@@ -144,10 +144,10 @@ namespace sm {
 
         struct MessageToken : public Token
         {
-            virtual ~MessageToken() {
+            ~MessageToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     // \todo Does this still work on Windows?
 // #ifdef _MSC_VER
@@ -162,10 +162,10 @@ namespace sm {
 
         struct StreamNameToken : public Token
         {
-            virtual ~StreamNameToken() {
+            ~StreamNameToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     return event.streamName;
                 }
@@ -174,10 +174,10 @@ namespace sm {
     
         struct TimeToken : public Token
         {
-            virtual ~TimeToken() {
+            ~TimeToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent&e)
+            std::string getString(const ::sm::logging::LoggingEvent&e) override
                 {
                     return e.timestring;
                 }
@@ -185,10 +185,10 @@ namespace sm {
 
         struct ThreadToken : public Token
         {
-            virtual ~ThreadToken() {
+            ~ThreadToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent&)
+            std::string getString(const ::sm::logging::LoggingEvent&) override
                 {
                     std::stringstream ss;
                     ss << boost::this_thread::get_id();
@@ -198,10 +198,10 @@ namespace sm {
 
         struct FileToken : public Token
         {
-            virtual ~FileToken() {
+            ~FileToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     return event.file;
                 }
@@ -209,10 +209,10 @@ namespace sm {
 
         struct FunctionToken : public Token
         {
-            virtual ~FunctionToken() {
+            ~FunctionToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     return event.function;
                 }
@@ -220,10 +220,10 @@ namespace sm {
 
         struct LineToken : public Token
         {
-            virtual ~LineToken() {
+            ~LineToken() override {
 
             }
-            virtual std::string getString(const ::sm::logging::LoggingEvent& event)
+            std::string getString(const ::sm::logging::LoggingEvent& event) override
                 {
                     std::stringstream ss;
                     ss << event.line;
