@@ -49,7 +49,7 @@ namespace sm {
       /// Assignment operator
       EulerAnglesZXY& operator = (const EulerAnglesZXY& other);
       /// Destructor
-      virtual ~EulerAnglesZXY();
+      ~EulerAnglesZXY() override;
       /** @}
         */
 
@@ -57,18 +57,18 @@ namespace sm {
         @{
         */
       /// Returns the rotation matrix associated with the input parameters
-      virtual Eigen::Matrix3d parametersToRotationMatrix(const Eigen::Vector3d&
-        parameters, Eigen::Matrix3d * S = NULL) const;
+      Eigen::Matrix3d parametersToRotationMatrix(const Eigen::Vector3d&
+        parameters, Eigen::Matrix3d * S = NULL) const override;
       /// Returns the parameters associated with the input rotation matrix
-      virtual Eigen::Vector3d rotationMatrixToParameters(const Eigen::Matrix3d&
-        rotationMatrix) const;
+      Eigen::Vector3d rotationMatrixToParameters(const Eigen::Matrix3d&
+        rotationMatrix) const override;
       /// Returns the "S"-matrix associated to the input parameters
-      virtual Eigen::Matrix3d parametersToSMatrix(const Eigen::Vector3d&
-        parameters) const;
+      Eigen::Matrix3d parametersToSMatrix(const Eigen::Vector3d&
+        parameters) const override;
       /// Returns the angular velocity for given input parameters and derivative
-      virtual Eigen::Vector3d angularVelocityAndJacobian(const Eigen::Vector3d&
+      Eigen::Vector3d angularVelocityAndJacobian(const Eigen::Vector3d&
         p, const Eigen::Vector3d& pdot,
-        Eigen::Matrix<double, 3, 6>* Jacobian = NULL) const;
+        Eigen::Matrix<double, 3, 6>* Jacobian = NULL) const override;
       /** @}
         */
 

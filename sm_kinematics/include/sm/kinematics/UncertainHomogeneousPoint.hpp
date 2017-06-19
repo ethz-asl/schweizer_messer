@@ -37,7 +37,7 @@ namespace sm {
       /// out of Gauss-Newton
       UncertainHomogeneousPoint(const HomogeneousPoint & p, const Eigen::Matrix3d & Uav);
 
-      virtual ~UncertainHomogeneousPoint();
+      ~UncertainHomogeneousPoint() override;
 
       /// Set a random point and uncertainty
       void setRandom();
@@ -55,12 +55,12 @@ namespace sm {
       /// \brief Add two homogeneous points. 
       /// The result of this operation is the same as adding
       /// the equivelent vectors in R^3
-      virtual UncertainHomogeneousPoint operator+(const UncertainHomogeneousPoint & rhs) const;
+      UncertainHomogeneousPoint operator+(const UncertainHomogeneousPoint & rhs) const override;
       
       /// \brief Subtract one homogeneous point from another. 
       /// The result of this operation is the same as subtracting
       /// the equivelent vectors in R^3
-      virtual UncertainHomogeneousPoint operator-(const UncertainHomogeneousPoint & rhs) const;
+      UncertainHomogeneousPoint operator-(const UncertainHomogeneousPoint & rhs) const override;
 
       
       /// \brief Return the 4x4 uncertainty of the homogeneous point.
@@ -80,7 +80,7 @@ namespace sm {
 
       /// \brief Normalize the homogeneous point so that p.transpose() * p = 1.0
       ///        This function will convert the uncertainty accordingly.
-      virtual void normalize();
+      void normalize() override;
 
 
         enum {CLASS_SERIALIZATION_VERSION = 0};

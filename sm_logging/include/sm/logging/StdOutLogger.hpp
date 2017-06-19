@@ -11,11 +11,11 @@ namespace sm {
         {
         public:
             StdOutLogger();
-            virtual ~StdOutLogger();
+            ~StdOutLogger() override;
             
             Formatter formatter;
         protected:
-            virtual void logImplementation(const LoggingEvent & event);
+            void logImplementation(const LoggingEvent & event) override;
         };
 
     } // namespace logger

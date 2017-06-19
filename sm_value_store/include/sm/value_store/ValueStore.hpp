@@ -27,10 +27,10 @@ template <typename T>
 class ConstValueHandleImpl : public ValueHandleImpl<T> {
  public:
   ConstValueHandleImpl(T v) : v(v) {}
-  virtual bool isUpdateable() const { return false; }
-  virtual void update(T /*newValue*/) { assert(false); }
-  virtual T get() const { return v; }
-  virtual ~ConstValueHandleImpl() {}
+  bool isUpdateable() const override { return false; }
+  void update(T /*newValue*/) override { assert(false); }
+  T get() const override { return v; }
+  ~ConstValueHandleImpl() override {}
  private:
   const T v;
 };

@@ -50,7 +50,7 @@ class PropertyTreeValueStoreValueHanlder : public ValueHandleImpl<T> {
     (pt.*PropertyTreeAccessorMap<PropertyTree, T>::setter)(path, newValue);
   }
   T get() const override { return (pt.*PropertyTreeAccessorMap<const PropertyTree, T>::getter)(path); }
-  virtual ~PropertyTreeValueStoreValueHanlder(){}
+  ~PropertyTreeValueStoreValueHanlder() override{}
  private:
   T value;
   std::string path;
@@ -133,66 +133,66 @@ std::vector<ExtendibleKeyValueStorePair> PropertyTreeValueStore::getExtendibleCh
 class ValueStorePropertyTreeImpl : public sm::PropertyTreeImplementation {
  public:
   ValueStorePropertyTreeImpl(const ValueStoreRef vs) : vs_(vs) {}
-  virtual ~ValueStorePropertyTreeImpl(){}
+  ~ValueStorePropertyTreeImpl() override{}
 
-  virtual double getDouble(const std::string & key) const override {
+  double getDouble(const std::string & key) const override {
     return vs_.getDouble(translateKey(key));
   }
-  virtual double getDouble(const std::string & key, double defaultValue) const override {
+  double getDouble(const std::string & key, double defaultValue) const override {
     return vs_.getDouble(translateKey(key), defaultValue);
   }
-  virtual double getDouble(const std::string & /* key */, double /* defaultValue */) override {
+  double getDouble(const std::string & /* key */, double /* defaultValue */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
 
-  virtual int getInt(const std::string & key) const override {
+  int getInt(const std::string & key) const override {
     return vs_.getInt(translateKey(key));
   }
-  virtual int getInt(const std::string & key, int defaultValue) const override {
+  int getInt(const std::string & key, int defaultValue) const override {
     return vs_.getInt(translateKey(key), defaultValue);
   }
-  virtual int getInt(const std::string & /* key */, int /* defaultValue */) override {
+  int getInt(const std::string & /* key */, int /* defaultValue */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
 
-  virtual bool getBool(const std::string & key) const override {
+  bool getBool(const std::string & key) const override {
     return vs_.getBool(translateKey(key));
   }
-  virtual bool getBool(const std::string & key, bool defaultValue) const override {
+  bool getBool(const std::string & key, bool defaultValue) const override {
     return vs_.getBool(translateKey(key), defaultValue);
   }
-  virtual bool getBool(const std::string & /* key */, bool /* defaultValue */) override {
+  bool getBool(const std::string & /* key */, bool /* defaultValue */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
 
-  virtual std::string getString(const std::string & key) const override {
+  std::string getString(const std::string & key) const override {
     return vs_.getString(translateKey(key));
   }
-  virtual std::string getString(const std::string & key, const std::string & defaultValue) const override {
+  std::string getString(const std::string & key, const std::string & defaultValue) const override {
     return vs_.getString(translateKey(key), defaultValue);
   }
-  virtual std::string getString(const std::string & /* key */, const std::string & /* defaultValue */)  override {
+  std::string getString(const std::string & /* key */, const std::string & /* defaultValue */)  override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
 
-  virtual void setDouble(const std::string & /* key */, double /* value */){
+  void setDouble(const std::string & /* key */, double /* value */) override{
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
-  virtual void setInt(const std::string & /* key */, int /* value */) override {
+  void setInt(const std::string & /* key */, int /* value */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
-  virtual void setBool(const std::string & /* key */, bool /* value */) override {
+  void setBool(const std::string & /* key */, bool /* value */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
-  virtual void setString(const std::string & /* key */, const std::string & /* value */) override {
+  void setString(const std::string & /* key */, const std::string & /* value */) override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
 
-  virtual bool doesKeyExist(const std::string & key) const override {
+  bool doesKeyExist(const std::string & key) const override {
     return vs_.hasKey(translateKey(key));
   }
 
-  virtual std::vector<KeyPropertyTreePair> getChildren(const std::string & /* key */) const override {
+  std::vector<KeyPropertyTreePair> getChildren(const std::string & /* key */) const override {
     SM_THROW(std::runtime_error, "Not implemented, yet");
   }
  private:

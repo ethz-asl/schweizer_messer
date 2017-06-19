@@ -22,16 +22,16 @@ class LayeredValueStore : public ValueStore {
   void add(const std::shared_ptr<ValueStore> & p){ if(p) valuestores.push_back(p); }
   void add(ValueStoreRef & p){ if(p) valuestores.push_back(p.getValueStoreSharedPtr()); }
 
-  virtual ValueHandle<bool> getBool(const std::string & path, boost::optional<bool> def = boost::optional<bool>()) const;
-  virtual ValueHandle<int> getInt(const std::string & path, boost::optional<int> def = boost::optional<int>()) const;
-  virtual ValueHandle<double> getDouble(const std::string & path, boost::optional<double> def = boost::optional<double>()) const;
-  virtual ValueHandle<std::string> getString(const std::string & path, boost::optional<std::string> def = boost::optional<std::string>()) const;
+  ValueHandle<bool> getBool(const std::string & path, boost::optional<bool> def = boost::optional<bool>()) const override;
+  ValueHandle<int> getInt(const std::string & path, boost::optional<int> def = boost::optional<int>()) const override;
+  ValueHandle<double> getDouble(const std::string & path, boost::optional<double> def = boost::optional<double>()) const override;
+  ValueHandle<std::string> getString(const std::string & path, boost::optional<std::string> def = boost::optional<std::string>()) const override;
 
-  virtual bool hasKey(const std::string & path) const override;
+  bool hasKey(const std::string & path) const override;
 
-  virtual bool isChildSupported() const override;
-  virtual KeyValueStorePair getChild(const std::string & key) const override;
-  virtual std::vector<KeyValueStorePair> getChildren() const override;
+  bool isChildSupported() const override;
+  KeyValueStorePair getChild(const std::string & key) const override;
+  std::vector<KeyValueStorePair> getChildren() const override;
  private:
   void add(){}
   template <typename V, ValueHandle<V> (ValueStore::* Func)(const std::string &, boost::optional<V>) const>

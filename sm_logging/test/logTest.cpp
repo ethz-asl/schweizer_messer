@@ -10,7 +10,7 @@ class TestLogger : public sm::logging::StdOutLogger {
   TestLogger() : sm::logging::StdOutLogger() {
     formatter.doColor_ = false;
   }
-  virtual ~TestLogger() { }
+  ~TestLogger() override { }
   std::string string() { std::string str = _str; _str.clear(); return str; }
  protected:
   void logImplementation(const sm::logging::LoggingEvent & event) override {
