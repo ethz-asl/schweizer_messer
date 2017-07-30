@@ -82,7 +82,8 @@ TEST(PTreeTestSuite, testBoostPTree)
         std::vector<const char *> expectedKeys{"d", "i", "b", "s"};
         int i = 0;
         for (auto & c : pt.getChildren()){
-          EXPECT_EQ(expectedKeys[i++], c.key);
+          EXPECT_EQ(expectedKeys[i], c.key);
+          i++;
           if(c.key == "d"){
             ASSERT_LT(i, expectedKeys.size());
             EXPECT_NEAR(0.2, c.pt.getDouble("d"), 1e-16);
@@ -92,7 +93,8 @@ TEST(PTreeTestSuite, testBoostPTree)
             int i = 0;
             for (auto & c2 : c.pt.getChildren()){
               ASSERT_LT(i, expectedKeys.size());
-              EXPECT_EQ(expectedKeys[i++], c2.key);
+              EXPECT_EQ(expectedKeys[i], c2.key);
+              i++;
             }
             EXPECT_EQ(expectedKeys.size(), i);
           }
@@ -104,7 +106,8 @@ TEST(PTreeTestSuite, testBoostPTree)
         int i = 0;
         for (auto & c2 : sm::ConstPropertyTree(pt, "s").getChildren()){
           ASSERT_LT(i, expectedKeys.size());
-          EXPECT_EQ(expectedKeys[i++], c2.key);
+          EXPECT_EQ(expectedKeys[i], c2.key);
+          i++;
         }
         EXPECT_EQ(expectedKeys.size(), i);
       }
