@@ -41,7 +41,8 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
     int i = 0;
     for (auto & c : dChildF.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
-      EXPECT_EQ(expectedKeys[i++], c.getKey());
+      EXPECT_EQ(expectedKeys[i], c.getKey());
+      i++;
     }
     EXPECT_EQ(expectedKeys.size(), i);
   }
@@ -50,7 +51,8 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
     int i = 0;
     for (auto & c : ddChildF.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
-      EXPECT_EQ(expectedKeys[i++], c.getKey());
+      EXPECT_EQ(expectedKeys[i], c.getKey());
+      i++;
     }
     EXPECT_EQ(expectedKeys.size(), i);
   }
@@ -59,7 +61,8 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
     int i = 0;
     for (auto & c : vpt.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
-      EXPECT_EQ(expectedKeys[i++], c.getKey());
+      EXPECT_EQ(expectedKeys[i], c.getKey());
+      i++;
       if(c.getKey() == "d"){
         EXPECT_NEAR(0.1, c.getValueStore().getDouble(""), 1e-16);
         EXPECT_NEAR(0.2, c.getValueStore().getDouble("d"), 1e-16);
@@ -67,7 +70,8 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
         int i = 0;
         for (auto & c2 : c.getChildren()){
           ASSERT_LT(i, expectedKeys.size());
-          EXPECT_EQ(expectedKeys[i++], c2.getKey());
+          EXPECT_EQ(expectedKeys[i], c2.getKey());
+          i++;
         }
         EXPECT_EQ(expectedKeys.size(), i);
       }
