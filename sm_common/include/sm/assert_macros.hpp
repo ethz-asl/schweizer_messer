@@ -93,7 +93,7 @@ namespace sm {
     }
 
 #define SM_ASSERT_FALSE(exceptionType, condition, message)				\
-  if((condition))														\
+  if(condition)														\
     {																	\
       std::stringstream sm_assert_stringstream;							\
       sm_assert_stringstream << "assert( not " << #condition << ") failed: " << message; \
