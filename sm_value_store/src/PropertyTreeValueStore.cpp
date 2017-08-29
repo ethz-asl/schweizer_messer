@@ -6,6 +6,7 @@
 #include <sm/assert_macros.hpp>
 #include <sm/value_store/PropertyTreeValueStore.hpp>
 #include <sm/PropertyTreeImplementation.hpp>
+#include <sm/BoostPropertyTreeImplementation.hpp>
 #include <sm/BoostPropertyTree.hpp>
 
 namespace sm {
@@ -218,7 +219,12 @@ sm::ValueStoreRef ValueStoreRef::fromString(const std::string & content){
   return pt;
 }
 
-
+bool PropertyTreeValueStore::isEmpty() const {
+  if(auto ptr = dynamic_cast<sm::BoostPropertyTreeImplementation*>(_imp.get())) {
+    return ptr->begin() == ptr->end();
+  }
+  return false;
+}
 
 }
 }

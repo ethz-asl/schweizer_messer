@@ -3,6 +3,21 @@
 #include <sm/value_store/LayeredValueStore.hpp>
 #include <sm/value_store/PropertyTreeValueStore.hpp>
 
+TEST(ValueStoreSuite, isEmpty)
+{
+  sm::BoostPropertyTree pt;
+
+  EXPECT_EQ(pt.begin(), pt.end()); // empty condition
+
+  sm::ExtendibleValueStoreRef vpt(pt);
+
+  EXPECT_TRUE(vpt.isEmpty());
+
+  pt.setDouble("d", 0.1);
+
+  EXPECT_FALSE(vpt.isEmpty());
+}
+
 TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
 {
   sm::BoostPropertyTree pt;
