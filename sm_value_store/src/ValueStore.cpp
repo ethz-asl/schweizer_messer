@@ -11,6 +11,11 @@
 namespace sm {
 namespace value_store {
 
+
+bool ValueStore::isEmpty() const {
+  return false;
+}
+
 ValueStoreRef ValueStoreRef::getChild(const std::string & key) const {
   if(_vs->isChildSupported()){
     return _vs->getChild(key);
@@ -124,3 +129,4 @@ ExtendibleValueStoreRef::ExtendibleValueStoreRef(sm::PropertyTree bpt) : ValueSt
 
 }
 }
+

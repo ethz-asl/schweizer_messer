@@ -29,6 +29,8 @@ class PropertyTreeValueStore : public ExtendibleValueStore, public sm::PropertyT
   ExtendibleKeyValueStorePair addChild(const std::string & key) override;
   ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const override;
   std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const override;
+
+  bool isEmpty() const override;
  private:
   template <typename T> ValueHandle<T> getFromPt(const std::string & path, boost::optional<T> def) const;
 };

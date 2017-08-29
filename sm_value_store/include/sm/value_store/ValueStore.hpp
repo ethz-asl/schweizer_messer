@@ -75,6 +75,13 @@ class ValueStore {
 
   virtual bool isChildSupported() const { return true ; }
 
+  /**
+   * Return whether the value store is empty.
+   * Default implementation is always false
+   * @return true if the value store is empty. But false is also allowed for non empty value stores.
+   */
+  virtual bool isEmpty() const;
+
   virtual ~ValueStore(){}
 };
 
@@ -120,6 +127,10 @@ class ValueStoreRef {
   }
   ValueHandle<std::string> getString(const std::string & path, boost::optional<std::string> def = boost::optional<std::string>()) const {
     return _vs->getString(path, def);
+  }
+
+  bool isEmpty() const {
+    return _vs->isEmpty();
   }
 
   bool hasKey(const std::string & path) const{
