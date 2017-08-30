@@ -158,6 +158,9 @@ class ValueStoreRef {
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from string using @see sm::BoostPropertyTree::loadString .
   static ValueStoreRef fromString(const std::string & contentString);
+
+  /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
+  static ValueStoreRef fromFile(const std::string & path);
  private:
   std::shared_ptr<ValueStore> _vs;
   friend class ExtendibleValueStoreRef;
