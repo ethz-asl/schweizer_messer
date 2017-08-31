@@ -11,6 +11,7 @@
 namespace sm {
 class ConstPropertyTree;
 class PropertyTree;
+class BoostPropertyTreeImplementation;
 
 namespace value_store {
 
@@ -161,7 +162,22 @@ class ValueStoreRef {
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
   static ValueStoreRef fromFile(const std::string & path);
+
+
+  /**
+   * Return whether saveTo() may be used.
+   * @return true iff saveTo can work (see there).
+   */
+  bool canSave() const;
+
+  /**
+   * Save to file. Currently, this only works for ValuesSoresRefs directly referring to sm::BoostPropertyTree objects (@see sm::BoostPropertyTree::save).
+   * If in doubt, use canSave() to check first.
+   */
+  void saveTo(const std::string & path) const;
  private:
+  sm::BoostPropertyTreeImplementation* getBptPtr() const;
+
   std::shared_ptr<ValueStore> _vs;
   friend class ExtendibleValueStoreRef;
 };

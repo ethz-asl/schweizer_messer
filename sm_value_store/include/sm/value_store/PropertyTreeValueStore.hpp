@@ -32,6 +32,7 @@ class PropertyTreeValueStore : public ExtendibleValueStore, public sm::PropertyT
 
   bool isEmpty() const override;
  private:
+  friend class ValueStoreRef;
   template <typename T> ValueHandle<T> getFromPt(const std::string & path, boost::optional<T> def) const;
 };
 

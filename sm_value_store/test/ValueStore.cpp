@@ -155,3 +155,35 @@ TEST(ValueStoreSuite, layeredValueStore)
   EXPECT_TRUE(lpt.hasKey("a"));
   EXPECT_EQ(0.1, lpt.getDouble("a"));
 }
+
+TEST(ValueStoreSuite, save)
+{
+  sm::BoostPropertyTree pt;
+
+  pt.setDouble("d", 0.1);
+  pt.setDouble("d/i", 10);
+  pt.setDouble("d/d", 0.2);
+  pt.setDouble("d/d/d", 0.3);
+  pt.setDouble("d/d/j", 11);
+  EXPECT_EQ(0.1, pt.getDouble("d"));
+  EXPECT_EQ(10, pt.getInt("d/i"));
+  EXPECT_EQ(0.2, pt.getDouble("d/d"));
+  EXPECT_EQ(0.3, pt.getDouble("d/d/d"));
+  EXPECT_EQ(11, pt.getInt("d/d/j"));
+  EXPECT_EQ(11, pt.getInt("d/d/j"));
+  const std::string fileName = "test.xml";
+  sm::ValueStoreRef ptVs = sm::ValueStoreRef(pt);
+  EXPECT_TRUE(ptVs.canSave());
+  ptVs.saveTo(fileName);
+  auto vpt = sm::ValueStoreRef::fromFile(fileName);
+
+  EXPECT_FALSE(vpt.hasKey("BLA"));
+  EXPECT_TRUE(vpt.hasKey("d"));
+  EXPECT_EQ(0.1, vpt.getDouble("d").get());
+  EXPECT_TRUE(vpt.hasKey("d/d"));
+  EXPECT_EQ(0.2, vpt.getDouble("d/d").get());
+  auto dChild = vpt.getValueStore().getChild("d");
+  EXPECT_EQ("d", dChild.getKey());
+  EXPECT_EQ(0.1, dChild.getValueStore().getDouble("").get());
+  EXPECT_EQ(0.2, dChild.getValueStore().getDouble("d").get());
+}

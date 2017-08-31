@@ -20,6 +20,12 @@ namespace sm {
   {
   }
 
+  BoostPropertyTree::BoostPropertyTree(const boost::shared_ptr<BoostPropertyTreeImplementation>& impl) :
+    PropertyTree(impl)
+  {
+  }
+
+
   BoostPropertyTree::~BoostPropertyTree()
   {
   }

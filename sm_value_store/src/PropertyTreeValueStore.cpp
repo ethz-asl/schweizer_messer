@@ -232,5 +232,24 @@ bool PropertyTreeValueStore::isEmpty() const {
   return false;
 }
 
+sm::BoostPropertyTreeImplementation* ValueStoreRef::getBptPtr() const {
+  sm::value_store::PropertyTreeValueStore* ptvs = dynamic_cast<PropertyTreeValueStore*>(_vs.get());
+  sm::BoostPropertyTreeImplementation* bpt = dynamic_cast<BoostPropertyTreeImplementation*>(ptvs->_imp.get());
+  return bpt;
+}
+
+bool ValueStoreRef::canSave() const {
+  return getBptPtr() != nullptr;
+}
+
+void ValueStoreRef::saveTo(const std::string& path) const {
+  auto bptPtr = getBptPtr();
+  if(!bptPtr){
+    SM_THROW(std::runtime_error, "Cannot save this value store. Check with canSave() first!");
+  }
+  boost::shared_ptr<BoostPropertyTreeImplementation> bptSharedPtr(bptPtr, [](sm::BoostPropertyTreeImplementation*) {});
+  BoostPropertyTree(bptSharedPtr).save(path);
+}
+
 }
 }
