@@ -12,6 +12,7 @@
 #include <sm/BoostPropertyTreeSupport.hpp>
 
 namespace sm {
+  class BoostPropertyTreeImplementation;
   
   class BoostPropertyTree : public PropertyTree
   {
@@ -23,6 +24,7 @@ namespace sm {
 
     BoostPropertyTree(const std::string & baseNamespace = "");
     BoostPropertyTree(const boost::property_tree::ptree& ptree, const std::string & baseNamespace = "");
+    BoostPropertyTree(const boost::shared_ptr<BoostPropertyTreeImplementation> & impl);
     ~BoostPropertyTree() override;
 
     void loadXml(const boost::filesystem::path & fileName);
