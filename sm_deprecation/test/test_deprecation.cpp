@@ -1,4 +1,4 @@
-#include <sm/Deprecation.h>
+#include <sm/deprecation.h>
 
 SM_DEPRECATED("DEP_TEST_MESSAGE") void foo();
 
