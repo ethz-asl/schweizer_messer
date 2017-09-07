@@ -29,13 +29,10 @@
 #define SMLIB_MACROS_H_INCLUDED
 
 #if defined(__GNUC__)
-#define SM_DEPRECATED __attribute__((deprecated))
 #define SM_FORCE_INLINE __attribute__((always_inline))
 #elif defined(_MSC_VER)
-#define SM_DEPRECATED
 #define SM_FORCE_INLINE __forceinline
 #else
-#define SM_DEPRECATED
 #define SM_FORCE_INLINE inline
 #endif
 
