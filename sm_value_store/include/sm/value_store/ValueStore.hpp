@@ -134,7 +134,7 @@ class ValueStoreRef {
     return _vs->isEmpty();
   }
 
-  bool hasKey(const std::string & path) const{
+  bool hasKey(const std::string & path) const {
     return _vs->hasKey(path);
   }
 
@@ -143,7 +143,7 @@ class ValueStoreRef {
     return (this->*internal::AccessorMap<ValueStoreRef, T>::getter)(path, def);
   }
 
-  ValueStore & getValueStore() { return *_vs; }
+  ValueStore & getValueStore() const { return *_vs; }
 
   ValueStoreRef getChild(const std::string & key) const;
 
@@ -153,8 +153,8 @@ class ValueStoreRef {
 
   std::shared_ptr<ValueStore> getValueStoreSharedPtr() const { return _vs; }
 
-  operator std::shared_ptr<ValueStore> () { return getValueStoreSharedPtr(); }
-  operator ValueStore & () { return *getValueStoreSharedPtr(); }
+  operator std::shared_ptr<ValueStore> () const { return getValueStoreSharedPtr(); }
+  operator ValueStore & () const { return *getValueStoreSharedPtr(); }
   operator bool () const { return bool(_vs); }
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from string using @see sm::BoostPropertyTree::loadString .
@@ -162,7 +162,6 @@ class ValueStoreRef {
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
   static ValueStoreRef fromFile(const std::string & path);
-
 
   /**
    * Return whether saveTo() may be used.

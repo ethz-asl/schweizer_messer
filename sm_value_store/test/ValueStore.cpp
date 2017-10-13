@@ -2,6 +2,7 @@
 #include <sm/BoostPropertyTree.hpp>
 #include <sm/value_store/LayeredValueStore.hpp>
 #include <sm/value_store/PropertyTreeValueStore.hpp>
+#include <sm/value_store/VerboseValueStore.hpp>
 
 TEST(ValueStoreSuite, isEmpty)
 {
@@ -144,9 +145,9 @@ TEST(ValueStoreSuite, layeredValueStore)
   pt.setDouble("d", 0.1);
   sm::BoostPropertyTree pt2;
   pt2.setDouble("a", 0.1);
+  pt2.setDouble("d", 0.2); // going to be shadowed!
   sm::value_store::ValueStoreRef vpt(pt);
   sm::value_store::ValueStoreRef vpt2(pt2);
-
   sm::value_store::ValueStoreRef lpt(std::shared_ptr<sm::value_store::LayeredValueStore>(new sm::value_store::LayeredValueStore{vpt.getValueStoreSharedPtr(), vpt2.getValueStoreSharedPtr()}));
 
   EXPECT_FALSE(lpt.hasKey("BLA"));
@@ -154,6 +155,15 @@ TEST(ValueStoreSuite, layeredValueStore)
   EXPECT_EQ(0.1, lpt.getDouble("d"));
   EXPECT_TRUE(lpt.hasKey("a"));
   EXPECT_EQ(0.1, lpt.getDouble("a"));
+
+  // update through layers:
+  lpt.getDouble("d").update(0.3);
+  lpt.getDouble("a").update(0.4);
+  EXPECT_EQ(0.3, lpt.getDouble("d"));
+  EXPECT_EQ(0.3, pt.getDouble("d"));
+  EXPECT_EQ(0.2, pt2.getDouble("d"));
+  EXPECT_EQ(0.4, lpt.getDouble("a"));
+  EXPECT_EQ(0.4, pt2.getDouble("a"));
 }
 
 TEST(ValueStoreSuite, save)
@@ -186,4 +196,47 @@ TEST(ValueStoreSuite, save)
   EXPECT_EQ("d", dChild.getKey());
   EXPECT_EQ(0.1, dChild.getValueStore().getDouble("").get());
   EXPECT_EQ(0.2, dChild.getValueStore().getDouble("d").get());
+}
+
+TEST(ValueStoreSuite, verboseValueStore)
+{
+  sm::BoostPropertyTree pt;
+
+  pt.setInt("i", 1);
+
+  const std::string fileName = "test.xml";
+  std::stringstream buffer;
+  auto logToBuffer = [&buffer](const std::string& s) {
+    buffer << s;
+  };
+  auto emptyBuffer = [&buffer]() {
+    buffer.str("");
+    buffer.clear();
+  };
+
+  sm::ValueStoreRef ptVVs = sm::ValueStoreRef(std::make_shared<sm::VerboseValueStore>(sm::ValueStoreRef(pt), logToBuffer));
+
+  EXPECT_EQ(1, ptVVs.getInt("i"));
+  EXPECT_EQ("getInt(\"i\")->1", buffer.str());
+
+  pt.setDouble("d", 0.1);
+  sm::BoostPropertyTree pt2;
+  pt2.setDouble("a", 0.1);
+  pt2.setDouble("d", 0.2); // going to be shadowed!
+  sm::value_store::ValueStoreRef vpt(pt);
+  sm::value_store::ValueStoreRef vpt2(pt2);
+  sm::value_store::ValueStoreRef lpt(std::shared_ptr<sm::value_store::LayeredValueStore>(new sm::value_store::LayeredValueStore{vpt.getValueStoreSharedPtr(), vpt2.getValueStoreSharedPtr()}));
+
+  ptVVs = sm::ValueStoreRef(std::make_shared<sm::VerboseValueStore>(sm::ValueStoreRef(lpt), logToBuffer));
+
+  emptyBuffer();
+  EXPECT_EQ(1, ptVVs.getInt("i"));
+  EXPECT_EQ("getInt(\"i\")->1", buffer.str());
+
+  emptyBuffer();
+  EXPECT_EQ(0.1, ptVVs.getDouble("d"));
+  EXPECT_EQ("getDouble(\"d\")->0.100000", buffer.str());
+  emptyBuffer();
+  EXPECT_EQ(0.1, ptVVs.getDouble("a"));
+  EXPECT_EQ("getDouble(\"a\")->0.100000", buffer.str());
 }

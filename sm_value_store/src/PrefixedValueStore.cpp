@@ -58,7 +58,7 @@ std::string PrefixedValueStore::applyPrefix(const std::string& path, bool* isPos
           *isPossiblePtr = path.size() == prefix_.size() - 1 && path + "/" == prefix_;
           return std::string();
         } else {
-          SM_THROW(std::runtime_error, "path doesn not contain the prefix (" << prefix_ << "): " << path);
+          SM_THROW(std::runtime_error, "path does not contain the prefix (" << prefix_ << "): " << path);
         }
       }
     default:
