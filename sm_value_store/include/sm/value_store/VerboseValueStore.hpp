@@ -22,9 +22,16 @@ class VerboseValueStore : public ValueStore {
   bool isChildSupported() const override;
   KeyValueStorePair getChild(const std::string & key) const override;
   std::vector<KeyValueStorePair> getChildren() const override;
+
+  std::shared_ptr<ValueStore> getUnderlyingValueStore() const {
+    return vs_;
+  }
  private:
   std::shared_ptr<ValueStore> vs_;
   std::function<void(const std::string &)> log_;
+
+  template <typename T, typename O = bool>
+  T logValue(const char * func, const std::string & path, T && v, O o = false) const;
 };
 
 }
