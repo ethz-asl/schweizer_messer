@@ -23,7 +23,6 @@ ValueHandle<std::string> PrefixedValueStore::getString(const std::string & path,
 bool PrefixedValueStore::hasKey(const std::string& path) const {
   bool isPossible;
   auto && prefixedPath = applyPrefix(path, &isPossible);
-  std::cout << "path=" << path << std::endl; // XXX: debug output of path
   return isPossible && vs_->hasKey(prefixedPath);
 }
 
