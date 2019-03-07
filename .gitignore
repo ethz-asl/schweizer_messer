@@ -77,4 +77,5 @@ lib
 *.o
 *.so
 *.pyc
+*.vscode
 log_test

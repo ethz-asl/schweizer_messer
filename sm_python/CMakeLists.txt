@@ -30,6 +30,7 @@ add_python_export_library(${PY_PROJECT_NAME} ${PY_PACKAGE_DIR}
   src/Timing.cpp
   src/exportNsecTime.cpp
   src/random.cpp
+  src/exportValueStoreRef.cpp
 )
 
 cs_install()
