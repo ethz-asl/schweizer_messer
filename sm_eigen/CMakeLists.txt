@@ -22,19 +22,15 @@ target_link_libraries(${PROJECT_NAME}
 #############
 ## Testing ##
 #############
-# Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
-add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
-
-## Add gtest based cpp test target and link libraries
-catkin_add_gtest(${PROJECT_NAME}-test 
+if(CATKIN_ENABLE_TESTING)
+catkin_add_gtest(${PROJECT_NAME}-test
   test/test_main.cpp
   test/EigenSerializationTests.cpp
   test/MatrixSqrtTest.cpp
 )
-if(TARGET ${PROJECT_NAME}-test)
-  target_link_libraries(${PROJECT_NAME}-test 
-    ${PROJECT_NAME}
-  )
+target_link_libraries(${PROJECT_NAME}-test
+  ${PROJECT_NAME}
+)
 endif()
 
 cs_install()
