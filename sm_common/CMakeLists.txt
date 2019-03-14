@@ -27,6 +27,7 @@ target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 ## Testing ##
 #############
 
+if(CATKIN_ENABLE_TESTING)
 catkin_add_gtest(${PROJECT_NAME}-test
   test/test_main.cpp
   test/assert_macros.cpp
@@ -38,6 +39,7 @@ catkin_add_gtest(${PROJECT_NAME}-test
   test/hash_id.cpp
 )
 target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+endif()
 
 cs_install()
 cs_export(CFG_EXTRAS export_flags.cmake)
