@@ -1,5 +1,4 @@
 #include <boost/python.hpp>
-#include <boost/core/noncopyable.hpp>
 
 #include <sm/PropertyTree.hpp>
 #include <sm/value_store/ValueStore.hpp>
