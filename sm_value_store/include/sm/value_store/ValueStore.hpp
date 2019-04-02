@@ -130,17 +130,35 @@ class ValueStoreRef {
     return _vs->getString(path, def);
   }
 
+  template <typename T>
+  ValueHandle<T> get(const std::string & path, boost::optional<T> def = boost::optional<T>()) const {
+    return (this->*internal::AccessorMap<ValueStoreRef, T>::getter)(path, def);
+  }
+
+  typedef std::function<void(std::string path, std::string arg)> PathAlertHandler;
+
+  /**
+  Like get(path, def) but with multiple path alternatives in \pathsWithAlerts.
+
+  It also supports calling back the \alertHandler in case a path prefixed with
+  an '!' is used.
+
+  @param pathsWithAlerts[in] contains the path alternatives possibly prefixed
+  with an '!' to indicate that the alertHandler should be called. In that case
+  the next entry of the vector is considered a special argument to the
+  \alertHandler and _not_ a path candidate.
+  */
+  template<typename T>
+  ValueHandle<T> get(const std::vector<std::string> & pathsWithAlerts, boost::optional<T> def = boost::optional<T>(), PathAlertHandler alertHandler = PathAlertHandler()) const {
+    return get<T>(findPathAndAlert(pathsWithAlerts, alertHandler), def);
+  }
+
   bool isEmpty() const {
     return _vs->isEmpty();
   }
 
   bool hasKey(const std::string & path) const {
     return _vs->hasKey(path);
-  }
-
-  template <typename T>
-  ValueHandle<T> get(const std::string & path, boost::optional<T> def = boost::optional<T>()) const {
-    return (this->*internal::AccessorMap<ValueStoreRef, T>::getter)(path, def);
   }
 
   ValueStore & getValueStore() const { return *_vs; }
@@ -176,6 +194,8 @@ class ValueStoreRef {
   void saveTo(const std::string & path) const;
  private:
   sm::BoostPropertyTreeImplementation* getBptPtr() const;
+
+  std::string findPathAndAlert(const std::vector<std::string> & pathsWithAlerts, PathAlertHandler alertHandler) const;
 
   std::shared_ptr<ValueStore> _vs;
   friend class ExtendibleValueStoreRef;

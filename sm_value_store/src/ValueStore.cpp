@@ -123,6 +123,25 @@ ValueStoreRef::ValueStoreRef(ValueStore::SharedPtr spVs) : _vs(spVs) {
   }
 }
 
+std::string ValueStoreRef::findPathAndAlert(const std::vector<std::string> & pathsAndDeprecationWarnings, PathAlertHandler alertHandler) const {
+  for(size_t i = 0; i < pathsAndDeprecationWarnings.size(); i++){
+    const std::string & p = pathsAndDeprecationWarnings[i];
+    if(!p.empty() && p[0] == '!') {
+      std::string pp = p.substr(1);
+      if (hasKey(pp)) {
+        i++; // skip deprecation message
+        alertHandler(pp, i < pathsAndDeprecationWarnings.size() ?
+            pathsAndDeprecationWarnings[i] : "");
+        return pp;
+      }
+    } else if (hasKey(p)) {
+      return p;
+    }
+  }
+  return pathsAndDeprecationWarnings.front();
+}
+
+
 ExtendibleValueStoreRef::ExtendibleValueStoreRef(sm::PropertyTree bpt) : ValueStoreRef(bpt) {
   _evs = std::static_pointer_cast<PropertyTreeValueStore>(_vs);
 }
