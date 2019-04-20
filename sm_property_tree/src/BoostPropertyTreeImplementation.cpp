@@ -200,6 +200,7 @@ namespace sm {
           if(countBraceOpen.size() <= 1){
             throw boost::property_tree::file_parser_error("Unmatched closing bracket '}' at ", string, pos);
           }
+	  /* FALLTHRU (disable -Wimplicit-fallthrough) */
         case ',':
           for(; countBraceOpen.back(); countBraceOpen.back() --){
             s << "\n}";
