@@ -20,5 +20,7 @@ if(CATKIN_ENABLE_TESTING)
     test/test_main.cpp
     test/ValueStore.cpp
   )
-  target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+  if(TARGET ${PROJECT_NAME}-test)
+    target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+  endif()
 endif()
