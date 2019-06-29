@@ -67,7 +67,11 @@ bool VerboseValueStore::isChildSupported() const {
 
 std::vector<KeyValueStorePair> VerboseValueStore::getChildren() const {
   log_(std::string(__func__) + "()");
-  return vs_->getChildren(); //TODO instrument with VerboseValueStore, too.
+  std::vector<KeyValueStorePair> verboseChildren;
+  for (const auto& c : vs_->getChildren()){
+    verboseChildren.push_back(this->getChild(c.getKey()));
+  }
+  return verboseChildren;
 }
 
 }
