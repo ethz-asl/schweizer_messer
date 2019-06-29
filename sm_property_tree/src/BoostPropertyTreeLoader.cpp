@@ -36,16 +36,20 @@ class UpdateablePropertyTree {
   }
 
   void loadConfigFileWithParents(std::string configFile, std::set<std::string> & ignore, const std::string & relativeToFile) {
+    ptl.info("Loading configuration file '" + configFile + "'"
+                + (relativeToFile.empty() ? "" : " relative to file '" + relativeToFile + "'."));
     const size_t lastIndex = configFile.size() - 1;
     const bool updateOnly = configFile[lastIndex] == '!';
     if (updateOnly) {
+      ptl.info("Only allow to updating properties because the name ends in '!'.");
       configFile = configFile.substr(0, lastIndex);
     }
 
     std::string configFileFullPath = ptl.resolveFullFilePath(configFile, relativeToFile);
+    ptl.verbose("Resolved '" + configFile + "' to '" + configFileFullPath + "'.");
 
     sm::BoostPropertyTree pt;
-    pt.loadXml(configFileFullPath);
+    pt.load(configFileFullPath);
 
     std::string parents = pt.getString("parents", "");
     if (parents.empty()) {
@@ -56,12 +60,13 @@ class UpdateablePropertyTree {
     }
 
     if (!parents.empty()) {
-      readFile(splitCommaSeparatedList(parents), ignore, configFile);
+      ptl.info("Loading parents for " + configFile + ": " + parents);
+      readFiles(splitCommaSeparatedList(parents), ignore, configFile);
     }
     updateOrSet(pt, configFileFullPath, updateOnly);
   }
 
-  void readFile(const std::vector<std::string> & configFiles, std::set<std::string> & ignore, const std::string & relativeToFile) {
+  void readFiles(const std::vector<std::string> & configFiles, std::set<std::string> & ignore, const std::string & relativeToFile) {
     for(auto configFile : configFiles) {
       if(configFile.empty()) continue;
       if(ignore.count(configFile)) continue;
@@ -81,12 +86,17 @@ void BoostPropertyTreeLoader::startingWith(const std::string& path) {
 }
 
 void BoostPropertyTreeLoader::warn(const std::string& message){
+  std::cerr << "WARNING: " << message << std::endl;
+}
+void BoostPropertyTreeLoader::info(const std::string& message){
   std::cerr << message << std::endl;
+}
+void BoostPropertyTreeLoader::verbose(const std::string&){
 }
 
 sm::BoostPropertyTree BoostPropertyTreeLoader::readFiles(const std::vector<std::string>& configFiles, std::set<std::string>& ignore) {
   UpdateablePropertyTree upt(*this);
-  upt.readFile(configFiles, ignore, "");
+  upt.readFiles(configFiles, ignore, "");
   return upt.pt;
 }
 
