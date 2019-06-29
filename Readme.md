@@ -3,7 +3,7 @@ in robotics research requiring rapid prototyping.
 
 That's it.
 
-[![Build Status](https://jenkins.asl.ethz.ch/buildStatus/icon?job=SchweizerMesser)](https://jenkins.asl.ethz.ch/job/SchweizerMesser/)
+[![Build Status](https://jenkins.asl.ethz.ch/buildStatus/icon?job=schweizer_messer)](https://jenkins.asl.ethz.ch/job/schweizer_messer/)
 
 If you have trouble compiling, make sure to:
 * Use gcc 4.7 ([How to install on Ubuntu 12.04](http://charette.no-ip.com:81/programming/2011-12-24_GCCv47/))
