@@ -29,8 +29,9 @@ class BoostPropertyTreeLoader {
  private:
   virtual void goingToMergeIn(const std::string & updatePath);
   virtual void startingWith(const std::string & path);
-  virtual void warn(const std::string & path);
-
+  virtual void warn(const std::string & message);
+  virtual void info(const std::string & message);
+  virtual void verbose(const std::string & message);
 
   sm::BoostPropertyTree readFiles(const std::vector<std::string>& configFiles, std::set<std::string>& ignore);
 
