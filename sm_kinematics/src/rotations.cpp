@@ -1,4 +1,7 @@
 #include <sm/kinematics/rotations.hpp>
+
+#include <Eigen/Geometry>
+
 #include <sm/assert_macros.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/math/special_functions/round.hpp>
@@ -131,29 +134,8 @@ namespace sm { namespace kinematics {
   }
 	
   Eigen::Vector3d R2AxisAngle(Eigen::Matrix3d const & C){
-    // Sometimes, because of roundoff error, the value of tr ends up outside
-    // the valid range of arccos. Truncate to the valid range.
-    double tr = std::max(-1.0, std::min( (C(0,0) + C(1,1) + C(2,2) - 1.0) * 0.5, 1.0));
-    double a = acos( tr ) ;
-
-    Eigen::Vector3d axis;
-
-    if(fabs(a) < 1e-10) {
-      return Eigen::Vector3d::Zero();
-    }
-		
-    axis[0] = (C(2,1) - C(1,2));
-    axis[1] = (C(0,2) - C(2,0));
-    axis[2] = (C(1,0) - C(0,1));
-    double n2 = axis.norm();
-    if(fabs(n2) < 1e-10)
-      return Eigen::Vector3d::Zero();
-		
-    double scale = -a/n2;
-    axis = scale * axis;
-
-    return axis;
-
+    auto angleAxis = Eigen::AngleAxis<double>(C);
+    return angleAxis.axis()*angleAxis.angle();
   }
 
   // Utility functions
