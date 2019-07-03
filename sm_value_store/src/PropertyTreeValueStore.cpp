@@ -234,8 +234,11 @@ bool PropertyTreeValueStore::isEmpty() const {
 
 sm::BoostPropertyTreeImplementation* ValueStoreRef::getBptPtr() const {
   sm::value_store::PropertyTreeValueStore* ptvs = dynamic_cast<PropertyTreeValueStore*>(_vs.get());
-  sm::BoostPropertyTreeImplementation* bpt = dynamic_cast<BoostPropertyTreeImplementation*>(ptvs->_imp.get());
-  return bpt;
+  if (ptvs) {
+    return dynamic_cast<BoostPropertyTreeImplementation*>(ptvs->_imp.get());
+  } else {
+    return nullptr;
+  }
 }
 
 bool ValueStoreRef::canSave() const {
