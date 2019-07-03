@@ -1,7 +1,6 @@
 #include <sm/kinematics/rotations.hpp>
 
 #include <Eigen/Geometry>
-
 #include <sm/assert_macros.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/math/special_functions/round.hpp>
@@ -134,8 +133,8 @@ namespace sm { namespace kinematics {
   }
 	
   Eigen::Vector3d R2AxisAngle(Eigen::Matrix3d const & C){
-    auto angleAxis = Eigen::AngleAxis<double>(C);
-    return angleAxis.axis()*angleAxis.angle();
+    const Eigen::AngleAxis<double> angleAxis(C);
+    return angleAxis.axis() * angleAxis.angle();
   }
 
   // Utility functions
