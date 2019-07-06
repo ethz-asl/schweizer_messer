@@ -134,7 +134,10 @@ namespace sm { namespace kinematics {
 	
   Eigen::Vector3d R2AxisAngle(Eigen::Matrix3d const & C){
     const Eigen::AngleAxis<double> angleAxis(C);
-    return angleAxis.axis() * angleAxis.angle();
+    // The negative corrects for the different conventions of this library and Eigen:
+    // Here C is assumed a passive matrix while in Eigen it is assumed active.
+    // However both libraries treat the angleAxis the same way (both active)
+    return angleAxis.axis() * (-angleAxis.angle());
   }
 
   // Utility functions
