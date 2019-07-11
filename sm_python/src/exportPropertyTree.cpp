@@ -38,6 +38,7 @@ void exportPropertyTree() {
   using namespace sm;
 
   class_<ConstPropertyTree>("ConstPropertyTree", init<const ConstPropertyTree &, const std::string &>("ConstPropertyTree(ConstPropertyTree parent, string childNamespace)"))
+      .def("getChild", &PropertyTree::getChild)
       .def("getInt", &getInt).def("getIntDefault", &getIntDefault)
       .def("getString", &getString)
       .def("getStringDefault", &getStringDefault)
@@ -46,6 +47,7 @@ void exportPropertyTree() {
       .def("doesKeyExist", &ConstPropertyTree::doesKeyExist);
 
   class_<PropertyTree, bases<ConstPropertyTree>>("PropertyTree", init<const PropertyTree &, const std::string &>("PropertyTree(PropertyTree parent, string childNamespace)"))
+      .def("getChild", &PropertyTree::getChild)
       .def("getOrCreateInt", static_cast<int(PropertyTree::*)(const std::string &, int)>(&PropertyTree::getInt))
       .def("getOrCreateString", static_cast<std::string(PropertyTree::*)(const std::string &, const std::string&)>(&PropertyTree::getString))
       .def("getOrCreatetBool", static_cast<bool(PropertyTree::*)(const std::string &, bool)>(&PropertyTree::getBool))
