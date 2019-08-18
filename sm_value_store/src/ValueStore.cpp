@@ -129,9 +129,16 @@ std::string ValueStoreRef::findPathAndAlert(const std::vector<std::string> & pat
     if(!p.empty() && p[0] == '!') {
       std::string pp = p.substr(1);
       if (hasKey(pp)) {
-        i++; // skip deprecation message
-        alertHandler(pp, i < pathsAndDeprecationWarnings.size() ?
-            pathsAndDeprecationWarnings[i] : "");
+        i++; // skip deprecation message in the input
+        std::string message = i < pathsAndDeprecationWarnings.size() ?
+            pathsAndDeprecationWarnings[i] :
+            "Property name '" + pp + "' is deprecated! Use "
+              + pathsAndDeprecationWarnings[0] + " instead.";
+        if (alertHandler) {
+          alertHandler(pp, message);
+        } else {
+          std::cerr << message << std::endl;
+        }
         return pp;
       }
     } else if (hasKey(p)) {
