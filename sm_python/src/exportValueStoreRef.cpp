@@ -36,5 +36,15 @@ void exportValueStoreRef()
     /// ValueHandle<std::string> getString(const std::string & path, boost::optional<std::string> def = boost::optional<std::string>()) const;
     .def("getString", +[](ValueStoreRef * vs, const std::string & path){return vs->getString(path).get();})
     .def("getString", +[](ValueStoreRef * vs, const std::string & path, const std::string & defaultValue){return vs->getString(path, defaultValue).get();})
+    /// ValueHandle<bool> getBool(const std::string & path).update(bool newVal) const;
+    .def("setBool", +[](ValueStoreRef * vs, const std::string & path, bool newVal){vs->getBool(path).update(newVal);})
+    /// ValueHandle<int> getInt(const std::string & path).update(int newVal) const;
+    .def("setInt", +[](ValueStoreRef * vs, const std::string & path, int newVal){vs->getInt(path).update(newVal);})
+    /// ValueHandle<double> getDouble(const std::string & path).update(double newVal) const;
+    .def("setDouble", +[](ValueStoreRef * vs, const std::string & path, double newVal){vs->getDouble(path).update(newVal);})
+    /// ValueHandle<std::string> getString(const std::string & path).update(std::string newVal) const;
+    .def("setString", +[](ValueStoreRef * vs, const std::string & path, const std::string& newVal){vs->getString(path).update(newVal);})
+    /// void saveTo(const std::string & path) const;
+    .def("saveTo", &ValueStoreRef::saveTo);
   ;
 }
