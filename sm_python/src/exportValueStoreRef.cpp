@@ -45,6 +45,8 @@ void exportValueStoreRef()
     /// ValueHandle<std::string> getString(const std::string & path).update(std::string newVal) const;
     .def("setString", +[](ValueStoreRef * vs, const std::string & path, const std::string& newVal){vs->getString(path).update(newVal);})
     /// void saveTo(const std::string & path) const;
-    .def("saveTo", &ValueStoreRef::saveTo);
+    .def("saveTo", &ValueStoreRef::saveTo)
+    /// bool hasKey(const std::string& path) const;
+    .def("hasKey", &ValueStoreRef::hasKey)
   ;
 }
