@@ -61,7 +61,7 @@ class UpdateablePropertyTree {
 
     if (!parents.empty()) {
       ptl.info("Loading parents for " + configFile + ": " + parents);
-      readFiles(splitCommaSeparatedList(parents), ignore, configFile);
+      readFiles(splitCommaSeparatedList(parents), ignore, configFileFullPath);
     }
     updateOrSet(pt, configFileFullPath, updateOnly);
   }
