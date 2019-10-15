@@ -1,4 +1,5 @@
 #include <boost/python.hpp>
+#include <boost/python/suite/indexing/vector_indexing_suite.hpp>
 
 #include <sm/PropertyTree.hpp>
 #include <sm/value_store/ValueStore.hpp>
@@ -9,6 +10,13 @@ void exportValueStoreRef()
   using namespace boost::python;
   using namespace sm::value_store;
 
+  typedef std::vector<KeyValueStorePair> ChildrenT;
+
+  class_<ChildrenT>("ChildVector")
+    .def(boost::python::vector_indexing_suite<ChildrenT>())
+    .def("__iter__", boost::python::iterator<ChildrenT>())
+  ;
+  
   /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
   class_<ValueStoreRef>("ValueStoreRef", init<>())
     .def(init<ValueStoreRef>())
@@ -16,6 +24,8 @@ void exportValueStoreRef()
     .def(init<sm::PropertyTree>())
     /// ValueStoreRef getChild(const std::string & key)
     .def("getChild", &ValueStoreRef::getChild)
+    /// virtual std::vector<KeyValueStorePair> getChildren() const
+    .def("getChildren", &ValueStoreRef::getChildren)
     /// sm::ConstPropertyTree asPropertyTree() const
     .def("asPropertyTree", &ValueStoreRef::asPropertyTree)
     /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
@@ -48,5 +58,16 @@ void exportValueStoreRef()
     .def("saveTo", &ValueStoreRef::saveTo)
     /// bool hasKey(const std::string& path) const;
     .def("hasKey", &ValueStoreRef::hasKey)
+  ;
+}
+
+void exportKeyValueStorePair()
+{
+  using namespace boost::python;
+  using namespace sm::value_store;
+
+  class_<KeyValueStorePair, bases<ValueStoreRef>>("KeyValueStorePair", init<const std::string&, const ValueStoreRef&>())
+    ///const std::string& getKey() const
+    .def("getKey", &KeyValueStorePair::getKey, return_value_policy<copy_const_reference>())
   ;
 }
