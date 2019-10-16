@@ -14,6 +14,7 @@ void exportTransformation();
 void exportHomogeneousPoint();
 void exportTimestampCorrectors();
 void exportPropertyTree();
+void exportPropertyTreeLoader();
 void exportEigen();
 void exportUncertainVector();
 void exportMatrixArchive();
@@ -24,6 +25,7 @@ void exportRandom();
 void export_eigen_property_tree();
 void export_kinematics_property_tree();
 void exportValueStoreRef();
+void exportKeyValueStorePair();
 
 BOOST_PYTHON_MODULE(libsm_python)
 {
@@ -36,6 +38,7 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportHomogeneousPoint();
   exportTimestampCorrectors();
   exportPropertyTree();
+  exportPropertyTreeLoader();
   exportEigen();
   exportUncertainVector();
   exportMatrixArchive();
@@ -46,4 +49,5 @@ BOOST_PYTHON_MODULE(libsm_python)
   export_eigen_property_tree();
   export_kinematics_property_tree();
   exportValueStoreRef();
+  exportKeyValueStorePair();
 }

@@ -1,5 +1,6 @@
 #include <numpy_eigen/boost_python_headers.hpp>
 #include <sm/BoostPropertyTree.hpp>
+#include <sm/BoostPropertyTreeLoader.hpp>
 
 double getDouble(const sm::ConstPropertyTree * p, const std::string & key) {
   return p->getDouble(key);
@@ -82,4 +83,14 @@ void exportPropertyTree() {
            ),
            "updateOrCreate(BoostPropertyTree & with), update the property tree with another one, creating nodes if necessary")
      ;
+}
+
+void exportPropertyTreeLoader() {
+  using namespace boost::python;
+  using namespace sm;
+  
+  class_<BoostPropertyTreeLoader>("BoostPropertyTreeLoader", init<>())
+    ///sm::BoostPropertyTree readFilesAndMergeIntoPropertyTree(const std::string& commaSeparatedFileList)
+    .def<sm::BoostPropertyTree(BoostPropertyTreeLoader::*)(const std::string&)>("readFilesAndMergeIntoPropertyTree", &BoostPropertyTreeLoader::readFilesAndMergeIntoPropertyTree)
+  ;
 }

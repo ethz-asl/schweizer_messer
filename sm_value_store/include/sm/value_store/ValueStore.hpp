@@ -213,6 +213,7 @@ class ConstKeyValueStorePair : public ValueStoreRef {
 class KeyValueStorePair : public ValueStoreRef {
  public:
   KeyValueStorePair(const std::string& key, const std::shared_ptr<ValueStore> & vs) : ValueStoreRef(vs), _key(key){}
+  KeyValueStorePair(const std::string& key, const ValueStoreRef & vs) : ValueStoreRef(vs), _key(key){}
 
   const std::string& getKey() const { return _key; }
  private:
