@@ -117,6 +117,8 @@ class ValueStoreRef {
   explicit ValueStoreRef(ValueStore & vs) : _vs(ValueStore::SharedPtr(&vs, [](ValueStore*){})) {}
   ValueStoreRef(sm::PropertyTree bpt);
 
+  ValueStoreRef(const ValueStoreRef & other) = default;
+
   ValueHandle<bool> getBool(const std::string & path, boost::optional<bool> def = boost::optional<bool>()) const {
     return _vs->getBool(path, def);
   }
