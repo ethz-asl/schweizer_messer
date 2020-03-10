@@ -26,7 +26,6 @@ class PropertyTreeValueStore : public ExtendibleValueStore, public sm::PropertyT
   ValueHandle<double> addDouble(const std::string & path, double initialValue) override;
   ValueHandle<std::string> addString(const std::string & path, std::string initialValue) override;
 
-  ExtendibleKeyValueStorePair addChild(const std::string & key) override;
   ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const override;
   std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const override;
 

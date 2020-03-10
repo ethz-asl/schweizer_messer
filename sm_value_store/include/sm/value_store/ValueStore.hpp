@@ -229,8 +229,6 @@ class ExtendibleValueStore : public ValueStore {
   virtual ValueHandle<double> addDouble(const std::string & path, double initialValue) = 0;
   virtual ValueHandle<std::string> addString(const std::string & path, std::string initialValue) = 0;
 
-  virtual ExtendibleKeyValueStorePair addChild(const std::string & key) = 0;
-
   virtual ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const = 0;
   virtual std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const = 0;
 
@@ -256,8 +254,6 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
     return _evs->addString(path, initialValue);
   }
 
-  inline ExtendibleKeyValueStorePair addChild(const std::string & key);
-
   ExtendibleValueStore & getValueStore() { return *_evs; }
 
   inline ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const;
@@ -281,7 +277,6 @@ class ExtendibleKeyValueStorePair : public ExtendibleValueStoreRef {
 };
 
 ExtendibleKeyValueStorePair ExtendibleValueStoreRef::getExtendibleChild(const std::string & key) const { return _evs->getExtendibleChild(key); }
-inline ExtendibleKeyValueStorePair ExtendibleValueStoreRef::addChild(const std::string & key) { return _evs->addChild(key);}
 
 }
 using namespace value_store;

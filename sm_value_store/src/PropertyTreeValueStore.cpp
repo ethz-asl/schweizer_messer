@@ -119,16 +119,18 @@ ValueHandle<std::string> PropertyTreeValueStore::addString(const std::string& pa
   return initialValue;
 }
 
-ExtendibleKeyValueStorePair PropertyTreeValueStore::addChild(const std::string& /* key */) {
-	SM_THROW(std::runtime_error, "Not implemented, yet");
-}
-
-ExtendibleKeyValueStorePair PropertyTreeValueStore::getExtendibleChild(const std::string& /* key */) const {
-  SM_THROW(std::runtime_error, "Not implemented, yet");
+ExtendibleKeyValueStorePair PropertyTreeValueStore::getExtendibleChild(const std::string& key ) const {
+  return ExtendibleKeyValueStorePair(key, std::make_shared<PropertyTreeValueStore>(PropertyTree::getChild(key)));
 }
 
 std::vector<ExtendibleKeyValueStorePair> PropertyTreeValueStore::getExtendibleChildren() const {
-  SM_THROW(std::runtime_error, "Not implemented, yet");
+  auto children = PropertyTree::getChildren();
+  std::vector<ExtendibleKeyValueStorePair> ret;
+  ret.reserve(children.size());
+  for(auto & c : children){
+    ret.emplace_back(c.key, std::make_shared<PropertyTreeValueStore>(c.pt));
+  }
+  return ret;
 }
 
 class ValueStorePropertyTreeImpl : public sm::PropertyTreeImplementation {

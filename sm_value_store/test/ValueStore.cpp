@@ -54,7 +54,7 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
 
   {
     const std::vector<const char *> expectedKeys{"i", "d"};
-    int i = 0;
+    unsigned i = 0;
     for (auto & c : dChildF.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
       EXPECT_EQ(expectedKeys[i], c.getKey());
@@ -64,7 +64,7 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
   }
   {
     const std::vector<const char *> expectedKeys{"d", "j"};
-    int i = 0;
+    unsigned i = 0;
     for (auto & c : ddChildF.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
       EXPECT_EQ(expectedKeys[i], c.getKey());
@@ -74,7 +74,7 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
   }
   {
     const std::vector<const char *> expectedKeys{"d"};
-    int i = 0;
+    unsigned i = 0;
     for (auto & c : vpt.getChildren()){
       ASSERT_LT(i, expectedKeys.size());
       EXPECT_EQ(expectedKeys[i], c.getKey());
@@ -83,7 +83,7 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
         EXPECT_NEAR(0.1, c.getValueStore().getDouble(""), 1e-16);
         EXPECT_NEAR(0.2, c.getValueStore().getDouble("d"), 1e-16);
         const std::vector<const char *> expectedKeys = { "i", "d"};
-        int i = 0;
+        unsigned i = 0;
         for (auto & c2 : c.getChildren()){
           ASSERT_LT(i, expectedKeys.size());
           EXPECT_EQ(expectedKeys[i], c2.getKey());
@@ -98,6 +98,38 @@ TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
   vpt.addInt("ai", 4);
   EXPECT_EQ(4, pt.getInt("ai"));
   EXPECT_EQ(4, vpt.getInt("ai").get());
+
+  vpt.addDouble("a/ad", 4.1);
+  EXPECT_EQ(4.1, pt.getDouble("a/ad"));
+  EXPECT_EQ(4.1, vpt.getDouble("a/ad").get());
+
+  vpt.addString("a/a/as", "add_string");
+  EXPECT_EQ("add_string", pt.getString("a/a/as"));
+  EXPECT_EQ("add_string", vpt.getString("a/a/as").get());
+  
+  {
+    auto newChild = vpt.getExtendibleChild("aC");
+    newChild.addBool("ab", true);
+    EXPECT_TRUE(newChild.getBool("ab"));
+    EXPECT_TRUE(vpt.getBool("aC/ab"));
+  }
+
+  {
+    auto aCChild = vpt.getExtendibleChild("aC");
+    EXPECT_TRUE(aCChild.getBool("ab"));
+    EXPECT_NO_THROW(aCChild.addInt("ai", 1));
+  }
+
+  {
+    const std::vector<const char *> expectedKeys{"ab", "ai"};
+    unsigned i = 0;
+    for (auto & c : vpt.getExtendibleChild("aC").getExtendibleChildren()){
+      ASSERT_LT(i, expectedKeys.size());
+      EXPECT_EQ(expectedKeys[i], c.getKey());
+      i++;
+    }
+    EXPECT_EQ(expectedKeys.size(), i);
+  }
 
   // TODO (HannesSommer) complete ExtendibleValueStore (testing)
   //  auto nDchild = vpt.addChild("nD");
