@@ -238,19 +238,23 @@ class ExtendibleValueStore : public ValueStore {
 
 class ExtendibleValueStoreRef : public ValueStoreRef {
  public:
-  ExtendibleValueStoreRef(sm::PropertyTree bpt);
+  using ValueStoreRef::ValueStoreRef;
   ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr spVs) : ValueStoreRef(spVs), _evs(spVs) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : _evs(ExtendibleValueStore::SharedPtr(vsPtr)) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : _evs(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
+  ExtendibleValueStoreRef(sm::PropertyTree bpt);
+  
 
-  ValueHandle<bool> addBool(const std::string & path, bool initialValue) {
+  ValueHandle<bool> addBool(const std::string & path, bool initialValue) const {
     return _evs->addBool(path, initialValue);
   }
   ValueHandle<int> addInt(const std::string & path, int initialValue) const {
     return _evs->addInt(path, initialValue);
   }
-  ValueHandle<double> addDouble(const std::string & path, double initialValue) {
+  ValueHandle<double> addDouble(const std::string & path, double initialValue) const {
     return _evs->addDouble(path, initialValue);
   }
-  ValueHandle<std::string> addString(const std::string & path, std::string initialValue) {
+  ValueHandle<std::string> addString(const std::string & path, std::string initialValue) const {
     return _evs->addString(path, initialValue);
   }
 

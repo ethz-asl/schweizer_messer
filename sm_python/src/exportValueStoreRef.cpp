@@ -10,7 +10,7 @@ void exportValueStoreRef()
   using namespace boost::python;
   using namespace sm::value_store;
 
-  typedef std::vector<KeyValueStorePair> ChildrenT;
+  using ChildrenT = std::vector<KeyValueStorePair>;
 
   class_<ChildrenT>("ChildVector")
     .def(boost::python::vector_indexing_suite<ChildrenT>())
@@ -69,5 +69,49 @@ void exportKeyValueStorePair()
   class_<KeyValueStorePair, bases<ValueStoreRef>>("KeyValueStorePair", init<const std::string&, const ValueStoreRef&>())
     ///const std::string& getKey() const
     .def("getKey", &KeyValueStorePair::getKey, return_value_policy<copy_const_reference>())
+  ;
+}
+
+void exportExtendibleValueStoreRef()
+{
+  using namespace boost::python;
+  using namespace sm::value_store;
+
+  using ChildrenT = std::vector<ExtendibleKeyValueStorePair>;
+
+  class_<ChildrenT>("ExtendibleChildVector")
+    .def(boost::python::vector_indexing_suite<ChildrenT>())
+    .def("__iter__", boost::python::iterator<ChildrenT>())
+  ;
+
+  class_<ExtendibleValueStoreRef, bases<ValueStoreRef>>("ExtendibleValueStoreRef", init<>())
+    .def(init<ExtendibleValueStoreRef>())
+    .def(init<ExtendibleValueStore::SharedPtr>())
+    .def(init<sm::PropertyTree>())
+
+    //ValueHandle<bool> addBool(const std::string & path, bool initialValue) const
+    .def("addBool", +[](ExtendibleValueStoreRef * vs, const std::string & path, bool value){return vs->addBool(path, value).get();})
+    //ValueHandle<int> addInt(const std::string & path, int initialValue) const
+    .def("addInt", +[](ExtendibleValueStoreRef * vs, const std::string & path, int value){return vs->addInt(path, value).get();})
+    //ValueHandle<double> addDouble(const std::string & path, double initialValue) const
+    .def("addDouble", +[](ExtendibleValueStoreRef * vs, const std::string & path, double value){return vs->addDouble(path, value).get();})
+    //ValueHandle<std::string> addString(const std::string & path, std::string initialValue) const
+    .def("addString", +[](ExtendibleValueStoreRef * vs, const std::string & path, const std::string& value){return vs->addString(path, value).get();})
+
+    //inline ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const
+    .def("getExtendibleChild", &ExtendibleValueStoreRef::getExtendibleChild)
+    //std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const
+    .def("getExtendibleChildren", &ExtendibleValueStoreRef::getExtendibleChildren)
+  ;
+}
+
+void exportExtendibleKeyValueStorePair()
+{
+  using namespace boost::python;
+  using namespace sm::value_store;
+
+  class_<ExtendibleKeyValueStorePair, bases<ExtendibleValueStoreRef>>("ExtendibleKeyValueStorePair", init<const std::string&, const ExtendibleValueStoreRef&>())
+    ///const std::string& getKey() const
+    .def("getKey", &ExtendibleKeyValueStorePair::getKey, return_value_policy<copy_const_reference>())
   ;
 }
