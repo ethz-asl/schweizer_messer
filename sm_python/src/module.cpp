@@ -26,6 +26,8 @@ void export_eigen_property_tree();
 void export_kinematics_property_tree();
 void exportValueStoreRef();
 void exportKeyValueStorePair();
+void exportExtendibleValueStoreRef();
+void exportExtendibleKeyValueStorePair();
 
 BOOST_PYTHON_MODULE(libsm_python)
 {
@@ -50,4 +52,6 @@ BOOST_PYTHON_MODULE(libsm_python)
   export_kinematics_property_tree();
   exportValueStoreRef();
   exportKeyValueStorePair();
+  exportExtendibleValueStoreRef();
+  exportExtendibleKeyValueStorePair();
 }
