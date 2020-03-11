@@ -238,7 +238,7 @@ class ExtendibleValueStore : public ValueStore {
 
 class ExtendibleValueStoreRef : public ValueStoreRef {
  public:
-  using ValueStoreRef::ValueStoreRef;
+  ExtendibleValueStoreRef() : ValueStoreRef() {}
   ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr spVs) : ValueStoreRef(spVs), _evs(spVs) {}
   explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : _evs(ExtendibleValueStore::SharedPtr(vsPtr)) {}
   explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : _evs(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
