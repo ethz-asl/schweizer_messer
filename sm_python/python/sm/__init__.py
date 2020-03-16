@@ -85,16 +85,20 @@ def logErrorNamed(name,message):
     logNamed(name, LoggingLevel.Error, message, stackdepth=2)
 
 def setExtendableValueStoreValue(evs, key, value, add_if_missing=True):
-    type2func_string = {
-        bool : "Bool",
-        int : "Int",
-        float : "Double",
-        str : "String"
-    }
+    def type2func_string(value):
+        if isinstance(value, str):
+            return "String"
+        elif isinstance(value, bool):
+            return "Bool"
+        elif isinstance(value, int):
+            return "Int"
+        elif isinstance(value, float):
+            return "Double"
+
     if evs.hasKey(key):
-        getattr(evs, "set" + type2func_string[value.__class__])(key, value)
+        getattr(evs, "set" + type2func_string(value))(key, value)
     elif add_if_missing:
-        getattr(evs, "add" + type2func_string[value.__class__])(key, value)
+        getattr(evs, "add" + type2func_string(value))(key, value)
 
 from types import MethodType
 ExtendibleValueStoreRef.set = MethodType(setExtendableValueStoreValue, None, ExtendibleValueStoreRef)
