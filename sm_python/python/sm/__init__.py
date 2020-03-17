@@ -94,11 +94,14 @@ def setExtendableValueStoreValue(evs, key, value, add_if_missing=True):
             return "Int"
         elif isinstance(value, float):
             return "Double"
+        else:
+            logFatal("Don't know how to add value of type " + str(value.__class__))
 
-    if evs.hasKey(key):
-        getattr(evs, "set" + type2func_string(value))(key, value)
-    elif add_if_missing:
+    if add_if_missing and not evs.hasKey(key):
         getattr(evs, "add" + type2func_string(value))(key, value)
+    else:
+        getattr(evs, "set" + type2func_string(value))(key, value)
+        
 
 from types import MethodType
 ExtendibleValueStoreRef.set = MethodType(setExtendableValueStoreValue, None, ExtendibleValueStoreRef)
