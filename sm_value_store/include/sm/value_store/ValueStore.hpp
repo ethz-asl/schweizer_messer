@@ -267,6 +267,12 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
   operator ExtendibleValueStore::SharedPtr () const { return getValueStoreSharedPtr(); }
 
   operator ExtendibleValueStore & () const { return *getValueStoreSharedPtr(); }
+
+  /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from string using @see sm::BoostPropertyTree::loadString .
+  static ExtendibleValueStoreRef fromString(const std::string & contentString);
+
+  /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
+  static ExtendibleValueStoreRef fromFile(const std::string & path);
  private:
   ExtendibleValueStore::SharedPtr  _evs;
 };
