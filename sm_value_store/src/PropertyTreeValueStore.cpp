@@ -227,6 +227,18 @@ sm::ValueStoreRef ValueStoreRef::fromFile(const std::string & path){
   return bpt;
 }
 
+sm::ExtendibleValueStoreRef ExtendibleValueStoreRef::fromString(const std::string & content){
+  sm::BoostPropertyTree pt;
+  pt.loadString(content);
+  return pt;
+}
+
+sm::ExtendibleValueStoreRef ExtendibleValueStoreRef::fromFile(const std::string & path){
+  sm::BoostPropertyTree bpt;
+  bpt.load(path);
+  return bpt;
+}
+
 bool PropertyTreeValueStore::isEmpty() const {
   if(auto ptr = dynamic_cast<sm::BoostPropertyTreeImplementation*>(_imp.get())) {
     return ptr->begin() == ptr->end();

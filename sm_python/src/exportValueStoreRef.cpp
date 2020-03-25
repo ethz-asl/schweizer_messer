@@ -97,7 +97,12 @@ void exportExtendibleValueStoreRef()
     .def("addDouble", +[](ExtendibleValueStoreRef * vs, const std::string & path, double value){return vs->addDouble(path, value).get();})
     //ValueHandle<std::string> addString(const std::string & path, std::string initialValue) const
     .def("addString", +[](ExtendibleValueStoreRef * vs, const std::string & path, const std::string& value){return vs->addString(path, value).get();})
-
+    /// brief Create a ExtendibleValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
+    /// static ExtendibleValueStoreRef fromFile(const std::string & path)
+    .def("fromFile", &ExtendibleValueStoreRef::fromFile).staticmethod("fromFile")
+    /// brief Create a ExtendibleValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
+    /// static ExtendibleValueStoreRef fromFile(const std::string & path)
+    .def("fromString", &ExtendibleValueStoreRef::fromString).staticmethod("fromString")
     //inline ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const
     .def("getExtendibleChild", &ExtendibleValueStoreRef::getExtendibleChild)
     //std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const
