@@ -52,8 +52,14 @@ std::string getValue(const ValueHandle<std::string> & v) {
 template <typename T, typename O>
 T VerboseValueStore::logValue(const char * func, const std::string & path, T && v, O o) const {
   std::string extra = "";
-  if(!std::is_same<bool, O>::value && o){
-    if(!vs_->hasKey(path)){
+  //prevent unused warning
+  static_cast<void>(o);
+  if constexpr(!std::is_same_v<std::false_type, O>) {
+    //TODO (huberya): we somehow want to switch between optional (and others) for DEFAULT vs INITIAL (@Hannes)
+    /*if constexpr(std::is_same_v<std::decay_t<decltype(std::declval<T>.get())>, std::decay_t<O>>) {
+      extra = "INITIAL:";
+    }
+    else */if(o && !vs_->hasKey(path)) {
       extra = "DEFAULT:";
     }
   }
@@ -70,6 +76,33 @@ std::vector<KeyValueStorePair> VerboseValueStore::getChildren() const {
   std::vector<KeyValueStorePair> verboseChildren;
   for (const auto& c : vs_->getChildren()){
     verboseChildren.push_back(this->getChild(c.getKey()));
+  }
+  return verboseChildren;
+}
+
+ValueHandle<bool> VerboseExtendibleValueStore::addBool(const std::string & path, bool initialValue) {
+  return logValue(__func__, path, vs_->addBool(path, initialValue)/*, initialValue*/);
+}
+ValueHandle<int> VerboseExtendibleValueStore::addInt(const std::string & path, int initialValue) {
+  return logValue(__func__, path, vs_->addInt(path, initialValue)/*, initialValue*/);
+}
+ValueHandle<double> VerboseExtendibleValueStore::addDouble(const std::string & path, double initialValue) {
+  return logValue(__func__, path, vs_->addDouble(path, initialValue)/*, initialValue*/);
+}
+ValueHandle<std::string> VerboseExtendibleValueStore::addString(const std::string & path, std::string initialValue) {
+  return logValue(__func__, path, vs_->addString(path, initialValue)/*, initialValue*/);
+}
+
+ExtendibleKeyValueStorePair VerboseExtendibleValueStore::getExtendibleChild(const std::string & key) const {
+  log_(std::string(__func__) + "(" + key + ")");
+  auto log = log_;
+  return ExtendibleKeyValueStorePair(key, std::make_shared<VerboseExtendibleValueStore>(vs_->getExtendibleChild(key), [log, key](const std::string &text){ log("extendible child(" + key + "):" + text);}));
+}
+std::vector<ExtendibleKeyValueStorePair> VerboseExtendibleValueStore::getExtendibleChildren() const {
+  log_(std::string(__func__) + "()");
+  std::vector<ExtendibleKeyValueStorePair> verboseChildren;
+  for (const auto& c : vs_->getExtendibleChildren()){
+    verboseChildren.push_back(this->getExtendibleChild(c.getKey()));
   }
   return verboseChildren;
 }

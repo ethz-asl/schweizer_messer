@@ -149,9 +149,7 @@ std::string ValueStoreRef::findPathAndAlert(const std::vector<std::string> & pat
 }
 
 
-ExtendibleValueStoreRef::ExtendibleValueStoreRef(sm::PropertyTree bpt) : ValueStoreRef(bpt) {
-  _evs = std::static_pointer_cast<PropertyTreeValueStore>(_vs);
-}
+ExtendibleValueStoreRef::ExtendibleValueStoreRef(sm::PropertyTree bpt) : ValueStoreRef(bpt), _evs(std::make_shared<PropertyTreeValueStore>(bpt)) {}
 
 }
 }

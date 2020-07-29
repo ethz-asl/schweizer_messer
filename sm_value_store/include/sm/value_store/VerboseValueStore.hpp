@@ -9,7 +9,7 @@
 namespace sm {
 namespace value_store {
 
-class VerboseValueStore : public ValueStore {
+class VerboseValueStore : public virtual ValueStore {
  public:
   VerboseValueStore(std::shared_ptr<ValueStore> vs, std::function<void(const std::string &)> log) : vs_(vs), log_(log) {}
   ValueHandle<bool> getBool(const std::string & path, boost::optional<bool> def = boost::optional<bool>()) const override;
@@ -26,12 +26,31 @@ class VerboseValueStore : public ValueStore {
   std::shared_ptr<ValueStore> getUnderlyingValueStore() const {
     return vs_;
   }
- private:
+ protected:
   std::shared_ptr<ValueStore> vs_;
   std::function<void(const std::string &)> log_;
 
-  template <typename T, typename O = bool>
-  T logValue(const char * func, const std::string & path, T && v, O o = false) const;
+  template <typename T, typename O = std::false_type>
+  T logValue(const char * func, const std::string & path, T && v, O o = std::false_type()) const;
+};
+
+class VerboseExtendibleValueStore : public ExtendibleValueStore, public VerboseValueStore {
+ public:
+  VerboseExtendibleValueStore(std::shared_ptr<ExtendibleValueStore> vs, std::function<void(const std::string &)> log) : VerboseValueStore(vs, log), vs_(vs) {}
+  ValueHandle<bool> addBool(const std::string & path, bool initialValue) override;
+  ValueHandle<int> addInt(const std::string & path, int initialValue) override;
+  ValueHandle<double> addDouble(const std::string & path, double initialValue) override;
+  ValueHandle<std::string> addString(const std::string & path, std::string initialValue) override;
+
+  ExtendibleKeyValueStorePair getExtendibleChild(const std::string & key) const override;
+  std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const override;
+
+  std::shared_ptr<ExtendibleValueStore> getUnderlyingValueStore() const {
+    return vs_;
+  }
+
+  protected:
+  std::shared_ptr<ExtendibleValueStore> vs_;
 };
 
 }
