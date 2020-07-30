@@ -148,6 +148,7 @@ std::string ValueStoreRef::findPathAndAlert(const std::vector<std::string> & pat
   return pathsAndDeprecationWarnings.front();
 }
 
+ExtendibleValueStoreRef::ExtendibleValueStoreRef() : ExtendibleValueStoreRef(sm::BoostPropertyTree()) {};
 
 ExtendibleValueStoreRef::ExtendibleValueStoreRef(sm::PropertyTree bpt) : ValueStoreRef(bpt), _evs(std::make_shared<PropertyTreeValueStore>(bpt)) {}
 
