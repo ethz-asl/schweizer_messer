@@ -84,7 +84,7 @@ def logFatalNamed(name,message):
 def logErrorNamed(name,message):
     logNamed(name, LoggingLevel.Error, message, stackdepth=2)
 
-def setExtendableValueStoreValue(evs, key, value, add_if_missing=True):
+def setExtendableValueStoreValue(evs, key, value, add_if_missing=True, force_add=False):
     def type2func_string(value):
         if isinstance(value, str):
             return "String"
@@ -101,7 +101,7 @@ def setExtendableValueStoreValue(evs, key, value, add_if_missing=True):
         logFatal("Don't know how to set value of type " + str(value.__class__))
         return
 
-    if add_if_missing and not evs.hasKey(key):
+    if add_if_missing and (not evs.hasKey(key) or force_add):
         getattr(evs, "add" + accessorSuffix)(key, value)
     else:
         getattr(evs, "set" + accessorSuffix)(key, value)
