@@ -221,7 +221,7 @@ class KeyValueStorePair : public ValueStoreRef {
 };
 
 class ExtendibleKeyValueStorePair;
-class ExtendibleValueStore : public virtual ValueStore {
+class ExtendibleValueStore : public ValueStore {
  public:
   typedef std::shared_ptr<ExtendibleValueStore> SharedPtr;
   virtual ValueHandle<bool> addBool(const std::string & path, bool initialValue) = 0;
