@@ -29,9 +29,9 @@ class VerboseValueStore : public virtual ValueStore {
  protected:
   std::shared_ptr<ValueStore> vs_;
   std::function<void(const std::string &)> log_;
-
-  template <typename T, typename O = std::false_type>
-  T logValue(const char * func, const std::string & path, T && v, O o = std::false_type()) const;
+ private:
+  template <typename T, typename O = bool>
+  T logValue(const char * func, const std::string & path, T && v, O o = false) const;
 };
 
 class VerboseExtendibleValueStore : public ExtendibleValueStore, public VerboseValueStore {
@@ -49,8 +49,11 @@ class VerboseExtendibleValueStore : public ExtendibleValueStore, public VerboseV
     return vs_;
   }
 
-  protected:
+ protected:
   std::shared_ptr<ExtendibleValueStore> vs_;
+ private:
+  template <typename T>
+  T logAddValue(const char * func, const std::string & path, T && v) const;
 };
 
 }

@@ -3,7 +3,7 @@ project(sm_value_store)
 
 find_package(catkin_simple REQUIRED)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 catkin_simple()
 
