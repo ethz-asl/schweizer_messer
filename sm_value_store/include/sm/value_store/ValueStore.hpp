@@ -108,6 +108,7 @@ struct AccessorMap<Class, std::string> {
 };
 }
 
+class ExtendibleValueStoreRef;
 class ValueStoreRef {
  public:
   /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
@@ -192,6 +193,9 @@ class ValueStoreRef {
    * If in doubt, use canSave() to check first.
    */
   void saveTo(const std::string & path) const;
+
+  virtual bool isExtendible() const;
+  virtual ExtendibleValueStoreRef asExtendible() const;
  private:
   sm::BoostPropertyTreeImplementation* getBptPtr() const;
 
@@ -273,6 +277,9 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
   static ExtendibleValueStoreRef fromFile(const std::string & path);
+
+  bool isExtendible() const override;
+  ExtendibleValueStoreRef asExtendible() const override;
  private:
   ExtendibleValueStore::SharedPtr  _evs;
 };

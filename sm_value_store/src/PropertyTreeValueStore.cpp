@@ -268,5 +268,19 @@ void ValueStoreRef::saveTo(const std::string& path) const {
   BoostPropertyTree(bptSharedPtr).save(path);
 }
 
+bool ValueStoreRef::isExtendible() const {
+  return false;
+}
+ExtendibleValueStoreRef ValueStoreRef::asExtendible() const {
+  SM_THROW(std::runtime_error, "Cannot use this as an extendible value store. Check with isExtendible() first!!");
+}
+
+bool ExtendibleValueStoreRef::isExtendible() const {
+  return true;
+}
+ExtendibleValueStoreRef ExtendibleValueStoreRef::asExtendible() const {
+  return *this;
+}
+
 }
 }
