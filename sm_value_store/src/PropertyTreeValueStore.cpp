@@ -1,5 +1,6 @@
 #include <sm/value_store/ValueStore.hpp>
 
+#include <memory>
 #include <unordered_map>
 #include <boost/make_shared.hpp>
 
@@ -269,17 +270,14 @@ void ValueStoreRef::saveTo(const std::string& path) const {
 }
 
 bool ValueStoreRef::isExtendible() const {
-  return false;
-}
-ExtendibleValueStoreRef ValueStoreRef::asExtendible() const {
-  SM_THROW(std::runtime_error, "Cannot use this as an extendible value store. Check with isExtendible() first!!");
+  return _vs->isExtendible();
 }
 
-bool ExtendibleValueStoreRef::isExtendible() const {
-  return true;
-}
-ExtendibleValueStoreRef ExtendibleValueStoreRef::asExtendible() const {
-  return *this;
+ExtendibleValueStoreRef ValueStoreRef::asExtendible() const {
+  if (!isExtendible()){
+    SM_THROW(std::runtime_error, "Cannot use this as an extendible value store. Check with isExtendible() first!!");
+  }
+  return ExtendibleValueStoreRef(std::static_pointer_cast<ExtendibleValueStore>(_vs));
 }
 
 }

@@ -83,6 +83,10 @@ class ValueStore {
    */
   virtual bool isEmpty() const;
 
+  virtual bool isExtendible() const {
+    return false;
+  }
+
   virtual ~ValueStore(){}
 };
 
@@ -194,8 +198,8 @@ class ValueStoreRef {
    */
   void saveTo(const std::string & path) const;
 
-  virtual bool isExtendible() const;
-  virtual ExtendibleValueStoreRef asExtendible() const;
+  bool isExtendible() const;
+  ExtendibleValueStoreRef asExtendible() const;
  private:
   sm::BoostPropertyTreeImplementation* getBptPtr() const;
 
@@ -237,6 +241,10 @@ class ExtendibleValueStore : public ValueStore {
   virtual std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const = 0;
 
   ~ExtendibleValueStore() override{}
+
+  bool isExtendible() const override {
+    return true;
+  }
 };
 
 
@@ -244,8 +252,8 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
  public:
   ExtendibleValueStoreRef();
   ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr spVs) : ValueStoreRef(spVs), _evs(spVs) {}
-  explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : _evs(ExtendibleValueStore::SharedPtr(vsPtr)) {}
-  explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : _evs(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr(vsPtr)) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
   ExtendibleValueStoreRef(sm::PropertyTree bpt);
   
 
@@ -278,8 +286,6 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
   static ExtendibleValueStoreRef fromFile(const std::string & path);
 
-  bool isExtendible() const override;
-  ExtendibleValueStoreRef asExtendible() const override;
  private:
   ExtendibleValueStore::SharedPtr  _evs;
 };

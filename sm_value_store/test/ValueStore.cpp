@@ -22,15 +22,17 @@ TEST(ValueStoreSuite, isEmpty)
 TEST(ValueStoreSuite, isExtendible)
 {
   sm::BoostPropertyTree pt;
+  sm::BoostPropertyTree pt2;
 
   sm::ValueStoreRef vpt(pt);
-  sm::ExtendibleValueStoreRef evpt(pt);
+  sm::ValueStoreRef evpt = sm::ExtendibleValueStoreRef(pt2);
 
   EXPECT_FALSE(vpt.isExtendible());
   EXPECT_TRUE(evpt.isExtendible());
 
   EXPECT_THROW(vpt.asExtendible(), std::runtime_error);
   EXPECT_NO_THROW(evpt.asExtendible());
+  sm::ExtendibleValueStoreRef evref = evpt.asExtendible();
 }
  
 TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
