@@ -32,8 +32,7 @@ TEST(ValueStoreSuite, isExtendible)
 {
   sm::BoostPropertyTree pt;
   sm::NonExtendiblePropertyTreeValueStore pt2 = sm::NonExtendiblePropertyTreeValueStore(pt);
-  sm::ValueStore& vs = pt2;
-  sm::ValueStoreRef vpt(vs);
+  sm::ValueStoreRef vpt(pt2);
   sm::ValueStoreRef evpt = sm::ExtendibleValueStoreRef(pt);
 
   EXPECT_FALSE(vpt.isExtendible());
