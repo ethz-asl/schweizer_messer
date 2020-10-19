@@ -83,6 +83,10 @@ class ValueStore {
    */
   virtual bool isEmpty() const;
 
+  virtual bool isExtendible() const {
+    return false;
+  }
+
   virtual ~ValueStore(){}
 };
 
@@ -108,6 +112,7 @@ struct AccessorMap<Class, std::string> {
 };
 }
 
+class ExtendibleValueStoreRef;
 class ValueStoreRef {
  public:
   /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
@@ -192,6 +197,9 @@ class ValueStoreRef {
    * If in doubt, use canSave() to check first.
    */
   void saveTo(const std::string & path) const;
+
+  bool isExtendible() const;
+  ExtendibleValueStoreRef asExtendible() const;
  private:
   sm::BoostPropertyTreeImplementation* getBptPtr() const;
 
@@ -233,6 +241,10 @@ class ExtendibleValueStore : public ValueStore {
   virtual std::vector<ExtendibleKeyValueStorePair> getExtendibleChildren() const = 0;
 
   ~ExtendibleValueStore() override{}
+
+  bool isExtendible() const override {
+    return true;
+  }
 };
 
 
@@ -240,8 +252,8 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
  public:
   ExtendibleValueStoreRef();
   ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr spVs) : ValueStoreRef(spVs), _evs(spVs) {}
-  explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : _evs(ExtendibleValueStore::SharedPtr(vsPtr)) {}
-  explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : _evs(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore * vsPtr) : ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr(vsPtr)) {}
+  explicit ExtendibleValueStoreRef(ExtendibleValueStore & vs) : ExtendibleValueStoreRef(ExtendibleValueStore::SharedPtr(&vs, [](ExtendibleValueStore*){})) {}
   ExtendibleValueStoreRef(sm::PropertyTree bpt);
   
 
@@ -273,6 +285,7 @@ class ExtendibleValueStoreRef : public ValueStoreRef {
 
   /// brief Create a ValueStoreRef to a BoostPropertyTree loaded from file using @see sm::BoostPropertyTree::load .
   static ExtendibleValueStoreRef fromFile(const std::string & path);
+
  private:
   ExtendibleValueStore::SharedPtr  _evs;
 };

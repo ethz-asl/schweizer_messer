@@ -1,5 +1,6 @@
 #include <sm/value_store/ValueStore.hpp>
 
+#include <memory>
 #include <unordered_map>
 #include <boost/make_shared.hpp>
 
@@ -266,6 +267,17 @@ void ValueStoreRef::saveTo(const std::string& path) const {
   }
   boost::shared_ptr<BoostPropertyTreeImplementation> bptSharedPtr(bptPtr, [](sm::BoostPropertyTreeImplementation*) {});
   BoostPropertyTree(bptSharedPtr).save(path);
+}
+
+bool ValueStoreRef::isExtendible() const {
+  return _vs->isExtendible();
+}
+
+ExtendibleValueStoreRef ValueStoreRef::asExtendible() const {
+  if (!isExtendible()){
+    SM_THROW(std::runtime_error, "Cannot use this as an extendible value store. Check with isExtendible() first!!");
+  }
+  return ExtendibleValueStoreRef(std::static_pointer_cast<ExtendibleValueStore>(_vs));
 }
 
 }

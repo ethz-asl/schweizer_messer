@@ -19,6 +19,29 @@ TEST(ValueStoreSuite, isEmpty)
   EXPECT_FALSE(vpt.isEmpty());
 }
 
+namespace sm {
+class NonExtendiblePropertyTreeValueStore : public PropertyTreeValueStore {
+  using PropertyTreeValueStore::PropertyTreeValueStore;
+  bool isExtendible() const override {
+    return false;
+  }
+};
+}  // namespace sm
+
+TEST(ValueStoreSuite, isExtendible)
+{
+  sm::BoostPropertyTree pt;
+  sm::NonExtendiblePropertyTreeValueStore pt2 = sm::NonExtendiblePropertyTreeValueStore(pt);
+  sm::ValueStoreRef vpt(static_cast<sm::ValueStore&>(pt2));
+  sm::ValueStoreRef evpt = sm::ExtendibleValueStoreRef(pt);
+
+  EXPECT_FALSE(vpt.isExtendible());
+  EXPECT_TRUE(evpt.isExtendible());
+
+  EXPECT_THROW(vpt.asExtendible(), std::runtime_error);
+  EXPECT_NO_THROW(evpt.asExtendible());
+}
+ 
 TEST(ValueStoreSuite, testSimplePropertyTreeValueStore)
 {
   sm::BoostPropertyTree pt;
