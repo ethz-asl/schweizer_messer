@@ -10,6 +10,9 @@ include_directories(include ${Boost_INCLUDE_DIRS})
 include_directories("${PROJECT_SOURCE_DIR}/include/numpy_eigen")
 add_definitions(-std=c++0x -D__STRICT_ANSI__)
 
+# ignore "error: return-statement with a value, in function returning ‘void’" in "__multiarray_api.h"
+add_compile_options(-fpermissive)
+
 INCLUDE(src/autogen_files.cmake)
 add_python_export_library(${PROJECT_NAME} 
   ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_FILES}
