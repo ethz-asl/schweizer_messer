@@ -47,8 +47,8 @@ template<> struct TypeToNumPy<boost::uint64_t>
   static bool canConvert(int type)
   {
     return type == NPY_UINT8 || type == NPY_USHORT ||
-           type == NPY_UINT16 || type == NPY_UINT32 || 
-           type == NPY_ULONG || type == NPY_ULONGLONG || 
+           type == NPY_UINT16 || type == NPY_UINT32 ||
+           type == NPY_ULONG || type == NPY_ULONGLONG ||
            type == NPY_UINT64;
   }
 };
@@ -120,41 +120,41 @@ inline const char * npyTypeToString(int npyType)
     case NPY_BOOL:
       return "NPY_BOOL";
     case NPY_BYTE:
-      return "NPY_BYTE"; 
+      return "NPY_BYTE";
     case NPY_UBYTE:
       return "NPY_UBYTE";
     case NPY_SHORT:
-      return "NPY_SHORT"; 
+      return "NPY_SHORT";
     case NPY_USHORT:
       return "NPY_USHORT";
     case NPY_INT:
-      return "NPY_INT"; 
+      return "NPY_INT";
     case NPY_UINT:
       return "NPY_UINT";
     case NPY_LONG:
-      return "NPY_LONG"; 
+      return "NPY_LONG";
     case NPY_ULONG:
       return "NPY_ULONG";
     case NPY_LONGLONG:
-      return "NPY_LONGLONG"; 
+      return "NPY_LONGLONG";
     case NPY_ULONGLONG:
       return "NPY_ULONGLONG";
     case NPY_FLOAT:
-      return "NPY_FLOAT"; 
+      return "NPY_FLOAT";
     case NPY_DOUBLE:
-      return "NPY_DOUBLE"; 
+      return "NPY_DOUBLE";
     case NPY_LONGDOUBLE:
       return "NPY_LONGDOUBLE";
     case NPY_CFLOAT:
-      return "NPY_CFLOAT"; 
+      return "NPY_CFLOAT";
     case NPY_CDOUBLE:
-      return "NPY_CDOUBLE"; 
+      return "NPY_CDOUBLE";
     case NPY_CLONGDOUBLE:
       return "NPY_CLONGDOUBLE";
     case NPY_OBJECT:
       return "NPY_OBJECT";
     case NPY_STRING:
-      return "NPY_STRING"; 
+      return "NPY_STRING";
     case NPY_UNICODE:
       return "NPY_UNICODE";
     case NPY_VOID:

@@ -14,13 +14,13 @@ add_definitions(-std=c++0x -D__STRICT_ANSI__)
 add_compile_options(-fpermissive)
 
 INCLUDE(src/autogen_files.cmake)
-add_python_export_library(${PROJECT_NAME} 
+add_python_export_library(${PROJECT_NAME}
   ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_FILES}
 )
 target_link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 
 INCLUDE(src/autogen_test_files.cmake)
-add_python_export_library(${PROJECT_NAME}_test 
+add_python_export_library(${PROJECT_NAME}_test
       ${PROJECT_SOURCE_DIR}/python/${PROJECT_NAME} ${AUTOGEN_TEST_FILES}
   )
 
