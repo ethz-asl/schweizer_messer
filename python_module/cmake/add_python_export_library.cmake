@@ -13,12 +13,12 @@
 # with the __init__.py file. The standard for ROS (where python message
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
 
-# Python version as optional argument
 FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY)
-  if (DEFINED ARGV0)
-    set(TARGET_VERSION ARGV0)
-  else
-    set(TARGET_VERSION )
+  if (DEFINED PYTHON_TARGET_VERSION)
+    set(TARGET_VERSION ${PYTHON_TARGET_VERSION})
+  else()
+    set(TARGET_VERSION 2.7)
+  endif()
 
   # Cmake is a very bad scripting language. Very bad indeed.
   # Get the leaf of the python module directory. This is the python package name
