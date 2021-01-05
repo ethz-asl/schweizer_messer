@@ -13,8 +13,12 @@
 # with the __init__.py file. The standard for ROS (where python message
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
 
-
-FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY )
+# Python version as optional argument
+FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY)
+  if (DEFINED ARGV0)
+    set(TARGET_VERSION ARGV0)
+  else
+    set(TARGET_VERSION )
 
   # Cmake is a very bad scripting language. Very bad indeed.
   # Get the leaf of the python module directory. This is the python package name
@@ -63,7 +67,7 @@ ${SETUP_PY_TEXT}
   catkin_python_setup()
 
   # Find Python
-  FIND_PACKAGE(PythonLibs 2.7 REQUIRED)
+  FIND_PACKAGE(PythonLibs ${TARGET_VERSION} REQUIRED)
   INCLUDE_DIRECTORIES(${PYTHON_INCLUDE_DIRS})
 
   if(APPLE)
@@ -81,7 +85,7 @@ ${SETUP_PY_TEXT}
       set(NUMPY_INCLUDE_HINTS 
         ${REAL_PYTHON_INCLUDE}/../../Extras/lib/python/numpy/core/include/numpy
         ${REAL_PYTHON_INCLUDE}/numpy
-        /usr/local/lib/python2.7/site-packages/numpy/core/include/numpy
+        /usr/local/lib/python${TARGET_VERSION}/site-packages/numpy/core/include/numpy
       )
       message("Looking in ${NUMPY_INCLUDE_HINTS}")
       FIND_PATH(NUMPY_INCLUDE_DIR arrayobject.h ${NUMPY_INCLUDE_HINTS})
@@ -121,12 +125,12 @@ ${SETUP_PY_TEXT}
   endif()
 
   install(TARGETS ${TARGET_NAME}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python2.7/${DIST_DIR}/${PYTHON_PACKAGE_NAME}
-    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python2.7/${DIST_DIR}/${PYTHON_PACKAGE_NAME}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python${TARGET_VERSION}/${DIST_DIR}/${PYTHON_PACKAGE_NAME}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/python${TARGET_VERSION}/${DIST_DIR}/${PYTHON_PACKAGE_NAME}
   )
   
     # Cause the library to be output in the correct directory.
-  set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/lib/python2.7/${DIST_DIR}/${PYTHON_PACKAGE_NAME})
+  set(PYTHON_LIB_DIR ${CATKIN_DEVEL_PREFIX}/lib/python${TARGET_VERSION}/${DIST_DIR}/${PYTHON_PACKAGE_NAME})
   add_custom_command(TARGET ${TARGET_NAME}
     POST_BUILD
     COMMAND mkdir -p ${PYTHON_LIB_DIR} && cp -v $<TARGET_FILE:${TARGET_NAME}> ${PYTHON_LIB_DIR}/${PYLIB_SO_NAME}
