@@ -14,9 +14,9 @@
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
 
 FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY)
-  cmake_parse_arguments(${TARGET_NAME} ${PYTHON_MODULE_DIRECTORY} "" "${VERSION}" "" ${ARGN} )
-  if (DEFINED VERSION)
-    set(TARGET_VERSION ${VERSION})
+  cmake_parse_arguments(MY_ARGS "" "VERSION" "" ${ARGN} )
+  if (DEFINED MY_ARGS_VERSION)
+    set(TARGET_VERSION ${MY_ARGS_VERSION})
   else()
     set(TARGET_VERSION 2.7)
   endif()
