@@ -4,3 +4,6 @@
 - git:
     local-name: eigen_catkin
     uri: https://github.com/ethz-asl/eigen_catkin.git
+- git:
+    local-name: catkin_boost_python_buildtool
+    uri: https://github.com/ethz-asl/catkin_boost_python_buildtool.git
