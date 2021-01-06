@@ -101,7 +101,6 @@ ${SETUP_PY_TEXT}
   ENDIF(APPLE)
 
 
-  # message("Target files: ${MY_ARGS_UNPARSED_ARGUMENTS}")
   # Create the target and assign source files
   add_library( ${TARGET_NAME}
       ${MY_ARGS_UNPARSED_ARGUMENTS}
