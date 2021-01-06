@@ -12,6 +12,7 @@
 # Set the path for the output python files. This should be the path
 # with the __init__.py file. The standard for ROS (where python message
 # definitions live) is ${PROJECT_SOURCE_DIR}/src/${PROJECT_NAME}
+include(CMakeParseArguments)
 
 FUNCTION(add_python_export_library TARGET_NAME PYTHON_MODULE_DIRECTORY)
   cmake_parse_arguments(MY_ARGS "" "VERSION" "" ${ARGN} )
