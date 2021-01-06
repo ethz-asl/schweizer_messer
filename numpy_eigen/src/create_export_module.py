@@ -47,6 +47,7 @@ with open(os.path.join(module_path,'numpy_eigen_export_module.cpp'),'w') as f:
     f.write('{\n')
     f.write('\tusing namespace boost::python;\n')
     f.write('\t// Without this import, the converter will segfault\n');
+    f.write('#undef NUMPY_IMPORT_ARRAY_RETVAL\n#define NUMPY_IMPORT_ARRAY_RETVAL')
     f.write('\timport_array();\n');
     f.write('\n');
     for d1 in dimTags:

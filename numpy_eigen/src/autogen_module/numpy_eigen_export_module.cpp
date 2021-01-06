@@ -253,6 +253,8 @@ BOOST_PYTHON_MODULE(libnumpy_eigen)
 {
 	using namespace boost::python;
 	// Without this import, the converter will segfault
+	#undef NUMPY_IMPORT_ARRAY_RETVAL
+	#define NUMPY_IMPORT_ARRAY_RETVAL
 	import_array();
 
 	import_D_D_int();
