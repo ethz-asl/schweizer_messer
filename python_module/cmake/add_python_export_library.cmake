@@ -101,10 +101,10 @@ ${SETUP_PY_TEXT}
   ENDIF(APPLE)
 
 
-  # message("Target files: ${ARGN}")
+  # message("Target files: ${MY_ARGS_UNPARSED_ARGUMENTS}")
   # Create the target and assign source files
   add_library( ${TARGET_NAME}
-      ${ARGN}
+      ${MY_ARGS_UNPARSED_ARGUMENTS}
     )
 
   # Link your python project to the main library and to Python
