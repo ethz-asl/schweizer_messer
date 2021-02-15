@@ -1,3 +1,5 @@
+import sys
+
 import numpy_eigen
 import inspect
 
@@ -107,5 +109,8 @@ def setExtendableValueStoreValue(evs, key, value, add_if_missing=True, force_add
         getattr(evs, "set" + accessorSuffix)(key, value)
         
 
-from types import MethodType
-ExtendibleValueStoreRef.set = MethodType(setExtendableValueStoreValue, None, ExtendibleValueStoreRef)
+if sys.version_info.major == 2:
+    from types import MethodType
+    ExtendibleValueStoreRef.set = MethodType(setExtendableValueStoreValue, None, ExtendibleValueStoreRef)
+else:
+    ExtendibleValueStoreRef.set = setExtendableValueStoreValue
