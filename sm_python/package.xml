@@ -11,7 +11,7 @@
 
   <build_depend>sm_common</build_depend>
   <build_depend>numpy_eigen</build_depend>
-  <build_depend>python_module</build_depend>
+  <build_depend>catkin_boost_python_module</build_depend>
   <build_depend>sm_kinematics</build_depend>
   <build_depend>sm_timing</build_depend>
   <build_depend>sm_logging</build_depend>
@@ -21,7 +21,7 @@
 
   <run_depend>sm_common</run_depend>
   <run_depend>numpy_eigen</run_depend>
-  <run_depend>python_module</run_depend>
+  <run_depend>catkin_boost_python_module</run_depend>
   <run_depend>sm_kinematics</run_depend>
   <run_depend>sm_timing</run_depend>
   <run_depend>sm_logging</run_depend>
