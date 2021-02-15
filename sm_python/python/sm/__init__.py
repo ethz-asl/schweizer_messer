@@ -2,9 +2,9 @@ import numpy_eigen
 import inspect
 
 from .libsm_python import *
-from plotCoordinateFrame import *
-from Progress import Progress, Progress2
-from saveFigTight import saveFigTight
+from .plotCoordinateFrame import *
+from .Progress import Progress, Progress2
+from .saveFigTight import saveFigTight
 
 
 def log(level, message, stackdepth=1):
