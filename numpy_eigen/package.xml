@@ -10,5 +10,5 @@
   <buildtool_depend>catkin_simple</buildtool_depend>
 
   <depend>eigen_catkin</depend>
-  <depend>catkin_boost_python_module</depend>
+  <depend>catkin_boost_python_buildtool</depend>
 </package>
