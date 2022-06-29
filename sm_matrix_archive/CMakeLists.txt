@@ -21,11 +21,12 @@ cs_add_executable(lsma
 )
 target_link_libraries(lsma ${PROJECT_NAME})
 
-#I think here we need to do something for install aswell
-#as is now it ends up in ./usr/lib/sm_matrix_archive/lsma
 set_target_properties(lsma
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CATKIN_DEVEL_PREFIX}/bin"
+)
+install(TARGETS lsma
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CATKIN_GLOBAL_BIN_DESTINATION}
 )
 
 # Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
