@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="3">
   <name>sm_python</name>
   <version>0.0.1</version>
   <description>sm_python</description>
@@ -19,12 +19,13 @@
   <build_depend>sm_property_tree</build_depend>
   <build_depend> sm_value_store</build_depend>
 
-  <run_depend>sm_common</run_depend>
-  <run_depend>numpy_eigen</run_depend>
-  <run_depend>catkin_boost_python_buildtool</run_depend>
-  <run_depend>sm_kinematics</run_depend>
-  <run_depend>sm_timing</run_depend>
-  <run_depend>sm_logging</run_depend>
-  <run_depend>sm_matrix_archive</run_depend>
-  <run_depend>sm_property_tree</run_depend>
+  <exec_depend>sm_common</exec_depend>
+  <exec_depend>numpy_eigen</exec_depend>
+  <exec_depend>catkin_boost_python_buildtool</exec_depend>
+  <exec_depend>sm_kinematics</exec_depend>
+  <exec_depend>sm_timing</exec_depend>
+  <exec_depend>sm_logging</exec_depend>
+  <exec_depend>sm_matrix_archive</exec_depend>
+  <exec_depend>sm_property_tree</exec_depend>
+  <exec_depend condition="$ROS_PYTHON_VERSION == 3">python3-matplotlib</exec_depend>
 </package>
