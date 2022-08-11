@@ -19,6 +19,7 @@
   <build_depend>sm_property_tree</build_depend>
   <build_depend> sm_value_store</build_depend>
 
+  <exec_depend>python-tk</exec_depend>
   <exec_depend>sm_common</exec_depend>
   <exec_depend>numpy_eigen</exec_depend>
   <exec_depend>catkin_boost_python_buildtool</exec_depend>

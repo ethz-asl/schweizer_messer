@@ -25,6 +25,9 @@ set_target_properties(lsma
     PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CATKIN_DEVEL_PREFIX}/bin"
 )
+install(TARGETS lsma
+    RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/${CATKIN_GLOBAL_BIN_DESTINATION}
+)
 
 # Avoid clash with tr1::tuple: https://code.google.com/p/googletest/source/browse/trunk/README?r=589#257
 add_definitions(-DGTEST_USE_OWN_TR1_TUPLE=0)
