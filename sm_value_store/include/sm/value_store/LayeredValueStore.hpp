@@ -14,10 +14,10 @@ class LayeredValueStore : public ValueStore {
   LayeredValueStore(ValueStores && ... vss) {
     add(vss...);
   }
-  template <typename ValueStoreA, typename ValueStoreB, typename ...ValueStores>
-  void add(ValueStoreA && vsA, ValueStoreB && vsB, ValueStores && ... vss) {
+  template <typename ValueStoreA, typename ...ValueStores>
+  void add(ValueStoreA && vsA, ValueStores && ... vss) {
     add(vsA);
-    add(vsB, vss...);
+    add(vss...);
   }
   void add(const std::shared_ptr<ValueStore> & p){ if(p) valuestores.push_back(p); }
   void add(ValueStoreRef & p){ if(p) valuestores.push_back(p.getValueStoreSharedPtr()); }

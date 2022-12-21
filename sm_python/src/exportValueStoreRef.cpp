@@ -1,8 +1,11 @@
 #include <boost/python.hpp>
 #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+#include <boost/python/enum.hpp>
 
 #include <sm/PropertyTree.hpp>
 #include <sm/value_store/ValueStore.hpp>
+#include <sm/value_store/LayeredValueStore.hpp>
+#include <sm/value_store/PrefixedValueStore.hpp>
 #include <functional>
 
 void exportValueStoreRef()
@@ -119,4 +122,29 @@ void exportExtendibleKeyValueStorePair()
     ///const std::string& getKey() const
     .def("getKey", &ExtendibleKeyValueStorePair::getKey, return_value_policy<copy_const_reference>())
   ;
+}
+
+void exportLayeredValueStore() {
+  using namespace boost::python;
+  using namespace sm::value_store;
+  
+  class_<LayeredValueStore, bases<ValueStoreRef>>("LayeredValueStore", init<>())
+    .def(init<LayeredValueStore>())
+    .def(init<LayeredValueStore::SharedPtr>())
+    .def(init<sm::PropertyTree>())
+    //void add(ValueStoreRef & p)
+    .def<void (LayeredValueStore::*)(ValueStoreRef &)>("add", &LayeredValueStore::add)
+  ;
+}
+
+void exportPrefixedValueStore() {
+  using namespace boost::python;
+  using namespace sm::value_store;
+  
+  enum_<PrefixedValueStore::PrefixMode>("PrefixMode")
+  .value("ADD", PrefixedValueStore::PrefixMode::ADD)
+  .value("REMOVE", PrefixedValueStore::PrefixMode::REMOVE)
+  ;
+
+  class_<PrefixedValueStore, bases<ValueStoreRef>>("PrefixedValueStore", init<const ValueStoreRef&, PrefixedValueStore::PrefixMode, const std::string&>());
 }
