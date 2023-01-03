@@ -15,7 +15,7 @@ class LayeredValueStore : public ValueStore {
     add(vss...);
   }
   template <typename ValueStoreA, typename ValueStoreB, typename ...ValueStores>
-  void add(ValueStoreA && vsA, ValueStoreA && vsB, ValueStores && ... vss) {
+  void add(ValueStoreA && vsA, ValueStoreB && vsB, ValueStores && ... vss) {
     add(vsA);
     add(vsB, vss...);
   }
