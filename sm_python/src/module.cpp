@@ -28,6 +28,7 @@ void exportValueStoreRef();
 void exportKeyValueStorePair();
 void exportExtendibleValueStoreRef();
 void exportExtendibleKeyValueStorePair();
+void exportValueStore();
 void exportLayeredValueStore();
 void exportPrefixedValueStore();
 
@@ -56,6 +57,7 @@ BOOST_PYTHON_MODULE(libsm_python)
   exportKeyValueStorePair();
   exportExtendibleValueStoreRef();
   exportExtendibleKeyValueStorePair();
+  exportValueStore();
   exportLayeredValueStore();
   exportPrefixedValueStore();
 }
