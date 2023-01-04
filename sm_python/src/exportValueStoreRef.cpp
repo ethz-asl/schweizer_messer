@@ -23,7 +23,8 @@ void exportValueStoreRef()
   /// brief create a value store reference pointing to a fresh empty value store (based on @see sm::BoostPropertyTree)
   class_<ValueStoreRef>("ValueStoreRef", init<>())
     .def(init<ValueStoreRef>())
-    .def(init<ValueStore>())
+    .def(init<LayeredValueStore&>())
+    .def(init<PrefixedValueStore&>())
     .def(init<ValueStore::SharedPtr>())
     .def(init<sm::PropertyTree>())
     /// ValueStoreRef getChild(const std::string & key)
@@ -125,18 +126,11 @@ void exportExtendibleKeyValueStorePair()
   ;
 }
 
-void exportValueStore() {
-  using namespace boost::python;
-  using namespace sm::value_store;
-  
-  class_<ValueStore>("ValueStore", init<>());
-}
-
 void exportLayeredValueStore() {
   using namespace boost::python;
   using namespace sm::value_store;
   
-  class_<LayeredValueStore, bases<ValueStore>>("LayeredValueStore", init<>())
+  class_<LayeredValueStore>("LayeredValueStore", init<>())
     .def(init<sm::ValueStoreRef>())
     //void add(ValueStoreRef & p)
     .def<void (LayeredValueStore::*)(ValueStoreRef &)>("add", &LayeredValueStore::add)
@@ -152,5 +146,5 @@ void exportPrefixedValueStore() {
   .value("REMOVE", PrefixedValueStore::PrefixMode::REMOVE)
   ;
 
-  class_<PrefixedValueStore, bases<ValueStore>>("PrefixedValueStore", init<const ValueStoreRef&, PrefixedValueStore::PrefixMode, const std::string&>());
+  class_<PrefixedValueStore>("PrefixedValueStore", init<const ValueStoreRef&, PrefixedValueStore::PrefixMode, const std::string&>());
 }
